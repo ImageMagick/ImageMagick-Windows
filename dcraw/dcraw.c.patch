@@ -1,0 +1,56 @@
+diff -r a9fccc1b01d0 dcraw/dcraw.c
+--- a/dcraw/dcraw.c	Sun Sep 30 17:46:00 2012 -0500
++++ b/dcraw/dcraw.c	Sun Sep 30 18:52:42 2012 -0500
+@@ -63,7 +63,7 @@
+ #define _(String) (String)
+ #endif
+ 
+-#if defined(DJGPP) || defined(__MINGW32__)
++#if defined(DJGPP) || defined(__MINGW32__) || defined(WIN32) || defined(WIN64)
+ #define fseeko fseek
+ #define ftello ftell
+ #else
+@@ -113,6 +113,7 @@
+ FILE *ifp, *ofp;
+ short order;
+ const char *ifname;
++char *outfile = NULL;
+ char *meta_data;
+ char cdesc[5], desc[512], make[64], model[64], model2[64], artist[64];
+ float flash_used, canon_ev, iso_speed, shutter, aperture, focal_len;
+@@ -9113,6 +9114,7 @@
+     puts(_("-r <r g b g> Set custom white balance"));
+     puts(_("+M/-M     Use/don't use an embedded color matrix"));
+     puts(_("-C <r b>  Correct chromatic aberration"));
++    puts(_("-O <file> Write output to this file"));
+     puts(_("-P <file> Fix the dead pixels listed in this file"));
+     puts(_("-K <file> Subtract dark frame (16-bit raw PGM)"));
+     puts(_("-k <num>  Set the darkness level"));
+@@ -9181,6 +9183,7 @@
+ #endif
+ 	break;
+       case 'P':  bpfile     = argv[arg++];  break;
++      case 'O':  outfile    = argv[arg++];  break;
+       case 'K':  dark_frame = argv[arg++];  break;
+       case 'z':  timestamp_only    = 1;  break;
+       case 'e':  thumbnail_only    = 1;  break;
+@@ -9444,7 +9447,10 @@
+     if (write_to_stdout)
+       strcpy (ofname,_("standard output"));
+     else {
+-      strcpy (ofname, ifname);
++      if (outfile)
++        strcpy (ofname,outfile);
++      else {
++        strcpy (ofname, ifname);
+       if ((cp = strrchr (ofname, '.'))) *cp = 0;
+       if (multi_out)
+ 	sprintf (ofname+strlen(ofname), "_%0*d",
+@@ -9452,6 +9458,7 @@
+       if (thumbnail_only)
+ 	strcat (ofname, ".thumb");
+       strcat (ofname, write_ext);
++      }
+       ofp = fopen (ofname, "wb");
+       if (!ofp) {
+ 	status = 1;

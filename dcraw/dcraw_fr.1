@@ -1,0 +1,297 @@
+.\"
+.\" Page Man de dcraw
+.\"
+.\" Copyright (c) 2009 by David Coffin
+.\"
+.\" Vous pouvez distribuer sans aucune restriction.
+.\"
+.\" David Coffin
+.\" dcoffin a cybercom o net
+.\" http://www.cybercom.net/~dcoffin
+.\"
+.TH dcraw 1 "14 mai 2009"
+.LO 1
+.SH NOM
+dcraw - décodeur en ligne de commande de photos numériques raw
+.SH SYNOPSIS
+.B dcraw
+[\fIOPTION\fR]... [\fIFICHIER\fR]...
+.SH DESCRIPTION
+.B dcraw
+décode des photos numériques raw, affiche les métadonnées et
+extrait les vignettes
+.SH OPTIONS GENERALES
+.TP
+.B -v
+affiche les messages complets, pas uniquement les erreurs et les
+avertissements.
+.TP
+.B -c
+Ecrit les images décodées et les vignettes sur la sortie standard.
+.TP
+.B -e
+Extrait la vignette générée par l'appareil photo (et pas l'image
+raw) Vous obtiendrez soit un fichier JPEG soit un fichier PPM en
+fonction de l'appareil photo.
+.TP
+.B -z
+Change les dates d'accès et de modification d'un fichier AVI,
+JPEG, TIFF ou raw à la date de prise de la photo en supposant que
+l'horloge de l'appareil photo soit fixée sur le Temps Universel.
+.TP
+.B -i
+Identifie les fichiers sans les décoder.
+Le code de sortie est 0 si
+.B dcraw
+peut décoder le dernier fichier, 1 sinon.
+.B -i -v
+montre les métadonnées.
+.TP
+.B ""
+.B dcraw
+ne peut pas décoder les fichiers JPEG !!
+.SH OPTION DE REPARATION
+.TP
+.B -P pixelsmorts.txt
+Lit la liste des pixels morts depuis ce fichier au lieu de ".badpixels".
+Voir
+.B FICHIERS
+pour une description du format.
+.TP
+.B -K noir.pgm
+Soustrait un noir de la donnée raw.  Pour créer un noir, prendre
+une photo dans le noir et exécuter
+.BR dcraw\ -D\ -4\ -j\ -t\ 0 .
+.TP
+.B -k niveau_noir
+Quand les zones sombres apparaissent brumeuses vous devez augmenter le
+niveau de noir.
+Pour le mesurer appliquer
+.B pamsumm -mean
+au noir généré ci-dessus.
+.TP
+.B -S saturation
+Quand les zones claires apparaissent rosées vous devez baisser le niveau
+de saturation.
+Pour le mesurer prenez une image de quelque chose de brillant et faite
+.B dcraw -D -4 -j -c
+photo.raw
+.B | pamsumm -max
+.TP
+.B ""
+Par défaut le niveau de noir et la saturation sont normalement corrects.
+.TP
+.B -n seuil_du_bruit
+Utilise des ondelettes pour supprimer le bruit tout en préservant
+les vrais détails.  Le meilleur seuil devrait se trouver quelque
+part entre 100 et 1000.
+.TP
+.B -C mag_rouge mag_bleu
+Agrandit les couches bleue et rouge des facteurs passés en paramètre,
+typiquement de 0.999 à 1.001 pour corriger l'aberration chromatique.
+.TP
+.B -H 0
+Limite les zones claires à du blanc pur (par défaut).
+.TP
+.B -H 1
+Laisse les zones claires sans limite (différentes teintes rosées
+peuvent apparaitre).
+.TP
+.B -H 2
+Combine les valeurs de pixels limitées et illimitées de façon à
+obtenir un transition graduelle vers les blancs.
+.TP
+.B -H 3+
+Reconstruit les zones claires.  Les petites valeurs favorisent
+les blancs, les valeurs importantes favorisent les couleurs.
+Essayez
+.B -H 5
+comme un compromis.  Si cela n'est pas assez bon utilisez
+.BR -H\ 9 ,
+supprimez les zones claires non blanches et copiez les dans une
+image générée avec
+.BR -H\ 3 .
+.SH OPTIONS DES COULEURS
+Par défaut,
+.B dcraw
+Utilise une balance des blancs fixe basée sur une carte couleur
+éclairée par une lampe D65 standard.
+.TP
+.B -w
+Utilise la balance des blancs de la caméra.
+Si elle n'est pas trouvée, un avertissement est affiché et une autre
+méthode est utilisée.
+.TP
+.B -a
+Calcule la balance des blancs en moyennant toute l'image.
+.TP
+.B -A gauche haut largeur hauteur
+Calcule la balance des blancs en moyennant une zone rectangulaire.
+Utilisez
+.B dcraw\ -j\ -t\ 0
+et sélectionnez une zone de couleur gris neutre.
+.TP
+.B -r mul0 mul1 mul2 mul3
+Précisez votre propre balance des blancs.
+Ces coefficients multiplicateurs peuvent être copiés et collés depuis
+la sortie de
+.BR dcraw\ -v .
+.TP
+.BR +M " ou " -M
+Utilise (ou n'utilise pas) une matrice de couleurs contenue dans les
+métadonnées de l'appareil photo.
+La valeur par défaut est
+.B +M
+si
+.B -w
+est positionné,
+.B -M
+sinon.
+Cette option ne concerne que les appareils photo Olympus, Leaf, et Phase One.
+.TP
+.B -o [0-5]
+Sélectionne l'espace de couleur de sortie quand l'option
+.B -p
+n'est pas utilisée :
+
+.B \t0
+\ \ couleur raw (différente pour chaque appareil photo)
+.br
+.B \t1
+\ \ sRGB D65 (par défaut)
+.br
+.B \t2
+\ \ Adobe RGB (1998) D65
+.br
+.B \t3
+\ \ Wide Gamut RGB D65
+.br
+.B \t4
+\ \ Kodak ProPhoto RGB D65
+.br
+.B \t5
+\ \ XYZ
+.TP
+.BR -p\ appareilphoto.icm \ [\  -o\ sortie.icm \ ]
+Utilise le profil ICC pour définir l'espace de couleur de
+l'appareil photo et l'espace de couleur souhaité en sortie
+(sRGB par défaut).
+.TP
+.B -p embed
+Utilise le profil ICC contenu dans la photo raw.
+.SH OPTIONS D'INTERPOLATION
+.TP
+.B -d
+Montre les données raw comme une image monochrome sans interpolation.
+Bon pour photographier des documents en noir et blanc.
+.TP
+.B -D
+Pareil que
+.BR -d ,
+mais complètement raw (aucune mise à l'échelle des couleurs).
+.TP
+.B -h
+Génère une image couleur réduite de moitié.  Deux fois plus rapide que
+.BR -q\ 0 .
+.TP
+.B -q 0
+Utilise une interpolation bilinéaire très rapide et de basse qualité.
+.TP
+.B -q 1
+Utilise une interpolation Nombre Variable de Gradient (VNG).
+.TP
+.B -q 2
+Utilise une interpolation Regroupement par Motif de Pixel (PPG).
+.TP
+.B -q 3
+Utilise une interpolation Homogénéité Dirigée et Adaptative (AHD).
+.TP
+.B -f
+Interpole RVB comme quatre couleurs.  A utiliser si la sortie
+montre des faux motifs 2x2 avec VNG ou des labyrinthes avec AHD.
+.TP
+.B -m nombre_de_passes
+Après l'interpolation, nettoie les artefacts de couleurs en appliquant
+un filtre médian 3x3 de façon répétée aux canaux R-V et B-V.
+.SH OPTION DE SORTIE
+Par défaut,
+.B dcraw
+écrit des fichiers PGM/PPM/PAM 8 bits, une courbe gamma BT.709, un
+niveau de blanc basé sur l'histogramme, et aucune méta donnée.
+.TP
+.B -W
+Utilise un niveau de blanc fixé ignorant l'histogramme de l'image
+.TP
+.B -b luminosité
+Divise le niveau de blanc par cette valeur, 1.0 par défaut.
+.TP
+.B -g puissance pente_a_l_origine
+Fixe la courbe gamma, par défaut BT.709
+.RB ( -g\ 2.222\ 4.5 ).
+Si vous préférez le gamma du sRGB, utilisez
+.BR -g\ 2.4\ 12.92 .
+Pour une simple courbe de puissance, fixez la pente à l'origine à zéro.
+.TP
+.B -6
+Ecrit seize bits par pixel/canal au lieu de huit.
+.TP
+.B -4
+16 bits linéaires, équivalent à
+.BR -6\ -W\ -g\ 1\ 1 .
+.TP
+.B -T
+Ecrit des fichiers TIFF avec les métadonnées au lieu de
+fichiers PGM/PPM/PAM.
+.TP
+.B -t [0-7,90,180,270]
+Change l'orientation de l'image de sortie.  Par défaut,
+.B dcraw
+applique l'orientation spécifiée par l'appareil photo.
+.B -t 0
+désactive le changement d'orientation.
+.TP
+.B -j
+Pour les appareils photos Fuji\ Super\ CCD, montre l'image
+tournée à 45 degrés. Pour les appareils photos avec des pixels
+non carrés, n'étire pas l'image à son rapport hauteur/largeur
+réel.  Dans tous les cas cette option garantie que chaque pixel
+en sortie correspond à un pixel raw.
+.TP
+.BR "-s [0..N-1]" " ou " "-s all"
+Si un fichier contient N images raw, choisissez en une ou "all"
+(toutes) pour les décoder.
+Par exemple, les appareils photos Fuji\ Super\ CCD\ SR
+génèrent une seconde image sous exposée de 4 stops pour montrer
+les détails dans les zones claires.
+.SH FICHIERS
+.TP
+\:./.badpixels, ../.badpixels, ../../.badpixels, ...
+Liste des pixels morts de votre appareil photo afin que
+.B dcraw
+puisse interpoler autour d'eux.  Chaque ligne spécifie une colonne,
+une ligne, et la date UNIX de la mort pour un pixel.  Par exemple :
+.sp 1
+.nf
+ 962   91 1028350000  # mort entre le 1er et le 4 Aout 2002
+1285 1067 0           # mort à une date inconnue
+.fi
+.sp 1
+Ces coordonnées sont celles avant toute rotation ou réduction,
+donc utilisez
+.B dcraw -j -t 0
+pour identifier les pixels morts.
+.SH "VOIR AUSSI"
+.BR pgm (5),
+.BR ppm (5),
+.BR pam (5),
+.BR pamsumm (1),
+.BR pnmgamma (1),
+.BR pnmtotiff (1),
+.BR pnmtopng (1),
+.BR gphoto2 (1),
+.BR cjpeg (1),
+.BR djpeg (1)
+.SH AUTEUR
+Ecrit par David Coffin, dcoffin a cybercom o net
+.SH TRADUCTION
+Luc Coiffier, luc o coiffier a free o fr

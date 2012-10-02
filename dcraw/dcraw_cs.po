@@ -1,0 +1,377 @@
+# Czech translation of dcraw messages.
+# (c) 2008 Dave Coffin dcoffin a cybercom o net
+# Distribute freely.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: dcraw 8.82\n"
+"Report-Msgid-Bugs-To: dcoffin a cybercom o net\n"
+"POT-Creation-Date: 2006-12-21 22:45-0500\n"
+"PO-Revision-Date: 2011-07-23 17:00-0400\n"
+"Last-Translator: Dan Ohnesorg <dan a ohnesorg o cz>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "%s: Out of memory in %s\n"
+msgstr "%s: Došla paměť při %s\n"
+
+msgid "Unexpected end of file\n"
+msgstr "Neočekávaný konec souboru\n"
+
+msgid "Corrupt data near 0x%lx\n"
+msgstr "Poškozená data na adrese 0x%lx\n"
+
+msgid "Corrupt data near 0x%llx\n"
+msgstr "Poškozená data na adrese 0x%llx\n"
+
+msgid "%s: decoder table overflow\n"
+msgstr "%s: došlo k přetečení tabulky dekodéru\n"
+
+msgid "Phase One correction...\n"
+msgstr "Phase One korekce...\n"
+
+msgid "%s: incorrect JPEG dimensions\n"
+msgstr "%s: neplatné rozměry JPEG obrázku\n"
+
+msgid "%s: \"%s\" matrix not found!\n"
+msgstr "%s: \"%s\" matice nenalezena!\n"
+
+msgid "Foveon interpolation...\n"
+msgstr "Interpolace Foveon...\n"
+
+msgid "%s: Invalid white balance \"%s\"\n"
+msgstr "%s: Neplatné vyvážení bílé \"%s\"\n"
+
+msgid "Fixed bad pixels at:"
+msgstr "Opraveny vadné pixely v:"
+
+msgid "Fixed dead pixels at:"
+msgstr "Opraveny vadné pixely v:"
+
+msgid "%s is not a valid PGM file!\n"
+msgstr "%s není platný PGM soubor!\n"
+
+msgid "%s has the wrong dimensions!\n"
+msgstr "%s má neplatné rozměry!\n"
+
+msgid "Wavelet denoising...\n"
+msgstr "Odstranění šumu Wavelet transformací...\n"
+
+msgid "%s: Cannot use camera white balance.\n"
+msgstr "%s: Nemohu použít vyvážení bílé dle fotoaparátu.\n"
+
+msgid "Scaling with black %d, multipliers"
+msgstr "Měním velikost přidáním černé %d, násobek"
+
+msgid "Scaling with darkness %d, saturation %d, and\nmultipliers"
+msgstr "Upravuji úroveň černé %d, nasycení %d,\npoměry barevných kanálů"
+
+msgid "Correcting chromatic aberration...\n"
+msgstr "Koriguji chromatickou aberaci...\n"
+
+msgid "Bilinear interpolation...\n"
+msgstr "Bilineární interpolace...\n"
+
+msgid "VNG interpolation...\n"
+msgstr "VNG interpolace...\n"
+
+msgid "PPG interpolation...\n"
+msgstr "PPG interpolace...\n"
+
+msgid "AHD interpolation...\n"
+msgstr "AHD interpolace...\n"
+
+msgid "Median filter pass %d...\n"
+msgstr "Median filtr -- průchod číslo %d...\n"
+
+msgid "Bilateral filtering...\n"
+msgstr "Bilineární filtr...\n"
+
+msgid "Blending highlights...\n"
+msgstr "Zvýraznění hran...\n"
+
+msgid "Rebuilding highlights...\n"
+msgstr "Regenerace stínů...\n"
+
+msgid "Highlight recovery...\n"
+msgstr "Záchrana přesvícení...\n"
+
+msgid "Reading metadata from %s ...\n"
+msgstr "Čtu metadata z %s ...\n"
+
+msgid "Failed to read metadata from %s\n"
+msgstr "Nelze přečíst metadata z %s\n"
+
+msgid "%s: You must link dcraw with libjpeg!!\n"
+msgstr "%s: dcraw musí být slinkován s libjpeg!!\n"
+
+msgid "%s: You must link dcraw with %s!!\n"
+msgstr "%s: dcraw musí být slinkován s %s!!\n"
+
+msgid "%s has no embedded profile.\n"
+msgstr "%s neobsahuje vložený profil.\n"
+
+msgid "Cannot open file %s!\n"
+msgstr "Nemohu otevřít soubor %s!\n"
+
+msgid "Applying color profile...\n"
+msgstr "Aplikuji barevný profil...\n"
+
+msgid "Building histograms...\n"
+msgstr "Počítám histogramy...\n"
+
+msgid "Converting to %s colorspace...\n"
+msgstr "Konvertuji do barevného profilu %s...\n"
+
+msgid "Rotating image 45 degrees...\n"
+msgstr "Otáčím obrázek o 45 °...\n"
+
+msgid "Stretching the image...\n"
+msgstr "Roztahuji obrázek...\n"
+
+msgid "\nRaw photo decoder \"dcraw\" v%s"
+msgstr "\nDekodér fotografií z raw formátu\"dcraw\" v%s"
+
+msgid "\nby Dave Coffin, dcoffin a cybercom o net\n"
+msgstr "\nvytvořil Dave Coffin, dcoffin zavináč cybercom tečka net\n"
+
+msgid "\nUsage:  %s [OPTION]... [FILE]...\n\n"
+msgstr "\nPoužití:  %s [VOLBY]... [SOUBOR]...\n\n"
+
+msgid "-v        Print verbose messages"
+msgstr "-v        Zobrazit detailnější informace"
+
+msgid "-c        Write image data to standard output"
+msgstr "-c        Zapsat obrázek na standardní výstup"
+
+msgid "-e        Extract embedded thumbnail image"
+msgstr "-e        Extrahovat vložený náhled obrázku"
+
+msgid "-i        Identify files without decoding them"
+msgstr "-i        Rozpoznat formát souborů, ale nedekódovat je"
+
+msgid "-i -v     Identify files and show metadata"
+msgstr "-i -v     Rozpoznat formát souborů a zobrazit metadata"
+
+msgid "-z        Change file dates to camera timestamp"
+msgstr "-z        Nastavit datum a čas souborů podle času pořízení fotografie"
+
+msgid "-a        Use automatic white balance"
+msgstr "-a        Použít automatické vyvážení bílé"
+
+msgid "-w        Use camera white balance, if possible"
+msgstr "-w        Použít vyvážení bílé dle údajů fotoaparátu"
+
+msgid "-a        Average the whole image for white balance"
+msgstr "-a        Nastavit vyvážení bílé dle průměru celého obrázku"
+
+msgid "-A <x y w h> Average a grey box for white balance"
+msgstr "-A <x y ∆x ∆y> Spočítat vyvážení bílé dle obdélníku specifikovaného rozměry"
+
+msgid "-r <r g b g> Set custom white balance"
+msgstr "-r <r g b g> Nastavit vlastní vyvážení bílé"
+
+msgid "-r <4 numbers> Set custom white balance"
+msgstr "-r <4 čísla> Nastav vlastní vyvážení bílé"
+
+msgid "+M/-M     Use/don't use an embedded color matrix"
+msgstr "+M/-M     Použij/nepoužij vestavěnou barevnou matici"
+
+msgid "-C <r b>  Correct chromatic aberration"
+msgstr "-C <r b>  Koriguj chromatickou aberaci"
+
+msgid "-P <file> Fix the dead pixels listed in this file"
+msgstr "-P <soubor> Opraví vadné pixely na základě zvoleného souboru"
+
+msgid "-K <file> Subtract dark frame (16-bit raw PGM)"
+msgstr "-K <soubor> Odečti tmavý rám (ve formátu 16 bitového raw PGM)"
+
+msgid "-k <num>  Set black point"
+msgstr "-k <číslo> Nastav černý bod"
+
+msgid "-k <num>  Set the black level"
+msgstr "-k <číslo> Nastaví úroveň černé"
+
+msgid "-k <num>  Set the darkness level"
+msgstr "-k <číslo> Nastaví úroveň černé"
+
+msgid "-S <num>  Set the saturation level"
+msgstr "-S <číslo> Nastaví úroveň nasycení"
+
+msgid "-n <num>  Set threshold for wavelet denoising"
+msgstr "-n <číslo> Nastav práh pro odstranění šumu wavelet transformací"
+
+msgid "-H [0-9]  Highlight mode (0=clip, 1=no clip, 2+=recover)"
+msgstr "-H [0-9]  Režim korekce přeexpozice (0=změn na bílou, 1=ponech fialové stíny, 2+=zachránit)"
+
+msgid "-H [0-9]  Highlight mode (0=clip, 1=unclip, 2=blend, 3+=rebuild)"
+msgstr "-H [0-9]  Režim korekce přeexpozice (0=změn na bílou, 1=ponech fialové stíny,2 = gradient do bílé, 3+=rekonstruovat)"
+
+msgid "-t [0-7]  Flip image (0=none, 3=180, 5=90CCW, 6=90CW)"
+msgstr "-t [0-7]  Otoč obrázek (0=ne, 3=180°, 5 = 90° doleva, 6=90° doprava)"
+
+msgid "-o [0-5]  Output colorspace (raw,sRGB,Adobe,Wide,ProPhoto,XYZ)"
+msgstr "-o [0-5]  Výstupní barevný profil (cru, sRGB, Adobe, Wide, ProPhoto, XYZ)"
+
+msgid "-o <file> Apply output ICC profile from file"
+msgstr "-o <soubor> Aplikuj ICC barevný profil ze souboru"
+
+msgid "-p <file> Apply camera ICC profile from file or \"embed\""
+msgstr "-p <soubor> Použij barevný profil fotoaparátu ze souboru nebo vložený ve fotografii"
+
+msgid "-d        Document mode (no color, no interpolation)"
+msgstr "-d        Dokumentační režim (bez barev, bez úprav)"
+
+msgid "-D        Document mode without scaling (totally raw)"
+msgstr "-D        Dokumentační režim bez změny velikosti (čistý raw)"
+
+msgid "-j        Don't stretch or rotate raw pixels"
+msgstr "-j        Neotáčej ani neměň poměr stran raw pixelů"
+
+msgid "-W        Don't automatically brighten the image"
+msgstr "-W        Zakáže automatickou úpravu jasu obrázku"
+
+msgid "-b <num>  Adjust brightness (default = 1.0)"
+msgstr "-b <číslo> Vlastní jas (výchozí je 1.0)"
+
+msgid "-q [0-3]  Set the interpolation quality"
+msgstr "-q [0-3]  Nastav kvalitu interpolace"
+
+msgid "-h        Half-size color image (twice as fast as \"-q 0\")"
+msgstr "-h        Barevný obrázek poloviční velikosti (dvakrát rychlejší než \"-q 0\")"
+
+msgid "-f        Interpolate RGGB as four colors"
+msgstr "-f        Interpoluj RGGB jako čtyři barvy"
+
+msgid "-m <num>  Apply a 3x3 median filter to R-G and B-G"
+msgstr "-m <číslo> Použij medián filtr 3x3 na kanály R-G a B-G"
+
+msgid "-B <domain> <range> Apply bilateral filter to smooth noise"
+msgstr "-B <doména> <rozsah> Použij bilaterální filter k odstranění šumu"
+
+msgid "-s [0-99] Select a different raw image from the same file"
+msgstr "-s [0-99] Vyber jiný raw obrázek ze stejného souboru"
+
+msgid "-s [0..N-1] Select one raw image or \"all\" from each file"
+msgstr "-s [0..N-1] Vyber jeden nebo \"všechny\" obrázky z každého souboru"
+
+msgid "-4        Write 16-bit linear instead of 8-bit with gamma"
+msgstr "-4        Zapiš 16bitový lineární výstup místo 8bitového s přidáním hodnoty gamma"
+
+msgid "-T        Write TIFF instead of PPM"
+msgstr "-T        Vytvoř TIFF místo PPM"
+
+msgid "Non-numeric argument to \"-%c\"\n"
+msgstr "Hodnota parametru \"-%c\" není číslo.\n"
+
+msgid "Unknown option \"-%c\".\n"
+msgstr "Neznámý parametr \"-%c\".\n"
+
+msgid "No files to process.\n"
+msgstr "Chybí soubory ke konverzi.\n"
+
+msgid "Will not write an image to the terminal!\n"
+msgstr "Nemohu vypsat obrázek na terminál!\n"
+
+msgid "%s has no timestamp.\n"
+msgstr "%s nemá časové razítko.\n"
+
+msgid "%s time set to %d.\n"
+msgstr "%s čas nastaven na %d.\n"
+
+msgid "%s has no thumbnail.\n"
+msgstr "%s nemá náhled.\n"
+
+msgid "\nFilename: %s\n"
+msgstr "\nNázev souboru: %s\n"
+
+msgid "Timestamp: %s"
+msgstr "Časové razítko: %s"
+
+msgid "Camera: %s %s\n"
+msgstr "Fotoaparát: %s %s\n"
+
+msgid "Owner: %s\n"
+msgstr "Vlastník: %s\n"
+
+msgid "DNG Version: "
+msgstr "Verze DNG: "
+
+msgid "ISO speed: %d\n"
+msgstr "ISO: %d\n"
+
+msgid "Shutter: "
+msgstr "Uzávěrka: "
+
+msgid "%0.1f sec\n"
+msgstr "%0.1f sec\n"
+
+msgid "Aperture: f/%0.1f\n"
+msgstr "Clona: f/%0.1f\n"
+
+msgid "Focal length: %0.1f mm\n"
+msgstr "Ohnisková vzdálenost: %0.1f mm\n"
+
+msgid "Secondary pixels: %s\n"
+msgstr "Sekundární pixely: %s\n"
+
+msgid "yes"
+msgstr "ano"
+
+msgid "no"
+msgstr "ne"
+
+msgid "Embedded ICC profile: %s\n"
+msgstr "Vložený ICC profil: %s\n"
+
+msgid "Decodable with dcraw: %s\n"
+msgstr "Lze dekódovat pomocí dcraw: %s\n"
+
+msgid "Number of raw images: %d\n"
+msgstr "Počet raw obrázků: %d\n"
+
+msgid "Pixel Aspect Ratio: %0.6f\n"
+msgstr "Poměr stran pixelů: %0.6f\n"
+
+msgid "Thumb size:  %4d x %d\n"
+msgstr "Velikost náhledu:  %4d x %d\n"
+
+msgid "Full size:   %4d x %d\n"
+msgstr "Plná velikost:     %4d x %d\n"
+
+msgid "Cannot decode file %s\n"
+msgstr "Nemohu dekódovat soubor %s\n"
+
+msgid "Image size:  %4d x %d\n"
+msgstr "Velikost obrázku:  %4d x %d\n"
+
+msgid "Output size: %4d x %d\n"
+msgstr "Výstupní velikost: %4d x %d\n"
+
+msgid "Raw colors: %d"
+msgstr "Raw barvy: %d"
+
+msgid "\nFilter pattern: "
+msgstr "\nVzor pro filtrování: "
+
+msgid "\nDaylight multipliers:"
+msgstr "\nNásobitel pro denní světlo:"
+
+msgid "\nCamera multipliers:"
+msgstr "\nNásobitel dle fotoaparátu:"
+
+msgid "%s is a %s %s image.\n"
+msgstr "%s je obrázek typu %s %s.\n"
+
+msgid "Loading %s %s image from %s ...\n"
+msgstr "Načítám %s %s obrázky z %s ...\n"
+
+msgid "%s: \"-s %d\" requests a nonexistent image!\n"
+msgstr "%s: \"-s %d\" požaduje neexistující obrázek!\n"
+
+msgid "standard output"
+msgstr "standardní výstup"
+
+msgid "Writing data to %s ...\n"
+msgstr "Zapisuji data do %s ...\n"

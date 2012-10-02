@@ -1,0 +1,280 @@
+.\"
+.\" Man page for dcraw
+.\"
+.\" Copyright (c) 2009 by David Coffin
+.\"
+.\" You may distribute without restriction.
+.\"
+.\" David Coffin
+.\" dcoffin a cybercom o net
+.\" http://www.cybercom.net/~dcoffin
+.\"
+.TH dcraw 1 "14. maj 2009"
+.LO 1
+.SH NAVN
+dcraw - kommandolinjeafkoder for rå digitalfotos
+.SH SYNTAX
+.B dcraw
+[\fITILVALG\fR]... [\fIFIL\fR]...
+.SH BESKRIVELSE
+.B dcraw
+afkoder råfotos, viser metadata og udtrækker miniaturbilleder.
+.SH GENERELLE TILVALG
+.TP
+.B -v
+Udskriv detaljerede meddelelser, ikke kun advarsler og fejlmeddelelser.
+.TP
+.B -c
+Skriv afkodede billeder eller miniaturbilleder til standard-uddata.
+.TP
+.B -e
+Udtrækker det kamera-skabte miniaturbillede, ikke det rå billede.
+Du får enten en JPEG- eller en PPM-fil afhængigt af kameraet.
+.TP
+.B -z
+Ændrer tilgangs- og ændringstidspunkterne for AVI-, JPEG-, TIFF- eller rå-
+filen til optagelsestidspunktet under forudsætning af, at kameraets ur var
+indstillet til universel tid (UTC).
+.TP
+.B -i
+Identificer filerne, men afkod dem ikke.
+Slutstatus er 0 hvis
+.B dcraw
+kan afkode den sidste fil, og 1 hvis det ikke kan.
+.B -i -v
+viser metadata.
+.TP
+.B ""
+.B dcraw
+kan ikke afkode JPEG-filer!!
+.SH REPARATIONSTILVALG
+.TP
+.B -P dødepunkter.txt
+Læs de døde punkter fra denne fil i stedet for fra ".badpixels".
+Se
+.B FILER
+for en beskrivelse af formatet.
+.TP
+.B -K sortbilled.pgm
+Udtræk et sortbillede fra de rå data.  Optag et råfoto uden lys
+for at lave et sortbillede og kør
+.BR dcraw\ -D\ -4\ -j\ -t\ 0 .
+.TP
+.B -k sortpunkt
+Når skyggerne er tågede skal du øge sortpunktsværdien.
+For at måle dette, skal du anvende
+.B pamsumm -mean
+på det sortbillede du lavede ovenfor.
+.TP
+.B -S mætning
+Når højlysene er lyserøde, skal du sænke mætningsværdien.
+For at måle dette, skal du optage et billede af noget skinnende og køre
+.B dcraw -D -4 -j -c
+foto.raw
+.B | pamsumm -max
+.TP
+.B ""
+Standardværdierne af sortpunkt og mætning er normalt korrekte.
+.TP
+.B -n støjtærskelværdi
+Brug wavelets for at fjerne støj mens detaljerne bevares.
+De bedste tærskeværdier ligger normalt mellem 100 og 1000.
+.TP
+.B -C rødforst. blåforst.
+Forstør de rå røde og blå lag med en given faktor,
+typisk mellem 0,999 og 1,001, for at korrigere kromatisk aberration.
+.TP
+.B -H 0
+Beskær alle højlys til rent hvidt (standard).
+.TP
+.B -H 1
+Lad højlysene være ubeskårne i forskellige lyserøde nuancer.
+.TP
+.B -H 2
+Bland beskårne og ubeskårne værdier samme for at få en gradueret udfadning
+til hvidt.
+.TP
+.B -H 3+
+Rekonstruer højlysene.  Lavere værdier favoriserer hvidt, højere værdier
+favoriserer farver.  Prøv
+.B -H 5
+så et kompromis.  Hvis det ikke er godt nok, prøv
+.BR -H\ 9 ,
+klip de ikke-hvidt højlys ud, og sæt dem ind i et billede lavet med
+.BR -H\ 3 .
+.SH FARVETILVALG
+Normalt bruger
+.B dcraw
+en fast hvidbalance baseret på et farvekort belyst med
+en standard D65-lampe.
+.TP
+.B -w
+Brug den hvidbalance, der er indstillet på kameraet.
+Udskriv en advarsel og prøv en anden metode, hvis denne ikke findes.
+.TP
+.B -a
+Beregn hvidbalancen som et gennemsnit for hele billedet.
+.TP
+.B -A venstre top bredde højde
+Beregn hvidbalancen som et gennemsnit for et rektangulært område.
+Kør først
+.B dcraw\ -j\ -t\ 0
+og vælg et område med neutral grå farve.
+.TP
+.B -r mul0 mul1 mul2 mul3
+Angiv din egen hvidbalance.
+Disse multiplikatorer kan klippes og indsættes fra
+.BR dcraw\ -v .
+.TP
+.BR +M " or " -M
+Anvend (eller anvend ikke) en farvematrix fra kameraets metadata.
+Standarden er
+.B +M
+hvis
+.B -w
+er sat, og
+.B -M
+ellers.
+Dette tilvalg har kun effekt med Olympus-, Leaf- og Phase One-kameraer.
+.TP
+.B -o [0-5]
+Vælg uddata-farverummet når
+.B -p
+ikke anvendes:
+
+.B \t0
+\ \ Rå farver (unikke for hvert kamera)
+.br
+.B \t1
+\ \ sRGB D65 (standard)
+.br
+.B \t2
+\ \ Adobe RGB (1998) D65
+.br
+.B \t3
+\ \ Wide Gamut RGB D65
+.br
+.B \t4
+\ \ Kodak ProPhoto RGB D65
+.br
+.B \t5
+\ \ XYZ
+.TP
+.BR -p\ kamera.icm \ [\  -o\ uddata.icm \ ]
+Anvend ICC-profiler for at definere kameraets rå farverum og det
+ønskede uddata-farverum (sRGB som standard).
+.TP
+.B -p embed
+Anvend den indlejrede ICC-profil fra det rå foto.
+.SH INTERPOLATIONSTILVALG
+.TP
+.B -d
+Hvis de rå data som et gråskalabillede uden interpolation.
+Godt for affotografering af sort/hvide dokumenter.
+.TP
+.B -D
+Samme som
+.BR -d ,
+men helt rå (ingen farveskalering).
+.TP
+.B -h
+Lav et farvebillede i halv størrelse.  Dobbelt så hurtig som
+.BR -q\ 0 .
+.TP
+.B -q 0
+Brug hurtig, lavkvalitets bilineær interpolation.
+.TP
+.B -q 1
+Brug Variable Number of Gradients (VNG) interpolation.
+.TP
+.B -q 2
+Brug Patterned Pixel Grouping (PPG) interpolation.
+.TP
+.B -q 3
+Brug Adaptive Homogeneity-Directed (AHD) interpolation.
+.TP
+.B -f
+Interpoler RGB som fire farver.  Brug dette, hvis uddata viser
+falske 2x2 mønstre med VNG eller labyrintmønstre med AHD.
+.TP
+.B -m antal_anvendelser
+Fjern farvefejl efter interpolationen med gentagne anvendelser
+af et 3x3 median-filter på R-G- og B-G-farvekanalerne.
+.SH UDDATATILVALG
+Normalt udskriver
+.B dcraw
+PGM/PPM/PAM med 8 bits pr. farvekanal, en BT.709 gammakurve,
+et histogram-baseret hvidniveau og ingen metadata.
+.TP
+.B -W
+Anvende et fast hvidniveau, ignorer billedets histogram.
+.TP
+.B -b belysning
+Divider hvidniveauet med dette tal, standard er 1.0.
+.TP
+.B -g eksponent hældning
+Sæt gammakurven, standard er BT.709
+.RB ( -g\ 2.222\ 4.5 ).
+Brug
+.BR -g\ 2.4\ 12.92 ,
+hvis du foretrækker sRGB-gamma.
+Sæt hældningen til nul, for at få en simpel eksponentiel kurve.
+.TP
+.B -6
+Udskriv seksten bits pr. farvekanal i stedet for otte.
+.TP
+.B -4
+Lineær 16-bits, samme som
+.BR -6\ -W\ -g\ 1\ 1 .
+.TP
+.B -T
+Udskriv TIFF med metadata i stedet for PGM/PPM/PAM.
+.TP
+.B -t [0-7,90,180,270]
+Drej uddata-billedet.  Normalt drejer
+.B dcraw
+billedet som angivet i kameraet.
+.B -t 0
+udelader alle drejninger.
+.TP
+.B -j
+Vis billedet drejet 45 grader for Fuji\ Super\ CCD kameraer.
+Stræk ikke billedet til det korrekte side-forhold for kameraer med
+ikke-kvadratiske billedpunkter.  Dette tilvalg garanterer at hvert
+uddata-punkt svarer til et billedpunkt i råbilledet.
+.TP
+.BR "-s [0..N-1]" " or " "-s all"
+Afkod et eller "all" (alle) billeder, hvis en fil indeholder N rå billeder.
+For eksempel laver Fuji\ Super\ CCD\ SR kameraer et andet billede,
+undereksponeret med fire trin, for at vise detaljer i højlysene.
+.SH FILER
+.TP
+\:./.badpixels, ../.badpixels, ../../.badpixels, ...
+Liste over dit kameras døde billedpunkter, så
+.B dcraw
+kan interpolere omkring dem.  Hver linje angiver søjle,
+række og UNIX "dødstidspunkt" for et punkt.  For eksempel:
+.sp 1
+.nf
+ 962   91 1028350000  # døde mellem 1. og 4. august 2002
+1285 1067 0           # ved ikke hvornår dette punkt døde
+.fi
+.sp 1
+Disse koordinater angives før beskæring og drejning af billedet, så anvend
+.B dcraw -j -t 0
+til at lokalisere døde billedpunkter.
+.SH "SE OGSÅ"
+.BR pgm (5),
+.BR ppm (5),
+.BR pam (5),
+.BR pamsumm (1),
+.BR pnmgamma (1),
+.BR pnmtotiff (1),
+.BR pnmtopng (1),
+.BR gphoto2 (1),
+.BR cjpeg (1),
+.BR djpeg (1)
+.SH FORFATTER
+Skrevet af David Coffin, dcoffin a cybercom o net
+.SH OVERSÆTTER
+Oversat af Niels Kristian Bech Jensen, nkbj a users o sourceforge o net

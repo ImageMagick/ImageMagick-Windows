@@ -1,0 +1,377 @@
+# Traditional Chinese translation of dcraw messages.
+# (c) 2009 Dave Coffin dcoffin a cybercom o net
+# Distribute freely.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: dcraw 8.92\n"
+"Report-Msgid-Bugs-To: dcoffin a cybercom o net\n"
+"POT-Creation-Date: 2006-12-21 22:45-0500\n"
+"PO-Revision-Date: 2011-07-23 17:00-0400\n"
+"Last-Translator: Bryan Chang <bryanchang a mac o com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "%s: Out of memory in %s\n"
+msgstr "%s : 在 %s 發生記憶體不足錯誤\n"
+
+msgid "Unexpected end of file\n"
+msgstr "檔案內容提前終止\n"
+
+msgid "Corrupt data near 0x%lx\n"
+msgstr "資料在 0x%lx 附近毀損\n"
+
+msgid "Corrupt data near 0x%llx\n"
+msgstr "資料在 0x%llx 附近毀損\n"
+
+msgid "%s: decoder table overflow\n"
+msgstr "%s : 解碼表容量不足導致發生錯誤\n"
+
+msgid "Phase One correction...\n"
+msgstr "轉換 Phase One 格式檔案...\n"
+
+msgid "%s: incorrect JPEG dimensions\n"
+msgstr "%s : JPEG 檔案長寬尺寸有誤\n"
+
+msgid "%s: \"%s\" matrix not found!\n"
+msgstr "%s : 找不到 \"%s\" 矩陣！\n"
+
+msgid "Foveon interpolation...\n"
+msgstr "使用 Foveon 內插法...\n"
+
+msgid "%s: Invalid white balance \"%s\"\n"
+msgstr "%s : 無效的白平衡數值 \"%s\"\n"
+
+msgid "Fixed bad pixels at:"
+msgstr "資料修復中，損壞像素之座標 :"
+
+msgid "Fixed dead pixels at:"
+msgstr "資料修復中，損壞像素之座標 :"
+
+msgid "%s is not a valid PGM file!\n"
+msgstr "%s 是無效的 PGM 檔案。\n"
+
+msgid "%s has the wrong dimensions!\n"
+msgstr "%s 的尺寸錯誤。\n"
+
+msgid "Wavelet denoising...\n"
+msgstr "微波法消除雜訊...\n"
+
+msgid "%s: Cannot use camera white balance.\n"
+msgstr "%s : 無法使用相機內存之白平衡值。\n"
+
+msgid "Scaling with black %d, multipliers"
+msgstr "以黑色點與白平衡系數來調整色彩"
+
+msgid "Scaling with darkness %d, saturation %d, and\nmultipliers"
+msgstr "以黑暗度值 %d，色彩飽和度 %d 以及\n乘算參數"
+
+msgid "Correcting chromatic aberration...\n"
+msgstr "校正色像差...\n"
+
+msgid "Bilinear interpolation...\n"
+msgstr "兩面過濾法...\n"
+
+msgid "VNG interpolation...\n"
+msgstr "VNG 影像內插法處理中...\n"
+
+msgid "PPG interpolation...\n"
+msgstr "PPG 影像內插法處理中...\n"
+
+msgid "AHD interpolation...\n"
+msgstr "AHD 影像內插法處理中...\n"
+
+msgid "Median filter pass %d...\n"
+msgstr "第 %d 次中間值濾鏡運算...\n"
+
+msgid "Bilateral filtering...\n"
+msgstr "兩面過濾法處理中...\n"
+
+msgid "Blending highlights...\n"
+msgstr "混合高亮度區域數值...\n"
+
+msgid "Rebuilding highlights...\n"
+msgstr "重建高量度區域影像...\n"
+
+msgid "Highlight recovery...\n"
+msgstr "重建高亮度部份之資料...\n"
+
+msgid "Reading metadata from %s ...\n"
+msgstr "自 %s 中讀取詮釋資料...\n"
+
+msgid "Failed to read metadata from %s\n"
+msgstr "無法自 %s 中讀取詮釋資料\n"
+
+msgid "%s: You must link dcraw with libjpeg!!\n"
+msgstr "%s dcraw 需要系統安裝有 libjpeg。\n"
+
+msgid "%s: You must link dcraw with %s!!\n"
+msgstr "%s dcraw 需要系統安裝有 %s。\n"
+
+msgid "%s has no embedded profile.\n"
+msgstr "%s 沒有內嵌的色彩描述資料。\n"
+
+msgid "Cannot open file %s!\n"
+msgstr "無法開啟檔案： %s\n"
+
+msgid "Applying color profile...\n"
+msgstr "加入色彩描述...\n"
+
+msgid "Building histograms...\n"
+msgstr "產生直方統計圖...\n"
+
+msgid "Converting to %s colorspace...\n"
+msgstr "轉換至 %s colorspace...\n"
+
+msgid "Rotating image 45 degrees...\n"
+msgstr "將影像翻轉 45 度...\n"
+
+msgid "Stretching the image...\n"
+msgstr "將影像展開...\n"
+
+msgid "\nRaw photo decoder \"dcraw\" v%s"
+msgstr "\n原始影像解碼工具 \"dcraw\" v%s"
+
+msgid "\nby Dave Coffin, dcoffin a cybercom o net\n"
+msgstr "\n本軟體由 Dave Coffin 製作 dcoffin a cybercom o net\n"
+
+msgid "\nUsage:  %s [OPTION]... [FILE]...\n\n"
+msgstr "\n指令用法： %s [參數]... [圖檔路徑]...\n\n"
+
+msgid "-v        Print verbose messages"
+msgstr "-v        顯示詳細訊息"
+
+msgid "-c        Write image data to standard output"
+msgstr "-c        將影像資料輸出終端機標準輸出埠"
+
+msgid "-e        Extract embedded thumbnail image"
+msgstr "-e        抽出內嵌於原始圖檔中的預覽圖片"
+
+msgid "-i        Identify files without decoding them"
+msgstr "-i        確認圖檔格式但不進行解碼"
+
+msgid "-i -v     Identify files and show metadata"
+msgstr "-i -v     確認圖檔格式並顯示詮釋資料 (metadata)。"
+
+msgid "-z        Change file dates to camera timestamp"
+msgstr "-z        將輸出檔案的產生時間設定成相片拍攝的時間。"
+
+msgid "-a        Use automatic white balance"
+msgstr "-a        使用自動白平衡"
+
+msgid "-w        Use camera white balance, if possible"
+msgstr "-w        在允許的情況下使用相機指定的白平衡值"
+
+msgid "-a        Average the whole image for white balance"
+msgstr "-a        利用整個影像的平均值來計算白平衡"
+
+msgid "-A <x y w h> Average a grey box for white balance"
+msgstr "-A <x y ∆x ∆y> 取灰色矩形區域平均值來計算白平衡"
+
+msgid "-r <r g b g> Set custom white balance"
+msgstr "-r <r g b g> 使用自定白平衡值"
+
+msgid "-r <4 numbers> Set custom white balance"
+msgstr "-r <四個數值> 使用訂製白平衡"
+
+msgid "+M/-M     Use/don't use an embedded color matrix"
+msgstr "+M/-M     使用或捨棄影像檔案中的 color matrix 資料"
+
+msgid "-C <r b>  Correct chromatic aberration"
+msgstr "-C <r b>  校正色像差"
+
+msgid "-P <file> Fix the dead pixels listed in this file"
+msgstr "-P <資料檔名> 修正列在資料檔中的損壞感光元件資料"
+
+msgid "-K <file> Subtract dark frame (16-bit raw PGM)"
+msgstr "-K <檔案路徑> 使用黑框抵消法來消除影像雜訊 (黑框檔案格式必須是 16-bit raw PGM)"
+
+msgid "-k <num>  Set black point"
+msgstr "-k <數值> 設定黑色點"
+
+msgid "-k <num>  Set the darkness level"
+msgstr "-k <數值> 設定黑色調數值"
+
+msgid "-S <num>  Set the saturation level"
+msgstr "-S <數值> 設定色彩飽和度值"
+
+msgid "-n <num>  Set threshold for wavelet denoising"
+msgstr "-n <數值> 設定微波雜訊消除臨界值"
+
+msgid "-H [0-9]  Highlight mode (0=clip, 1=no clip, 2+=recover)"
+msgstr "-H [0-9]  重建影像中高亮度處色彩 (0：純白色，1：以淡粉紅色階調取代，2-9：使用顏色漸層取代)"
+
+msgid "-H [0-9]  Highlight mode (0=clip, 1=unclip, 2=blend, 3+=rebuild)"
+msgstr "-H [0-9]  高亮度區域影像處理"
+
+msgid "-t [0-7]  Flip image (0=none, 3=180, 5=90CCW, 6=90CW)"
+msgstr "-t [0-7]  翻轉影像 (0：不翻轉，3：轉 180 度，5：逆時針轉 90 度， 6：順時針轉 90 度)"
+
+msgid "-o [0-5]  Output colorspace (raw,sRGB,Adobe,Wide,ProPhoto,XYZ)"
+msgstr "-o [0-5]  輸出 colorspace (raw,sRGB,Adobe,Wide,ProPhoto,XYZ)"
+
+msgid "-o <file> Apply output ICC profile from file"
+msgstr "-o <檔案路徑> 讀取相機 ICC 描述檔案"
+
+msgid "-p <file> Apply camera ICC profile from file or \"embed\""
+msgstr "-p <檔案路徑> 讀取相機 ICC 描述檔案或者是使用內嵌描述檔"
+
+msgid "-d        Document mode (no color, no interpolation)"
+msgstr "-d        文件翻拍模式（黑白，不使用內插法）"
+
+msgid "-D        Document mode without scaling (totally raw)"
+msgstr "-D        黑白翻拍模式（完全不調整影像。）"
+
+msgid "-j        Don't stretch or rotate raw pixels"
+msgstr "-j        不要拉長或是旋轉原始影像中的像素"
+
+msgid "-W        Don't automatically brighten the image"
+msgstr "-W        不要自動提高影像亮度"
+
+msgid "-b <num>  Adjust brightness (default = 1.0)"
+msgstr "-b <數值> 調整亮度(預設值 = 1.0)"
+
+msgid "-g <p ts> Set custom gamma curve (default = 2.222 4.5)"
+msgstr "-g <次方 斜率> 設定訂製 gamma 曲線 (預設值為 2.222 4.5)"
+
+msgid "-q [0-3]  Set the interpolation quality"
+msgstr "-q [0-3]  設定內插法所產生影像的品質。"
+
+msgid "-h        Half-size color image (twice as fast as \"-q 0\")"
+msgstr "-h        輸出影像的尺寸減半，相對的解碼速度也會比 \"-q 0\" 要快兩倍。"
+
+msgid "-f        Interpolate RGGB as four colors"
+msgstr "-f        在進行內插法演算時將 RGGB 當成四種顏色。"
+
+msgid "-m <num>  Apply a 3x3 median filter to R-G and B-G"
+msgstr "-m <num>  以 3x3 大小中間值濾鏡過濾紅綠與藍綠雜訊"
+
+msgid "-B <domain> <range> Apply bilateral filter to smooth noise"
+msgstr "-B <領域> <範圍> 採用兩面過濾法 (bilateral filter) 來減低雜訊並同時保持細節的銳利度。"
+
+msgid "-s [0-99] Select a different raw image from the same file"
+msgstr "-s [0-99] 解碼同一原始影像檔中所內含的某個原始影像檔案。"
+
+msgid "-s [0..N-1] Select one raw image or \"all\" from each file"
+msgstr "-s [0..N-1] 選擇第 N 個 raw 檔案，或使用 \"all\" 參數來指 定轉換檔案裡所有的影像"
+
+msgid "-4        Write 16-bit linear instead of 8-bit with gamma"
+msgstr "-4        改用十六位元線性解碼，而不以八位元加 Gamma 曲線格式輸出"
+
+msgid "-T        Write TIFF instead of PPM"
+msgstr "-T        放棄 PPM 格式，改以 TIFF 格式輸出"
+
+msgid "Non-numeric argument to \"-%c\"\n"
+msgstr "\"-%c\" 指令的非數值參數\n"
+
+msgid "Unknown option \"-%c\".\n"
+msgstr "未定義的參數 \"-%c\".\n"
+
+msgid "No files to process.\n"
+msgstr "找不到檔案來處理。\n"
+
+msgid "Will not write an image to the terminal!\n"
+msgstr "不會將影像資料輸出至終端機。\n"
+
+msgid "%s has no timestamp.\n"
+msgstr "%s 檔案沒有時間戳記\n"
+
+msgid "%s time set to %d.\n"
+msgstr "%s 的時間被設成 %d。\n"
+
+msgid "%s has no thumbnail.\n"
+msgstr "%s 檔案沒有預覽小圖\n"
+
+msgid "\nFilename: %s\n"
+msgstr "\n檔名： %s\n"
+
+msgid "Timestamp: %s"
+msgstr "時間： %s"
+
+msgid "Camera: %s %s\n"
+msgstr "相機型號： %s %s\n"
+
+msgid "Owner: %s\n"
+msgstr "拍攝相機擁有者： %s\n"
+
+msgid "DNG Version: "
+msgstr "DNG 版本： "
+
+msgid "ISO speed: %d\n"
+msgstr "ISO 感光度： %d\n"
+
+msgid "Shutter: "
+msgstr "快門速度： "
+
+msgid "%0.1f sec\n"
+msgstr "%0.1f 秒\n"
+
+msgid "Aperture: f/%0.1f\n"
+msgstr "光圈： f/%0.1f\n"
+
+msgid "Focal length: %0.1f mm\n"
+msgstr "焦距： %0.1f mm\n"
+
+msgid "Secondary pixels: %s\n"
+msgstr "次要像素： %s\n"
+
+msgid "yes"
+msgstr "是"
+
+msgid "no"
+msgstr "否"
+
+msgid "Embedded ICC profile: %s\n"
+msgstr "內含 ICC 描述檔案： %s\n"
+
+msgid "Decodable with dcraw: %s\n"
+msgstr "dcraw 支援此檔案之解碼： %s\n"
+
+msgid "Number of raw images: %d\n"
+msgstr "raw 影像檔數目: %d\n"
+
+msgid "Pixel Aspect Ratio: %0.6f\n"
+msgstr "像素高寬比： %0.6f\n"
+
+msgid "Thumb size:  %4d x %d\n"
+msgstr "預覽圖片尺寸： %4d x %d\n"
+
+msgid "Full size:   %4d x %d\n"
+msgstr "原尺寸：       %4d x %d\n"
+
+msgid "Cannot decode file %s\n"
+msgstr "無法解碼檔案。檔案路徑： %s\n"
+
+msgid "Image size:  %4d x %d\n"
+msgstr "圖檔大小：     %4d x %d\n"
+
+msgid "Output size: %4d x %d\n"
+msgstr "圖形輸出尺寸： %4d x %d\n"
+
+msgid "Raw colors: %d"
+msgstr "原始色彩： %d"
+
+msgid "\nFilter pattern: "
+msgstr "\n濾鏡圖案： "
+
+msgid "\nDaylight multipliers:"
+msgstr "\n日光系數："
+
+msgid "\nCamera multipliers:"
+msgstr "\n相機系數："
+
+msgid "%s is a %s %s image.\n"
+msgstr "%s 是 %s %s 格式檔案。\n"
+
+msgid "Loading %s %s image from %s ...\n"
+msgstr "載入 %s %s 格式檔案中，檔案路徑： %s ...\n"
+
+msgid "%s: \"-s %d\" requests a nonexistent image!\n"
+msgstr "%s: \"-s %d\" 所需要的影像檔並不存在！\n"
+
+msgid "standard output"
+msgstr "終端機標準輸出埠"
+
+msgid "Writing data to %s ...\n"
+msgstr "資料正寫出至： %s ...\n"

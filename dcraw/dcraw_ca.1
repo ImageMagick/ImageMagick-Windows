@@ -1,0 +1,282 @@
+.\"
+.\" Catalan manpage for dcraw
+.\"
+.\" Copyright (c) 2009 by David Coffin
+.\"
+.\" Es permet la distribució sense restriccions.
+.\"
+.\" David Coffin
+.\" dcoffin a cybercom o net
+.\" http://www.cybercom.net/~dcoffin
+.\"
+.TH dcraw 1 "14 maig 2009"
+.LO 1
+.SH NOM
+dcraw - descodificador de línea de comandes per a fotos digitals crues (raw)
+.SH RESUM
+.B dcraw
+[\fIOPCIÓ\fR]... [\fIFITXER\fR]...
+.SH DESCRIPCIÓ
+.B dcraw
+descodifica fotos crues, mostra metadades i extreu les miniatures.
+.SH OPCIONS GENERALS
+.TP
+.B -v
+Mostra el missatges detallats, a més d'avisos i errors.
+.TP
+.B -c
+Mostra les imatges descodificades o miniatures per la sortida estándar.
+.TP
+.B -e
+Extreu la miniatura generada per la càmera, no la imatge crua.
+Aconsegueix o bé un fitxer JPEG o un fitxer PPM, depenent de la càmera.
+.TP
+.B -z
+Canvia les dates de modificació i accés d'un fitxer AVI, JPEG, TIFF
+o cru de quan es va fer la foto, assumint que el rellotge de la càmera
+estava establert en horari Universal (UTC).
+.TP
+.B -i
+Identifica els fitxers sense descodificar-los.
+La sortida d'estat és 0 si
+.B dcraw
+pot descodificar el darrer fitxer, 1 si no pot.
+.B -i -v
+mostra les metadades.
+.TP
+.B ""
+.B dcraw
+no pot descodificar els fitxers JPEG!!
+.SH OPCIONS DE RECUPERACIÓ
+.TP
+.B -P píxels_morts.txt
+Llegeix la llista de píxels morts d'aquest fitxer en comptes de ".badpixels".
+Veieu
+.B FITXERS
+per a una descripció del format.
+.TP
+.B -K fosc.pgm
+Substreu un quadre fosc de les dades crues.  Per a generar un
+quadre fosc, fes una foto crua sense llum i fes
+.BR dcraw\ -D\ -4\ -j\ -t\ 0 .
+.TP
+.B -k fosc
+Quan les ombres apareguin amb boirina, s'ha d'augmentar el nivell de fosc.
+Per a mesurar això, aplica
+.B pamsumm -mean
+al quadre fosc generat amunt.
+.TP
+.B -S saturació
+Si els realçats apareixen roses, cal reduïr el nivell de saturació.
+Per a mesurar això, feu una captura d'un objecte brillant i feu
+.B dcraw -D -4 -j -c
+foto.raw
+.B | pamsumm -max
+.TP
+.B ""
+Els valors de fosc i saturació per omissió solen ser adequats.
+.TP
+.B -n llindar_reducció_soroll
+Utilitza un algorisme basat en ondetes per a eliminar el soroll
+mantenint el detall.  El llindar òptim sol estar entre 100 i 1000.
+.TP
+.B -C mag_vermella mag_blau
+Amplia les capes vermella i blava segons els factors indicats, normalment
+de 0.999 a 1.001, per a corregir l'aberració cromàtica.
+.TP
+.B -H 0
+Exclou totes les sobreexposicions de blanc sòlid (per omissió).
+.TP
+.B -H 1
+Deixa les sobreexposicions sense excloure en vàries ombres de rosa.
+.TP
+.B -H 2
+Combina els valors retallats i no retallats en un degradat gradual
+a blanc.
+.TP
+.B -H 3+
+Reconstrueix les sobreexposicions.  Els valors baixos afavoreixen
+els blancs; els valors alts afavoreixen els colors.  Proveu
+.B -H 5
+com a compromís.  Si no és prou bo, feu
+.BR -H\ 9 ,
+talla les sobreexposicions que no són blanques i enganxa-les sobre
+la imatge generada amb
+.BR -H\ 3 .
+.SH OPCIONS DE COLOR
+Per omissió,
+.B dcraw
+usa balanç de blancs prefixat basat en una carta de colors sota
+il·luminació estàndar D65.
+.TP
+.B -w
+Utilitza el balanç de blancs especificat per la càmera.
+Si no es troba, mostra un missatge d'avís i utilitza un altre mètode.
+.TP
+.B -a
+Calcula el balanç de blancs fent la mitja de tota la imatge.
+.TP
+.B -A esquerra amunt ample alt
+Calcula el balanç de blancs fent la mitja d'un àrea rectangular.
+Primer feu
+.B dcraw\ -j\ -t\ 0
+i seleccioneu un àrea de color gris neutre.
+.TP
+.B -r mul0 mul1 mul2 mul3
+Especifica el teu propi balanç de blancs.
+Aquests multiplicadors es poden tallar i enganxar des de la sortida de
+.BR dcraw\ -v .
+.TP
+.BR +M " o " -M
+Utiliza (o no utilizis) la matriu de colors incrustada en les metadades
+de la càmera.
+Si heu seleccionat
+.B -w
+el seu valor per omissió és
+.B +M
+, sinò el valor per omissió és
+.B -M
+Aquesta opció només afecta a les càmeres Olympus, Leaf i Phase One.
+.TP
+.B -o [0-5]
+Selecciona l'espai de color de sortida quan la opció
+.B -p
+no s'utilitza:
+
+.B \t0
+\ \ Color cru (únic per a cada càmera)
+.br
+.B \t1
+\ \ sRGB D65 (per omissió)
+.br
+.B \t2
+\ \ Adobe RGB (1998) D65
+.br
+.B \t3
+\ \ Wide Gamut RGB D65
+.br
+.B \t4
+\ \ Kodak ProPhoto RGB D65
+.br
+.B \t5
+\ \ XYZ
+.TP
+.BR -p\ càmera.icm \ [\  -o\ sortida.icm \ ]
+Utilitza perfils de color ICC per a definir l'espai de color cru de
+la càmera i l'espai de color desitjat (sRGB per omissió).
+.TP
+.B -p embed
+Utilitza el perfil de color ICC associat de la foto crua.
+.SH OPCIONS D'INTERPOLACIÓ
+.TP
+.B -d
+Mostra les dades crues com una imatge en escala de grisos sense
+interpolació.  Útil per a fotografiar documents en blanc i negre.
+.TP
+.B -D
+Igual que
+.BR -d ,
+però totalment cru (sense escalat de color).
+.TP
+.B -h
+Mostra una imatge en color a la meitat de la seva mida original.  Doble de ràpid que
+.BR -q\ 0 .
+.TP
+.B -q 0
+Utilitza la interpolació bilineal d'alta velocitat i baixa qualitat.
+.TP
+.B -q 1
+Utilitza la interpolació de Número Variable de Gradients (VNG).
+.TP
+.B -q 2
+Utilitza la interpolació per Agrupació de Píxels en Patrons (PPG).
+.TP
+.B -q 3
+Utilitza la interpolació Adaptativa Dirigida a la Homogeneïtat (AHD).
+.TP
+.B -f
+Interpola RGB com a quatre colors.  Useu això si la sortida mostra
+retines 2x2 falses amb VNG o laberints amb AHD.
+.TP
+.B -m numero_de_passes
+Després de la interpolació, elimina els artefactes de color aplicant
+repetidament un filtre de mediana de 3x3 als canals R-G i B-G.
+.SH OPCIONS DE SORTIDA
+Per omissió,
+.B dcraw
+genera fitxers PGM/PPM/PAM de 8 bits, corba gamma BT.709, nivell de
+blanc basat en histograma, i cap metadada.
+.TP
+.B -W
+Utilitza nivell de blanc prefixat, ignorant l'histograma de la imatge.
+.TP
+.B -b lluminositat
+Divideix el nivell de blanc per aquest número, per omissió 1.0.
+.TP
+.B -g potència pendent_picada
+Permet triar la corba de gamma, per omissió BT.709
+.RB ( -g\ 2.222\ 4.5 ).
+Si preferiu la correcció de gama sRGB, useu
+.BR -g\ 2.4\ 12.92 .
+Per triar una corba de potència simple, trieu una valor de pendent picada zero.
+.TP
+.B -6
+Escriu setze bits per mostra en comptes de vuit.
+.TP
+.B -4
+16 bits lineal, com a
+.BR -6\ -W\ -g\ 1\ 1 .
+.TP
+.B -T
+Desa en format TIFF amb metadades en comptes de PGM/PPM/PAM.
+.TP
+.B -t [0-7,90,180,270]
+Gira la imatge de sortida.  Per omissió,
+.B dcraw
+aplica el gir especificat per la càmera.
+.B -t 0
+deshabilita tots els girs.
+.TP
+.B -j
+Per a càmeres Fuji\ Super\ CCD, mostra la imatge girada 45 graus.
+Per a càmeres sense píxels quadrats, no encongeixis la imatge a la seva
+relació d'aspecte correcte.  En qualsevol cas, aquesta opció
+garantitza que cada píxel de sortida correspon amb un píxel cru.
+.TP
+.BR "-s [0..N-1]" " o " "-s all"
+Si un fitxer conté N imatges crues, trieu descodificar una
+concreta o "all" (totes).
+Por exemple, les càmeres Fuji\ Super\ CCD\ SR generen
+una segona imatge subexposada quatre parades per a mostrar en
+detall les sobreexposicions.
+.SH FITXERS
+.TP
+\:./.badpixels, ../.badpixels, ../../.badpixels, ...
+Llista els píxels morts de la càmera, per a que
+.B dcraw
+pugui interpolar al seu voltant.  Cada línea especifica la columna,
+fila i temps UNIX de la mort de cada píxel.  Per exemple:
+.sp 1
+.nf
+ 962   91 1028350000  # va morir entre el 1 i el 4 d'Agost del 2002
+1285 1067 0           # no es sap quan va morir aquest píxel
+.fi
+.sp 1
+Aquestes coordenades són d'abans del retall o rotació, així que utilitza
+.B dcraw -j -t 0
+per a trobar píxels morts.
+.SH "VEiEU TAMBÉ"
+.BR pgm (5),
+.BR ppm (5),
+.BR pam (5),
+.BR pamsumm (1),
+.BR pnmgamma (1),
+.BR pnmtotiff (1),
+.BR pnmtopng (1),
+.BR gphoto2 (1),
+.BR cjpeg (1),
+.BR djpeg (1)
+.SH AUTOR
+David Coffin, dcoffin a cybercom o net
+.SH TRADUCCIÓ
+Paco Rivière, http://pacoriviere.cat/

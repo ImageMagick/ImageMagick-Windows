@@ -1,0 +1,320 @@
+# Dutch translation of dcraw messages.
+# (c) 2007 Dave Coffin dcoffin a cybercom o net
+# Distribute freely.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: dcraw 8.70\n"
+"Report-Msgid-Bugs-To: dcoffin a cybercom o net\n"
+"POT-Creation-Date: 2006-12-21 22:45-0500\n"
+"PO-Revision-Date: 2011-07-23 17:00-0400\n"
+"Last-Translator: René Clerc <rene a clerc o nl>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "%s: Out of memory in %s\n"
+msgstr "%s: Geheugen is vol in %s\n"
+
+msgid "Unexpected end of file\n"
+msgstr "Onverwacht bestandseinde\n"
+
+msgid "Corrupt data near 0x%lx\n"
+msgstr "Corrupte gegevens bij 0x%lx\n"
+
+msgid "Corrupt data near 0x%llx\n"
+msgstr "Corrupte gegevens bij 0x%llx\n"
+
+msgid "%s: decoder table overflow\n"
+msgstr "%s: overflow van de decodeertabel\n"
+
+msgid "Phase One correction...\n"
+msgstr "Phase One correctie...\n"
+
+msgid "%s: incorrect JPEG dimensions\n"
+msgstr "%s: incorrecte JPEG dimensies\n"
+
+msgid "%s: \"%s\" matrix not found!\n"
+msgstr "%s: \"%s\" matrix niet gevonden!\n"
+
+msgid "Foveon interpolation...\n"
+msgstr "Foveon interpolatie...\n"
+
+msgid "%s: Invalid white balance \"%s\"\n"
+msgstr "%s: Ongeldige witbalans \"%s\"\n"
+
+msgid "Fixed bad pixels at:"
+msgstr "Foute pixels verholpen bij:"
+
+msgid "%s is not a valid PGM file!\n"
+msgstr "%s is geen geldig PGM-bestand!\n"
+
+msgid "%s has the wrong dimensions!\n"
+msgstr "%s heeft de verkeerde afmetingen!\n"
+
+msgid "Wavelet denoising...\n"
+msgstr "Wavelet ontdoen van ruis...\n"
+
+msgid "%s: Cannot use camera white balance.\n"
+msgstr "%s: Kan de witbalans van de camera niet gebruiken.\n"
+
+msgid "Scaling with black %d, multipliers"
+msgstr "Schalen met zwart %d, vermenigvuldigingsfactoren"
+
+msgid "Bilinear interpolation...\n"
+msgstr "Bilineaire interpolatie...\n"
+
+msgid "VNG interpolation...\n"
+msgstr "VNG interpolatie...\n"
+
+msgid "PPG interpolation...\n"
+msgstr "PPG interpolatie...\n"
+
+msgid "AHD interpolation...\n"
+msgstr "AHD interpolatie...\n"
+
+msgid "Bilateral filtering...\n"
+msgstr "Bilateraal filteren...\n"
+
+msgid "Highlight recovery...\n"
+msgstr "Oplichting herstellen...\n"
+
+msgid "Reading metadata from %s ...\n"
+msgstr "Bezig met lezen van meta-gegevens van %s ...\n"
+
+msgid "Failed to read metadata from %s\n"
+msgstr "Lezen van meta-gegevens gefaald van %s\n"
+
+msgid "%s: You must link dcraw with libjpeg!!\n"
+msgstr "%s: dcraw moet gelinkt worden met libjpeg!!\n"
+
+msgid "%s: You must link dcraw with %s!!\n"
+msgstr "%s: dcraw moet gelinkt worden met %s!!\n"
+
+msgid "%s has no embedded profile.\n"
+msgstr "%s heeft geen ingebed profiel.\n"
+
+msgid "Cannot open file %s!\n"
+msgstr "Kan bestand niet openen %s!\n"
+
+msgid "Applying color profile...\n"
+msgstr "Kleurenprofiel toepassen...\n"
+
+msgid "Building histograms...\n"
+msgstr "Opbouwen histogrammen...\n"
+
+msgid "Converting to %s colorspace...\n"
+msgstr "Omzetten naar %s kleurenruimte...\n"
+
+msgid "Rotating image 45 degrees...\n"
+msgstr "Afbeelding 45 graden roteren...\n"
+
+msgid "Stretching the image...\n"
+msgstr "Afbeelding oprekken...\n"
+
+msgid "\nRaw photo decoder \"dcraw\" v%s"
+msgstr "\nRuwe foto decodeerder \"dcraw\" v%s"
+
+msgid "\nby Dave Coffin, dcoffin a cybercom o net\n"
+msgstr "\ndoor Dave Coffin, dcoffin a cybercom o net\n"
+
+msgid "\nUsage:  %s [OPTION]... [FILE]...\n\n"
+msgstr "\nGebruik:  %s [OPTION]... [FILE]...\n\n"
+
+msgid "-v        Print verbose messages"
+msgstr "-v        Meldingen afdrukken"
+
+msgid "-c        Write image data to standard output"
+msgstr "-c        Schrijf afbeeldingsgegevens naar standaarduitvoer"
+
+msgid "-e        Extract embedded thumbnail image"
+msgstr "-e        Extraheer ingebed miniatuurvoorbeeld"
+
+msgid "-i        Identify files without decoding them"
+msgstr "-i        Benoem bestanden zonder ze te decoderen"
+
+msgid "-i -v     Identify files and show metadata"
+msgstr "-i -v     Benoem bestanden en toon meta-gegevens"
+
+msgid "-z        Change file dates to camera timestamp"
+msgstr "-z        Verander bestandsdata naar datum van de opname"
+
+msgid "-a        Use automatic white balance"
+msgstr "-a        Gebruik automatische witbalans"
+
+msgid "-w        Use camera white balance, if possible"
+msgstr "-w        Gebruik witbalans van de camera, indien mogelijk"
+
+msgid "-a        Average the whole image for white balance"
+msgstr "-a        Middel de gehele afbeelding voor witbalans"
+
+msgid "-A <x y w h> Average a grey box for white balance"
+msgstr "-A <x y b h> Middle een grijs vlak voor witbalans"
+
+msgid "-r <r g b g> Set custom white balance"
+msgstr "-r <r g b g> Zet handmatige witbalans"
+
+msgid "-r <4 numbers> Set custom white balance"
+msgstr "-r <4 nummers> Zet handmatige witbalans"
+
+msgid "-b <num>  Adjust brightness (default = 1.0)"
+msgstr "-b <num>  Pas helderheid aan (standaard = 1.0)"
+
+msgid "-n <num>  Set threshold for wavelet denoising"
+msgstr "-n <num>  Zet grens voor wavelet ontdoen van ruis"
+
+msgid "-k <num>  Set black point"
+msgstr "-k <num>  Zet zwart punt"
+
+msgid "-K <file> Subtract dark frame (16-bit raw PGM)"
+msgstr "-K <file> Verwijder donker kader (16-bit ruwe PGM)"
+
+msgid "-H [0-9]  Highlight mode (0=clip, 1=no clip, 2+=recover)"
+msgstr "-H [0-9]  Oplichtingsmodus (0=clip, 1=geen clip, 2+=herstellen)"
+
+msgid "-t [0-7]  Flip image (0=none, 3=180, 5=90CCW, 6=90CW)"
+msgstr "-t [0-7]  Roteer afbeelding (0=niet, 3=180, 5=90klok-tegen, 6=90klok-mee)"
+
+msgid "-o [0-5]  Output colorspace (raw,sRGB,Adobe,Wide,ProPhoto,XYZ)"
+msgstr "-o [0-5]  Toon kleurenruimte (ruw,sRGB,Adobe,Wide,ProPhoto,XYZ)"
+
+msgid "-o <file> Apply output ICC profile from file"
+msgstr "-o <file> Pas uitvoer ICC-profiel toe van bestand"
+
+msgid "-p <file> Apply camera ICC profile from file or \"embed\""
+msgstr "-p <file> Pas camera ICC-profiel toe van bestand of \"embed\""
+
+msgid "-d        Document mode (no color, no interpolation)"
+msgstr "-d        Documentmodus (geen kleur, geen interpolatie)"
+
+msgid "-D        Document mode without scaling (totally raw)"
+msgstr "-D        Documentmodus zonder schaling (helemaal ruw)"
+
+msgid "-j        Don't stretch or rotate raw pixels"
+msgstr "-j        Ruwe pixels niet oprekken of roteren"
+
+msgid "-q [0-3]  Set the interpolation quality"
+msgstr "-q [0-3]  Zet de kwaliteit van de interpolatie"
+
+msgid "-h        Half-size color image (twice as fast as \"-q 0\")"
+msgstr "-h        Kleurenafbeelding op halve grootte (tweemaal zo snel als \"-q 0\")"
+
+msgid "-f        Interpolate RGGB as four colors"
+msgstr "-f        Interpoleer RGGB als vier kleuren"
+
+msgid "-B <domain> <range> Apply bilateral filter to smooth noise"
+msgstr "-B <domein> <bereik> Pas bilateraal filter to om ruis te vereffenen"
+
+msgid "-s [0-99] Select a different raw image from the same file"
+msgstr "-s [0-99] Selecteer een andere ruwe afbeelding van hetzelfde bestand"
+
+msgid "-4        Write 16-bit linear instead of 8-bit with gamma"
+msgstr "-4        Schrijf 16-bit lineair in plaats van 8-bit met gamma"
+
+msgid "-T        Write TIFF instead of PPM"
+msgstr "-T        Schrijf TIFF in plaats van PPM"
+
+msgid "Non-numeric argument to \"-%c\"\n"
+msgstr "Geen numeriek argument voor \"-%c\"\n"
+
+msgid "Unknown option \"-%c\".\n"
+msgstr "Onbekende optie \"-%c\".\n"
+
+msgid "No files to process.\n"
+msgstr "Geen bestanden om te verwerken.\n"
+
+msgid "Will not write an image to the terminal!\n"
+msgstr "Zal geen afbeelding naar de terminal wegschrijven!\n"
+
+msgid "%s has no timestamp.\n"
+msgstr "%s heeft geen tijdstempel.\n"
+
+msgid "%s time set to %d.\n"
+msgstr "%s tijd gezet naar %d.\n"
+
+msgid "%s has no thumbnail.\n"
+msgstr "%s heeft geen miniatuurafbeelding.\n"
+
+msgid "\nFilename: %s\n"
+msgstr "\nBestandsnaam: %s\n"
+
+msgid "Timestamp: %s"
+msgstr "Tijd: %s"
+
+msgid "Camera: %s %s\n"
+msgstr "Camera: %s %s\n"
+
+msgid "DNG Version: "
+msgstr "DNG Versie: "
+
+msgid "ISO speed: %d\n"
+msgstr "ISO snelheid: %d\n"
+
+msgid "Shutter: "
+msgstr "Sluiter: "
+
+msgid "%0.1f sec\n"
+msgstr "%0.1f sec\n"
+
+msgid "Aperture: f/%0.1f\n"
+msgstr "Diafragmaopening: f/%0.1f\n"
+
+msgid "Focal length: %0.1f mm\n"
+msgstr "Scherpstelafstand: %0.1f mm\n"
+
+msgid "Secondary pixels: %s\n"
+msgstr "Secondaire pixels: %s\n"
+
+msgid "yes"
+msgstr "ja"
+
+msgid "no"
+msgstr "nee"
+
+msgid "Embedded ICC profile: %s\n"
+msgstr "Ingebed ICC-profiel: %s\n"
+
+msgid "Decodable with dcraw: %s\n"
+msgstr "Decodeerbaar met dcraw: %s\n"
+
+msgid "Pixel Aspect Ratio: %0.6f\n"
+msgstr "Pixel Aspectratio: %0.6f\n"
+
+msgid "Thumb size:  %4d x %d\n"
+msgstr "Miniatuurafmetingen:          %4d x %d\n"
+
+msgid "Full size:   %4d x %d\n"
+msgstr "Volledige grootte:            %4d x %d\n"
+
+msgid "Cannot decode file %s\n"
+msgstr "Kan bestand niet decoderen %s\n"
+
+msgid "Image size:  %4d x %d\n"
+msgstr "Afmetingen van de afbeelding: %4d x %d\n"
+
+msgid "Output size: %4d x %d\n"
+msgstr "Afmetingen van de uitvoer:    %4d x %d\n"
+
+msgid "Raw colors: %d"
+msgstr "Ruwe kleuren: %d"
+
+msgid "\nFilter pattern: "
+msgstr "\nFilterpatroon: "
+
+msgid "\nDaylight multipliers:"
+msgstr "\nDaglicht vermenigvuldigingen:"
+
+msgid "\nCamera multipliers:"
+msgstr "\nCamera vermenigvuldigingen:"
+
+msgid "%s is a %s %s image.\n"
+msgstr "%s is een %s %s afbeelding.\n"
+
+msgid "Loading %s %s image from %s ...\n"
+msgstr "Afbeelding %s %s laden van %s ...\n"
+
+msgid "standard output"
+msgstr "standaard uitvoer"
+
+msgid "Writing data to %s ...\n"
+msgstr "Gegevens wegschrijven naar %s ...\n"

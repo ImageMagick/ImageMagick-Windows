@@ -1,0 +1,278 @@
+.\"
+.\" Manpaĝo por dcraw
+.\"
+.\" Kopirajte 2009 de David Coffin
+.\"
+.\" Por libera distribuo
+.\"
+.\" David Coffin
+.\" dcoffin a cybercom o net
+.\" http://www.cybercom.net/~dcoffin
+.\"
+.TH dcraw 1 "14 majo 2009"
+.LO 1
+.SH NOMO
+dcraw - komand-linia deĉifrilo por krudaj ciferecaj fotoj
+.SH RESUMO
+.B dcraw
+[\fIOPCIO\fR]... [\fIDOSIERO\fR]...
+.SH PRISKRIBO
+.B dcraw
+deĉifras krudajn fotojn, montras pridatumon, kaj eltiras bildetojn.
+.SH ĜENERALAJ OPCIOJ
+.TP
+.B -v
+Donu abundajn mesaĝojn, ne nur avertojn kaj erarojn.
+.TP
+.B -c
+Skribu deĉifritajn bild(et)ojn al la ĉefeligujo (stdout).
+.TP
+.B -e
+Eltiru la bildeton generitan de la fotilo, ne la krudan bildon.
+Estos dosiero aŭ JPEG aŭ PPM, depende de la fotilo.
+.TP
+.B -z
+Por dosiero kruda, TIFF, JPEG, aŭ AVI, ŝanĝu la tempojn de lasta aliro
+kaj modifo al la tempo de obturado, supozante ke la fotila horloĝo
+tenas Universalan Tempon.
+.TP
+.B -i
+Identigu dosierojn sed ne deĉifru ilin.
+Eliru kun 0 se
+.B dcraw
+povas deĉifri la lastan dosieron, aŭ kun 1 se ĝi ne povas.
+.B -i -v
+montras pridatumon.
+.TP
+.B ""
+.B dcraw
+ne povas deĉifri JPEG-dosierojn!!
+.SH RIPARAJ OPCIOJ
+.TP
+.B -P mortintaj_bilderoj.txt
+Legu la liston de mortintaj bilderoj el tiu ĉi dosiero anstataŭ
+".badpixels".  Vidu sub
+.B DOSIEROJ
+priskribon de la formato.
+.TP
+.B -K senlumo.pgm
+Subtrahu senluman bildon de la kruda datumo.  Por generi tian
+bildon, faru jene al senluma kruda foto:
+.BR dcraw\ -D\ -4\ -j\ -t\ 0 .
+.TP
+.B -k senlumo
+Kiam ombroj aspektas nebulecaj, necesas levi la senluman nivelon.
+Por mezuri ĝin, apliku
+.B pamsumm -mean
+al la supre generita senluma bildo.
+.TP
+.B -S saturo
+Kiam brilaĵoj aspektas rozkoloraj, necesas mallevi la saturan nivelon.
+Por mezuri ĝin, fotu ion brilan kaj faru
+.B dcraw -D -4 -j -c
+foto.raw
+.B | pamsumm -max
+.TP
+.B ""
+La supozaj senlumo kaj saturo plej ofte ĝustas.
+.TP
+.B -n brua_sojlo
+Uzu ondetojn por forviŝi bruon kaj konservi realan detalon.
+La plej ĝusta sojlo estu ie inter 100 kaj 1000.
+.TP
+.B -C ruĝa_grandigo blua_grandigo
+Grandigu la krudajn ruĝan kaj bluan tavolojn je ties faktoroj,
+tipe inter 0.999 kaj 1.001, por korekti koloran aberacion.
+.TP
+.B -H 0
+Blankigu ĉiujn brilaĵojn (la supozo).
+.TP
+.B -H 1
+Lasu brilaĵojn fuksinaj por malkaŝi detalojn.
+.TP
+.B -H 2
+Miksu limigitajn kaj nelimigitajn valorojn por grade blankigi
+la brilaĵojn.
+.TP
+.B -H 3+
+Rekonstruu brilaĵojn.  Malaltaj numeraloj favoras blankecon;
+altaj numeraloj favoras kolorojn.  Provu
+.B -H 5
+kiel kompromison.  Se tio ne sufiĉe bonas, faru
+.BR -H\ 9 ,
+eltranĉu la neblankajn brilaĵojn, kaj gluu ilin en foton
+generitan per
+.BR -H\ 3 .
+.SH KOLORAJ OPCIOJ
+Laŭ supozo,
+.B dcraw
+uzas fiksan blank-ekvilibron bazitan sur kolor-karto lumigita
+per norma lampo D65.
+.TP
+.B -w
+Uzu la blank-ekvilibron specifitan de la fotilo.
+Se tio ne troviĝas, avertu kaj uzu alian metodon.
+.TP
+.B -a
+Kalkulu la blank-ekvilibron per averaĝi la tutan bildon.
+.TP
+.B -A maldekstro supro larĝeco alteco
+Kalkulu la blank-ekvilibron per averaĝi rektangulan areon.
+Unue faru
+.B dcraw\ -j\ -t\ 0
+kaj elektu areon de neŭtrala griza koloro.
+.TP
+.B -r mul0 mul1 mul2 mul3
+Specifu propran blank-ekvilibron.
+Eblas kopii tiujn ĉi multiplikantojn el la mesaĝoj de
+.BR dcraw\ -v .
+.TP
+.BR +M " aŭ " -M
+Uzu (aŭ ne uzu) iun ajn kolor-matricon el la pridatumo.
+La supozo estas
+.B +M
+se
+.B -w
+uziĝas,
+.B -M
+alikaze.
+Tiu ĉi opcio koncernas nur fotilojn Olympus, Leaf, kaj Phase One.
+.TP
+.B -o [0-5]
+Elektu la eligotan kolorspacon kiam ne uziĝas la opcio
+.B -p
+:
+
+.B \t0
+\ \ Kruda koloro (unika por ĉiu fotilo)
+.br
+.B \t1
+\ \ sRGB D65 (la supozo)
+.br
+.B \t2
+\ \ Adobe RGB (1998) D65
+.br
+.B \t3
+\ \ Wide Gamut RGB D65
+.br
+.B \t4
+\ \ Kodak ProPhoto RGB D65
+.br
+.B \t5
+\ \ XYZ
+.TP
+.BR -p\ fotilo.icm \ [\  -o\ eligo.icm \ ]
+Uzu ICC profilojn por difini la krudan kolorspacon de la fotilo
+kaj la eligotan kolorspacon (sRGB laŭ supozo).
+.TP
+.B -p embed
+Uzu la ICC-profilon internan de la kruda foto.
+.SH INTERPOLAJ OPCIOJ
+.TP
+.B -d
+Montru la krudan datumon grizskala sen interpolado.
+Estas bone por foti nigrablankajn dokumentojn.
+.TP
+.B -D
+Same kiel
+.BR -d ,
+sed tute krude (sen blank-ekvilibro).
+.TP
+.B -h
+Eligu duon-grandan koloran bildon.  Duoble pli rapide ol
+.BR -q\ 0 .
+.TP
+.B -q 0
+Interpolu per simpla bilinia averaĝado.
+.TP
+.B -q 1
+Interpolu per Variabla Nombro de Gradientoj (VNG).
+.TP
+.B -q 2
+Interpolu per Ŝablona Bildera Grupigo (PPG).
+.TP
+.B -q 3
+Interpolu per Adapta Homogena Direkto (AHD).
+.TP
+.B -f
+Interpolu RVB-on kiel kvar kolorojn.  Uzu tion ĉi se la eligo
+montras falsan 2-je-2 reton per VNG aŭ labirinton per AHD.
+.TP
+.B -m nombro_de_pasoj
+Post interpolado, purigu falsajn kolorojn per ripete apliki
+medianan filtrilon 3x3 al la kanaloj R-V kaj B-V.
+.SH ELIGAJ OPCIOJ
+Laŭ supozo,
+.B dcraw
+skribas PGM/PPM/PAM kun 8-bita datumo, la gama-kurbo BT.709,
+blanka nivelo laŭ histogramo, kaj nenia pridatumo.
+.TP
+.B -W
+Uzu fiksan blankan nivelon, ignorante la bildo-histogramon.
+.TP
+.B -b heleco
+Dividu la blankan nivelon je tiu ĉi nombron, supoze 1.0.
+.TP
+.B -g potenco origina_deklivo
+Agordu la gama-kurbon, supoze BT.709
+.RB ( -g\ 2.222\ 4.5 ).
+Se vi preferas la kurbon sRGB, uzu
+.BR -g\ 2.4\ 12.92 .
+Origina deklivo "0" donas simplan potencan kurbon.
+.TP
+.B -6
+Skribu 16-bite anstataŭ 8-bite.
+.TP
+.B -4
+Linie 16-bite, same kiel
+.BR -6\ -W\ -g\ 1\ 1 .
+.TP
+.B -T
+Skribu TIFF-on kun pridatumo anstataŭ PGM/PPM/PAM.
+.TP
+.B -t [0-7,90,180,270]
+Turnu la bildon.
+.B dcraw
+supozas apliki la turnon specifitan de la fotilo.
+.B -t 0
+preventas ian ajn turnadon.
+.TP
+.B -j
+Por fotiloj kun Fuji\ Super\ CCD, montru la bildon klinita
+45 gradojn.  Por fotiloj kun nekvadrataj bilderoj, ne streĉu la
+bildon al ĝia ĝusta proporcio.  Ĉiakaze, tiu ĉi opcio neprigas,
+ke ĉiu eligata bildero respondos unu krudan bilderon.
+.TP
+.BR "-s [0..N-1]" " aŭ " "-s all"
+Se dosiero enhavas N krudajn bildojn, elektu unu aŭ "all" (ĉiujn)
+por deĉifri.  Ekzemple fotiloj kun Fuji\ Super\ CCD\ SR generas duan
+bildon, kvar paŝojn pli malhelan, por montri detalojn en la brilaĵoj.
+.SH DOSIEROJ
+.TP
+\:./.badpixels, ../.badpixels, ../../.badpixels, ...
+Listo de mortintaj bilderoj en via fotilo, por ke
+.B dcraw
+interpolu ĉirkaŭ ili.  Ĉiu linio specifas la kolumnon, vicon,
+kaj Uniksan tempon de morto por unu bildero.  Ekzemple:
+.sp 1
+.nf
+ 962   91 1028350000  # mortis inter 1a kaj 4a aŭgusto 2002
+1285 1067 0           # ne scias kiam mortis tiu ĉi bildero
+.fi
+.sp 1
+Tiuj ĉi koordinatoj antaŭas ĉian tondadon aŭ rotacion, do uzu
+.B dcraw -j -t 0
+por lokalizi mortintajn bilderojn.
+.SH "VIDU ANKAŬ"
+.BR pgm (5),
+.BR ppm (5),
+.BR pam (5),
+.BR pamsumm (1),
+.BR pnmgamma (1),
+.BR pnmtotiff (1),
+.BR pnmtopng (1),
+.BR gphoto2 (1),
+.BR cjpeg (1),
+.BR djpeg (1)
+.SH AŬTORO
+David Coffin, dcoffin heliko cybercom punkto net

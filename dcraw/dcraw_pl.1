@@ -1,0 +1,295 @@
+.\"
+.\" Man page for dcraw
+.\"
+.\" Copyright (c) 2009 by David Coffin
+.\"
+.\" You may distribute without restriction.
+.\"
+.\" David Coffin
+.\" dcoffin a cybercom o net
+.\" http://www.cybercom.net/~dcoffin
+.\"
+.TH dcraw 1 "14 maj 2009"
+.LO 1
+.SH NAZWA
+dcraw - dekoder obrazów w formacie raw
+.SH SKŁADNIA
+.B dcraw
+[\fIOPCJE\fR]... [\fIPLIK\fR]...
+.SH OPIS
+.B dcraw
+dekoduje obrazy w formacie raw, wyświetla metadane oraz wyodrębnia miniaturki.
+.SH OPCJE PODSTAWOWE
+.TP
+.B -v
+Wyświetl szczegółowe informacje, a nie tylko błędy i ostrzeżenia.
+.TP
+.B -c
+Zapisz zdekodowany obraz lub miniaturę na standardowe wyjście.
+.TP
+.B -e
+Wyodrębnij wygenerowaną przez aparat miniaturkę, a nie obraz raw.
+Wynikowy obraz będzie w formacie JPEG lub PPM, w zależności od modelu aparatu.
+.TP
+.B -z
+Zmień daty modyfikacji i ostatniego dostępu plików AVI, JPEG, TIFF lub raw
+na datę wykonania obrazu przy założeniu, że zegar aparatu jest
+ustawiony na Czas Uniwersalny (UTC).
+.TP
+.B -i
+Tylko zidentyfikuj pliki, nie dekoduj zawartości.
+Zwraca wartość 0 jeżeli
+.B dcraw
+jest w stanie zdekodować ostatni obraz. W innym przypadku zwracana jest wartość 1.
+.B -i -v
+pokazuje metadane obrazka.
+.TP
+.B ""
+.B dcraw
+nie dekoduje obrazów w formacie JPEG!!
+.SH OPCJE NAPRAWY OBRAZU
+.TP
+.B -P martwepiksele.txt
+Wczytuje listę martwych pikseli z tego pliku zamiast z ".badpixels".
+Zobacz w
+.B PLIKI
+opis składni tego pliku.
+.TP
+.B -K czarna_klatka.pgm
+Odejmuje czarna klatkę od danych raw. Czarna klatkę wygenerujesz
+robiąc zdjecie bez oswietlenia (np.: z obiektywem zasłoniętym dekielkiem), które
+wywołaj następująco
+.BR dcraw\ -D\ -4\ -j\ -t\ 0 .
+.TP
+.B -k odciecie_czerni
+Kiedy po wywołaniu cienie stają się szare, należy podnieść poziom
+odcięcia czerni.
+Zmierzyć można poprzez użycie
+.B pamsumm -mean
+z plikiem czarnej klatki, przygotowanym jak powyżej.
+.TP
+.B -S nasycenie
+Kiedy światła przechodzą w kolor różowy, należy obniżyć poziom nasycenia.
+Żeby ustalic właściwy poziom, należy zrobić  zdjęcie z czymś lśniącym
+w kadrze, a następnie
+.B dcraw -D -4 -j -c
+fotka.raw
+.B | pamsumm -max
+.TP
+.B ""
+Domyślny poziom czerni, jak i nasycenia jest zazwyczaj poprawny i nie
+wymaga ingerencji.
+.TP
+.B -n poziom_redukcji
+Użyj falkowej redukcji szumów, pozostawiając jak najwięcej detali.
+Najlepszy efekt dają wartości poziomu z przedziału między 100 a 1000.
+.TP
+.B -C wzm_czerw wzm_nieb
+Zwiększ warstwy koloru czerwonego i niebieskiego o podane współczynniki
+(zazwyczaj od 0.999 do 1.001) aby zniwelować aberrację chromatyczną.
+.TP
+.B -H 0
+Przytnij wszystkie światła do koloru białego (domyślne).
+.TP
+.B -H 1
+Nie przycinaj świateł (pozostaw w różnych odcieniach różu).
+.TP
+.B -H 2
+Połącz przycięte i nieprzycięte wartości ze sobą aby uzyskać wygładzone
+przejście do bieli.
+.TP
+.B -H 3+
+Rekonstruuj światła. Niskie wartości preferują biel, wyższe preferują
+kolory. Spróbuj użyć
+.B -H 5
+jako dobrego kompromisu. Gdyby to okazało się niewystarczające, użyj opcji
+.BR -H\ 9 ,
+wyczyść wszystkie inne niż białe światła, a następnie wklej je do obrazka
+wygenerowanego przy użyciu
+.BR -H\ 3 .
+.SH OPCJE KOLORÓW
+Domyślnie
+.B dcraw
+używa stałego balansu bieli w oparciu o próbnik kolorów naświetlony
+standardową lampą błyskową D65.
+.TP
+.B -w
+Użyj wartości balansu bieli zapisanej przez aparat.
+Jeżeli wartość ta nie zostanie odnaleziona, zostanie wyświetlone
+ostrzeżenie i użyta będzie inna metoda jego określenia.
+.TP
+.B -a
+Oblicz balans bieli na podstawie średniej z zawartości całego obrazu.
+.TP
+.B -A lewo góra szerokość wysokość
+Oblicz balans bieli na podstawie średniej z zawartości wybranego
+szarego obszaru prostokątnego (np. zdjęcie z szarą kartą).
+Przedtem wykonaj
+.B dcraw\ -j\ -t\ 0
+, a następnie wybierz obszar o neutralnym, szarym kolorze.
+.TP
+.B -r mul0 mul1 mul2 mul3
+Podaj własne wartości balansu bieli. Te wartości mogą również zostać
+skopiowane z rezultatu działania polecenia
+.BR dcraw\ -v .
+.TP
+.BR +M " lub " -M
+Używaj (lub nie używaj) jakichkolwiek macierzy kolorów z metadanych aparatu.
+Domyślna wartość to
+.B +M
+gdy użyto opcji
+.BR -w ,
+lub
+.B -M
+w przeciwnym wypadku.
+Ta opcja dotyczy jedynie aparatów Olympus, Leaf oraz Phase One.
+.TP
+.B -o [0-5]
+Wybierz wynikową przestrzeń kolorów, w przypadku gdy nie użyto parametru
+.B -p
+:
+
+.B \t0
+\ \ Surowy kolor (specyficzny dla każdego aparatu)
+.br
+.B \t1
+\ \ sRGB D65 (domyślna)
+.br
+.B \t2
+\ \ Adobe RGB (1998) D65
+.br
+.B \t3
+\ \ Wide Gamut RGB D65
+.br
+.B \t4
+\ \ Kodak ProPhoto RGB D65
+.br
+.B \t5
+\ \ XYZ
+.TP
+.BR -p\ aparat.icm \ [\  -o\ rezultat.icm \ ]
+Użyj profilów kolorów ICC do obliczenia surowej przestrzeni kolorów
+aparatu oraz wynikowej przestrzeni kolorów (domyślnie sRGB).
+.TP
+.B -p embed
+Użyj profilu ICC osadzonego wewnątrz obrazu w formacie raw.
+.SH OPCJE INTERPOLACJI
+.TP
+.B -d
+Zdekoduj obraz raw w skali szarości, bez interpolacji kolorów.
+Przydatne przy fotografowaniu czarno-białego tekstu.
+.TP
+.B -D
+Tak samo jak
+.BR -d ,
+lecz bez skalowania kolorów (całkowicie surowy obraz).
+.TP
+.B -h
+Generuj obraz o wymiarach równych połowie oryginału.
+Działa dwa razy szybciej niż
+.BR -q\ 0 .
+.TP
+.B -q 0
+Użyj szybkiej, lecz niskiej jakości interpolacji dwuliniowej.
+.TP
+.B -q 1
+Użyj interpolacji VNG (Variable Number of Gradients).
+.TP
+.B -q 2
+Użyj interpolacji PPG (Patterned Pixel Grouping).
+.TP
+.B -q 3
+Użyj interpolacji AHD (Adaptive Homogeneity-Directed, najwyższa jakość).
+.TP
+.B -f
+Interpoluj RGB jako cztery kolory. Użyj tej opcji, jeżeli na wynikowym
+obrazie widać niewłaściwe obszary 2x2 (interpolacja VNG) lub mazy (AHD).
+.TP
+.B -m liczba_przebiegów
+Po dokonaniu interpolacji usuń zniekształcenia kolorystyczne poprzez
+wielokrotne zastosowanie filtra medianowego (3x3 piksele) do wartości
+R-G oraz B-G (różnic składowych).
+.SH OPCJE FORMATU WYJŚCIOWEGO
+Domyślnie
+.B dcraw
+zapisuje obrazy PGM/PPM/PAM wykorzystując 8 bitów na składową koloru,
+krzywą gamma BT 709, poziom bieli oparty o histogram oraz bez metadanych.
+.TP
+.B -W
+Użyj stałego poziomu bieli, ignorując histogram obrazka.
+.TP
+.B -b jasnosc
+Podziel poziom bieli przez tą wartość (domyślnie 1.0).
+.TP
+.B -g potęga początkowego_nachylenia
+Ustaw krzywą gamma, domyślne BT.709
+.RB ( -g\ 2.222\ 4.5 ).
+Jeżeli wolisz współczynnik gamma zgodny z sRGB, użyj
+.BR -g\ 2.4\ 12.92 .
+Dla zwykłej funkji potęgowej, ustaw nachylenie początkowe na zero.
+.TP
+.B -6
+Zapisuje 16-bitów na próbkę, zamiast 8-bitów.
+.TP
+.B -4
+Liniowy zapis 16-bitowy, tak samo jak
+.BR -6\ -W\ -g\ 1\ 1 .
+.TP
+.B -T
+Generuj obraz wynikowy w formacie TIFF z metadanymi zamiast
+domyślnego formatu PGM/PPM/PAM.
+.TP
+.B -t [0-7,90,180,270]
+Obróć wynikowy obraz. Domyślnie
+.B dcraw
+obraca obraz stosownie do informacji zapisanej przez aparat.
+.B -t 0
+wyłącza obracanie.
+.TP
+.B -j
+W przypadku aparatów Fuji\ Super\ CCD obróć obraz o 45 stopni.
+Dla aparatów o innym niż kwadratowy kształcie piksela nie skaluj
+obrazu do jego właściwych proporcji. W każdym przypadku użycie tej
+opcji gwarantuje, że jeden wynikowy piksel odpowiada dokładnie
+jednemu surowemu pikselowi.
+.TP
+.BR "-s [0..N-1]" " lub " "-s all"
+Jeżeli plik zawiera N surowych obrazków, wybierz do zdekodowania
+jeden z nich lub "all" (wszystkie).
+Przykładowo aparaty Fuji\ Super\ CCD\ SR generują drugi obraz o
+zmniejszonej o cztery poziomy ekspozycji, na którym dokładniej
+przedstawione są odbłyski.
+.SH PLIKI
+.TP
+\:./.badpixels, ../.badpixels, ../../.badpixels, ...
+Lista uszkodzonych pikseli Twojego aparatu, używana po to, aby
+.B dcraw
+mógł zinterpolować ich wartość ba podstawie sąsiednich pikseli.
+Każda linia zawiera kolumnę i wiersz uszkodzonego piksela, oraz
+datę (w formacie uniksowym), kiedy nastąpiło uszkodzenie.
+Na przykład:
+.sp 1
+.nf
+ 962   91 1028350000  # uszkodzony 1. sierpnia 2002
+1285 1067 0           # nieznana data uszkodzenia
+.fi
+.sp 1
+Te współrzędne dotyczą obrazu przed przycięciem oraz obrotem,
+tak więc użyj polecenia
+.B dcraw -j -t 0
+aby zlokalizować uszkodzone piksele.
+.SH "ZOBACZ TAKŻE"
+.BR pgm (5),
+.BR ppm (5),
+.BR pam (5),
+.BR pnmgamma (1),
+.BR pnmtotiff (1),
+.BR pnmtopng (1),
+.BR gphoto2 (1),
+.BR cjpeg (1),
+.BR djpeg (1)
+.SH AUTOR
+.B dcraw
+został stworzony przez Davida Coffina, dcoffin a cybercom o net
+.SH TŁUMACZENIE
+Krzysztof Nowicki krissn a op o pl

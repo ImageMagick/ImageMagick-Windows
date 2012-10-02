@@ -1,0 +1,376 @@
+# Polish translation of dcraw messages.
+# (c) 2009 Dave Coffin dcoffin a cybercom o net
+# (c) 2009 Krzysztof Nowicki krissn a op o pl
+# (c) 2009 Michal Smoczyk msmoczyk a wp o pl
+# Distribute freely.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: dcraw 8.94\n"
+"Report-Msgid-Bugs-To: dcoffin a cybercom o net\n"
+"POT-Creation-Date: 2006-12-21 22:45-0500\n"
+"PO-Revision-Date: 2011-07-23 17:00-0400\n"
+"Last-Translator: Michal Smoczyk <msmoczyk@wp.pl>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "%s: Out of memory in %s\n"
+msgstr "%s: Brak pamięci %s\n"
+
+msgid "Unexpected end of file\n"
+msgstr "Nieoczekiwany koniec pliku\n"
+
+msgid "Corrupt data near 0x%lx\n"
+msgstr "Uszkodzone dane w pobliżu 0x%lx\n"
+
+msgid "Corrupt data near 0x%llx\n"
+msgstr "Uszkodzone dane w pobliżu 0x%llx\n"
+
+msgid "%s: decoder table overflow\n"
+msgstr "%s: przepełnienie tablicy dekodera\n"
+
+msgid "Phase One correction...\n"
+msgstr "Korekcja Phase One...\n"
+
+msgid "%s: incorrect JPEG dimensions\n"
+msgstr "%s: niewłaściwe wymiary obrazu JPEG\n"
+
+msgid "%s: \"%s\" matrix not found!\n"
+msgstr "Nie znaleziono macierzy %s: \"%s\"!\n"
+
+msgid "Foveon interpolation...\n"
+msgstr "Interpolacja Foveon...\n"
+
+msgid "%s: Invalid white balance \"%s\"\n"
+msgstr "%s: Niewłaściwy balans bieli \"%s\"\n"
+
+msgid "Fixed bad pixels at:"
+msgstr "Naprawiono uszkodzone piksele:"
+
+msgid "Fixed dead pixels at:"
+msgstr "Usuwanie martwych pikseli:"
+
+msgid "%s is not a valid PGM file!\n"
+msgstr "%s to nieprawidłowy plik PGM!\n"
+
+msgid "%s has the wrong dimensions!\n"
+msgstr "%s ma niewłaściwe wymiary!\n"
+
+msgid "Wavelet denoising...\n"
+msgstr "Falkowa redukcja szumów...\n"
+
+msgid "%s: Cannot use camera white balance.\n"
+msgstr "%s: Nie można użyć balansu bieli uzyskanego z aparatu.\n"
+
+msgid "Scaling with black %d, multipliers"
+msgstr "Skalowanie z punktem czerni %d, mnożniki"
+
+msgid "Scaling with darkness %d, saturation %d, and\nmultipliers"
+msgstr "Skalowanie z użyciem odcięcia czerni %d, poziomu nasycenia %d,\noraz mnożników"
+
+msgid "Correcting chromatic aberration...\n"
+msgstr "Korygowanie aberracji chromatycznej...\n"
+
+msgid "Bilinear interpolation...\n"
+msgstr "Interpolacja dwuliniowa...\n"
+
+msgid "VNG interpolation...\n"
+msgstr "Interpolacja VNG...\n"
+
+msgid "PPG interpolation...\n"
+msgstr "Interpolacja PPG...\n"
+
+msgid "AHD interpolation...\n"
+msgstr "Interpolacja AHD...\n"
+
+msgid "Median filter pass %d...\n"
+msgstr "Filtr medianowy - przebieg %d...\n"
+
+msgid "Blending highlights...\n"
+msgstr "Wygładzanie świateł...\n"
+
+msgid "Rebuilding highlights...\n"
+msgstr "Przebudowa świateł...\n"
+
+msgid "Highlight recovery...\n"
+msgstr "Rekonstrukcja świateł...\n"
+
+msgid "Reading metadata from %s ...\n"
+msgstr "Czytanie metadanych z %s ...\n"
+
+msgid "Failed to read metadata from %s\n"
+msgstr "Nie udało się odczytać metadanych z %s\n"
+
+msgid "%s: You must link dcraw with libjpeg!!\n"
+msgstr "%s: Musisz zlinkować dcraw z libjpeg!!\n"
+
+msgid "%s: You must link dcraw with %s!!\n"
+msgstr "%s: Musisz zlinkować dcraw z %s!!\n"
+
+msgid "%s has no embedded profile.\n"
+msgstr "%s nie posiada osadzonego profilu.\n"
+
+msgid "Cannot open file %s!\n"
+msgstr "Nie można otworzyć pliku %s!\n"
+
+msgid "Applying color profile...\n"
+msgstr "Stosowanie profilu kolorów...\n"
+
+msgid "Building histograms...\n"
+msgstr "Generacja histogramów...\n"
+
+msgid "Converting to %s colorspace...\n"
+msgstr "Konwersja do przestrzeni kolorów %s...\n"
+
+msgid "Rotating image 45 degrees...\n"
+msgstr "Obracanie obrazu o 45 stopni...\n"
+
+msgid "Stretching the image...\n"
+msgstr "Rozciąganie obrazu...\n"
+
+msgid "\nRaw photo decoder \"dcraw\" v%s"
+msgstr "\nDekoder surowych obrazów \"dcraw\" v%s"
+
+msgid "\nby Dave Coffin, dcoffin a cybercom o net\n"
+msgstr "\nnapisany przez Dave'a Coffina, dcoffin a cybercom o net\n"
+
+msgid "\nUsage:  %s [OPTION]... [FILE]...\n\n"
+msgstr "\nUżycie:  %s [OPCJE]... [PLIK]...\n\n"
+
+msgid "-v        Print verbose messages"
+msgstr "-v        Wyświetl dodatkowe komunikaty"
+
+msgid "-c        Write image data to standard output"
+msgstr "-c        Zapisz obraz wynikowy na standardowe wyjście"
+
+msgid "-e        Extract embedded thumbnail image"
+msgstr "-e        Wyodrębnij osadzoną miniaturkę"
+
+msgid "-i        Identify files without decoding them"
+msgstr "-i        Identyfikuj pliki bez ich dekodowania"
+
+msgid "-i -v     Identify files and show metadata"
+msgstr "-i -v     Identyfikuj pliki i pokaż metadane"
+
+msgid "-z        Change file dates to camera timestamp"
+msgstr "-z        Ustaw datę dostępu/modyfikacji na czas wykonania zdjęcia"
+
+msgid "-w        Use camera white balance, if possible"
+msgstr "-w        Jeżeli to możliwe, użyj wartości balansu bieli zapisanej przez aparat"
+
+msgid "-a        Average the whole image for white balance"
+msgstr "-a        Oblicz balans bieli na podstawie średniej z całego obrazka"
+
+msgid "-A <x y w h> Average a grey box for white balance"
+msgstr "-A <x y ∆x ∆y> Oblicz balans bieli na podstawie średniej szarego obszaru prostokątnego"
+
+msgid "-r <r g b g> Set custom white balance"
+msgstr "-r <r g b g> Użyj własnych wartości balansu bieli"
+
+msgid "+M/-M     Use/don't use an embedded color matrix"
+msgstr "+M/-M     Używaj/nie używaj zawartych w obrazku macierzy kolorów"
+
+msgid "-C <r b>  Correct chromatic aberration"
+msgstr "-C <r b>  Skoryguj aberrację chromatyczną"
+
+msgid "-P <file> Fix the dead pixels listed in this file"
+msgstr "-P <plik> Usuń martwe piksele bazując na pliku"
+
+msgid "-K <file> Subtract dark frame (16-bit raw PGM)"
+msgstr "-K <plik> Odejmij czarną klatkę (16-bitowy surowy plik PGM)"
+
+msgid "-k <num>  Set black point"
+msgstr "-k <num>  Ustaw punkt czerni"
+
+msgid "-k <num>  Set the black level"
+msgstr "-k <num>  Ustaw poziom czerni"
+
+msgid "-k <num>  Set the darkness level"
+msgstr "-k <num>  Ustaw poziom odcięcia czerni"
+
+msgid "-S <num>  Set the saturation level"
+msgstr "-S <num>  Ustaw poziom nasycenia"
+
+msgid "-n <num>  Set threshold for wavelet denoising"
+msgstr "-n <num>  Ustaw próg falkowej redukcji szumów"
+
+msgid "-H [0-9]  Highlight mode (0=clip, 1=no clip, 2+=recover)"
+msgstr "-H [0-9]  Rekonstrukcja świateł (0=obetnij, 1=pozostaw, 2+=zrekonstruuj)"
+
+msgid "-H [0-9]  Highlight mode (0=clip, 1=unclip, 2=blend, 3+=rebuild)"
+msgstr "-H [0-9]  Tryb przetwarzania świateł (0=obetnij, 1=nie obcinaj, 2=mieszaj, 3+=rekonstruuj)"
+
+msgid "-t [0-7]  Flip image (0=none, 3=180, 5=90CCW, 6=90CW)"
+msgstr "-t [0-7]  Obróć obrazek (0=brak, 3=180, 5=90 w lewo, 6=90 w prawo)"
+
+msgid "-o [0-5]  Output colorspace (raw,sRGB,Adobe,Wide,ProPhoto,XYZ)"
+msgstr "-o [0-5]  Wyjściowa przestrzeń kolorów (surowa,sRGB,Adobe,Wide,ProPhoto,XYZ)"
+
+msgid "-o <file> Apply output ICC profile from file"
+msgstr "-o <plik> Zastosuj profil wyjściowy ICC z pliku"
+
+msgid "-p <file> Apply camera ICC profile from file or \"embed\""
+msgstr "-p <plik> Zastosuj profil ICC aparatu z pliku lub osadzony w obrazie raw"
+
+msgid "-d        Document mode (no color, no interpolation)"
+msgstr "-d        Tryb dokumentowy (brak interpolacji kolorów)"
+
+msgid "-D        Document mode without scaling (totally raw)"
+msgstr "-D        Tryb dokumentowy bez skalowania (całkowicie surowy)"
+
+msgid "-j        Don't stretch or rotate raw pixels"
+msgstr "-j        Nie skaluj ani nie obracaj surowych pikseli"
+
+msgid "-W        Don't automatically brighten the image"
+msgstr "-W        Nie rozjaśniaj obrazu automatycznie"
+
+msgid "-b <num>  Adjust brightness (default = 1.0)"
+msgstr "-b <num>  Dostosuj jasność (domyślnie 1.0)"
+
+msgid "-g <p ts> Set custom gamma curve (default = 2.222 4.5)"
+msgstr "-g <p ts> Ustawia własną krzywą gamma (domyślnie 2.222 4.5)"
+
+msgid "-q [0-3]  Set the interpolation quality"
+msgstr "-q [0-3]  Ustawia jakość interpolacji"
+
+msgid "-h        Half-size color image (twice as fast as \"-q 0\")"
+msgstr "-h        Generuj obraz o dwukrotnie mniejszych wymiarach (działa dwukrotnie szybciej niż \"-q 0\")"
+
+msgid "-f        Interpolate RGGB as four colors"
+msgstr "-f        Interpoluj RGGB jako cztery kolory"
+
+msgid "-m <num>  Apply a 3x3 median filter to R-G and B-G"
+msgstr "-m <num>  Zastosuj filtr medianowy 3x3 do wartości R-G i B-G"
+
+msgid "-s [0-99] Select a different raw image from the same file"
+msgstr "-s [0-99] Wybierz inny obraz raw z tego samego pliku"
+
+msgid "-s [0..N-1] Select one raw image or \"all\" from each file"
+msgstr "-s [0..N-1] Wybierz pojedynczy obrazek lub \"all\" (wszystkie) z każdego pliku"
+
+msgid "-6        Write 16-bit instead of 8-bit"
+msgstr "-6        Zapisuje obraz 16-bitowy, zamiast 8-bitowego"
+
+msgid "-4        Linear 16-bit, same as \"-6 -W -g 1 1\""
+msgstr "-4        Liniowy 16-bitowy, tak samo jak \"-6 -W -g 1 1\""
+
+msgid "-4        Write 16-bit linear instead of 8-bit with gamma"
+msgstr "-4        Zapisuje obraz 16-bitowy, zamiast 8-bitowego z gammą"
+
+msgid "-T        Write TIFF instead of PPM"
+msgstr "-T        Zapisuje obraz TIFF zamiast PPM"
+
+msgid "Non-numeric argument to \"-%c\"\n"
+msgstr "Nieliczbowy argument dla opcji \"-%c\"\n"
+
+msgid "Unknown option \"-%c\".\n"
+msgstr "Nieznana opcja \"-%c\".\n"
+
+msgid "No files to process.\n"
+msgstr "Brak plików do przetworzenia.\n"
+
+msgid "Will not write an image to the terminal!\n"
+msgstr "Nie można zapisać obrazu bezpośrednio do terminala!\n"
+
+msgid "%s has no timestamp.\n"
+msgstr "%s nie posiada znacznika czasu.\n"
+
+msgid "%s time set to %d.\n"
+msgstr "%s data i czas ustawiony na %d.\n"
+
+msgid "%s has no thumbnail.\n"
+msgstr "%s nie zawiera miniaturki.\n"
+
+msgid "\nFilename: %s\n"
+msgstr "\nNazwa pliku: %s\n"
+
+msgid "Timestamp: %s"
+msgstr "Data/czas: %s"
+
+msgid "Camera: %s %s\n"
+msgstr "Model aparatu: %s %s\n"
+
+msgid "Owner: %s\n"
+msgstr "Właściciel: %s\n"
+
+msgid "DNG Version: "
+msgstr "Wersja DNG: "
+
+msgid "ISO speed: %d\n"
+msgstr "Czułość ISO: %d\n"
+
+msgid "Shutter: "
+msgstr "Migawka: "
+
+msgid "%0.1f sec\n"
+msgstr "%0.1f s\n"
+
+msgid "Aperture: f/%0.1f\n"
+msgstr "Przesłona: f/%0.1f\n"
+
+msgid "Focal length: %0.1f mm\n"
+msgstr "Długość ogniskowej: %0.1f mm\n"
+
+msgid "Secondary pixels: %s\n"
+msgstr "Dodatkowe piksele: %s\n"
+
+msgid "yes"
+msgstr "tak"
+
+msgid "no"
+msgstr "nie"
+
+msgid "Embedded ICC profile: %s\n"
+msgstr "Osadzony profil ICC: %s\n"
+
+msgid "Decodable with dcraw: %s\n"
+msgstr "Dekodowalny przez dcraw: %s\n"
+
+msgid "Number of raw images: %d\n"
+msgstr "Ilość surowych obrazków: %d\n"
+
+msgid "Pixel Aspect Ratio: %0.6f\n"
+msgstr "Proporcje piksela: %0.6f\n"
+
+msgid "Thumb size:  %4d x %d\n"
+msgstr "Wielkość miniaturki:        %4d x %d\n"
+
+msgid "Full size:   %4d x %d\n"
+msgstr "Wymiary pełnego obrazu:     %4d x %d\n"
+
+msgid "Cannot decode file %s\n"
+msgstr "Nie można odkodować pliku %s\n"
+
+msgid "Image size:  %4d x %d\n"
+msgstr "Wymiary obrazu:             %4d x %d\n"
+
+msgid "Output size: %4d x %d\n"
+msgstr "Wymiary obrazu wyjściowego: %4d x %d\n"
+
+msgid "Raw colors: %d"
+msgstr "Surowych kolorów: %d"
+
+msgid "\nFilter pattern: "
+msgstr "\nFiltr: "
+
+msgid "\nDaylight multipliers:"
+msgstr "\nWspółczynniki korekcji światła dziennego:"
+
+msgid "\nCamera multipliers:"
+msgstr "\nWspółczynniki korekcji aparatu:"
+
+msgid "%s is a %s %s image.\n"
+msgstr "%s jest obrazem %s %s.\n"
+
+msgid "Loading %s %s image from %s ...\n"
+msgstr "Ładowanie obrazu %s %s z %s ...\n"
+
+msgid "%s: \"-s %d\" requests a nonexistent image!\n"
+msgstr "%s: \"-s %d\" określa nieistniejący obrazek!\n"
+
+msgid "standard output"
+msgstr "standardowe wyjście"
+
+msgid "Writing data to %s ...\n"
+msgstr "Zapisywanie danych do %s ...\n"

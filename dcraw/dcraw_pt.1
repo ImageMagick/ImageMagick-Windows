@@ -1,0 +1,286 @@
+.\"
+.\" Man page for dcraw
+.\"
+.\" Copyright (c) 2009 by David Coffin
+.\"
+.\" Você pode redistribuir sem nenhuma restrição.
+.\"
+.\" David Coffin
+.\" dcoffin a cybercom o net
+.\" http://www.cybercom.net/~dcoffin
+.\"
+.TH dcraw 1 "14 de maio de 2009"
+.LO 1
+.SH NOME
+dcraw - decodificador de linha de comando para fotos cruas (raw)
+.SH SINOPSE
+.B dcraw
+[\fIOPÇÃO\fR]... [\fIARQUIVO\fR]...
+.SH DESCRIÇÃO
+.B dcraw
+decodifica fotos cruas, mostra metadados e extrai miniaturas.
+.SH OPÇÕES GERAIS
+.TP
+.B -v
+Imprime mensagens detalhadas, não somente avisos e erros.
+.TP
+.B -c
+Grava as imagens decodificadas ou miniaturas na saída padrão.
+.TP
+.B -e
+Extrai a miniatura gerada pela câmera, e não a imagem crua.
+Você obterá uma imagem JPEG ou PPM, dependendo da câmera.
+.TP
+.B -z
+Muda os horários de acesso e modificação de um AVI, JPEG, TIFF ou
+arquivo cru para quando a foto foi feita, supondo que o relógio
+da câmera foi configurado para Horário Universal.
+.TP
+.B -i
+Identifica os arquivos, mas não os decodifica.
+O status de saída é 0 se o
+.B dcraw
+conseguiu decodificar o último arquivo, e 1 caso contrário.
+.B -i -v
+mostra metadados.
+.TP
+.B ""
+.B dcraw
+não pode decodificar arquivos JPEG!!
+.SH OPÇÕES DE REPARO
+.TP
+.B -P pixelsmortos.txt
+Lê a lista de pixels mortos deste arquivo, em vez de ".badpixels"
+Veja
+.B ARQUIVOS
+para uma descrição do formato.
+.TP
+.B -K escuro.pgm
+Subtrai um quadro escuro dos dados crus.  Para gerar um quadro escuro,
+faça uma foto crua sem nenhuma luz, e depois faça
+.BR dcraw\ -D\ -4\ -j\ -t\ 0 .
+.TP
+.B -k negro
+Se as sombras aparecerem embaçadas, você precisa
+aumentar o nível de negro.
+Para medir isso, aplique
+.B pamsumm -mean
+ao quadro escuro gerado acima.
+.TP
+.B -S saturação
+Se as áreas claras aparecerem rosadas, você deve diminuir
+o nível de saturação.
+Para medir isso, faça uma foto de algo brilhante, depois faça
+.B dcraw -D -4 -j -c
+foto.raw
+.B | pamsumm -max
+.TP
+.B ""
+O negro e saturação padrões estão, via de regra, corretos.
+.TP
+.B -n valor_limite_de_ruído
+Usa wavelets para remover ruído, preservando detalhes reais.
+O melhor valor deve estar entre 100 e 1000.
+.TP
+.B -C mag_vermelho mag_azul
+Amplia as camadas cruas vermelha e azul pelos fatores dados,
+tipicamente 0.999 a 1.001, para corrigir aberrações cromáticas.
+.TP
+.B -H 0
+Elimina todas as superexposições, substituindo por branco sólido (padrão).
+.TP
+.B -H 1
+Deixa superexposições não-cortadas em vários tons de rosa.
+.TP
+.B -H 2
+Mistura valores cortados e não-cortados para obter uma transição
+gradual para branco.
+.TP
+.B -H 3+
+Reconstrói as superexposições.  Valores baixos tendem ao branco;
+valores altos tendem a cores.  Tente
+.B -H 5
+como uma medida.  Se não for suficiente, faça
+.BR -H\ 9 ,
+elimine as superexposições não-brancas, e cole-as em uma imagem
+gerada com
+.BR -H\ 3 .
+.SH OPÇÕES DE COR
+Por padrão,
+.B dcraw
+usa um balanço de branco fixo baseado em um cartão de cores iluminado
+com uma lâmpada padrão D65.
+.TP
+.B -w
+Usa o balanço de branco especificado pela câmera.
+Se não for encontrado, imprime um aviso e usa outro método.
+.TP
+.B -a
+Calcula o balanço de branco ponderando a imagem inteira.
+.TP
+.B -A esquerda alto largura altura
+Calcula o balanço de branco ponderando uma área retangular.
+Use
+.B dcraw\ -j\ -t\ 0
+e selecione uma área de cinza neutro.
+.TP
+.B -r mul0 mul1 mul2 mul3
+Especifica o seu próprio balanço de branco cru.
+Estes multiplicadores podem ser copiados e colados da saída de
+.BR dcraw\ -v .
+.TP
+.BR +M " ou " -M
+Usa (ou não) a matriz de cores dos metadados da câmera.
+O padrão é
+.B +M
+se
+.B -w
+está definido,
+.B -M
+caso contrário.
+Esta opção afeta somente câmeras Olympus, Leaf e Phase One.
+.TP
+.B -o [0-5]
+Selecione o espaço de cor de saída quando a opção
+.B -p
+não for usada:
+
+.B \t0
+\ \ Cor crua (específica de cada câmera)
+.br
+.B \t1
+\ \ sRGB D65 (padrão)
+.br
+.B \t2
+\ \ Adobe RGB (1998) D65
+.br
+.B \t3
+\ \ Wide Gamut RGB D65
+.br
+.B \t4
+\ \ Kodak ProPhoto RGB D65
+.br
+.B \t5
+\ \ XYZ
+.TP
+.BR -p\ camera.icm \ [\  -o\ output.icm \ ]
+Usa perfis ICC para definir o espaço de cor crua da câmera,
+e o desejado espaço de cor de saída (que é sRGB por padrão).
+.TP
+.B -p embed
+Usa o perfil ICC inserido na foto crua.
+.SH OPÇÕES DE INTERPOLAÇÃO
+.TP
+.B -d
+Mostra dados crus como escala de cinza, sem interpolação.
+Bom para fotografar documentos em preto-e-branco.
+.TP
+.B -D
+O mesmo que
+.BR -d ,
+porém totalmente cru (sem redimensionamento de cor).
+.TP
+.B -h
+Gera uma imagem em cor com metade do tamanho.
+Duas vezes mais rápido do que
+.BR -q\ 0 .
+.TP
+.B -q 0
+Usa interpolação bilinear de alta velocidade e baixa qualidade.
+.TP
+.B -q 1
+Usa interpolação de Número Variável de Gradientes (VNG).
+.TP
+.B -q 2
+Usa interpolação por padrão de pixel (PPG).
+.TP
+.B -q 3
+Usa interpolação Adaptativa Direcionada para Homogeneidade (AHD).
+.TP
+.B -f
+Interpola RGGB como quatro cores. Use isso se a saída resultante
+mostrar falsos padrões em 2x2 com VNG ou borrões com AHD.
+.TP
+.B -m número_de_passagens
+Depois da interpolação, limpa artefatos de cor aplicando
+repetidamente um filtro mediano 3x3 nos canais R-G e B-G.
+.SH OPÇÕES DE SAÍDA
+Por padrão,
+.B dcraw
+escreve PGM/PPM/PAM com amostras de 8 bits, curva de gama BT.709,
+nível de branco baseado em histograma e nenhum metadado.
+.TP
+.B -W
+Usa um nível de branco fixo, ignorando o histograma da imagem.
+.TP
+.B -b brilho
+Divide o nível de branco por este número, 1.0 por padrão.
+.TP
+.B -g potência inclinação_máxima
+Define a curva gamma, por padrão BT.709
+.RB ( -g\ 2.222\ 4.5 ).
+Se preferir gamma sRGB, use
+.BR -g\ 2.4\ 12.92 .
+Para uma curva simples de potência, defina a inclinação máxima em zero.
+.TP
+.B -6
+Grava dezesseis bits por amostra, em vez de oito.
+.TP
+.B -4
+16-bit linear, o mesmo que
+.BR -6\ -W\ -g\ 1\ 1 .
+.TP
+.B -T
+Grava a saída em TIFF com metadados, em vez de PGM/PPM/PAM.
+.TP
+.B -t [0-7,90,180,270]
+Inverte a imagem de saída.  Por padrão,
+.B dcraw
+aplica a inversão especificada pela câmera.
+.B -t 0
+desabilita qualquer inversão.
+.TP
+.B -j
+Para as câmeras Fuji\ Super\ CCD, mostra a imagem inclinada 45
+graus. Para câmeras com pixels não quadrados, não estica a imagem
+para a sua proporção correta. De qualquer forma, essa opção
+assegura que cada pixel de saída corresponde a um pixel cru.
+.TP
+.BR "-s [0..N-1]" " ou " "-s all"
+Se um arquivo contém N imagens cruas, escolha uma ou "all" (todas)
+para decodificar.
+Por exemplo, as câmeras Fuji\ Super\ CCD\ SR geram
+uma segunda imagem subexposta quatro pontos para mostrar detalhe
+nas áreas superexpostas.
+.SH ARQUIVOS
+.TP
+\:./.badpixels, ../.badpixels, ../../.badpixels, ...
+Lista de pixels mortos da sua câmera, para que o
+.B dcraw
+possa interpolar entre eles. Cada linha especifica coluna, linha
+e a hora UNIX de morte para cada pixel. Por exemplo:
+.sp 1
+.nf
+ 962   91 1028350000  # morreu entre 1 e 4 de Agosto, de 2002
+1285 1067 0           # não sei quando esse pixel morreu
+.fi
+.sp 1
+Essas coordenadas devem ficar antes de qualquer corte ou rotação,
+portanto use
+.B dcraw -j -t 0
+para localizar os pixels mortos.
+.SH "VEJA TAMBÉM"
+.BR pgm (5),
+.BR ppm (5),
+.BR pam (5),
+.BR pamsumm (1),
+.BR pnmgamma (1),
+.BR pnmtotiff (1),
+.BR pnmtopng (1),
+.BR gphoto2 (1),
+.BR cjpeg (1),
+.BR djpeg (1)
+.SH AUTOR
+Escrito por David Coffin, dcoffin a cybercom o net
+.SH TRADUTOR
+Bruno Buys, brunobuys a gmail o com

@@ -1,0 +1,343 @@
+# Hungarian translation of dcraw messages.
+# (c) 2007 Dave Coffin dcoffin a cybercom o net
+# Distribute freely.
+#
+# dcraw üzenetek magyar fordítása.
+# Fordítás: Sólyom Zoltán, z-one a freemail o hu
+# (c) 2007 Dave Coffin dcoffin a cybercom o net
+# Szabadon terjeszthető.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: dcraw 8.78\n"
+"Report-Msgid-Bugs-To: dcoffin a cybercom o net\n"
+"POT-Creation-Date: 2006-12-21 22:45-0500\n"
+"PO-Revision-Date: 2011-07-23 17:00-0400\n"
+"Last-Translator: Dave Coffin <dcoffin a cybercom o net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "%s: Out of memory in %s\n"
+msgstr "%s: Nincs elég memória: %s\n"
+
+msgid "Unexpected end of file\n"
+msgstr "A fájl váratlanul véget ért\n"
+
+msgid "Corrupt data near 0x%lx\n"
+msgstr "Hibás adat 0x%lx körül\n"
+
+msgid "Corrupt data near 0x%llx\n"
+msgstr "Hibás adat 0x%llx körül\n"
+
+msgid "%s: decoder table overflow\n"
+msgstr "%s: dekódoló tábla túlcsordulás\n"
+
+msgid "Phase One correction...\n"
+msgstr "Korrekció Phase One...\n"
+
+msgid "%s: incorrect JPEG dimensions\n"
+msgstr "%s: hibás JPEG képméret\n"
+
+msgid "%s: \"%s\" matrix not found!\n"
+msgstr "%s: A \"%s\" mátrix hiányzik!\n"
+
+msgid "Foveon interpolation...\n"
+msgstr "Foveon interpoláció...\n"
+
+msgid "%s: Invalid white balance \"%s\"\n"
+msgstr "%s: Helytelen fehéregyensúly \"%s\"\n"
+
+msgid "Fixed bad pixels at:"
+msgstr "Javított hibás képpont itt:"
+
+msgid "%s is not a valid PGM file!\n"
+msgstr "%s nem igazi PGM fájl!\n"
+
+msgid "%s has the wrong dimensions!\n"
+msgstr "%s méretei hibásak!\n"
+
+msgid "Wavelet denoising...\n"
+msgstr "Zajmentesítés...\n"
+
+msgid "%s: Cannot use camera white balance.\n"
+msgstr "%s: A fényképezőgép fehéregyensúlyát nem tudom használni.\n"
+
+msgid "Scaling with black %d, multipliers"
+msgstr "Átskálázás %d fekete szorzóval"
+
+msgid "Correcting chromatic aberration...\n"
+msgstr "Kromatikus aberráció javítása...\n"
+
+msgid "Bilinear interpolation...\n"
+msgstr "Bilineáris interpoláció...\n"
+
+msgid "VNG interpolation...\n"
+msgstr "VNG interpoláció...\n"
+
+msgid "PPG interpolation...\n"
+msgstr "PPG interpoláció...\n"
+
+msgid "AHD interpolation...\n"
+msgstr "AHD interpoláció...\n"
+
+msgid "Median filter pass %d...\n"
+msgstr "Medián szűrés %d. menete...\n"
+
+msgid "Blending highlights...\n"
+msgstr "Csúcsfények elkeverése...\n"
+
+msgid "Rebuilding highlights...\n"
+msgstr "Csúcsfények visszanyerése...\n"
+
+msgid "Reading metadata from %s ...\n"
+msgstr "Metaadatok beolvasása innen: %s ...\n"
+
+msgid "Failed to read metadata from %s\n"
+msgstr "Nem sikerült a metaadatok kiolvasása innen: %s\n"
+
+msgid "%s: You must link dcraw with libjpeg!!\n"
+msgstr "%s: A dcraw-t a libjpeg-el kell linkelni!!\n"
+
+msgid "%s: You must link dcraw with %s!!\n"
+msgstr "%s: A dcraw-t a %s-el kell linkelni!!\n"
+
+msgid "%s has no embedded profile.\n"
+msgstr "%s nem tartalmaz szín profilt.\n"
+
+msgid "Cannot open file %s!\n"
+msgstr "%s fájl nem nyitható meg!\n"
+
+msgid "Applying color profile...\n"
+msgstr "Szín profil alkalmazása...\n"
+
+msgid "Building histograms...\n"
+msgstr "Hisztogram meghatározása...\n"
+
+msgid "Converting to %s colorspace...\n"
+msgstr "Konvertálás %s színtérbe...\n"
+
+msgid "Rotating image 45 degrees...\n"
+msgstr "A kép 45 fokos elforgatása...\n"
+
+msgid "Stretching the image...\n"
+msgstr "Kép átméretezése...\n"
+
+msgid "\nRaw photo decoder \"dcraw\" v%s"
+msgstr "\nNyers (RAW) fotó dekódoló \"dcraw\" v%s"
+
+msgid "\nby Dave Coffin, dcoffin a cybercom o net\n"
+msgstr "\nírta Dave Coffin, dcoffin a cybercom o net\n"
+
+msgid "\nUsage:  %s [OPTION]... [FILE]...\n\n"
+msgstr "\nHasználata:  %s [OPCIÓK]... [FÁJLNÉV]...\n\n"
+
+msgid "-v        Print verbose messages"
+msgstr "-v        Minden üzenet kiírása"
+
+msgid "-c        Write image data to standard output"
+msgstr "-c        A kép a szabványos kimenetre kerül."
+
+msgid "-e        Extract embedded thumbnail image"
+msgstr "-e        Előnézeti kép kinyerése"
+
+msgid "-i        Identify files without decoding them"
+msgstr "-i        Fájlok azonosítása dekódolás nélkül"
+
+msgid "-i -v     Identify files and show metadata"
+msgstr "-i -v     Fájlok azonosítása, metaadatok listázása"
+
+msgid "-z        Change file dates to camera timestamp"
+msgstr "-z        Fájl dátumok beállítása a fényképezőgép órája alapján"
+
+msgid "-w        Use camera white balance, if possible"
+msgstr "-w        A fényképezőgép fehéregyensúlyának használata, ha lehetséges"
+
+msgid "-a        Average the whole image for white balance"
+msgstr "-a        Teljes kép átlagolása a fehéregyensúly meghatározásához"
+
+msgid "-A <x y w h> Average a grey box for white balance"
+msgstr "-A <x y sz m> Fehéregyensúly meghatározása egy képterület szürkére átlagolásával."
+
+msgid "-r <r g b g> Set custom white balance"
+msgstr "-r <r g b g> Tetszőleges fehéregyensúly beállítása"
+
+msgid "+M/-M     Use/don't use an embedded color matrix"
+msgstr "+M/-M     Beágyazott színmátrix használata/elhagyása"
+
+msgid "-C <r b>  Correct chromatic aberration"
+msgstr "-C <r b>  Kromatikus aberráció javítása"
+
+msgid "-b <num>  Adjust brightness (default = 1.0)"
+msgstr "-b <szám> Fényesség beállítása (alapértelmezés = 1.0)"
+
+msgid "-n <num>  Set threshold for wavelet denoising"
+msgstr "-n <szám> Zajmentesítés küszöbértékének meghatározása"
+
+msgid "-k <num>  Set black point"
+msgstr "-k <szám> Fekete pont beállítása"
+
+msgid "-K <file> Subtract dark frame (16-bit raw PGM)"
+msgstr "-K <fájl> Sötét kép kivonása (16-bites nyers PGM)"
+
+msgid "-H [0-9]  Highlight mode (0=clip, 1=unclip, 2=blend, 3+=rebuild)"
+msgstr "-H [0-9]  Csúcsfények kezelése (0=levág, 1=meghagy, 2=keverés, 3+=visszanyerés)"
+
+msgid "-t [0-7]  Flip image (0=none, 3=180, 5=90CCW, 6=90CW)"
+msgstr "-t [0-7]  Kép forgatása (0=nincs, 3=180, 5=90balra, 6=90jobbra)"
+
+msgid "-o [0-5]  Output colorspace (raw,sRGB,Adobe,Wide,ProPhoto,XYZ)"
+msgstr "-o [0-5]  Kimenet színtere (nyers,sRGB,Adobe,Wide,ProPhoto,XYZ)"
+
+msgid "-o <file> Apply output ICC profile from file"
+msgstr "-o <fájl> Kimeneti ICC-profil alkalmazása fájlból"
+
+msgid "-p <file> Apply camera ICC profile from file or \"embed\""
+msgstr "-p <fájl> Fényképezőgép ICC-profiljának alkalmazása fájlból, vagy \"embed\""
+
+msgid "-d        Document mode (no color, no interpolation)"
+msgstr "-d        Dokumentum mód (fekete fehér, interpoláció nélkül)"
+
+msgid "-D        Document mode without scaling (totally raw)"
+msgstr "-D        Dokumentum mód méretezés nélkül (teljesen nyers)"
+
+msgid "-j        Don't stretch or rotate raw pixels"
+msgstr "-j        Ne nyújtsa vagy forgassa a nyers képpontokat"
+
+msgid "-q [0-3]  Set the interpolation quality"
+msgstr "-q [0-3]  Interpoláció minőségének beállítása"
+
+msgid "-h        Half-size color image (twice as fast as \"-q 0\")"
+msgstr "-h        Fele méretű színes kép (kétszer olyan gyors mint a \"-q 0\")"
+
+msgid "-f        Interpolate RGGB as four colors"
+msgstr "-f        RGGB interpolálása négy színként"
+
+msgid "-m <num>  Apply a 3x3 median filter to R-G and B-G"
+msgstr "-m <szám> 3x3-as medián szűrő alkalmazása az R-G és B-G csatornákon"
+
+msgid "-s [0-99] Select a different raw image from the same file"
+msgstr "-s [0-99] Másik nyers kép kiválasztása ugyanabból a fájlból"
+
+msgid "-s [0..N-1] Select one raw image or \"all\" from each file"
+msgstr "-s [0..N-1] Egy nyers kép kiválasztása, vagy \"all\", az összes kép kiválasztása minden fájlból"
+
+msgid "-4        Write 16-bit linear instead of 8-bit with gamma"
+msgstr "-4        16-bites lineáris kép kiírása 8-bites helyett gammával"
+
+msgid "-T        Write TIFF instead of PPM"
+msgstr "-T        TIFF írása PPM helyett"
+
+msgid "Non-numeric argument to \"-%c\"\n"
+msgstr "A \"-%c\" opcióhoz egy számot kell megadni\n"
+
+msgid "Unknown option \"-%c\".\n"
+msgstr "Ismeretlen opció \"-%c\".\n"
+
+msgid "No files to process.\n"
+msgstr "Nincs feldolgozásra váró fájl.\n"
+
+msgid "Will not write an image to the terminal!\n"
+msgstr "A dcraw a terminálra nem ír képet!\n"
+
+msgid "%s has no timestamp.\n"
+msgstr "%s dátuma ismeretlen.\n"
+
+msgid "%s time set to %d.\n"
+msgstr "%s dátuma %d-re állítva .\n"
+
+msgid "%s has no thumbnail.\n"
+msgstr "%s -ben nincs előnézeti kép.\n"
+
+msgid "\nFilename: %s\n"
+msgstr "\nFájlnév: %s\n"
+
+msgid "Timestamp: %s"
+msgstr "Dátum/idő: %s"
+
+msgid "Camera: %s %s\n"
+msgstr "Fényképezőgép: %s %s\n"
+
+msgid "Owner: %s\n"
+msgstr "Tulajdonos: %s\n"
+
+msgid "DNG Version: "
+msgstr "DNG Verzió: "
+
+msgid "ISO speed: %d\n"
+msgstr "Érzékenység (ISO) érték: %d\n"
+
+msgid "Shutter: "
+msgstr "Záridő: "
+
+msgid "%0.1f sec\n"
+msgstr "%0.1f sec\n"
+
+msgid "Aperture: f/%0.1f\n"
+msgstr "Rekesznyílás: f/%0.1f\n"
+
+msgid "Focal length: %0.1f mm\n"
+msgstr "Fókusztávolság: %0.1f mm\n"
+
+msgid "Secondary pixels: %s\n"
+msgstr "Másodlagos képpontok: %s\n"
+
+msgid "yes"
+msgstr "igen"
+
+msgid "no"
+msgstr "nem"
+
+msgid "Embedded ICC profile: %s\n"
+msgstr "Beágyazott ICC-profil: %s\n"
+
+msgid "Decodable with dcraw: %s\n"
+msgstr "A dcraw-val dekódolható: %s\n"
+
+msgid "Number of raw images: %d\n"
+msgstr "Nyers képek száma: %d\n"
+
+msgid "Pixel Aspect Ratio: %0.6f\n"
+msgstr "Képpont oldalarány: %0.6f\n"
+
+msgid "Thumb size:  %4d x %d\n"
+msgstr "Előnézeti kép mérete: %4d x %d\n"
+
+msgid "Full size:   %4d x %d\n"
+msgstr "Teljes méret:         %4d x %d\n"
+
+msgid "Cannot decode file %s\n"
+msgstr "%s fájlt a dcraw nem tudja dekódolni!\n"
+
+msgid "Image size:  %4d x %d\n"
+msgstr "Kép méret:            %4d x %d\n"
+
+msgid "Output size: %4d x %d\n"
+msgstr "Kimenet mérete:       %4d x %d\n"
+
+msgid "Raw colors: %d"
+msgstr "Nem kompenzált színek: %d"
+
+msgid "\nFilter pattern: "
+msgstr "\nSzűrő mintázat: "
+
+msgid "\nDaylight multipliers:"
+msgstr "\nNapfény szorzók:"
+
+msgid "\nCamera multipliers:"
+msgstr "\nFényképezőgép szorzók:"
+
+msgid "%s is a %s %s image.\n"
+msgstr "%s a(z) %s %s képe.\n"
+
+msgid "Loading %s %s image from %s ...\n"
+msgstr "%s %s kép betöltése innen: %s ...\n"
+
+msgid "%s: \"-s %d\" requests a nonexistent image!\n"
+msgstr "%s: \"-s %d\" nemlétező képet kér!\n"
+
+msgid "standard output"
+msgstr "szabványos kimenet"
+
+msgid "Writing data to %s ...\n"
+msgstr "Adat kimenete: %s ...\n"

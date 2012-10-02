@@ -1,0 +1,282 @@
+.\"
+.\" Man page for dcraw
+.\"
+.\" Copyright (c) 2009 by David Coffin
+.\"
+.\" You may distribute without restriction.
+.\"
+.\" David Coffin
+.\" dcoffin a cybercom o net
+.\" http://www.cybercom.net/~dcoffin
+.\"
+.TH dcraw 1 "14 maj 2009"
+.LO 1
+.SH NAMN
+dcraw - kommandoradsavkodare för digitala råfoton (raw)
+.SH SYNTAX
+.B dcraw
+[\fIFLAGGA\fR]... [\fIFIL\fR]...
+.SH BESKRIVNING
+.B dcraw
+avkodar råfoton, visar metadata och extraherar miniatyrbilder.
+.SH GENERELLA FLAGGOR
+.TP
+.B -v
+Skriv utförliga meddelanden, inte bara varningar och fel.
+.TP
+.B -c
+Skriv avkodade bilder eller miniatyrbilder till standardutenhet.
+.TP
+.B -e
+Extrahera den kameragenererade miniatyrbilden. Inte råfotot.
+Du får antingen en JPEG- eller en PPM-fil, beroende på kameramodell.
+.TP
+.B -z
+Ändra användnings- och förändringstiderna för en AVI, JPEG, TIFF eller
+råfotofil till när bilden togs och anta att kamerans klocka var satt
+enligt Universal Time (UTC).
+.TP
+.B -i
+Identifiera filerna men avkoda dem inte.
+Slutstatus är 0 om
+.B dcraw
+kan avkoda den sista filen och 1 om den inte kan det.
+.B -i -v
+visar metadata.
+.TP
+.B ""
+.B dcraw
+kan inte avkoda JPEG-filer!!
+.SH REPARATIONSFLAGGOR
+.TP
+.B -P döda_bildpunkter.txt
+Läs listan med döda bildpunkter från den här filen istället för ".badpixels".
+Se
+.B FILER
+för en beskrivning av formatet på dessa filer.
+.TP
+.B -K mörkerbild.pgm
+Subtrahera mörkerbild från råfotot.  För att generera en
+mörkerbild, ta en råfoto utan ljus (linsskydd på, t.ex.) och kör
+.BR dcraw\ -D\ -4\ -j\ -t\ 0 .
+.TP
+.B -k mörkhet
+När skuggorna ser dimmiga ut måste du öka mörkhetsnivån.
+För att mäta detta, applicera
+.B pamsumm -mean
+på den mörkerbild du genererade ovan.
+.TP
+.B -S mättnad
+När ljusdagrarna ser rosaaktiga ut måste du sänka mättnadsnivån.
+För att mäta detta, ta en bild på något glansigt och kör
+.B dcraw -D -4 -j -c
+foto.raw
+.B | pamsumm -max
+.TP
+.B ""
+Standardvärdena för mörkhet och mättnad är vanligtvis korrekta.
+.TP
+.B -n bruströskel
+Använd vågelement för att ta bort brus samtidigt som du behåller
+riktiga detaljer. Det bästa tröskelvärdet torde vara mellan 100 och 1000.
+.TP
+.B -C röd_förstoring blå_förstoring
+Förstora de råa röda och blå lagren med dessa faktorer, vanligen
+mellan 0.999 och 1.001, för att rätta till kromatisk avvikelse.
+.TP
+.B -H 0
+Klipp alla högdagrar till solid vit (standard).
+.TP
+.B -H 1
+Låt högdagrar vara oklippta i diverse nyanser av rosa.
+.TP
+.B -H 2
+Blanda klippta och oklippta värden för en gradvis övergång
+till vitt.
+.TP
+.B -H 3+
+Återskapa högdagrarna.  Låga siffror gynnar vitt; höga siffror
+gynnar färger. Prova
+.B -H 5
+som en kompromiss.  Är inte det bra nog, prova
+.BR -H\ 9 ,
+klipp ut de icke-vita högdagrarna och klistra in dem i en bild
+som genererats med
+.BR -H\ 3 .
+.SH FÄRGFLAGGOR
+Som standard så använder
+.B dcraw
+en fast vitbalans baserad på en färgkarta upplyst med
+en standard D65-lampa.
+.TP
+.B -w
+Använd kamerans förvalda vitbalans.  Skriv ut en varning och
+använd en annan metod om ingen förvald vitbalans hittas.
+.TP
+.B -a
+Beräkna vitbalansen genom att använda ett genomsnitt av hela bilden.
+.TP
+.B -A vänster topp bredd höjd
+Beräkna vitbalansen genom att använda ett genomsnitt av en rektangulär yta.
+Först kör
+.B dcraw\ -j\ -t\ 0
+och välj en neutralt grå yta.
+.TP
+.B -r mul0 mul1 mul2 mul3
+Specifiera din egen råfotovitbalans.
+Dessa multiplikatorer kan klippas ut och klistras in från utdatat av
+.BR dcraw\ -v .
+.TP
+.BR +M " eller " -M
+Använd (eller använd inte) någon färgmatris från kamerans metadata.
+Standard är
+.B +M
+om
+.B -w
+är valt, annars
+.BR -M .
+Detta val påverkar bara Olympus-, Leaf-, och Phase One-kameror.
+.TP
+.B -o [0-5]
+Välj utdatats färgrymd när valet
+.B -p
+inte används:
+
+.B \t0
+\ \ Rå färg (unik för varje kamera)
+.br
+.B \t1
+\ \ sRGB D65 (standard)
+.br
+.B \t2
+\ \ Adobe RGB (1998) D65
+.br
+.B \t3
+\ \ Wide Gamut RGB D65
+.br
+.B \t4
+\ \ Kodak ProPhoto RGB D65
+.br
+.B \t5
+\ \ XYZ
+.TP
+.BR -p\ kamera.icm \ [\  -o\ utdata.icm \ ]
+Använd ICC-profiler för att definiera kamerans råa färgrymd och den
+önskade färgrymden för utdatat (sRGB är standard)
+.TP
+.B -p embed
+Använd ICC-profilen inbäddad i råfotot.
+.SH INTERPOLATIONSFLAGGOR
+.TP
+.B -d
+Visa råfotot som en bild i gråskala utan interpolation.
+Bra för att fotografera svartvita dokument.
+.TP
+.B -D
+Samma som
+.BR -d ,
+men helt rå (ingen färgskalning).
+.TP
+.B -h
+Skapa en färgbild i halv storlek. Detta är dubbelt så snabbt som
+.BR -q\ 0 .
+.TP
+.B -q 0
+Använd bilinjär interpolation. Detta är snabbt men har låg kvalitet.
+.TP
+.B -q 1
+Använd interpolation med ställbart antal gradienter (VNG).
+.TP
+.B -q 2
+Använd interpolation med grupperade bildpunktsmönster (PPG).
+.TP
+.B -q 3
+Använd anpassningsbart och enhetligt riktad interpolation (AHD).
+.TP
+.B -f
+Interpolera RGB som fyra färger. Använd det här om utdatat visar
+falska 2×2 nät med VNG eller labyrinter med AHD.
+.TP
+.B -m antal_upprepningar
+Rensa bort färgartefakter efter interpolation genom att upprepade
+gånger applicera ett 3×3-medianfilter till R-G- och B-G-kanalerna.
+.SH UTDATAFLAGGOR
+Som standard så skriver
+.B dcraw
+PGM/PPM/PAM med 8-bits samplingar, en BT.709-gammakurva,
+en histogrambaserad vitnivå och inga metadata.
+.TP
+.B -W
+Använd en fast vitnivå och ignorera bildens histogram.
+.TP
+.B -b ljusnivå
+Dela vitnivån med denna siffra. 1.0 är standard.
+.TP
+.B -g upphöjt_till maximal_lutning
+Ställ in gammakurvan, standard är BT.709
+.RB ( -g\ 2.222\ 4.5 ).
+Om du föredrar sRGB-gamma, använd
+.BR -g\ 2.4\ 12.92 .
+För en enkel potenskurva, ställ maximal lutning på noll.
+.TP
+.B -6
+Skriv sexton bitar per sampel istället för åtta.
+.TP
+.B -4
+Linjär 16-bit, samma som
+.BR -6\ -W\ -g\ 1\ 1 .
+.TP
+.B -T
+Skriv TIFF med metadata istället för PGM/PPM/PAM.
+.TP
+.B -t [0-7,90,180,270]
+Vrid utbilden. Som standard applicerar
+.B dcraw
+vridningen som kameran specifierat.
+.B -t 0
+stänger av all vridning.
+.TP
+.B -j
+För Fuji\ Super\ CCD-kameror så visas bilden vriden 45 grader.
+För kameror med ickekvadratiska bildpunkter så sträcks inte bilden
+ut till sitt korrekta förhållande mellan höjd och bredd.
+Hur som helst, så garanterar detta val att varje bildpunkt på utbilden
+motsvarar en rå bildpunkt.
+.TP
+.BR "-s [0..N-1]" " eller " "-s all"
+Om en fil innehåller N råbilder, välj då en eller "all" för avkodning.
+T.ex. genererar Fuji\ Super\ CCD\ SR-kameror en extra bild som är
+underexponerad med fyra steg för att få fram detaljer i högdagrar.
+.SH FILER
+.TP
+\:./.badpixels, ../.badpixels, ../../.badpixels, ...
+Lista på din kameras döda bildpunkter, så att
+.B dcraw
+kan interpolera runt dem. Varje rad specificerar kolumn, rad och
+UNIX-tid då bildpunkten dog. T.ex:
+.sp 1
+.nf
+ 962   91 1028350000  # dog mellan 1:e och 4:e augusti 2002
+1285 1067 0           # Vet inte när denna bildpunkt dog.
+.fi
+.sp 1
+Dessa är koordinater innan rotation eller beskärning gjorts, så använd
+.B dcraw -j -t 0
+för att söka rätt på döda bildpunkter.
+.SH "SE OCKSÅ"
+.BR pgm (5),
+.BR ppm (5),
+.BR pam (5),
+.BR pamsumm (1),
+.BR pnmgamma (1),
+.BR pnmtotiff (1),
+.BR pnmtopng (1),
+.BR gphoto2 (1),
+.BR cjpeg (1),
+.BR djpeg (1)
+.SH FÖRFATTARE
+Skriven av David Coffin, dcoffin a cybercom o net
+.SH ÖVERSÄTTARE
+Lars Lindley, lindley a coyote o org
+.br
+Johnny Rosenberg, guraknugen a gmail o com

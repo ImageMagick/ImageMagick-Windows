@@ -1,0 +1,362 @@
+# Translation of dcraw_ca_ES.po to Catalan (Catalan, Spain)
+# Traducció de dcraw_ca_ES.po al Català (Català, España)
+# (c) 2009 Dave Coffin dcoffin a cybercom o net,
+# Distribute freely.
+# Es permet la lliure distribució.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: dcraw 8.94\n"
+"Report-Msgid-Bugs-To: dcoffin a cybercom o net\n"
+"POT-Creation-Date: 2006-12-21 22:45-0500\n"
+"PO-Revision-Date: 2011-07-23 17:00-0400\n"
+"Last-Translator: Paco Rivière <friviere a palmcat o cat>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language-Team: \n"
+
+msgid "%s: Out of memory in %s\n"
+msgstr "%s: No hi ha prou memòria a %s\n"
+
+msgid "Unexpected end of file\n"
+msgstr "Final inesperat del fitxer\n"
+
+msgid "Corrupt data near 0x%llx\n"
+msgstr "S'han trobat dades corruptes al costat de 0x%llx\n"
+
+msgid "%s: decoder table overflow\n"
+msgstr "%s: Sobreeiximent de la taula del descodificador\n"
+
+msgid "Phase One correction...\n"
+msgstr "Correcció Phase One...\n"
+
+msgid "%s: incorrect JPEG dimensions\n"
+msgstr "%s: les dimensions JPEG són incorrectes\n"
+
+msgid "%s: \"%s\" matrix not foundq!\n"
+msgstr "%s: No s'ha trobat la matriu \"%s\"!\n"
+
+msgid "Foveon interpolation...\n"
+msgstr "Interpolació Foveon...\n"
+
+msgid "%s: Invalid white balance \"%s\"\n"
+msgstr "%s: El balanç de blancs \"%s\" no es vàlid\n"
+
+msgid "Fixed dead pixels at:"
+msgstr "Píxels morts reparats a:"
+
+msgid "%s is not a valid PGM file!\n"
+msgstr "%s no és un fitxer PGM vàlid!\n"
+
+msgid "%s has the wrong dimensions!\n"
+msgstr "%s té dimensions incorrectes!\n"
+
+msgid "Wavelet denoising...\n"
+msgstr "S'està aplicant el tractament de reducció de soroll d'ondetes...\n"
+
+msgid "%s: Cannot use camera white balance.\n"
+msgstr "%s: No es pot fer servir el balanç de blancs de la càmera.\n"
+
+msgid "Scaling with darkness %d, saturation %d, and\nmultipliers"
+msgstr "Escalant amb foscor %d, saturació %d, i\nmultiplicadors"
+
+msgid "Correcting chromatic aberration...\n"
+msgstr "S'està corregint l'aberració cromàtica...\n"
+
+msgid "Bilinear interpolation...\n"
+msgstr "Interpolació bilineal...\n"
+
+msgid "VNG interpolation...\n"
+msgstr "Interpolació VNG...\n"
+
+msgid "PPG interpolation...\n"
+msgstr "Interpolació PPG...\n"
+
+msgid "AHD interpolation...\n"
+msgstr "Interpolació AHD...\n"
+
+msgid "Median filter pass %d...\n"
+msgstr "Filtre de mediana %d...\n"
+
+msgid "Blending highlights...\n"
+msgstr "S'estant combinant les sobreexposicions...\n"
+
+msgid "Rebuilding highlights...\n"
+msgstr "S'està reconstruïnt les sobreexposicions...\n"
+
+msgid "Reading metadata from %s ...\n"
+msgstr "S'estant llegint les metadades des de %s ...\n"
+
+msgid "Failed to read metadata from %s\n"
+msgstr "Hi ha hagut un error en llegir les metadades de %s\n"
+
+msgid "%s: You must link dcraw with libjpeg!!\n"
+msgstr "%s: Heu d'enllaçar dcraw amb libjpeg!!\n"
+
+msgid "%s: You must link dcraw with %s!!\n"
+msgstr "%s: Heu d'enllaçar dcraw amb %s!!\n"
+
+msgid "%s has no embedded profile.\n"
+msgstr "%s no té cap perfil associat.\n"
+
+msgid "Cannot open file %s!\n"
+msgstr "No es pot obrir el fitxer %s!\n"
+
+msgid "Applying color profile...\n"
+msgstr "S'està aplicant el perfil de color...\n"
+
+msgid "Building histograms...\n"
+msgstr "S'estant construïnt els histogrames...\n"
+
+msgid "Converting to %s colorspace...\n"
+msgstr "S'està convertint a l'espai de colors %s...\n"
+
+msgid "Rotating image 45 degrees...\n"
+msgstr "S'està girant la imatge 45 graus...\n"
+
+msgid "Stretching the image...\n"
+msgstr "S'està encongint la imatge...\n"
+
+msgid "\nRaw photo decoder \"dcraw\" v%s"
+msgstr "\nDescodificador de foto crua (raw) \"dcraw\" v%s"
+
+msgid "\nby Dave Coffin, dcoffin a cybercom o net\n"
+msgstr "\nper Dave Coffin, dcoffin a cybercom o net\n"
+
+msgid "\nUsage:  %s [OPTION]... [FILE]...\n\n"
+msgstr "\nÚs:  %s [OPCIÓ]... [FITXER]...\n\n"
+
+msgid "-v        Print verbose messages"
+msgstr "-v        Mostra els missatges detallats"
+
+msgid "-c        Write image data to standard output"
+msgstr "-c        Mostra les dades de la imatge per la sortida estàndar"
+
+msgid "-e        Extract embedded thumbnail image"
+msgstr "-e        Extreu la miniatura de la imatge"
+
+msgid "-i        Identify files without decoding them"
+msgstr "-i        Identifica els arxius sense descodificar-los"
+
+msgid "-i -v     Identify files and show metadata"
+msgstr "-i -v     Identifica els fitxers i mostra les metadades"
+
+msgid "-z        Change file dates to camera timestamp"
+msgstr "-z        Reemplaça la data dels fitxers per la marca fixada per la càmera"
+
+msgid "-a        Use automatic white balance"
+msgstr "-a        Utilitza el balanç de blancs automàtic"
+
+msgid "-w        Use camera white balance, if possible"
+msgstr "-w        Utilitza el balanç de blancs de la càmera, si és possible"
+
+msgid "-a        Average the whole image for white balance"
+msgstr "-a        Fes la mitjana de la imatge completa per al balanç de blancs"
+
+msgid "-A <x y w h> Average a grey box for white balance"
+msgstr "-A <x y ∆x ∆y> Fes la mitjana de un rectangle gris per al balanç de blancs"
+
+msgid "-r <r g b g> Set custom white balance"
+msgstr "-r <r g b g> Defineix el balanç de blancs personalitzat"
+
+msgid "-r <4 numbers> Set custom white balance"
+msgstr "-r <4 números> Defineix el balanç de blancs personalitzat"
+
+msgid "+M/-M     Use/don't use an embedded color matrix"
+msgstr "+M/-M     Utiliza/no utilitzis la matriu de color incrustada"
+
+msgid "-C <r b>  Correct chromatic aberration"
+msgstr "-C <r b>  Corregeix l'aberració cromàtica"
+
+msgid "-P <file> Fix the dead pixels listed in this file"
+msgstr "-P <fitx> Repara els píxels morts llistats al fitxer"
+
+msgid "-K <file> Subtract dark frame (16-bit raw PGM)"
+msgstr "-K <fitx> Sustreu un quadre fosc (16 bits raw PGM)"
+
+msgid "-k <num>  Set the darkness level"
+msgstr "-k <num>  Estableix el nivell de foscor"
+
+msgid "-S <num>  Set the saturation level"
+msgstr "-S <num>  Estableix el nivell de saturació"
+
+msgid "-n <num>  Set threshold for wavelet denoising"
+msgstr "-n <num>  Estableix el llindar per a reducció de soroll d'ondetes"
+
+msgid "-H [0-9]  Highlight mode (0=clip, 1=unclip, 2=blend, 3+=rebuild)"
+msgstr "-H [0-9]  Mode de realçat (0=retallar, 1=no retallar, 2=combinar, 3+=reconstruïr)"
+
+msgid "-t [0-7]  Flip image (0=none, 3=180, 5=90CCW, 6=90CW)"
+msgstr "-t [0-7]  Gira la imatge (0=res, 3=180, 5=90AH, 6=90H)"
+
+msgid "-o [0-5]  Output colorspace (raw,sRGB,Adobe,Wide,ProPhoto,XYZ)"
+msgstr "-o [0-5]  Trieu l'espai de color de la sortida (cru,sRGB,Adobe,Wide,ProPhoto,XYZ)"
+
+msgid "-o <file> Apply output ICC profile from file"
+msgstr "-o <fitx> Aplica el perfil de color ICC de sortida des d'un fitxer"
+
+msgid "-p <file> Apply camera ICC profile from file or \"embed\""
+msgstr "-p <fitx> Aplica el perfil ICC de la càmera des d'un fitxer o \"embed\""
+
+msgid "-d        Document mode (no color, no interpolation)"
+msgstr "-d        Mode document (sense colors, sense interpolació)"
+
+msgid "-D        Document mode without scaling (totally raw)"
+msgstr "-D        Mode document sense redimensionat (totalment cru)"
+
+msgid "-j        Don't stretch or rotate raw pixels"
+msgstr "-j        No encongeixis ni giris els píxels crus"
+
+msgid "-W        Don't automatically brighten the image"
+msgstr "-W        No ajustis automàticament la brillantor de la imatge"
+
+msgid "-b <num>  Adjust brightness (default = 1.0)"
+msgstr "-b <num>  Ajusta la brillantor (per omissió = 1.0)"
+
+msgid "-g <p ts> Set custom gamma curve (default = 2.222 4.5)"
+msgstr "-g <p pp> Estableix una corba de gamma personalitzada (per omissió = 2.222 4.5)"
+
+msgid "-q [0-3]  Set the interpolation quality"
+msgstr "-q [0-3]  Defineix la qualitat d'interpolació"
+
+msgid "-h        Half-size color image (twice as fast as \"-q 0\")"
+msgstr "-h        Imatge en color reduïda a la meitat (2 cops més ràpid que \"-q 0\")"
+
+msgid "-f        Interpolate RGGB as four colors"
+msgstr "-f        Interpola RGGB com a quatre colors"
+
+msgid "-m <num>  Apply a 3x3 median filter to R-G and B-G"
+msgstr "-m <num>  Aplica un filtre de mediana de 3x3 sobre R-G i B-G"
+
+msgid "-s [0-99] Select a different raw image from the same file"
+msgstr "-s [0-99] Trieu una imatge crua diferent des del mateix fitxer"
+
+msgid "-s [0..N-1] Select one raw image or \"all\" from each file"
+msgstr "-s [0..N-1] Trieu una imatge crua concreta o \"all\" (totes) de cada fitxer"
+
+msgid "-6        Write 16-bit instead of 8-bit"
+msgstr "-6        Escriu 16 bits en comptes de 8 bits"
+
+msgid "-4        Linear 16-bit, same as \"-6 -W -g 1 1\""
+msgstr "-4        16 bits lineal, com a \"-6 -W -g 1 1\""
+
+msgid "-4        Write 16-bit linear instead of 8-bit with gamma"
+msgstr "-4        Desa en 16 bits linial en lloc de 8 bits amb gamma"
+
+msgid "-T        Write TIFF instead of PPM"
+msgstr "-T        Desa TIFF en lloc de PPM"
+
+msgid "Non-numeric argument to \"-%c\"\n"
+msgstr "\"-%c\" requereix un argument numèric\n"
+
+msgid "Unknown option \"-%c\".\n"
+msgstr "Opció desconeguda \"-%c\".\n"
+
+msgid "No files to process.\n"
+msgstr "No hi ha fitxer per processar.\n"
+
+msgid "Will not write an image to the terminal!\n"
+msgstr "No es desarà una imatge al terminal!\n"
+
+msgid "%s has no timestamp.\n"
+msgstr "%s no té marca de data.\n"
+
+msgid "%s time set to %d.\n"
+msgstr "L'hora del fitxer %s s'ha canviat a %d.\n"
+
+msgid "%s has no thumbnail.\n"
+msgstr "%s no té miniatura associada.\n"
+
+msgid "\nFilename: %s\n"
+msgstr "\nNom del fitxer: %s\n"
+
+msgid "Timestamp: %s"
+msgstr "Marca de data: %s"
+
+msgid "Camera: %s %s\n"
+msgstr "Càmera: %s %s\n"
+
+msgid "Owner: %s\n"
+msgstr "Propietari: %s\n"
+
+msgid "DNG Version: "
+msgstr "Versió DNG: "
+
+msgid "ISO speed: %d\n"
+msgstr "Velocitat ISO: %d\n"
+
+msgid "Shutter: "
+msgstr "Obturador: "
+
+msgid "%0.1f sec\n"
+msgstr "%0.1f seg\n"
+
+msgid "Aperture: f/%0.1f\n"
+msgstr "Obertura: f/%0.1f\n"
+
+msgid "Focal length: %0.1f mm\n"
+msgstr "Distància focal: %0.1f mm\n"
+
+msgid "Secondary pixels: %s\n"
+msgstr "Píxels secundaris: %s\n"
+
+msgid "yes"
+msgstr "sí"
+
+msgid "no"
+msgstr "no"
+
+msgid "Embedded ICC profile: %s\n"
+msgstr "Perfil de color ICC associat: %s\n"
+
+msgid "Decodable with dcraw: %s\n"
+msgstr "Descodificable amb dcraw: %s\n"
+
+msgid "Number of raw images: %d\n"
+msgstr "Número d'imatges crues: %d\n"
+
+msgid "Pixel Aspect Ratio: %0.6f\n"
+msgstr "Relació d'aspecte en píxels: %0.6f\n"
+
+msgid "Thumb size:  %4d x %d\n"
+msgstr "Mida de la miniatura: %4d x %d\n"
+
+msgid "Full size:   %4d x %d\n"
+msgstr "Mida real:            %4d x %d\n"
+
+msgid "Cannot decode file %s\n"
+msgstr "No es pot descodificar el fitxer %s\n"
+
+msgid "Image size:  %4d x %d\n"
+msgstr "Mida de la imatge:    %4d x %d\n"
+
+msgid "Output size: %4d x %d\n"
+msgstr "Mida de sortida:      %4d x %d\n"
+
+msgid "Raw colors: %d"
+msgstr "Colors crus: %d"
+
+msgid "\nFilter pattern: "
+msgstr "\nPatró de filtrat: "
+
+msgid "\nDaylight multipliers:"
+msgstr "\nMultiplicadors de llum de dia:"
+
+msgid "\nCamera multipliers:"
+msgstr "\nMultiplicadors de la càmera:"
+
+msgid "%s is a %s %s image.\n"
+msgstr "%s es una imatge %s %s.\n"
+
+msgid "Loading %s %s image from %s ...\n"
+msgstr "S'està carregant la imatge %s %s des de %s ...\n"
+
+msgid "%s: \"-s %d\" requests a nonexistent image!\n"
+msgstr "%s: \"-s %d\" solicita una imatge inexistent!\n"
+
+msgid "standard output"
+msgstr "sortida estàndard"
+
+msgid "Writing data to %s ...\n"
+msgstr "S'estant desant les dades a %s ...\n"

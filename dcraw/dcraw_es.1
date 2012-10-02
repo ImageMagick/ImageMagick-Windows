@@ -1,0 +1,284 @@
+.\"
+.\" Spanish manpage for dcraw
+.\"
+.\" Copyright (c) 2009 by David Coffin
+.\"
+.\" Se puede distribuir sin restricciones.
+.\"
+.\" David Coffin
+.\" dcoffin a cybercom o net
+.\" http://www.cybercom.net/~dcoffin
+.\"
+.TH dcraw 1 "14 mayo 2009"
+.LO 1
+.SH NOMBRE
+dcraw - descodificador de línea de comandos para fotos digitales crudas (raw)
+.SH RESUMEN
+.B dcraw
+[\fIOPCIÓN\fR]... [\fIARCHIVO\fR]...
+.SH DESCRIPCIÓN
+.B dcraw
+descodifica fotos crudas, muestra metadatos y extrae imágenes miniatura.
+.SH OPCIONES GENERALES
+.TP
+.B -v
+Mostrar mensajes detalados, no sólo avisos y errores.
+.TP
+.B -c
+Mostrar imágenes descodificadas o imágenes miniatura por salida estándar.
+.TP
+.B -e
+Extraer la imagen miniatura generada por la cámara, no la imagen cruda.
+Conseguirás o bien un archivo JPEG o un archivo PPM, dependiendo de la cámara.
+.TP
+.B -z
+Cambiar las fechas de modificación y acceso de un archivo AVI, JPEG, TIFF
+o crudo a cuando se tomó la foto, asumiendo que el reloj de la cámara
+estaba establecido en horario Universal (UTC).
+.TP
+.B -i
+Identificar archivos sin descodificarlos.
+La salida de estado es 0 si
+.B dcraw
+puede descodificar el último archivo, 1 si él no puede.
+.B -i -v
+muestra metadatos.
+.TP
+.B ""
+.RB ¡¡ dcraw
+no puede descodificar archivos JPEG!!
+.SH OPCIONES DE RECUPERACIÓN
+.TP
+.B -P píxeles_muertos.txt
+Leer la lista de píxeles muertos de este archivo en lugar de ".badpixels".
+Ver
+.B ARCHIVOS
+para una descripción del formato.
+.TP
+.B -K oscuro.pgm
+Substraer un cuadro oscuro de los datos crudos.  Para generar un
+cuadro oscuro, toma una foto cruda sin luz y haz
+.BR dcraw\ -D\ -4\ -j\ -t\ 0 .
+.TP
+.B -k oscuro
+Cuando las sombras aparezcan con neblina, se debe incrementar el nivel de oscuro.
+Para medir esto, aplicar
+.B pamsumm -mean
+al cuadro oscuro generado arriba.
+.TP
+.B -S saturación
+Si las altas luces aparecen rosa, se debe reducir el nivel de saturación.
+Para medir esto, realizar una captura de algo brillante y hacer
+.B dcraw -D -4 -j -c
+foto.raw
+.B | pamsumm -max
+.TP
+.B ""
+Los valores de oscuro y saturación por defecto suelen ser adecuados.
+.TP
+.B -n umbral_reducción_ruido
+Emplea un algoritmo basado en ondículas para eliminar el ruido
+manteniendo el detalle.  El umbral óptimo suele estar entre 100 y 1000.
+.TP
+.B -C mag_roja mag_azul
+Ampliar las capas roja y azul segun los factores indicados, tipicamente
+de 0.999 a 1.001, para corregir la aberracion cromatica.
+.TP
+.B -H 0
+Excluir todas las sobreexposiciones de blanco sólido (por defecto).
+.TP
+.B -H 1
+Dejar las sobreexposiciones sin excluir en varias sombras de rosa.
+.TP
+.B -H 2
+Combinar valores recortados y no recortados en un degradado gradual
+a blanco.
+.TP
+.B -H 3+
+Reconstruir sobreexposiciones.  Los valores bajos favorecen
+los blancos; los valores altos favorecen los colores.  Prueba
+.B -H 5
+como compromiso.  Si no es suficientemente bueno, haz
+.BR -H\ 9 ,
+corta las sobreexposiciones que no son blancas y pégalas sobre
+la imagen generada con
+.BR -H\ 3 .
+.SH OPCIONES DE COLOR
+Por defecto,
+.B dcraw
+usa balance de blancos prefijado basado en una carta de color bajo
+iluminación estándar D65.
+.TP
+.B -w
+Utilizar el balance de blancos especificado por la cámara.
+Si no se encuentra, mostrar un mensaje de aviso y utilizar otro método.
+.TP
+.B -a
+Calcular el balance de blancos promediando la imagen completa.
+.TP
+.B -A izquierda arriba ancho alto
+Calcular el balance de blancos promediando un área rectangular.
+Primero hacer
+.B dcraw\ -j\ -t\ 0
+y seleccionar un área de color gris neutro.
+.TP
+.B -r mul0 mul1 mul2 mul3
+Especificar tu propio balance de blancos.
+Estos multiplicadores se pueden cortar y pegar desde la salida de
+.BR dcraw\ -v .
+.TP
+.BR +M " o " -M
+Utilizar (o no utilizar) matriz de color incrustada en los metadatos
+de la cámara.
+Por defecto es
+.B +M
+si
+.B -w
+es seleccionado, es
+.B -M
+en otro caso.
+Esta opción solo afecta a las cámaras Olympus, Leaf y Phase One.
+.TP
+.B -o [0-5]
+Seleccionar el espacio de color de salida cuando la opción
+.B -p
+no se utiliza:
+
+.B \t0
+\ \ Color crudo (único para cada cámara)
+.br
+.B \t1
+\ \ sRGB D65 (por defecto)
+.br
+.B \t2
+\ \ Adobe RGB (1998) D65
+.br
+.B \t3
+\ \ Wide Gamut RGB D65
+.br
+.B \t4
+\ \ Kodak ProPhoto RGB D65
+.br
+.B \t5
+\ \ XYZ
+.TP
+.BR -p\ cámara.icm \ [\  -o\ salida.icm \ ]
+Usar perfiles ICC para definir el espacio de color crudo de
+la cámara y el espacio de color deseado (sRGB por defecto).
+.TP
+.B -p embed
+Usar el perfil ICC asociado en la foto cruda.
+.SH OPCIONES DE INTERPOLACIÓN
+.TP
+.B -d
+Mostrar los datos crudos como una imagen en escala de grises sin
+interpolación.  Bueno para fotografiar documentos en blanco y negro.
+.TP
+.B -D
+Igual que
+.BR -d ,
+pero totalmente crudo (sin escalado de color).
+.TP
+.B -h
+Mostrar una imagen en color de la mitad del tamaño.  Doble de rápido que
+.BR -q\ 0 .
+.TP
+.B -q 0
+Usar interpolación bilineal de alta velocidad y baja calidad.
+.TP
+.B -q 1
+Usar interpolación de Número Variable de Gradientes (VNG).
+.TP
+.B -q 2
+Usar interpolación por Agrupación de Píxeles en Patrones (PPG).
+.TP
+.B -q 3
+Usar interpolación Adaptativa Dirigida a la Homogeneidad (AHD).
+.TP
+.B -f
+Interpolar RGB como cuatro colores.  Usar esto si la salida muestra
+retinas 2x2 falsas con VNG o laberintos con AHD.
+.TP
+.B -m numero_de_pasos
+Tras la interpolación, elimina los artefactos de color aplicando
+repetidamente un filtro de mediana de 3x3 a los canales R-G y B-G.
+.SH OPCIONES DE SALIDA
+Por defecto,
+.B dcraw
+genera archivos PGM/PPM/PAM de 8 bits, curva gamma BT.709, nivel de
+blanco basado en histograma, y ningún metadato.
+.TP
+.B -W
+Usa nivel de blanco prefijado, ignorando el histograma de la imagen.
+.TP
+.B -b luminosidad
+Divide el nivel de blanco por este número, por defecto 1.0.
+.TP
+.B -g exponente pendiente_maxima
+Establecer curva gamma, por defecto BT.709
+.RB ( -g\ 2.222\ 4.5 ).
+Para una gamma sRGB, utilizar
+.BR -g\ 2.4\ 12.92 .
+Para una curva de potencianción pura, poner a cero la pendiente maxima.
+.TP
+.B -6
+Escribir dieciseis bits por muestra en lugar de ocho.
+.TP
+.B -4
+16 bits lineales, equivalente a
+.BR -6\ -W\ -g\ 1\ 1 .
+.TP
+.B -T
+Guardar en formato TIFF con metadatos en vez de PGM/PPM/PAM.
+.TP
+.B -t [0-7,90,180,270]
+Girar la imagen de salida.  Por defecto,
+.B dcraw
+aplica el giro especificado por la cámara.
+.B -t 0
+deshabilita todos los giros.
+.TP
+.B -j
+Para cámaras Fuji\ Super\ CCD, mostrar la imagen girada 45 grados.
+Para cámaras sin píxeles cuadrados, no estrechar la imagen a su
+proporción de aspecto correcto.  En cualquier caso, esta opción
+garantiza que cada píxel de salida corresponte con un píxel crudo.
+.TP
+.BR "-s [0..N-1]" " o " "-s all"
+Si un archivo contiene N imágenes crudas, elegir decodificar una
+concreta o "all" (todas).
+Por ejemplo, las cámaras Fuji\ Super\ CCD\ SR generan
+una segunda imagen infraexpuesta cuatro paradas para mostrar en
+detalle las sobreexposiciones.
+.SH ARCHIVOS
+.TP
+\:./.badpixels, ../.badpixels, ../../.badpixels, ...
+Listar los píxeles muertos de tu cámara, para que
+.B dcraw
+pueda interpolar alrededor de ellos.  Cada línea especifica la columna,
+fila y tiempo UNIX de la muerte de cada píxel.  Por ejemplo:
+.sp 1
+.nf
+ 962   91 1028350000  # murió entre el 1 y el 4 de Agosto del 2002
+1285 1067 0           # no se sabe cuándo murió este píxel
+.fi
+.sp 1
+Estas coordenadas son de antes del recorte o rotación, así que utiliza
+.B dcraw -j -t 0
+para encontrar píxeles muertos.
+.SH "VÉASE TAMBIÉN"
+.BR pgm (5),
+.BR ppm (5),
+.BR pam (5),
+.BR pamsumm (1),
+.BR pnmgamma (1),
+.BR pnmtotiff (1),
+.BR pnmtopng (1),
+.BR gphoto2 (1),
+.BR cjpeg (1),
+.BR djpeg (1)
+.SH AUTOR
+Written by David Coffin, dcoffin a cybercom o net
+.SH TRADUCCIÓN
+Traducido por Ioannis Aslanidis, deathwing00 a gentoo o org
+y Guillermo Luijk Delgado, guillermo.luijk a orange-ftgroup o com

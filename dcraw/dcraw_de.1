@@ -1,0 +1,289 @@
+.\"
+.\" Man page für dcraw
+.\"
+.\" Copyright (c) 2009 David Coffin
+.\"
+.\" Diese Datei darf ohne Einschränkungen weitergegeben werden
+.\"
+.\" David Coffin
+.\" dcoffin a cybercom o net
+.\" http://www.cybercom.net/~dcoffin
+.\"
+.TH dcraw 1 "14. Mai 2009"
+.LO 1
+.SH NAME
+dcraw - Kommandozeilen Dekoder für RAW Daten von digitalen Kameras
+.SH ZUSAMMENFASSUNG
+.B dcraw
+[\fIOPTIONEN\fR]... [\fIDATEI\fR]...
+.SH BESCHREIBUNG
+.B dcraw
+dekodiert RAW Daten, zeigt Metadaten an und extrahiert Thumbnails.
+.SH ALLGEMEINE EINSTELLUNGEN
+.TP
+.B -v
+Gebe zusätzliche Informationen neben Warnungen und Fehlermeldungen aus.
+.TP
+.B -c
+Schreibe dekodierte Bilder oder Thumbnails in die Standardausgabe.
+.TP
+.B -e
+Extrahiere das von der Kamera erzeugte Thumbnail, nicht das RAW Bild.
+Die Ausgabe wird, je nach Kamera, eine JPEG oder PPM Datei sein.
+.TP
+.B -z
+Setze die Zugriffs- und Änderungszeit von AVI, JPEG, TIFF oder RAW
+Dateien auf den Erstellungszeitpunkt des Fotos (dabei wird angenommen,
+dass die Kamera Uhr auf Universal Time (UT) eingestellt ist).
+.TP
+.B -i
+Überprüfe Dateien, aber dekodiere sie nicht.
+Gibt 0 zurück, wenn
+.B dcraw
+sie dekodieren kann, 1 wenn nicht.
+.B -i -v
+gibt Metadaten aus.
+.TP
+.B ""
+.B dcraw
+kann keine JPEG Dateien dekodieren!!
+.SH REPARATUREINSTELLUNGEN
+.TP
+.B -P deadpixels.txt
+Lese die Liste toter Pixel aus dieser Datei, anstatt aus ".badpixels".
+Siehe
+.B DATEIEN
+um eine Beschreibung zu finden.
+.TP
+.B -K dunkelbild.pgm
+Subtrahiere ein Dunkelbild von den RAW Daten. Um ein Dunkelbild zu
+erzeugen fotografieren Sie ohne Licht und verwenden danach
+.BR dcraw\ -D\ -4\ -j\ -t\ 0 .
+.TP
+.B -k Dunkelheit
+Wenn Schatten einen Schleier haben, muss der Dunkelheitsschwellenwert
+erhöht werden.
+Um diesen zu berechnen, wenden Sie
+.B pamsumm -mean
+auf das oben erstelle Dunkelbild an.
+.TP
+.B -S Sättigung
+Wenn Spitzenlichter pink aussehen, müssen Sie den Sättigungsschwellenwert
+erniedrigen.
+Um diesen zu berechnen, nehmen Sie ein Bild von etwas glänzenden auf, und
+wenden Sie anschließend
+.B dcraw -D -4 -j -c
+photo.raw
+.B | pamsumm -max
+auf das Bild an.
+.TP
+.B ""
+Die Standardwerte für Dunkelheit und Sättigung sind normalerweise richtig.
+.TP
+.B -n Rauschschwellenwert
+Verwende Wavelets um Rauschen zu entfernen und Bilddetails zu erhalten.
+Der Schwellenwert sollte zwischen 100 und 1000 liegen.
+.TP
+.B -C rot_verg blau_verg
+Vergrößere die roten oder blauen Kanäle um die angegebenen Werte,
+meistens 0.999 bis 1.001, um chromatische Aberration zu korrigieren.
+.TP
+.B -H 0
+Übersteuere alle Spitzlichter zu völligem weiß (Voreinstellung).
+.TP
+.B -H 1
+Belässt alle übersteuerten Spitzenlichter in verschiedenen Pink Tönen.
+.TP
+.B -H 2
+Vermische abgeschnittene und nicht abgeschnittene Werte zu einem
+allmählichen Verlauf zu Weiß.
+.TP
+.B -H 3+
+Rekonstruiert Spitzenlichter. Niedrige Nummern bevorzugen weiß;
+hohe Nummern bevorzugen Farben.  Verwenden Sie
+.B -H 5
+als Kompromiss.  Sollte das nicht gut genug sein, probieren Sie
+.BR -H\ 9 ,
+schneiden Sie die nicht weißen Spitzlichter aus,
+und kopieren Sie sie in ein Bild, das mit
+.B -H 3
+erzeugt wurde.
+.SH FARBEINSTELLUNGEN
+Standardmäßig verwendet
+.B dcraw
+einen festen Weißabgleich basierend auf einer, mit einer standard
+D65 Lampe beleuchteten, Farbkarte.
+.TP
+.B -w
+Benutze den Weißabgleich der Kamera.  Gebe eine Warnung aus,
+wenn dieser nicht gefunden wird und verwende eine andere Methode.
+.TP
+.B -a
+Berechne Weißabgleich unter Verwendung des ganzen Bildes.
+.TP
+.B -A Links Oben Breite Höhe
+Berechne Weißabgleich unter Verwendung eines rechteckigen Bereichs.
+Benutzen Sie
+.B dcraw\ -j\ -t\ 0
+und wählen sie einen Bereich mit neutralen Grauwert.
+.TP
+.B -r mul0 mul1 mul2 mul3
+Verwende manuellen Weißabgleich.
+Diese Multiplikatoren können aus der Ausgabe von
+.B dcraw -v
+kopiert werden.
+.TP
+.BR +M " oder " -M
+Verwende (oder verwende keine) Farbmatrix aus den Metadaten der Kamera.
+Voreinstellung ist
+.B +M
+oder, wenn
+.B -w
+gewählt wurde
+.BR -M .
+Diese Option betrifft nur Olympus, Leaf und Phase One Kameras.
+.TP
+.B -o [0-5]
+Wählt den Farbraum der Ausgabe aus, wenn
+.B -p
+nicht verwendet wird:
+
+.B \t0
+\ \ Raw Farbe (abhängig von der jeweiligen Kamera)
+.br
+.B \t1
+\ \ sRGB D65 (Voreinstellung)
+.br
+.B \t2
+\ \ Adobe RGB (1998) D65
+.br
+.B \t3
+\ \ Wide Gamut RGB D65
+.br
+.B \t4
+\ \ Kodak ProPhoto RGB D65
+.br
+.B \t5
+\ \ XYZ
+.TP
+.BR -p\ kamera.icm \ [\  -o\ ausgabe.icm \ ]
+Verwende ICC Profile um den RAW Farbraum der Kamera
+und den Ausgabe Farbraum zu definieren (Voreinstellung: sRGB).
+.TP
+.B -p embed
+Verwende das in der RAW Datei eingebettete Profil.
+.SH INTERPOLATIONSEINSTELLUNGEN
+.TP
+.B -d
+Zeige die RAW Daten als Graustufen Bild ohne Interpolation.
+(z.B. gut geeignet für Schwarz-Weiß Dokumente)
+.TP
+.B -D
+Identisch zu
+.BR -d ,
+aber völlig unbearbeitet (ohne Farbskalierung).
+.TP
+.B -h
+Gibt ein Bild mit halber Größe aus, doppelt so schnell wie
+.BR -q\ 0 .
+.TP
+.B -q 0
+Benutze schnelle und qualitativ schlechtere bilineare Interpolation.
+.TP
+.B -q 1
+Verwende Variable Number of Gradients (VNG) Interpolation.
+.TP
+.B -q 2
+Verwende Patterned Pixel Grouping (PPG) Interpolation.
+.TP
+.B -q 3
+Verwende Adaptive Homogeneity-Directed (AHD) Interpolation.
+.TP
+.B -f
+Interpoliere RGB als vier Farben. Verwenden Sie diese Option wenn
+die Ausgabe Anzeichen von 2x2 Netzen bei VNG Interpolation oder
+Labyrinthstrukturen bei AHD Interpolation zeigt.
+.TP
+.B -m Anzahl_der_Durchgänge
+Säubere Farbartefakte nach der Interpolation, durch wiederholtes
+Anwenden eines 3x3 Median Filters auf die R-G und B-G Kanäle.
+.SH AUSGABEEINSTELLUNGEN
+Standardmäßig gibt
+.B dcraw
+PGM/PPM/PAM Dateien mit 8-bit Daten, einer BT.709 Gamma Kurve,
+einem Histogramm basierten Weißwert und keinen Metadaten aus.
+.TP
+.B -W
+Ignoriere das Histogramm der Datei und verwende einen festen Weißwert.
+.TP
+.B -b Helligkeit
+Teile den Weißwert durch diese Zahl, standardmäßig 1.0
+.TP
+.B -g Potenz maximale_Steigung
+Die Gammakurve festlegen, standardmäßig BT.709
+.RB ( -g\ 2.222\ 4.5 ).
+Wenn Sie die sRGB Gammakurve bevorzugen, verwenden Sie
+.BR -g\ 2.4\ 12.92 .
+Für eine einfache Potenzfunktion, setzen Sie maximale_Steigung auf 0.
+.TP
+.B -6
+Schreibe sechzehn Bits pro Sample anstelle von acht.
+.TP
+.B -4
+Schreibe lineare 16-bit Daten, produziert dasselbe wie
+.BR -6\ -W\ -g\ 1\ 1 .
+.TP
+.B -T
+Gibt TIFF mit Metadaten, anstatt PGM/PPM/PAM Dateien, aus.
+.TP
+.B -t [0-7,90,180,270]
+Drehe die Ausgabe.  Die Voreinstellung,
+.B dcraw
+rotiert die Ausgabe nach den Vorgaben der Kamera.
+.B -t 0
+deaktiviert jede Rotation.
+.TP
+.B -j
+Neige das Bild um 45 Grad für Fuji\ Super\ CCD Kameras.
+Verhindert eine Streckung auf das korrekte Bildverhältnis für
+Kameras, die keine quadartischen Pixel haben. Diese Option
+garantiert, dass jeder Ausgabepixel einem RAW Pixel entspricht.
+.TP
+.BR "-s [0..N-1]" " oder " "-s all"
+Wenn eine Datei N raw Bilder enthält, wähle eins oder alle ("all")
+zum Dekodieren.
+Fuji\ Super\ CCD\ SR Kameras zum Beispiel erzeugen ein zweites Bild,
+welches vier Blenden unterbelichtet ist, um die Details in den
+Spitzenlichtern zu erhalten.
+.SH DATEIEN
+.TP
+\:./.badpixels, ../.badpixels, ../../.badpixels, ...
+Liste der toten Pixel Ihrer Kamera, so dass
+.B dcraw
+um sie herum interpolieren kann. Jede Zeile gibt die Spalte, Zeile und
+die UNIX Zeit des Todeszeitpunkts des jeweiligen Pixels an. Zum Beispiel:
+.sp 1
+.nf
+ 962   91 1028350000  # starb zwischen dem 1 und 4 Ausgust 2002
+1285 1067 0           # Todeszeitpunkt unbekannt
+.fi
+.sp 1
+Diese Koordinaten entsprechen denen vor jeglicher Größenänderung
+und Rotation, verwenden Sie also
+.B dcraw -j -t 0
+um tote Pixel zu finden.
+.SH "SIEHE AUCH"
+.BR pgm (5),
+.BR ppm (5),
+.BR pam (5),
+.BR pamsumm (1),
+.BR pnmgamma (1),
+.BR pnmtotiff (1),
+.BR pnmtopng (1),
+.BR gphoto2 (1),
+.BR cjpeg (1),
+.BR djpeg (1)
+.SH AUTOR
+Geschrieben von David Coffin, dcoffin a cybercom o net
+.SH ÜBERSETZUNG
+Benjamin Lebsanft, benjamin a lebsanft o org
