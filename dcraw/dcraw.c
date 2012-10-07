@@ -44,6 +44,10 @@
 #include <time.h>
 #include <sys/types.h>
 
+#if !defined(M_PI)
+#  define M_PI 3.14159265358979323846
+#endif
+
 #ifdef NODEPS
 #define NO_JASPER
 #define NO_JPEG
