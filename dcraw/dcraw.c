@@ -28,6 +28,8 @@
 #ifndef _GNU_SOURCE
 #define _GNU_SOURCE
 #endif
+#define WIN32_LEAN_AND_MEAN
+#define VC_EXTRALEAN
 #define _USE_MATH_DEFINES
 #include <ctype.h>
 #include <errno.h>

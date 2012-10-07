@@ -1,7 +1,16 @@
 diff -r a9fccc1b01d0 dcraw/dcraw.c
 --- a/dcraw/dcraw.c	Sun Sep 30 17:46:00 2012 -0500
-+++ b/dcraw/dcraw.c	Sun Sep 30 18:52:42 2012 -0500
-@@ -63,7 +63,7 @@
++++ b/dcraw/dcraw.c	Sat Oct 06 17:42:00 2012 -0500
+@@ -28,6 +28,8 @@
+ #ifndef _GNU_SOURCE
+ #define _GNU_SOURCE
+ #endif
++#define WIN32_LEAN_AND_MEAN
++#define VC_EXTRALEAN
+ #define _USE_MATH_DEFINES
+ #include <ctype.h>
+ #include <errno.h>
+@@ -63,7 +65,7 @@
  #define _(String) (String)
  #endif
  
@@ -10,7 +19,7 @@ diff -r a9fccc1b01d0 dcraw/dcraw.c
  #define fseeko fseek
  #define ftello ftell
  #else
-@@ -113,6 +113,7 @@
+@@ -113,6 +115,7 @@
  FILE *ifp, *ofp;
  short order;
  const char *ifname;
@@ -18,7 +27,7 @@ diff -r a9fccc1b01d0 dcraw/dcraw.c
  char *meta_data;
  char cdesc[5], desc[512], make[64], model[64], model2[64], artist[64];
  float flash_used, canon_ev, iso_speed, shutter, aperture, focal_len;
-@@ -9113,6 +9114,7 @@
+@@ -9113,6 +9116,7 @@
      puts(_("-r <r g b g> Set custom white balance"));
      puts(_("+M/-M     Use/don't use an embedded color matrix"));
      puts(_("-C <r b>  Correct chromatic aberration"));
@@ -26,7 +35,7 @@ diff -r a9fccc1b01d0 dcraw/dcraw.c
      puts(_("-P <file> Fix the dead pixels listed in this file"));
      puts(_("-K <file> Subtract dark frame (16-bit raw PGM)"));
      puts(_("-k <num>  Set the darkness level"));
-@@ -9181,6 +9183,7 @@
+@@ -9181,6 +9185,7 @@
  #endif
  	break;
        case 'P':  bpfile     = argv[arg++];  break;
@@ -34,7 +43,7 @@ diff -r a9fccc1b01d0 dcraw/dcraw.c
        case 'K':  dark_frame = argv[arg++];  break;
        case 'z':  timestamp_only    = 1;  break;
        case 'e':  thumbnail_only    = 1;  break;
-@@ -9444,7 +9447,10 @@
+@@ -9444,7 +9449,10 @@
      if (write_to_stdout)
        strcpy (ofname,_("standard output"));
      else {
@@ -46,7 +55,7 @@ diff -r a9fccc1b01d0 dcraw/dcraw.c
        if ((cp = strrchr (ofname, '.'))) *cp = 0;
        if (multi_out)
  	sprintf (ofname+strlen(ofname), "_%0*d",
-@@ -9452,6 +9458,7 @@
+@@ -9452,6 +9460,7 @@
        if (thumbnail_only)
  	strcat (ofname, ".thumb");
        strcat (ofname, write_ext);
