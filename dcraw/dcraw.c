@@ -43,6 +43,9 @@
 #include <string.h>
 #include <time.h>
 #include <sys/types.h>
+#if defined(WIN32)
+#include <io.h>
+#endif
 
 #if !defined(M_PI)
 #  define M_PI 3.14159265358979323846
@@ -3732,7 +3735,7 @@ void CLASS wavelet_denoise()
   int scale=1, size, lev, hpass, lpass, row, col, nc, c, i, wlast, blk[2];
   ushort *window[4];
   static const float noise[] =
-  { 0.8002,0.2735,0.1202,0.0585,0.0291,0.0152,0.0080,0.0044 };
+  { 0.8002f,0.2735f,0.1202f,0.0585f,0.0291f,0.0152f,0.0080f,0.0044f };
 
   if (verbose) fprintf (stderr,_("Wavelet denoising...\n"));
 
@@ -7003,15 +7006,15 @@ void CLASS simple_coeff (int index)
 {
   static const float table[][12] = {
   /* index 0 -- all Foveon cameras */
-  { 1.4032,-0.2231,-0.1016,-0.5263,1.4816,0.017,-0.0112,0.0183,0.9113 },
+  { 1.4032f,-0.2231f,-0.1016f,-0.5263f,1.4816f,0.017f,-0.0112f,0.0183f,0.9113f },
   /* index 1 -- Kodak DC20 and DC25 */
-  { 2.25,0.75,-1.75,-0.25,-0.25,0.75,0.75,-0.25,-0.25,-1.75,0.75,2.25 },
+  { 2.25f, 0.75f, -1.75f, -0.25f, -0.25f, 0.75f, 0.75f, -0.25f, -0.25f, -1.75f, 0.75f, 2.25f },
   /* index 2 -- Logitech Fotoman Pixtura */
-  { 1.893,-0.418,-0.476,-0.495,1.773,-0.278,-1.017,-0.655,2.672 },
+  { 1.893f, -0.418f, -0.476f, -0.495f, 1.773f, -0.278f, -1.017f, -0.655f, 2.672f },
   /* index 3 -- Nikon E880, E900, and E990 */
-  { -1.936280,  1.800443, -1.448486,  2.584324,
-     1.405365, -0.524955, -0.289090,  0.408680,
-    -1.204965,  1.082304,  2.941367, -1.818705 }
+  { -1.936280f,  1.800443f, -1.448486f,  2.584324f,
+     1.405365f, -0.524955f, -0.289090f,  0.408680f,
+    -1.204965f,  1.082304f,  2.941367f, -1.818705f }
   };
   int i, c;
 
@@ -7877,9 +7880,9 @@ e900:
     if (strcmp(model,"E995")) {
       filters = 0xb4b4b4b4;
       simple_coeff(3);
-      pre_mul[0] = 1.196;
-      pre_mul[1] = 1.246;
-      pre_mul[2] = 1.018;
+      pre_mul[0] = 1.196f;
+      pre_mul[1] = 1.246f;
+      pre_mul[2] = 1.018f;
     }
   } else if (!strcmp(model,"E2100")) {
     if (!timestamp && !nikon_e2100()) goto cp_e2500;
@@ -8429,9 +8432,9 @@ c603:
       colors = 4;
       filters = 0x8d8d8d8d;
       simple_coeff(1);
-      pre_mul[1] = 1.179;
-      pre_mul[2] = 1.209;
-      pre_mul[3] = 1.036;
+      pre_mul[1] = 1.179f;
+      pre_mul[2] = 1.209f;
+      pre_mul[3] = 1.036f;
       load_raw = &CLASS eight_bit_load_raw;
     } else if (!strcmp(model,"40")) {
       strcpy (model, "DC40");
