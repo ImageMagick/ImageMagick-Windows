@@ -9019,7 +9019,7 @@ int CLASS main (int argc, const char **argv)
   int timestamp_only=0, thumbnail_only=0, identify_only=0;
   int user_qual=-1, user_black=-1, user_sat=-1, user_flip=-1;
   int use_fuji_rotate=1, write_to_stdout=0, read_from_stdin=0;
-  const char *sp, *bpfile=0, *dark_frame=0, *write_ext;
+  const char *sp, *bpfile=0, *outfile=0, *dark_frame=0, *write_ext;
   char opm, opt, *ofname, *cp;
   struct utimbuf ut;
 #ifndef NO_LCMS
