@@ -1,0 +1,80 @@
+version: ImageMagick-{branch}.{build}
+
+os: Windows Server 2012 R2
+
+clone_folder: C:\ImageMagick
+shallow_clone: true
+
+skip_tags: true
+
+matrix:
+  fast_finish: true
+
+cache:
+  - C:\Program Files (x86)\Inno Setup 5 -> appveyor.yml
+  - C:\Strawberry-x86 -> appveyor.yml
+  - C:\Strawberry-x64 -> appveyor.yml
+
+environment:
+  ftp_password:
+     secure: 5jIgwMyyjTcIfLY/Xqk7dg==
+
+  matrix:
+    - im_platform: "x64"
+      im_name:     "dll-Q8"
+    - im_platform: "x64"
+      im_name:     "dll-Q16"
+    - im_platform: "x64"
+      im_name:     "static-Q8"
+    - im_platform: "x64"
+      im_name:     "static-Q16"
+
+    - im_platform: "x86"
+      im_name:     "dll-Q8"
+    - im_platform: "x86"
+      im_name:     "dll-Q16"
+    - im_platform: "x86"
+      im_name:     "static-Q8"
+    - im_platform: "x86"
+      im_name:     "static-Q16"
+
+    - im_platform: "x64"
+      im_name:     "hdri-dll-Q16"
+    - im_platform: "x64"
+      im_name:     "hdri-static-Q16"
+
+    - im_platform: "x86"
+      im_name:     "hdri-dll-Q16"
+    - im_platform: "x86"
+      im_name:     "hdri-static-Q16"
+
+    - im_platform: "x64"
+      im_name:     "portable-Q16"
+    - im_platform: "x86"
+      im_name:     "portable-Q16"
+
+    - im_platform: "none"
+      im_name:     "source"
+
+install:
+  - cd AppVeyor
+  - Install.cmd
+
+artifacts:
+  - path: 'Windows-Distribution\*.exe'
+  - path: 'Windows-Distribution\*.zip'
+  - path: 'Windows-Distribution\Version.txt'
+
+build_script:
+  - cd AppVeyor
+  - Build.cmd %im_platform% %im_name% %ftp_password%
+
+deploy:
+  provider: FTP
+  protocol: ftp
+  host: magick.imagemagick.org
+  beta: true
+  folder: /ImageMagick-7
+  username: upload
+  password:
+    secure: 5jIgwMyyjTcIfLY/Xqk7dg==
