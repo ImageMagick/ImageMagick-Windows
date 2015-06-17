@@ -201,7 +201,7 @@ function CheckUpload($version, $password)
   $webclient = New-Object System.Net.WebClient
   $webclient.Credentials = New-Object System.Net.NetworkCredential("upload", $password)
 
-  $source = "ftp://magick.imagemagick.org/ImageMagick7/Windows-Distribution/Version.txt"
+  $source = "ftp://magick.imagemagick.org/ImageMagick-7/Windows-Distribution/Version.txt"
   $destination = "CurrentVersion.txt"
   $webclient.DownloadFile($source, $destination)
 
