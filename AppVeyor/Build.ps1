@@ -44,15 +44,30 @@ function GetConfig($platform, $name)
 
 function GetVersion()
 {
-  return Get-Content "Version.txt"
+  $version = "7.x.x"
+  $addendum = "-x"
+
+  foreach ($line in [System.IO.File]::ReadLines("../VisualMagick/installer/inc/version.isx"))
+  {
+    if ($line.StartsWith("#define public MagickPackageVersionAddendum"))
+    {
+      $addendum = $line.SubString(45, $line.Length - 46)
+    }
+    elseif ($line.StartsWith("#define public MagickPackageVersion"))
+    {
+      $version = $line.SubString(37, $line.Length - 38)
+    }
+  }
+
+  return "$version$addendum"
 }
 
 function CheckExitCode($msg)
 {
-	if ($LastExitCode -ne 0)
-	{
-		Throw $msg
-	}
+  if ($LastExitCode -ne 0)
+  {
+    Throw $msg
+  }
 }
 
 function BuildConfigure()
@@ -196,27 +211,18 @@ function CreateSource($version)
   Copy-Item "Version.txt" "..\Windows-Distribution"
 }
 
-function CheckUpload($version, $password)
+function CheckUpload()
 {
-  $webclient = New-Object System.Net.WebClient
-  $webclient.Credentials = New-Object System.Net.NetworkCredential("upload", $password)
-
-  $source = "ftp://magick.imagemagick.org/ImageMagick-7/Windows-Distribution/Version.txt"
-  $destination = "CurrentVersion.txt"
-  $webclient.DownloadFile($source, $destination)
-
-  $currentVersion = Get-Content "CurrentVersion.txt"
-  if ($currentVersion -eq $version)
+  $day = (Get-Date).DayOfWeek
+  if ($day -ne "Saturday")
   {
-    Write-Host "Version $($version) has already been published."
+    Write-Host "Only uploading on Saturday."
     Remove-Item ..\Windows-Distribution\*
   }
 }
 
-
 $platform = $args[0]
 $name = $args[1]
-$password = $args[2]
 
 $version = GetVersion
 
@@ -225,7 +231,7 @@ New-Item -ItemType directory -Path ..\Windows-Distribution | Out-Null
 if ($name -eq "source")
 {
   CreateSource $version
-  CheckUpload $version $password
+  CheckUpload
 }
 else
 {
@@ -238,5 +244,5 @@ else
   BuildConfigure
   BuildConfiguration $config
   CreatePackage $config $version
-  CheckUpload $version $password
+  CheckUpload
 }

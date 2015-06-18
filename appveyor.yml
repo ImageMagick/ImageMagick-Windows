@@ -16,8 +16,6 @@ cache:
   - C:\Strawberry-x64 -> appveyor.yml
 
 environment:
-  ftp_password:
-     secure: 5jIgwMyyjTcIfLY/Xqk7dg==
 
   matrix:
     - im_platform: "x64"
@@ -67,7 +65,7 @@ artifacts:
 
 build_script:
   - cd AppVeyor
-  - Build.cmd %im_platform% %im_name% %ftp_password%
+  - Build.cmd %im_platform% %im_name%
 
 deploy:
   provider: FTP
