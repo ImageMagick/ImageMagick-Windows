@@ -207,8 +207,6 @@ function CreateSource($version)
 
   $output = "..\Windows-Distribution\ImageMagick-Windows-$($version).zip"
   CreateZipFile $output ".\Source"
-
-  Copy-Item "Version.txt" "..\Windows-Distribution"
 }
 
 function CheckUpload()
