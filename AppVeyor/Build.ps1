@@ -30,7 +30,7 @@ function GetConfig($platform, $name)
 
   elseif ($name -eq "portable-Q16")
   {
-    $config = @{options="/smtd /Q16";perl=$false;type="portable";solution="VisualStaticMTD.sln"}
+    $config = @{options="/smt /Q16";perl=$false;type="portable";solution="VisualStaticMTD.sln"}
   }
 
   if ($config -ne $null)
@@ -171,12 +171,6 @@ function CreatePortable($config, $version)
   Copy-Item ..\ImageMagick\NOTICE .\Portable
   Copy-Item ..\ImageMagick\README.txt .\Portable
   Copy-Item ..\ImageMagick\www .\Portable -recurse
-
-  $redist = "C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\redist\$($config.platform)\Microsoft.VC120."
-  Copy-Item "$($redist)CRT\msvcr120.dll" .\Portable
-  Copy-Item "$($redist)CRT\msvcp120.dll" .\Portable
-  Copy-Item "$($redist)OPENMP\vcomp120.dll" .\Portable
-  Copy-Item "$($redist)MFC\mfc120u.dll" .\Portable
 
   CheckExitCode "Failed to copy files."
 
