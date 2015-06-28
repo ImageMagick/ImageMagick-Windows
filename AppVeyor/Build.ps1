@@ -30,7 +30,7 @@ function GetConfig($platform, $name)
 
   elseif ($name -eq "portable-Q16")
   {
-    $config = @{options="/smt /Q16";perl=$false;type="portable";solution="VisualStaticMTD.sln"}
+    $config = @{options="/smt /Q16";perl=$false;type="portable";solution="VisualStaticMT.sln"}
   }
 
   if ($config -ne $null)
