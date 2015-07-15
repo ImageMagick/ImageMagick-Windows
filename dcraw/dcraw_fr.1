@@ -1,7 +1,7 @@
 .\"
 .\" Page Man de dcraw
 .\"
-.\" Copyright (c) 2009 by David Coffin
+.\" Copyright (c) 2015 by David Coffin
 .\"
 .\" Vous pouvez distribuer sans aucune restriction.
 .\"
@@ -9,7 +9,7 @@
 .\" dcoffin a cybercom o net
 .\" http://www.cybercom.net/~dcoffin
 .\"
-.TH dcraw 1 "14 mai 2009"
+.TH dcraw 1 "3 mars 2015"
 .LO 1
 .SH NOM
 dcraw - décodeur en ligne de commande de photos numériques raw
@@ -51,6 +51,12 @@ montre les métadonnées.
 .B dcraw
 ne peut pas décoder les fichiers JPEG !!
 .SH OPTION DE REPARATION
+.TP
+.B -I
+Lit les pixels bruts depuis l'entrée standard selon l'ordre des
+octets du processeur. Utilisez
+.B dcraw -E -4
+pour obtenir les valeurs brutes des pixels.
 .TP
 .B -P pixelsmorts.txt
 Lit la liste des pixels morts depuis ce fichier au lieu de ".badpixels".
@@ -144,10 +150,10 @@ La valeur par défaut est
 .B +M
 si
 .B -w
-est positionné,
+est activé ou si la photo est au format DNG,
 .B -M
-sinon.
-Cette option ne concerne que les appareils photo Olympus, Leaf, et Phase One.
+sinon. A part DNG,
+cette opinion est applicable aux appareils Olympus, Leaf et Phase One.
 .TP
 .B -o [0-5]
 Sélectionne l'espace de couleur de sortie quand l'option
@@ -186,9 +192,14 @@ Montre les données raw comme une image monochrome sans interpolation.
 Bon pour photographier des documents en noir et blanc.
 .TP
 .B -D
-Pareil que
+Comme avec
 .BR -d ,
-mais complètement raw (aucune mise à l'échelle des couleurs).
+mais avec les valeurs de pixels non mise à l'échelle
+.TP
+.B -E
+Comme avec
+.BR -D ,
+mais les pixels masqués ne sont pas découpés.
 .TP
 .B -h
 Génère une image couleur réduite de moitié.  Deux fois plus rapide que
@@ -276,7 +287,7 @@ une ligne, et la date UNIX de la mort pour un pixel.  Par exemple :
 1285 1067 0           # mort à une date inconnue
 .fi
 .sp 1
-Ces coordonnées sont celles avant toute rotation ou réduction,
+Ces coordonnées sont avant tout étirement ou rotation,
 donc utilisez
 .B dcraw -j -t 0
 pour identifier les pixels morts.

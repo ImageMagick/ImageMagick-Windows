@@ -1,7 +1,7 @@
 .\"
 .\" Man page for dcraw
 .\"
-.\" Copyright (c) 2009 by David Coffin
+.\" Copyright (c) 2015 by David Coffin
 .\"
 .\" You may distribute without restriction.
 .\"
@@ -9,7 +9,7 @@
 .\" dcoffin a cybercom o net
 .\" http://www.cybercom.net/~dcoffin
 .\"
-.TH dcraw 1 "14. maj 2009"
+.TH dcraw 1 "3. marts 2015"
 .LO 1
 .SH NAVN
 dcraw - kommandolinjeafkoder for rå digitalfotos
@@ -28,7 +28,7 @@ Udskriv detaljerede meddelelser, ikke kun advarsler og fejlmeddelelser.
 Skriv afkodede billeder eller miniaturbilleder til standard-uddata.
 .TP
 .B -e
-Udtrækker det kamera-skabte miniaturbillede, ikke det rå billede.
+Udtræk det kamera-skabte miniaturbillede, ikke det rå billede.
 Du får enten en JPEG- eller en PPM-fil afhængigt af kameraet.
 .TP
 .B -z
@@ -48,6 +48,11 @@ viser metadata.
 .B dcraw
 kan ikke afkode JPEG-filer!!
 .SH REPARATIONSTILVALG
+.TP
+.B -I
+Læs de rå pixels fra standard-inddata i CPU byte-orden uden fil-hoved. Brug
+.B dcraw -E -4
+for at få de rå pixel-værdier.
 .TP
 .B -P dødepunkter.txt
 Læs de døde punkter fra denne fil i stedet for fra ".badpixels".
@@ -78,11 +83,11 @@ Standardværdierne af sortpunkt og mætning er normalt korrekte.
 .TP
 .B -n støjtærskelværdi
 Brug wavelets for at fjerne støj mens detaljerne bevares.
-De bedste tærskeværdier ligger normalt mellem 100 og 1000.
+De bedste tærskelværdier ligger normalt mellem 100 og 1000.
 .TP
 .B -C rødforst. blåforst.
 Forstør de rå røde og blå lag med en given faktor,
-typisk mellem 0,999 og 1,001, for at korrigere kromatisk aberration.
+typisk mellem 0,999 og 1,001, for at korrigere for kromatisk aberration.
 .TP
 .B -H 0
 Beskær alle højlys til rent hvidt (standard).
@@ -98,7 +103,7 @@ til hvidt.
 Rekonstruer højlysene.  Lavere værdier favoriserer hvidt, højere værdier
 favoriserer farver.  Prøv
 .B -H 5
-så et kompromis.  Hvis det ikke er godt nok, prøv
+som et kompromis.  Hvis det ikke er godt nok, prøv
 .BR -H\ 9 ,
 klip de ikke-hvidt højlys ud, og sæt dem ind i et billede lavet med
 .BR -H\ 3 .
@@ -110,7 +115,7 @@ en standard D65-lampe.
 .TP
 .B -w
 Brug den hvidbalance, der er indstillet på kameraet.
-Udskriv en advarsel og prøv en anden metode, hvis denne ikke findes.
+Udskriver en advarsel og prøver en anden metode, hvis denne ikke findes.
 .TP
 .B -a
 Beregn hvidbalancen som et gennemsnit for hele billedet.
@@ -132,10 +137,10 @@ Standarden er
 .B +M
 hvis
 .B -w
-er sat, og
+er sat, eller billedet er i DNG-format, og
 .B -M
-ellers.
-Dette tilvalg har kun effekt med Olympus-, Leaf- og Phase One-kameraer.
+ellers. Foruden DNG har dette tilvalg har kun effekt med Olympus-, Leaf-
+og Phase One-kameraer.
 .TP
 .B -o [0-5]
 Vælg uddata-farverummet når
@@ -165,40 +170,45 @@ Anvend ICC-profiler for at definere kameraets rå farverum og det
 ønskede uddata-farverum (sRGB som standard).
 .TP
 .B -p embed
-Anvend den indlejrede ICC-profil fra det rå foto.
-.SH INTERPOLATIONSTILVALG
+Anvend den integrerede ICC-profil fra det rå foto.
+.SH INTERPOLERINGSTILVALG
 .TP
 .B -d
-Hvis de rå data som et gråskalabillede uden interpolation.
+Vis de rå data som et gråskalabillede uden interpolering.
 Godt for affotografering af sort/hvide dokumenter.
 .TP
 .B -D
 Samme som
 .BR -d ,
-men helt rå (ingen farveskalering).
+men med de originale uskalerede pixel-værdier.
+.TP
+.B -E
+Samme som
+.BR -D ,
+men maskerede pixels er ikke beskåret.
 .TP
 .B -h
 Lav et farvebillede i halv størrelse.  Dobbelt så hurtig som
 .BR -q\ 0 .
 .TP
 .B -q 0
-Brug hurtig, lavkvalitets bilineær interpolation.
+Brug hurtig, lavkvalitets bilineær interpolering.
 .TP
 .B -q 1
-Brug Variable Number of Gradients (VNG) interpolation.
+Brug Variable Number of Gradients (VNG) interpolering.
 .TP
 .B -q 2
-Brug Patterned Pixel Grouping (PPG) interpolation.
+Brug Patterned Pixel Grouping (PPG) interpolering.
 .TP
 .B -q 3
-Brug Adaptive Homogeneity-Directed (AHD) interpolation.
+Brug Adaptive Homogeneity-Directed (AHD) interpolering.
 .TP
 .B -f
 Interpoler RGB som fire farver.  Brug dette, hvis uddata viser
 falske 2x2 mønstre med VNG eller labyrintmønstre med AHD.
 .TP
 .B -m antal_anvendelser
-Fjern farvefejl efter interpolationen med gentagne anvendelser
+Fjern farvefejl efter interpoleringen med gentagne anvendelser
 af et 3x3 median-filter på R-G- og B-G-farvekanalerne.
 .SH UDDATATILVALG
 Normalt udskriver
@@ -260,7 +270,7 @@ række og UNIX "dødstidspunkt" for et punkt.  For eksempel:
 1285 1067 0           # ved ikke hvornår dette punkt døde
 .fi
 .sp 1
-Disse koordinater angives før beskæring og drejning af billedet, så anvend
+Disse koordinater angives før strækning og drejning af billedet, så anvend
 .B dcraw -j -t 0
 til at lokalisere døde billedpunkter.
 .SH "SE OGSÅ"

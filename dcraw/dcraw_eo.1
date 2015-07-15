@@ -1,7 +1,7 @@
 .\"
 .\" Manpaĝo por dcraw
 .\"
-.\" Kopirajte 2009 de David Coffin
+.\" Kopirajte 2015 de David Coffin
 .\"
 .\" Por libera distribuo
 .\"
@@ -9,7 +9,7 @@
 .\" dcoffin a cybercom o net
 .\" http://www.cybercom.net/~dcoffin
 .\"
-.TH dcraw 1 "14 majo 2009"
+.TH dcraw 1 "3 marto 2015"
 .LO 1
 .SH NOMO
 dcraw - komand-linia deĉifrilo por krudaj ciferecaj fotoj
@@ -48,6 +48,12 @@ montras pridatumon.
 .B dcraw
 ne povas deĉifri JPEG-dosierojn!!
 .SH RIPARAJ OPCIOJ
+.TP
+.B -I
+Legu la krudajn bilderojn el ĉefenigujo (stdin) sen ĉapo en la
+bajt-ordo de via procesoro. Uzu
+.B dcraw -E -4
+por havigi la krudajn bilderojn.
 .TP
 .B -P mortintaj_bilderoj.txt
 Legu la liston de mortintaj bilderoj el tiu ĉi dosiero anstataŭ
@@ -133,10 +139,10 @@ La supozo estas
 .B +M
 se
 .B -w
-uziĝas,
+uziĝas, aŭ la foto estas en DNG formato,
 .B -M
-alikaze.
-Tiu ĉi opcio koncernas nur fotilojn Olympus, Leaf, kaj Phase One.
+alikaze. Krom DNG,
+tiu ĉi opcio koncernas nur fotilojn Olympus, Leaf, kaj Phase One.
 .TP
 .B -o [0-5]
 Elektu la eligotan kolorspacon kiam ne uziĝas la opcio
@@ -176,7 +182,12 @@ Estas bone por foti nigrablankajn dokumentojn.
 .B -D
 Same kiel
 .BR -d ,
-sed tute krude (sen blank-ekvilibro).
+sed kun la originalaj neskalitaj bildero-valoroj.
+.TP
+.B -E
+Same kiel
+.BR -D ,
+sed kovritaj bilderoj ne estas detranĉitaj.
 .TP
 .B -h
 Eligu duon-grandan koloran bildon.  Duoble pli rapide ol
@@ -260,7 +271,7 @@ kaj Uniksan tempon de morto por unu bildero.  Ekzemple:
 1285 1067 0           # ne scias kiam mortis tiu ĉi bildero
 .fi
 .sp 1
-Tiuj ĉi koordinatoj antaŭas ĉian tondadon aŭ rotacion, do uzu
+Tiuj ĉi koordinatoj antaŭas ĉian streĉadon aŭ rotacion, do uzu
 .B dcraw -j -t 0
 por lokalizi mortintajn bilderojn.
 .SH "VIDU ANKAŬ"
