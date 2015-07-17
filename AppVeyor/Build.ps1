@@ -142,7 +142,7 @@ function CreatePackage($config, $version)
 
 function CreateInstaller($config)
 {
-  & "C:\Program Files (x86)\Inno Setup 5\iscc.exe" "/cc" "..\VisualMagick\installer\im-$($config.platform)-$($config.name).iss"
+  & "C:\Program Files (x86)\Inno Setup 5\iscc.exe" "..\VisualMagick\installer\im-$($config.platform)-$($config.name).iss"
   CheckExitCode "Failed to create setup executable."
 
   Get-ChildItem -Path ..\VisualMagick\installer\output\*.exe -Recurse | Move-Item -Destination ..\Windows-Distribution
