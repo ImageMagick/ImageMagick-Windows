@@ -161,8 +161,21 @@ function CreatePortable($config, $version)
   New-Item -ItemType directory -Path .\Portable | Out-Null
 
   Copy-Item ..\VisualMagick\bin\*.exe .\Portable
-  Copy-Item ..\VisualMagick\bin\*.xml .\Portable
+  Copy-Item ..\VisualMagick\config\colors.xml .\Portable
+  Copy-Item ..\VisualMagick\config\english.xml .\Portable
+  Copy-Item ..\VisualMagick\config\locale.xml .\Portable
+  Copy-Item ..\VisualMagick\config\log.xml .\Portable
+  Copy-Item ..\VisualMagick\config\magic.xml .\Portable
+  Copy-Item ..\VisualMagick\config\mime.xml .\Portable
+  Copy-Item ..\VisualMagick\config\quantization-table.xml .\Portable
+  Copy-Item ..\VisualMagick\bin\configure.xml .\Portable
   Copy-Item ..\VisualMagick\bin\ImageMagick.rdf .\Portable
+  Copy-Item ..\VisualMagick\bin\delegates.xml .\Portable
+  Copy-Item ..\VisualMagick\bin\policy.xml .\Portable
+  Copy-Item ..\VisualMagick\bin\sRGB.icc .\Portable
+  Copy-Item ..\VisualMagick\bin\thresholds.xml .\Portable
+  Copy-Item ..\VisualMagick\bin\type-ghostscript.xml .\Portable
+  Copy-Item ..\VisualMagick\bin\type.xml .\Portable
 
   Copy-Item ..\ImageMagick\ChangeLog .\Portable
   Copy-Item ..\ImageMagick\images .\Portable -recurse
