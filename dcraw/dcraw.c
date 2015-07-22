@@ -51,16 +51,22 @@
 #include <time.h>
 #include <sys/types.h>
 
-#if defined(DJGPP) || defined(__MINGW32__) || defined(WIN32) || defined(WIN64)
+#if !defined(__WIN32__) && (defined(_WIN32) || defined(WIN32) || defined(_WIN64))
+#define __WIN32__
+#endif
+
+#if defined(DJGPP) || defined(__MINGW32__) || defined(__WIN32__)
 #define fseeko fseek
 #define ftello ftell
 #else
 #define fgetc getc_unlocked
 #endif
+
 #ifdef __CYGWIN__
 #include <io.h>
 #endif
-#ifdef WIN32
+
+#ifdef __WIN32__
 #include <sys/utime.h>
 #include <winsock2.h>
 #pragma comment(lib, "ws2_32.lib")
@@ -108,6 +114,19 @@ typedef unsigned long long UINT64;
 #if !defined(ushort)
 #define ushort unsigned short
 #endif
+
+#define strnlen(s,maxlen) strnlen_port(s,maxlen)
+static size_t strnlen(const char *s, size_t maxlen)
+{
+  size_t i;
+
+  for (i = 0; (i < maxlen) && (s[i+1] != '\0'); i++)
+  {
+  }
+
+  return i;
+}
+
 
 /*
    All global variables are defined here, and all functions that
