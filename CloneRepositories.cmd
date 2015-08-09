@@ -1,17 +1,20 @@
 @echo off
 
-set type="full"
-if not "%1"=="" set type=%1
+set REPOS="http://git.imagemagick.org/repos/"
+if not "%1"=="" set REPOS=%1
 
-set bash="%PROGRAMFILES%\Git\bin\bash.exe"
-if exist %bash% goto execute
+set TYPE="full"
+if not "%2"=="" set TYPE=%2
+
+set BASH="%PROGRAMFILES%\Git\bin\bash.exe"
+if exist %BASH% goto EXECUTE
 
 set bash="%PROGRAMFILES(x86)%\Git\bin\bash.exe"
-if exist %bash% goto execute
+if exist %BASH% goto EXECUTE
 
 echo Failed to find bash.exe
-echo %bash%
+echo %BASH%
 exit /b 1
 
-:execute
-%bash% --login -i -c "./CloneRepositories.sh %type%"
+:EXECUTE
+%BASH% --login -i -c "./CloneRepositories.sh %REPOS% %TYPE%"
