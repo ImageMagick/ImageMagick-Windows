@@ -180,8 +180,8 @@ function CreatePortable($config, $version)
   Copy-Item ..\ImageMagick\ChangeLog .\Portable
   Copy-Item ..\ImageMagick\images .\Portable -recurse
   Copy-Item ..\ImageMagick\index.html .\Portable
-  Copy-Item ..\ImageMagick\LICENSE .\Portable
-  Copy-Item ..\ImageMagick\NOTICE .\Portable
+  Copy-Item ..\ImageMagick\LICENSE .\Portable\LICENSE.txt
+  Copy-Item ..\VisualMagick\NOTICE.txt .\Portable
   Copy-Item ..\ImageMagick\README.txt .\Portable
   Copy-Item ..\ImageMagick\www .\Portable -recurse
 
