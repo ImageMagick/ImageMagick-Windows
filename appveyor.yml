@@ -12,8 +12,6 @@ matrix:
 
 cache:
   - C:\Program Files (x86)\Inno Setup 5 -> appveyor.yml
-  - C:\Strawberry-x86 -> appveyor.yml
-  - C:\Strawberry-x64 -> appveyor.yml
 
 environment:
 
@@ -56,7 +54,7 @@ environment:
 
 install:
   - cd AppVeyor
-  - Install.cmd
+  - Install.cmd %im_platform%
 
 artifacts:
   - path: 'Windows-Distribution\*.exe'
