@@ -107,7 +107,7 @@ function BuildConfiguration($config)
 
 function BuildPerlMagick($platform)
 {
-  $folder = "C:\Strawberry-$platform"
+  $folder = "C:\Strawberry"
   $env:Path = "$($env:Path);$folder\c\bin"
 
   Set-Location ../ImageMagick/PerlMagick
