@@ -65,6 +65,8 @@ build_script:
   - cd AppVeyor
   - Build.cmd %im_platform% %im_name%
 
+test: off
+
 deploy:
   provider: FTP
   protocol: ftp
