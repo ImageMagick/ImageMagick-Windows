@@ -1,31 +1,32 @@
 function GetConfig($platform, $name)
 {
   $config = $null
+  $options = "/includeOptional /installedSupport /deprecated"
 
   if ($name -eq "dll-Q8")
   {
-    $config = @{options="/dmt /noHdri /Q8 /includeOptional /installedSupport";perl=$true;type="installer";solution="VisualDynamicMT.sln"}
+    $config = @{options="/dmt /noHdri /Q8 $options";perl=$true;type="installer";solution="VisualDynamicMT.sln"}
   }
   elseif ($name -eq "dll-Q16")
   {
-    $config = @{options="/dmt /noHdri /Q16 /includeOptional /installedSupport";perl=$true;type="installer";solution="VisualDynamicMT.sln"}
+    $config = @{options="/dmt /noHdri /Q16 $options";perl=$true;type="installer";solution="VisualDynamicMT.sln"}
   }
   elseif ($name -eq "static-Q8")
   {
-    $config = @{options="/smtd /noHdri /Q8 /includeOptional /installedSupport";perl=$false;type="installer";solution="VisualStaticMTD.sln"}
+    $config = @{options="/smtd /noHdri /Q8 $options";perl=$false;type="installer";solution="VisualStaticMTD.sln"}
   }
   elseif ($name -eq "static-Q16")
   {
-    $config = @{options="/smtd /noHdri /Q16 /includeOptional /installedSupport";perl=$false;type="installer";solution="VisualStaticMTD.sln"}
+    $config = @{options="/smtd /noHdri /Q16 $options";perl=$false;type="installer";solution="VisualStaticMTD.sln"}
   }
 
   elseif ($name -eq "hdri-dll-Q16")
   {
-    $config = @{options="/dmt /hdri /Q16 /includeOptional /installedSupport";perl=$true;type="installer";solution="VisualDynamicMT.sln"}
+    $config = @{options="/dmt /hdri /Q16 $options";perl=$true;type="installer";solution="VisualDynamicMT.sln"}
   }
   elseif ($name -eq "hdri-static-Q16")
   {
-    $config = @{options="/smtd /hdri /Q16 /includeOptional /installedSupport";perl=$false;type="installer";solution="VisualStaticMTD.sln"}
+    $config = @{options="/smtd /hdri /Q16 $options";perl=$false;type="installer";solution="VisualStaticMTD.sln"}
   }
 
   elseif ($name -eq "portable-Q16")
