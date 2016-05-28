@@ -44,6 +44,8 @@
 #include <time.h>
 #include <sys/types.h>
 
+#include "clew.h"
+
 #if defined(DJGPP) || defined(__MINGW32__) || defined(WIN32) || defined(WIN64)
 #define fseeko fseek
 #define ftello ftell
@@ -155,6 +157,20 @@ int histogram[4][0x2000];
 void (*write_thumb)(), (*write_fun)();
 void (*load_raw)(), (*thumb_load_raw)();
 jmp_buf failure;
+
+cl_context context;
+cl_device_id device;
+cl_command_queue commandQueue;
+cl_kernel ahdKernel;
+cl_kernel convertRGBKernel;
+cl_bool useCL = 0;
+cl_bool useCLColor = 0;
+cl_mem rawBuffer = NULL;
+cl_mem demoBuffer = NULL;
+cl_mem imageBuffer = NULL;
+cl_mem histoBuffer = NULL;
+cl_mem blackBuffer = NULL;
+cl_mem scaleBuffer = NULL;
 
 struct decode {
   struct decode *branch[2];
@@ -3419,9 +3435,11 @@ void CLASS crop_masked_pixels()
       }
     }
   } else {
-    for (row=0; row < height; row++)
-      for (col=0; col < width; col++)
-	BAYER2(row,col) = RAW(row+top_margin,col+left_margin);
+    if (!useCL) {
+      for (row = 0; row < height; row++)
+        for (col = 0; col < width; col++)
+          BAYER2(row, col) = RAW(row + top_margin, col + left_margin);
+    }
   }
   if (mask[0][3]) goto mask_set;
   if (load_raw == &CLASS canon_load_raw ||
@@ -3905,13 +3923,21 @@ skip_block: ;
     fputc ('\n', stderr);
   }
   size = iheight*iwidth;
-  for (i=0; i < size*4; i++) {
-    val = image[0][i];
-    if (!val) continue;
-    val -= cblack[i & 3];
-    val *= scale_mul[i & 3];
-    image[0][i] = CLIP(val);
+  if (!useCL) {
+    for (i = 0; i < size * 4; i++) {
+      val = image[0][i];
+      if (!val) continue;
+      val -= cblack[i & 3];
+      val *= scale_mul[i & 3];
+      image[0][i] = CLIP(val);
+    }
   }
+  else {
+    cl_int status;
+    blackBuffer = clCreateBuffer(context, CL_MEM_USE_HOST_PTR, sizeof(cblack), cblack, &status);
+    scaleBuffer = clCreateBuffer(context, CL_MEM_COPY_HOST_PTR, sizeof(scale_mul), scale_mul, &status);
+  }
+
   if ((aber[0] != 1 || aber[2] != 1) && colors == 3) {
     if (verbose)
       fprintf (stderr,_("Correcting chromatic aberration...\n"));
@@ -3978,9 +4004,11 @@ void CLASS pre_interpolate()
     mix_green = four_color_rgb ^ half_size;
     if (four_color_rgb | half_size) colors++;
     else {
-      for (row = FC(1,0) >> 1; row < height; row+=2)
-	for (col = FC(row,1) & 1; col < width; col+=2)
-	  image[row*width+col][1] = image[row*width+col][3];
+      if (!useCL) {
+        for (row = FC(1, 0) >> 1; row < height; row += 2)
+          for (col = FC(row, 1) & 1; col < width; col += 2)
+            image[row*width + col][1] = image[row*width + col][3];
+      }
       filters &= ~((filters & 0x55555555) << 1);
     }
   }
@@ -8724,21 +8752,51 @@ void CLASS convert_to_rgb()
 	_("Converting to %s colorspace...\n"), name[output_color-1]);
 
   memset (histogram, 0, sizeof histogram);
-  for (img=image[0], row=0; row < height; row++)
-    for (col=0; col < width; col++, img+=4) {
-      if (!raw_color) {
-	out[0] = out[1] = out[2] = 0;
-	FORCC {
-	  out[0] += out_cam[0][c] * img[c];
-	  out[1] += out_cam[1][c] * img[c];
-	  out[2] += out_cam[2][c] * img[c];
-	}
-	FORC3 img[c] = CLIP((int) out[c]);
+
+  if (!useCLColor) {
+    for (img=image[0], row=0; row < height; row++)
+      for (col=0; col < width; col++, img+=4) {
+        if (!raw_color) {
+          out[0] = out[1] = out[2] = 0;
+          FORCC {
+            out[0] += out_cam[0][c] * img[c];
+            out[1] += out_cam[1][c] * img[c];
+            out[2] += out_cam[2][c] * img[c];
+          }
+          FORC3 img[c] = CLIP((int) out[c]);
+        }
+        else if (document_mode)
+          img[0] = img[fcol(row,col)];
+        FORCC histogram[c][img[c] >> 3]++;
       }
-      else if (document_mode)
-	img[0] = img[fcol(row,col)];
-      FORCC histogram[c][img[c] >> 3]++;
-    }
+  }
+  else {
+    cl_int status;
+    size_t globalSize[1];
+    size_t localSize[1];
+    int i = 0;
+    cl_int size = height * width;
+    cl_mem outcamBuffer = clCreateBuffer(context, CL_MEM_COPY_HOST_PTR, sizeof(out_cam), out_cam, &status);
+    clSetKernelArg(convertRGBKernel, i++, sizeof(cl_mem), &demoBuffer);
+    clSetKernelArg(convertRGBKernel, i++, sizeof(cl_mem), &imageBuffer);
+    clSetKernelArg(convertRGBKernel, i++, sizeof(cl_mem), &outcamBuffer);
+    clSetKernelArg(convertRGBKernel, i++, sizeof(cl_mem), &histoBuffer);
+    clSetKernelArg(convertRGBKernel, i++, sizeof(cl_int), &size);
+
+    localSize[0] = 256;
+    globalSize[0] = ((size + localSize[0] - 1) / localSize[0]) * localSize[0];
+
+    (void) clEnqueueNDRangeKernel(commandQueue, convertRGBKernel, 1, NULL, globalSize, localSize, 0, NULL, NULL);
+    clReleaseMemObject(outcamBuffer);
+    clReleaseMemObject(histoBuffer);
+    clReleaseMemObject(demoBuffer);
+    clReleaseMemObject(imageBuffer);
+    clReleaseKernel(convertRGBKernel);
+
+    clFinish(commandQueue);
+    clReleaseCommandQueue(commandQueue);
+    clReleaseContext(context);
+  }
   if (colors == 4 && output_color) colors = 3;
   if (document_mode && filters) colors = 1;
 }
@@ -9011,6 +9069,608 @@ void CLASS write_ppm_tiff()
     fwrite (ppm, colors*output_bps/8, width, ofp);
   }
   free (ppm);
+}
+
+#define STRINGIFY(...) #__VA_ARGS__ "\n"
+
+const char* accelerateKernels = STRINGIFY(
+
+\n #define SQR(x) ((x)*(x)) \n
+
+\n #define FC(row,col) (filters >> ((((row) << 1 & 14) + ((col) & 1)) << 1) & 3) \n
+
+ushort clip(int val) {
+  val = (val < 0) ? 0 : val;
+  val = (val > 65535) ? 65535 : val;
+  return convert_ushort(val);
+}
+
+ushort clipf(float val) {
+  val = (val < 0) ? 0 : val;
+  val = (val > 65535) ? 65535 : val;
+  return convert_ushort(val);
+}
+
+float cbr(ushort val) {
+  float r = val / 65535.0;
+  return (r > 0.008856) ? pow(r, 1 / 3.0f) : 7.787*r + 16 / 116.0;
+}
+
+kernel void ahd_interpolate(global ushort *image,
+  global ushort4 *dstImage,
+  const int imageWidth,
+  const int imageHeight,
+  const int rawWidth,
+  const int rawHeight,
+  const int top,
+  const int left,
+  global const unsigned black[4],
+  global const float scale[4],
+  const uint filters,
+  const global float *xyz_cam
+)
+{
+  const int pad = 3;
+  const int tileSize = 16;
+  const int rowPixels = 16;
+  const int planePixels = 16 * 16;
+  const int srcRowPixels = 20;
+
+  local ushort green[16 * 16 * 2];
+  local short lab[16 * 16 * 3 * 2];
+  local char homo[16 * 16 * 2];
+  local ushort src[20 * 20];
+
+  ushort red[2];
+  ushort blue[2];
+
+  bool active = true;
+
+  {
+    // Load raw data into lds
+    int x = get_group_id(0) * (tileSize - 2 * pad) + get_global_offset(0) - pad - 2 + left;
+    int y = get_group_id(1) * (tileSize - 2 * pad) + get_global_offset(1) - pad - 2 + top;
+    int offset = get_local_id(1) * get_local_size(0) + get_local_id(0);
+    while (offset < srcRowPixels * srcRowPixels) {
+      int xx = x + (offset % srcRowPixels);
+      int yy = y + (offset / srcRowPixels);
+      xx = (xx < 0) ? --xx : xx;
+      xx = (xx >= rawWidth) ? 2 * rawWidth - xx - 1 : xx;
+      yy = (yy < 0) ? --yy : yy;
+      yy = (yy >= rawHeight) ? 2 * rawWidth - yy - 1 : yy;
+      int fc = FC(xx - left, yy - top);
+      src[offset] = clipf((convert_float(image[xx + yy * rawWidth]) - convert_float(black[fc])) * scale[fc]);
+      offset += 256;
+    }
+  }
+  barrier(CLK_LOCAL_MEM_FENCE);
+
+  // Remap work item order so each wavefront does the same type of pixel, i.e. FC() is the same
+
+  int lx;
+  int ly;
+
+  {
+    int linearId = get_local_id(0) + get_local_id(1) * get_local_size(0);
+    int blockId = linearId % (planePixels / 4);
+    int bx = blockId % (tileSize / 2);
+    int by = blockId / (tileSize / 2);
+    int dx = ((linearId * 4) / planePixels) % 2;
+    int dy = (linearId * 2) / planePixels;
+
+    lx = bx * 2 + dx;
+    ly = by * 2 + dy;
+  }
+
+  int x = get_group_id(0) * (tileSize - 2 * pad) + get_global_offset(0) + lx - pad;
+  int y = get_group_id(1) * (tileSize - 2 * pad) + get_global_offset(1) + ly - pad;
+
+  int fc = FC(x, y);
+  fc = (fc == 1) ? fc + FC(x + 1, y) : fc;
+
+  const int sp = (lx + 2) + (ly + 2) * srcRowPixels;
+  const int tp = lx + ly * rowPixels;
+
+  // Populate source pixels
+
+  if (active) {
+
+    // Load measured pixels
+
+    red[0] = red[1] = 0;
+    blue[0] = blue[1] = 0;
+
+    switch (fc) {
+    case 0: // R
+      red[0] = red[1] = src[sp];
+      break;
+    case 1: // Gr
+    case 3: // Gb
+      green[tp] = green[tp + planePixels] = src[sp];
+      break;
+    case 2: // B
+      blue[0] = blue[1] = src[sp];
+      break;
+    default:
+      break;
+    }
+
+    // Interpolate green
+
+    int val;
+
+    switch (fc) {
+    case 0: // R
+      val = (src[sp - 1] + src[sp + 1] + red[0]) * 2 - src[sp - 2] - src[sp + 2];
+      val /= 4;
+      green[tp] = clip(val);
+      val = (src[sp - srcRowPixels] + src[sp + srcRowPixels] + red[1]) * 2 - src[sp - 2 * srcRowPixels] - src[sp + 2 * srcRowPixels];
+      val /= 4;
+      green[tp + planePixels] = clip(val);
+      break;
+    case 2: // B
+      val = (src[sp - 1] + src[sp + 1] + blue[0]) * 2 - src[sp - 2] - src[sp + 2];
+      val /= 4;
+      green[tp] = clip(val);
+      val = (src[sp - srcRowPixels] + src[sp + srcRowPixels] + blue[1]) * 2 - src[sp - 2 * srcRowPixels] - src[sp + 2 * srcRowPixels];
+      val /= 4;
+      green[tp + planePixels] = clip(val);
+      break;
+    default:
+      break;
+    }
+  }
+
+  barrier(CLK_LOCAL_MEM_FENCE);
+
+  if (lx < 1 || ly < 1 || lx >= tileSize - 1 || ly >= tileSize - 1)
+    active = false;
+
+  // Interpolate Red, Blue
+
+  if (active) {
+    int val;
+    switch (fc) {
+    case 0: // R
+      val = src[sp - 1 - srcRowPixels] + src[sp + 1 - srcRowPixels] + src[sp - 1 + srcRowPixels] + src[sp + 1 + srcRowPixels]; // 4 way blue h
+      val += 4 * green[tp];
+      val -= green[tp + 1 + tileSize] + green[tp - 1 + tileSize] + green[tp + 1 - tileSize] + green[tp - 1 - tileSize];
+      val /= 4;
+      blue[0] = clip(val);
+      val = src[sp - 1 - srcRowPixels] + src[sp + 1 - srcRowPixels] + src[sp - 1 + srcRowPixels] + src[sp + 1 + srcRowPixels]; // 4 way blue v
+      val += 4 * green[tp + planePixels];
+      val -= green[tp + 1 + tileSize + planePixels] + green[tp - 1 + tileSize + planePixels] + green[tp + 1 - tileSize + planePixels] + green[tp - 1 - tileSize + planePixels];
+      val /= 4;
+      blue[1] = clip(val);
+      break;
+    case 1: // Gr
+      val = src[sp - 1] + src[sp + 1]; // red h
+      val += 2 * green[tp];
+      val -= green[tp - 1] + green[tp + 1];
+      val /= 2;
+      red[0] = clip(val);
+      val = src[sp - 1] + src[sp + 1]; // red v
+      val += 2 * green[tp + planePixels];
+      val -= green[tp - 1 + planePixels] + green[tp + 1 + planePixels];
+      val /= 2;
+      red[1] = clip(val);
+      val = src[sp - srcRowPixels] + src[sp + srcRowPixels]; // blue h
+      val += 2 * green[tp];
+      val -= green[tp - tileSize] + green[tp + tileSize];
+      val /= 2;
+      blue[0] = clip(val);
+      val = src[sp - srcRowPixels] + src[sp + srcRowPixels]; // blue v
+      val += 2 * green[tp + planePixels];
+      val -= green[tp - tileSize + planePixels] + green[tp + tileSize + planePixels];
+      val /= 2;
+      blue[1] = clip(val);
+      break;
+    case 2: // B
+      val = src[sp - 1 - srcRowPixels] + src[sp + 1 - srcRowPixels] + src[sp - 1 + srcRowPixels] + src[sp + 1 + srcRowPixels]; // 4 way red
+      val += 4 * green[tp];
+      val -= green[tp + 1 + tileSize] + green[tp - 1 + tileSize] + green[tp + 1 - tileSize] + green[tp - 1 - tileSize];
+      val /= 4;
+      red[0] = clip(val);
+      val = src[sp - 1 - srcRowPixels] + src[sp + 1 - srcRowPixels] + src[sp - 1 + srcRowPixels] + src[sp + 1 + srcRowPixels]; // 4 way red
+      val += 4 * green[tp + planePixels];
+      val -= green[tp + 1 + tileSize + planePixels] + green[tp - 1 + tileSize + planePixels] + green[tp + 1 - tileSize + planePixels] + green[tp - 1 - tileSize + planePixels];
+      val /= 4;
+      red[1] = clip(val);
+      break;
+    case 3: // Gb
+      val = src[sp - 1] + src[sp + 1]; // blue h
+      val += 2 * green[tp];
+      val -= green[tp - 1] + green[tp + 1];
+      val /= 2;
+      blue[0] = clip(val);
+      val = src[sp - 1] + src[sp + 1]; // blue v
+      val += 2 * green[tp + planePixels];
+      val -= green[tp - 1 + planePixels] + green[tp + 1 + planePixels];
+      val /= 2;
+      blue[1] = clip(val);
+      val = src[sp - srcRowPixels] + src[sp + srcRowPixels]; // red h
+      val += 2 * green[tp];
+      val -= green[tp - tileSize] + green[tp + tileSize];
+      val /= 2;
+      red[0] = clip(val);
+      val = src[sp - srcRowPixels] + src[sp + srcRowPixels]; // red v
+      val += 2 * green[tp + planePixels];
+      val -= green[tp - tileSize + planePixels] + green[tp + tileSize + planePixels];
+      val /= 2;
+      red[1] = clip(val);
+      break;
+    default:
+      break;
+    }
+
+    {
+      // convert to lab
+      float xyz[3];
+
+      // Horizonals
+      xyz[0] = xyz[1] = xyz[2] = 0.5f;
+
+      xyz[0] += xyz_cam[0] * red[0];
+      xyz[1] += xyz_cam[1] * red[0];
+      xyz[2] += xyz_cam[2] * red[0];
+
+      xyz[0] += xyz_cam[4] * green[tp];
+      xyz[1] += xyz_cam[5] * green[tp];
+      xyz[2] += xyz_cam[6] * green[tp];
+
+      xyz[0] += xyz_cam[8] * blue[0];
+      xyz[1] += xyz_cam[9] * blue[0];
+      xyz[2] += xyz_cam[10] * blue[0];
+
+      xyz[0] = cbr(clip(convert_int(xyz[0])));
+      xyz[1] = cbr(clip(convert_int(xyz[1])));
+      xyz[2] = cbr(clip(convert_int(xyz[2])));
+
+      lab[tp] = 64 * (116 * xyz[1] - 16);
+      lab[tp + planePixels] = 64 * 500 * (xyz[0] - xyz[1]);
+      lab[tp + 2 * planePixels] = 64 * 200 * (xyz[1] - xyz[2]);
+
+      // Verticals
+      xyz[0] = xyz[1] = xyz[2] = 0.5f;
+
+      xyz[0] += xyz_cam[0] * red[1];
+      xyz[1] += xyz_cam[1] * red[1];
+      xyz[2] += xyz_cam[2] * red[1];
+
+      xyz[0] += xyz_cam[4] * green[tp + planePixels];
+      xyz[1] += xyz_cam[5] * green[tp + planePixels];
+      xyz[2] += xyz_cam[6] * green[tp + planePixels];
+
+      xyz[0] += xyz_cam[8] * blue[1];
+      xyz[1] += xyz_cam[9] * blue[1];
+      xyz[2] += xyz_cam[10] * blue[1];
+
+      xyz[0] = cbr(clip(convert_int(xyz[0])));
+      xyz[1] = cbr(clip(convert_int(xyz[1])));
+      xyz[2] = cbr(clip(convert_int(xyz[2])));
+
+      lab[tp + 3 * planePixels] = 64 * (116 * xyz[1] - 16);
+      lab[tp + 4 * planePixels] = 64 * 500 * (xyz[0] - xyz[1]);
+      lab[tp + 5 * planePixels] = 64 * 200 * (xyz[1] - xyz[2]);
+    }
+  }
+  barrier(CLK_LOCAL_MEM_FENCE);
+
+  if (lx < 2 || ly < 2 || lx >= tileSize - 2 || ly >= tileSize - 2)
+    active = false;
+
+  // Build homogeneity maps from the CIELab images
+
+  if (active) {
+    homo[tp] = homo[tp + planePixels] = 0;
+    unsigned ldiff[2][4];
+    unsigned abdiff[2][4];
+    int lp = tp;
+    int ap = tp + planePixels;
+    int bp = tp + 2 * planePixels;
+    ldiff[0][0] = abs(lab[lp] - lab[lp - 1]);
+    ldiff[0][1] = abs(lab[lp] - lab[lp + 1]);
+    ldiff[0][2] = abs(lab[lp] - lab[lp - tileSize]);
+    ldiff[0][3] = abs(lab[lp] - lab[lp + tileSize]);
+    abdiff[0][0] = SQR(lab[ap] - lab[ap - 1]) + SQR(lab[bp] - lab[bp - 1]);
+    abdiff[0][1] = SQR(lab[ap] - lab[ap + 1]) + SQR(lab[bp] - lab[bp + 1]);
+    abdiff[0][2] = SQR(lab[ap] - lab[ap - tileSize]) + SQR(lab[bp] - lab[bp - tileSize]);
+    abdiff[0][3] = SQR(lab[ap] - lab[ap + tileSize]) + SQR(lab[bp] - lab[bp + tileSize]);
+    lp += 3 * planePixels;
+    ap += 3 * planePixels;
+    bp += 3 * planePixels;
+    ldiff[1][0] = abs(lab[lp] - lab[lp - 1]);
+    ldiff[1][1] = abs(lab[lp] - lab[lp + 1]);
+    ldiff[1][2] = abs(lab[lp] - lab[lp - tileSize]);
+    ldiff[1][3] = abs(lab[lp] - lab[lp + tileSize]);
+    abdiff[1][0] = SQR(lab[ap] - lab[ap - 1]) + SQR(lab[bp] - lab[bp - 1]);
+    abdiff[1][1] = SQR(lab[ap] - lab[ap + 1]) + SQR(lab[bp] - lab[bp + 1]);
+    abdiff[1][2] = SQR(lab[ap] - lab[ap - tileSize]) + SQR(lab[bp] - lab[bp - tileSize]);
+    abdiff[1][3] = SQR(lab[ap] - lab[ap + tileSize]) + SQR(lab[bp] - lab[bp + tileSize]);
+
+    unsigned leps = min(max(ldiff[0][0], ldiff[0][1]), max(ldiff[1][2], ldiff[1][3]));
+    unsigned abeps = min(max(abdiff[0][0], abdiff[0][1]), max(abdiff[1][2], abdiff[1][3]));
+
+    if (ldiff[0][0] <= leps && abdiff[0][0] <= abeps) homo[tp]++;
+    if (ldiff[0][1] <= leps && abdiff[0][1] <= abeps) homo[tp]++;
+    if (ldiff[0][2] <= leps && abdiff[0][2] <= abeps) homo[tp]++;
+    if (ldiff[0][3] <= leps && abdiff[0][3] <= abeps) homo[tp]++;
+    if (ldiff[1][0] <= leps && abdiff[1][0] <= abeps) homo[tp + planePixels]++;
+    if (ldiff[1][1] <= leps && abdiff[1][1] <= abeps) homo[tp + planePixels]++;
+    if (ldiff[1][2] <= leps && abdiff[1][2] <= abeps) homo[tp + planePixels]++;
+    if (ldiff[1][3] <= leps && abdiff[1][3] <= abeps) homo[tp + planePixels]++;
+  }
+
+  barrier(CLK_LOCAL_MEM_FENCE);
+
+  if (lx < 3 || ly < 3 || lx >= tileSize - 3 || ly >= tileSize - 3)
+   active = false;
+
+  if ((x >= imageWidth) || (y >= imageHeight))
+    active = false;
+
+  // Combine the most homogenous pixels for the final result
+
+  if (active) {
+    int hm[2];
+    int hp = tp;
+    hm[0] = homo[hp - 1] + homo[hp] + homo[hp + 1]
+      + homo[hp - 1 - tileSize] + homo[hp - tileSize] + homo[hp + 1 - tileSize]
+      + homo[hp - 1 + tileSize] + homo[hp + tileSize] + homo[hp + 1 + tileSize];
+    hp += planePixels;
+    hm[1] = homo[hp - 1] + homo[hp] + homo[hp + 1]
+      + homo[hp - 1 - tileSize] + homo[hp - tileSize] + homo[hp + 1 - tileSize]
+      + homo[hp - 1 + tileSize] + homo[hp + tileSize] + homo[hp + 1 + tileSize];
+
+    if (hm[0] == hm[1])
+      dstImage[x + y * imageWidth] = (ushort4)((red[0] + red[1]) / 2, (green[tp] + green[tp + planePixels]) / 2, (blue[0] + blue[1]) / 2, 65535);
+    else if (hm[0] > hm[1])
+      dstImage[x + y * imageWidth] = (ushort4)(red[0], green[tp], blue[0], 65535);
+    else
+      dstImage[x + y * imageWidth] = (ushort4)(red[1], green[tp + planePixels], blue[1], 65535);
+  }
+}
+
+kernel void convert_rgb(global ushort4 *srcImage,
+  global ushort4 *dstImage,
+  global const float4 profile[3],
+  global int histogram[4][8192],
+  int size
+)
+{
+  int x = get_global_id(0);
+  if (x < size) {
+    float4 in = convert_float4(srcImage[x]);
+    ushort4 stage = (ushort4)(clipf(dot(in, profile[0])), clipf(dot(in, profile[1])), clipf(dot(in, profile[2])), convert_ushort(in.s3));
+    dstImage[x] = stage;
+    atomic_inc(&histogram[0][(stage.s0) >> 3]);
+    atomic_inc(&histogram[1][(stage.s1) >> 3]);
+    atomic_inc(&histogram[2][(stage.s2) >> 3]);
+  }
+}
+
+kernel void scale_colors(global ushort *image,
+  global const unsigned black[4],
+  global const float scale[4],
+  int width,
+  int height,
+  const uint filters
+)
+{
+  int x = get_global_id(0);
+  int y = get_global_id(1);
+  int fc = FC(x, y);
+
+  if (x < width && y < height)
+    image[x + y * width] = clipf((convert_float(image[x + y * width]) - convert_float(black[fc])) * scale[fc]);
+}
+);
+
+void CLASS ahd_interpolate_cl()
+{
+  cl_int status;
+  cl_event event;
+  cl_mem xyzBuffer;
+  size_t imageSize;
+  float xyz_cam[3][4];
+  size_t i, j, k;
+
+  if (verbose) fprintf (stderr,_("AHD interpolation (CL)...\n"));
+
+  for (i = 0; i < 3; ++i) {
+    for (j = 0; j < colors; ++j) {
+      xyz_cam[i][j] = 0;
+      for (k = 0; k < 3; ++k) {
+        xyz_cam[i][j] += xyz_rgb[i][k] * rgb_cam[k][j] / d65_white[i];
+      }
+    }
+  }
+
+  xyzBuffer = clCreateBuffer(context, CL_MEM_COPY_HOST_PTR, sizeof(xyz_cam), &xyz_cam, &status);
+
+  {
+    cl_int width = iwidth;
+    cl_int height = iheight;
+    cl_int rawWidth = raw_width;
+    cl_int rawHeight = raw_height;
+    cl_int top = top_margin;
+    cl_int left = left_margin;
+    size_t i = 0;
+    clSetKernelArg(ahdKernel, i++, sizeof(cl_mem), &rawBuffer);
+    clSetKernelArg(ahdKernel, i++, sizeof(cl_mem), &demoBuffer);
+    clSetKernelArg(ahdKernel, i++, sizeof(cl_int), &width);
+    clSetKernelArg(ahdKernel, i++, sizeof(cl_int), &height);
+    clSetKernelArg(ahdKernel, i++, sizeof(cl_int), &rawWidth);
+    clSetKernelArg(ahdKernel, i++, sizeof(cl_int), &rawHeight);
+    clSetKernelArg(ahdKernel, i++, sizeof(cl_int), &top);
+    clSetKernelArg(ahdKernel, i++, sizeof(cl_int), &left);
+    clSetKernelArg(ahdKernel, i++, sizeof(cl_mem), &blackBuffer);
+    clSetKernelArg(ahdKernel, i++, sizeof(cl_mem), &scaleBuffer);
+    clSetKernelArg(ahdKernel, i++, sizeof(unsigned), &filters);
+    clSetKernelArg(ahdKernel, i++, sizeof(cl_mem), &xyzBuffer);
+  }
+
+  {
+    const int TILESIZE = 16;
+    const int PAD = 3;
+    const int SIZE = TILESIZE - 2 * PAD;
+
+    size_t globalSize[2];
+    size_t localSize[2];
+
+    globalSize[0] = ((width + SIZE - 1) / SIZE) * TILESIZE;
+    globalSize[1] = ((height + SIZE - 1) / SIZE) * TILESIZE;
+    localSize[0] = TILESIZE;
+    localSize[1] = TILESIZE;
+
+    status = clEnqueueNDRangeKernel(commandQueue, ahdKernel, 2, NULL, globalSize, localSize, 0, NULL, NULL);
+    clFlush(commandQueue);
+    useCLColor = TRUE;
+
+    clReleaseKernel(ahdKernel);
+  }
+
+  clReleaseMemObject(blackBuffer);
+  clReleaseMemObject(scaleBuffer);
+  clReleaseMemObject(rawBuffer);
+  clReleaseMemObject(xyzBuffer);
+  imageBuffer = clCreateBuffer(context, CL_MEM_USE_HOST_PTR, (iheight * iwidth * sizeof(*image)), image, &status);
+}
+
+int CLASS initCLDevice(cl_platform_id platformId, cl_device_id deviceId)
+{
+  cl_int status;
+  cl_context_properties properties[3];
+  properties[0] = CL_CONTEXT_PLATFORM;
+  properties[1] = (cl_context_properties)(platformId);
+  properties[2] = NULL;
+
+  context = clCreateContext(properties, 1, &deviceId, NULL, NULL, &status);
+  if (status != CL_SUCCESS)
+    return status;
+  commandQueue = clCreateCommandQueue(context, deviceId, NULL, &status);
+  if (status != CL_SUCCESS)
+    return status;
+  device = deviceId;
+  return status;
+}
+
+int CLASS initCLPlatform(cl_platform_id platform, char *use_device)
+{
+  cl_int status;
+  cl_uint numDevices;
+  cl_device_id *devices;
+
+  size_t i;
+
+  status = clGetDeviceIDs(platform, CL_DEVICE_TYPE_ALL, 0, NULL, &numDevices);
+  if (status != CL_SUCCESS || numDevices == 0)
+    return status;
+  devices = (cl_device_id *) malloc(sizeof(cl_device_id *) * numDevices);
+  status = clGetDeviceIDs(platform, CL_DEVICE_TYPE_ALL, numDevices, devices, NULL);
+  if (status == CL_SUCCESS) {
+    for (i = 0; i < numDevices; ++i) {
+      char dbuff[160];
+      if (i > 0  && verbose)
+        fprintf(stderr, "\n");
+      status = clGetDeviceInfo(devices[i], CL_DEVICE_NAME, 160, dbuff, NULL);
+      if (status != CL_SUCCESS)
+        continue;
+      if (verbose)
+        fprintf(stderr, "\tDevice %d: %s", i, dbuff);
+      if (use_device == (char *) NULL) {
+        cl_device_type type;
+        status = clGetDeviceInfo(devices[i], CL_DEVICE_TYPE, sizeof(cl_device_type), &type, NULL);
+        if (status != CL_SUCCESS || type != CL_DEVICE_TYPE_GPU)
+          continue;
+      }
+      else if (strncmp(dbuff, use_device, 160) != 0)
+        continue;
+
+      if (initCLDevice(platform, devices[i]) == CL_SUCCESS) {
+        useCL = TRUE;
+        if (verbose)
+          fprintf(stderr, "  <---\n");
+        break;
+      }
+    }
+  }
+  free(devices);
+  return status;
+}
+
+void CLASS initCL()
+{
+  cl_int status;
+  cl_uint numPlatforms;
+  cl_platform_id *platforms;
+
+  size_t i;
+
+  char *use_device = getenv("DCR_CL_DEVICE");
+  char *use_platform = getenv("DCR_CL_PLATFORM");
+
+  if (getenv("DCR_CL_DISABLED") != (char *) NULL)
+    return;
+
+#ifdef WIN32
+  if (clewInit("OpenCL.dll") != CL_SUCCESS)
+#else
+  if (clewInit("libOpenCL.so") != CL_SUCCESS)
+#endif
+    return;
+
+  status = clGetPlatformIDs(0, NULL, &numPlatforms);
+  if (numPlatforms == 0)
+    return;
+  platforms = (cl_platform_id *) malloc(sizeof(cl_platform_id *) * numPlatforms);
+  status = clGetPlatformIDs(numPlatforms, platforms, NULL);
+  if (status != CL_SUCCESS) {
+    free(platforms);
+    return;
+  }
+  for (i = 0; i < numPlatforms; ++i) {
+    char buff[160];
+    char buff2[160];
+    clGetPlatformInfo(platforms[i], CL_PLATFORM_VENDOR, 160, buff, NULL);
+    clGetPlatformInfo(platforms[i], CL_PLATFORM_VERSION, 160, buff2, NULL);
+    if (verbose)
+      fprintf(stderr, "Platform %d: %s %s\n", i, buff, buff2);
+
+    if (use_platform == (char *) NULL) {
+      if (initCLPlatform(platforms[i], (char *) NULL) == CL_SUCCESS)
+        break;
+    }
+    else if (strncmp(buff, use_platform, 160) == 0) {
+      if (use_device != (char *) NULL)
+        (void) initCLPlatform(platforms[i], use_device);
+      break;
+    }
+  }
+  free(platforms);
+}
+
+void CLASS buildKernels()
+{
+  cl_int status;
+  cl_program program;
+  size_t sizes[] = { strlen(accelerateKernels) };
+
+  program = clCreateProgramWithSource(context, 1,  &accelerateKernels, sizes, &status);
+  status = clBuildProgram(program, 1, &device, NULL, NULL, NULL);
+  if (status != CL_SUCCESS && verbose) {
+    char errmsg[8192];
+    size_t msgSize;
+    status = clGetProgramBuildInfo(program, device, CL_PROGRAM_BUILD_LOG, 8192, errmsg, &msgSize);
+    if (status == CL_SUCCESS)
+      fprintf(stderr, "%s\n", errmsg);
+  }
+  ahdKernel = clCreateKernel(program, "ahd_interpolate", &status);
+  if (status == CL_SUCCESS)
+    convertRGBKernel = clCreateKernel(program, "convert_rgb", &status);
+  if (status != CL_SUCCESS)
+    useCL = FALSE;
+  clReleaseProgram(program);
 }
 
 int CLASS main (int argc, const char **argv)
@@ -9316,6 +9976,10 @@ next:
       image = (ushort (*)[4]) calloc (iheight, iwidth*sizeof *image);
       merror (image, "main()");
     }
+#pragma omp parallel sections num_threads(2)
+  {
+#pragma omp section
+  {
     if (verbose)
       fprintf (stderr,_("Loading %s %s image from %s ...\n"),
 	make, model, ifname);
@@ -9326,6 +9990,20 @@ next:
     if (raw_image && read_from_stdin)
       fread (raw_image, 2, raw_height*raw_width, stdin);
     else (*load_raw)();
+  } // end omp section
+#pragma omp section
+  {
+    initCL();
+    if (useCL) {
+      cl_int status;
+      buildKernels();
+      demoBuffer = clCreateBuffer(context, 0, (iheight * iwidth * sizeof *image), NULL, &status);
+      rawBuffer = clCreateBuffer(context, CL_MEM_USE_HOST_PTR, (raw_height * raw_width * sizeof(*raw_image)), raw_image, &status);
+      histoBuffer = clCreateBuffer(context, CL_MEM_USE_HOST_PTR, sizeof(histogram), histogram, &status);
+    }
+  }
+  } // end omp sections
+
     if (document_mode == 3) {
       top_margin = left_margin = fuji_width = 0;
       height = raw_height;
@@ -9337,7 +10015,6 @@ next:
       image = (ushort (*)[4]) calloc (iheight, iwidth*sizeof *image);
       merror (image, "main()");
       crop_masked_pixels();
-      free (raw_image);
     }
     if (zero_is_bad) remove_zeroes();
     bad_pixels (bpfile);
@@ -9371,6 +10048,8 @@ next:
 	ppg_interpolate();
       else if (filters == 9)
 	xtrans_interpolate (quality*2-3);
+      else if (useCL)
+	ahd_interpolate_cl();
       else
 	ahd_interpolate();
     }
@@ -9423,6 +10102,7 @@ thumbnail:
     fclose(ifp);
     if (ofp != stdout) fclose(ofp);
 cleanup:
+    if (raw_image) free (raw_image);
     if (meta_data) free (meta_data);
     if (ofname) free (ofname);
     if (oprof) free (oprof);
