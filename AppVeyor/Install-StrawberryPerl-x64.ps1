@@ -1,0 +1,2 @@
+Import-Module "C:\ProgramData\chocolatey\helpers\chocolateyInstaller.psm1"
+Install-ChocolateyPackage "StrawberryPerl" "msi" "/qn INSTALLDIR=`"C:\Strawberry`"" "file:///C:/Strawberry-x64/strawberry-perl-5.20.1.1-64bit.msi"

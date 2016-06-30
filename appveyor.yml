@@ -11,7 +11,9 @@ matrix:
   fast_finish: true
 
 cache:
-  - C:\Program Files (x86)\Inno Setup 5 -> appveyor.yml
+  - C:\Strawberry-x86 -> AppVeyor\Install.cmd
+  - C:\Strawberry-x64 -> AppVeyor\Install.cmd
+  - C:\InnoSetup -> AppVeyor\Install.cmd
 
 environment:
 
