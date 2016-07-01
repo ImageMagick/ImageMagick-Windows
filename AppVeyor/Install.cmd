@@ -24,6 +24,8 @@ cd %STRAWBERRYX86%
 echo Downloading strawberry-perl-5.20.1.1-32bit.msi
 appveyor DownloadFile https://github.com/ImageMagick/ImageMagick-Windows/releases/download/20160630/strawberry-perl-5.20.1.1-32bit.msi
 
+goto install
+
 :x64
 
 set STRAWBERRY64=C:\Strawberry-x64
