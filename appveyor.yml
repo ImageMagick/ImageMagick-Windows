@@ -71,11 +71,5 @@ build_script:
 test: off
 
 deploy:
-  provider: FTP
-  protocol: ftp
-  host: magick.imagemagick.org
-  beta: true
-  folder: /ImageMagick-7
-  username: upload
-  password:
-    secure: 5jIgwMyyjTcIfLY/Xqk7dg==
+  - provider: Environment
+    name: ImageMagick7
