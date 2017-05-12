@@ -1,6 +1,6 @@
 version: ImageMagick-{branch}.{build}
 
-os: Windows Server 2012 R2
+os: Visual Studio 2013
 
 clone_folder: C:\ImageMagick
 shallow_clone: true
