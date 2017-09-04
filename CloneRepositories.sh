@@ -27,6 +27,9 @@ clone_repository()
       git clone -b $branch --depth 1 $1/$3.git $dir
     fi
   fi
+  cd $dir
+  git show --oneline -s
+  cd ..
 }
 
 clone_repository $1 $2 'bzlib'

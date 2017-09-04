@@ -1,6 +1,6 @@
 @echo off
 
-set REPOS="https://github.com/ImageMagick/"
+set REPOS="https://github.com/ImageMagick"
 if not "%1"=="" set REPOS=%1
 
 set TYPE="full"
