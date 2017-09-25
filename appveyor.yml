@@ -10,11 +10,6 @@ skip_tags: true
 matrix:
   fast_finish: true
 
-cache:
-  - C:\Strawberry-x86 -> AppVeyor\Install.cmd
-  - C:\Strawberry-x64 -> AppVeyor\Install.cmd
-  - C:\InnoSetup -> AppVeyor\Install.cmd
-
 environment:
 
   matrix:
