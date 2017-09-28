@@ -98,6 +98,9 @@ function BuildConfiguration($config)
   msbuild $config.solution /m:4 /t:Rebuild ("/p:Configuration=Release,Platform=$platformName")
   CheckExitCode "Failed to build: $($config.name)"
 
+  SignFiles "bin\*.exe"
+  SignFiles "bin\*.dll"
+
   Set-Location ../AppVeyor
 
   if ($config.perl -eq $true)
@@ -147,6 +150,7 @@ function CreateInstaller($config)
   CheckExitCode "Failed to create setup executable."
 
   Get-ChildItem -Path ..\VisualMagick\installer\output\*.exe -Recurse | Move-Item -Destination ..\Windows-Distribution
+  SignFiles "..\Windows-Distribution\*.exe"
 }
 
 function CreateZipFile($fileName, $directory)
@@ -217,14 +221,10 @@ function CreateSource($version)
   CreateZipFile $output ".\Source"
 }
 
-function CheckUpload()
+function SignFiles($files)
 {
-#  $day = (Get-Date).DayOfWeek
-#  if ($day -ne "Saturday" -And $day -ne "Sunday")
-#  {
-#    Write-Host "Only uploading in the weekend."
-#    Remove-Item ..\Windows-Distribution\*
-#  }
+    & $env:SignTool sign /f $env:KeyFile /p "$env:CertPassword" /t http://timestamp.comodoca.com $files
+    CheckExitCode "Failed to sign files."
 }
 
 $platform = $args[0]
@@ -250,5 +250,4 @@ else
   BuildConfigure
   BuildConfiguration $config
   CreatePackage $config $version
-  CheckUpload
 }
