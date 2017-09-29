@@ -223,7 +223,7 @@ function CreateSource($version)
 
 function SignFiles($files)
 {
-    & $env:SignTool sign /f $env:KeyFile /p "$env:CertPassword" /t http://timestamp.comodoca.com $files
+    & $env:SignTool sign /f $env:KeyFile /p "$env:CertPassword" /tr http://sha256timestamp.ws.symantec.com/sha256/timestamp $files
     CheckExitCode "Failed to sign files."
 }
 
