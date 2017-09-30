@@ -14,7 +14,7 @@ environment:
 
   PfxUri:
     secure: bQc3Nboe/KLQhUg19FYGyNxL+w6OQ7pTTE2OXPBi2JD9aQICOH9ZNO8MRioScKRSeMR39Jw1T/s3Pnz5pZ2K4pbntOqS5FnF94VnKkekee9MYHOnhSOMh4YrI9D+HmRdTuC+Q0B6IsO2gC1iATI7y2RkbB7cOHYgycyGVuotLVs=
-  KeyFile: C:\ImageMagick\ImageMagick.pfx
+  KeyFile: C:\ImageMagick.pfx
 
   SignTool: C:\Program Files (x86)\Microsoft SDKs\Windows\v7.1A\Bin\signtool.exe
   CertPassword:

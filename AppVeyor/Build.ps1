@@ -237,7 +237,6 @@ New-Item -ItemType directory -Path ..\Windows-Distribution | Out-Null
 if ($name -eq "source")
 {
   CreateSource $version
-  CheckUpload
 }
 else
 {
