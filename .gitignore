@@ -11,8 +11,9 @@
 /jbig
 /jp2
 /jpeg
-/libde265
 /lcms
+/libde265
+/liblzma
 /libraw
 /librsvg
 /libxml
