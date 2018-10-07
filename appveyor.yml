@@ -18,7 +18,7 @@ environment:
 
   SignTool: C:\Program Files (x86)\Windows Kits\8.1\bin\x64\signtool.exe
   CertPassword:
-    secure: rGwX2/9ZrBxYbBPOm0cNVEUo1ZEwr1O+e2DLLaxP8IaqfUuxESYvB2bzcumbH07WZaLZFonMWFLmO3j8LJA7rA==
+    secure: xjf6AHE97wYhvhEfMbZk5OxbrhbMDIu0yFtC2P2BSkX28quRX/in25YUvKe8rWURJpRVbpDH5btHC5BpCBb+Iw==
 
   matrix:
     - im_platform: "x64"
