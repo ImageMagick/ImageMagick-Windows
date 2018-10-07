@@ -13,12 +13,12 @@ matrix:
 environment:
 
   PfxUri:
-    secure: rGwX2/9ZrBxYbBPOm0cNVEUo1ZEwr1O+e2DLLaxP8IaqfUuxESYvB2bzcumbH07WZaLZFonMWFLmO3j8LJA7rA==
+    secure: bQc3Nboe/KLQhUg19FYGyNxL+w6OQ7pTTE2OXPBi2JD9aQICOH9ZNO8MRioScKRSeMR39Jw1T/s3Pnz5pZ2K4pbntOqS5FnF94VnKkekee9MYHOnhSOMh4YrI9D+HmRdTuC+Q0B6IsO2gC1iATI7y2RkbB7cOHYgycyGVuotLVs=
   KeyFile: C:\ImageMagick.pfx
 
   SignTool: C:\Program Files (x86)\Windows Kits\8.1\bin\x64\signtool.exe
   CertPassword:
-    secure: FPTUZszs2LsBXvLLO0u7rD/UJaT2IbyNZAxL9Kjhq4VSZB/hTDq87E7qNN+Wfj+F
+    secure: rGwX2/9ZrBxYbBPOm0cNVEUo1ZEwr1O+e2DLLaxP8IaqfUuxESYvB2bzcumbH07WZaLZFonMWFLmO3j8LJA7rA==
 
   matrix:
     - im_platform: "x64"
