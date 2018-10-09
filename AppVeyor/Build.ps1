@@ -170,7 +170,6 @@ function CreatePortable($config, $version)
   Copy-Item ..\ImageMagick\config\english.xml .\Portable
   Copy-Item ..\ImageMagick\config\locale.xml .\Portable
   Copy-Item ..\ImageMagick\config\log.xml .\Portable
-  Copy-Item ..\ImageMagick\config\magic.xml .\Portable
   Copy-Item ..\ImageMagick\config\mime.xml .\Portable
   Copy-Item ..\ImageMagick\config\quantization-table.xml .\Portable
   Copy-Item ..\VisualMagick\bin\configure.xml .\Portable
