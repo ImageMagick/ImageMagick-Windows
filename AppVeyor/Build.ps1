@@ -48,15 +48,15 @@ function GetVersion()
   $version = "7.x.x"
   $addendum = "-x"
 
-  foreach ($line in [System.IO.File]::ReadLines("../VisualMagick/installer/inc/version.isx"))
+  foreach ($line in [System.IO.File]::ReadLines("../ImageMagick/version.sh"))
   {
-    if ($line.StartsWith("#define public MagickPackageVersionAddendum"))
+    if ($line.StartsWith("PACKAGE_VERSION="))
     {
-      $addendum = $line.SubString(45, $line.Length - 46)
+      $addendum = "-" + $line.SubString(17, $line.Length - 18)
     }
-    elseif ($line.StartsWith("#define public MagickPackageVersion"))
+    elseif ($line.StartsWith("PACKAGE_VERSION="))
     {
-      $version = $line.SubString(37, $line.Length - 38)
+      $version = $line.SubString(17, $line.Length - 18)
     }
   }
 
