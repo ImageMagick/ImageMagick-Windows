@@ -50,7 +50,7 @@ function GetVersion()
 
   foreach ($line in [System.IO.File]::ReadLines("../ImageMagick/version.sh"))
   {
-    if ($line.StartsWith("PACKAGE_VERSION="))
+    if ($line.StartsWith("PACKAGE_RELEASE="))
     {
       $addendum = "-" + $line.SubString(17, $line.Length - 18)
     }
