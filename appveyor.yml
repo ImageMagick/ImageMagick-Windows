@@ -1,4 +1,4 @@
-version: ImageMagick-{branch}.{build}
+version: ImageMagick-Windows.{build}
 
 os: Visual Studio 2013
 
