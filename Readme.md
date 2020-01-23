@@ -31,7 +31,7 @@ One of the folders that was created in the previous step is called `VisualMagick
 folder called `configure`. This folder contains a solution `configure.sln`. Open this solution with Visual Studio
 and start a `Release` build of the project. This will create a file called `configure.exe` in the folder. Running
 this program will start a Wizard that allows configuration of ImageMagick and its individual components.
-Before running `configure.exe` make sure it's copied into `VisualMagick\configure\configure.exe` location, otherwise it will generate empty MSVC solution.
+Before running `configure.exe` make sure it's copied into `VisualMagick\configure\configure.exe` location, otherwise it will generate an empty MSVC solution.
 
 ### Build ImageMagick
 
