@@ -6,6 +6,9 @@ if not "%1"=="" set REPOS=%1
 set TYPE="full"
 if not "%2"=="" set TYPE=%2
 
+set BASH="%USERPROFILE%\scoop\apps\git\current\bin\bash.exe"
+if exist %BASH% goto EXECUTE
+
 set BASH="%PROGRAMFILES%\Git\bin\bash.exe"
 if exist %BASH% goto EXECUTE
 
