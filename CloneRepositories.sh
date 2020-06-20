@@ -32,6 +32,7 @@ clone_repository()
   cd ..
 }
 
+clone_repository $1 $2 'aom'
 clone_repository $1 $2 'bzlib'
 clone_repository $1 $2 'cairo'
 clone_repository $1 $2 'contrib'
