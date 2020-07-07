@@ -8,7 +8,9 @@
 /ffi
 /flif
 /freetype
+/fribidi
 /glib
+/harfbuzz
 /ImageMagick
 /jbig
 /jp2
