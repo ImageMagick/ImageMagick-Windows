@@ -32,6 +32,15 @@ clone_repository()
   cd ..
 }
 
+clone_imagemagick()
+{
+  if [ ! -d "../ImageMagick" ]; then
+    clone_repository $1 $2 'ImageMagick'
+  else
+    cp -R ../ImageMagick ImageMagick
+  fi
+}
+
 clone_repository $1 $2 'aom'
 clone_repository $1 $2 'bzlib'
 clone_repository $1 $2 'cairo'
@@ -45,7 +54,6 @@ clone_repository $1 $2 'freetype'
 clone_repository $1 $2 'fribidi'
 clone_repository $1 $2 'glib'
 clone_repository $1 $2 'harfbuzz'
-clone_repository $1 $2 'ImageMagick'
 clone_repository $1 $2 'jbig'
 clone_repository $1 $2 'jp2'
 clone_repository $1 $2 'jpeg-turbo' 'master' 'jpeg'
@@ -66,3 +74,5 @@ clone_repository $1 $2 'VisualMagick'
 clone_repository $1 $2 'webp'
 clone_repository $1 $2 'win2k'
 clone_repository $1 $2 'zlib'
+
+clone_imagemagick $1 $2
