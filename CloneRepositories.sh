@@ -41,6 +41,11 @@ clone_imagemagick()
   fi
 }
 
+if [ "$2" == "source" ]; then
+  mkdir -p "source"
+  cd "source"
+fi
+
 clone_repository $1 $2 'aom'
 clone_repository $1 $2 'bzlib'
 clone_repository $1 $2 'cairo'
@@ -77,3 +82,14 @@ clone_repository $1 $2 'win2k'
 clone_repository $1 $2 'zlib'
 
 clone_imagemagick $1 $2
+
+if [ "$2" == "source" ]; then
+  for folder in *; do
+    if [ -d "$folder" ]; then
+       cd $folder
+       rm -Rf .git
+       cd ..
+    fi
+  done
+fi
+
