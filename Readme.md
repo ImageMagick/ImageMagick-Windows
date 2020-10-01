@@ -43,3 +43,4 @@ in the `VisualMagick` folder:
 - VisualStaticMT.sln (Static Multi-threaded runtimes)
 
 Open the solution to start building ImageMagick. The binaries will be created in the `VisualMagick\bin` folder.
+amazing project
