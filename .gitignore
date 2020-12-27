@@ -1,4 +1,5 @@
 /aom
+/brotli
 /bzlib
 /cairo
 /contrib
@@ -11,10 +12,12 @@
 /fribidi
 /glib
 /harfbuzz
+/highway
 /ImageMagick
 /jbig
 /jp2
 /jpeg
+/jpeg-xl
 /lcms
 /libde265
 /libheif
