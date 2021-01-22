@@ -5,15 +5,8 @@ clone_repository()
   echo ''
   echo "Cloning $3"
 
-  branch="master"
-  if [ ! -z "$4" ]; then
-    branch="$4"
-  fi
-
+  branch="main"
   dir="$3"
-  if [ ! -z "$5" ]; then
-    dir="$5"
-  fi
 
   if [ "$2" == "full" ]; then
     if [ ! -d "$dir" ]; then
@@ -63,7 +56,7 @@ clone_repository $1 $2 'harfbuzz'
 clone_repository $1 $2 'highway'
 clone_repository $1 $2 'jbig'
 clone_repository $1 $2 'jp2'
-clone_repository $1 $2 'jpeg-turbo' 'master' 'jpeg'
+clone_repository $1 $2 'jpeg-turbo'
 clone_repository $1 $2 'jpeg-xl'
 clone_repository $1 $2 'lcms'
 clone_repository $1 $2 'libde265'
