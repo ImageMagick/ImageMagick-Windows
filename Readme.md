@@ -28,7 +28,7 @@ these libraries and the ImageMagick library.
 ### Build configure.exe
 
 One of the folders that was created in the previous step is called `VisualMagick` and this folder contains a
-folder called `configure`. This folder contains the solution file `configure.2019.sln` for the latest 2019
+folder called `configure`. This folder contains the solution file `configure.2022.sln` for the latest 2022
 version of Visual Studio, and `configure.sln` for older versions. Open one of those and start a `Release`
 build of the project. This will create a file called `configure.exe` in the folder. Running this program
 will start a Wizard that allows configuration of ImageMagick and its individual components.
