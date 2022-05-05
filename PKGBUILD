@@ -12,13 +12,14 @@ mingw_arch=('mingw32' 'mingw64' 'ucrt64' 'clang64')
 url="https://www.imagemagick.org/"
 license=("custom")
 makedepends=("${MINGW_PACKAGE_PREFIX}-cairo"
-             "${MINGW_PACKAGE_PREFIX}-gcc"
+             "${MINGW_PACKAGE_PREFIX}-cc"
              "${MINGW_PACKAGE_PREFIX}-ghostscript"
              "${MINGW_PACKAGE_PREFIX}-graphviz"
              "${MINGW_PACKAGE_PREFIX}-librsvg"
              "${MINGW_PACKAGE_PREFIX}-libxml2"
              "${MINGW_PACKAGE_PREFIX}-openexr"
              "${MINGW_PACKAGE_PREFIX}-pango"
+             "${MINGW_PACKAGE_PREFIX}-autotools"
              "${MINGW_PACKAGE_PREFIX}-pkg-config")
 depends=("${MINGW_PACKAGE_PREFIX}-bzip2"
          "${MINGW_PACKAGE_PREFIX}-djvulibre"
@@ -67,8 +68,6 @@ build() {
   [[ -d ${source_dir}/build-${MINGW_CHOST} ]] && rm -rf ${source_dir}/build-${MINGW_CHOST}
   mkdir -p ${source_dir}/build-${MINGW_CHOST} && cd ${source_dir}/build-${MINGW_CHOST}
 
-  # See: https://github.com/msys2/MINGW-packages/blob/master/mingw-w64-imagemagick/ImageMagick-7.0.1.3-mingw.patch
-  #export LIBS="-lws2_32"
   ../configure \
     --prefix=${MINGW_PREFIX} \
     --build=${MINGW_CHOST} \
@@ -102,7 +101,7 @@ build() {
     --with-gs-font-dir=${MINGW_PREFIX}/share/fonts/gsfonts \
     --with-dejavu-font-dir=${MINGW_PREFIX}/share/fonts/TTF \
     $EXTRAOPTS \
-    CFLAGS="${CFLAGS}" CPPFLAGS="${CPPFLAGS}" LDFLAGS="${LDFLAGS} -lws2_32"
+    CFLAGS="${CFLAGS}" CPPFLAGS="${CPPFLAGS}" LDFLAGS="${LDFLAGS}"
 
   if check_option "debug" "y"; then
     MAKE_VERBOSE="V=1"
