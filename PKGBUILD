@@ -20,7 +20,8 @@ makedepends=("${MINGW_PACKAGE_PREFIX}-cairo"
              "${MINGW_PACKAGE_PREFIX}-openexr"
              "${MINGW_PACKAGE_PREFIX}-pango"
              "${MINGW_PACKAGE_PREFIX}-autotools"
-             "${MINGW_PACKAGE_PREFIX}-pkg-config")
+             "${MINGW_PACKAGE_PREFIX}-pkg-config"
+             "git")
 depends=("${MINGW_PACKAGE_PREFIX}-bzip2"
          "${MINGW_PACKAGE_PREFIX}-djvulibre"
          "${MINGW_PACKAGE_PREFIX}-flif"
@@ -57,7 +58,9 @@ validpgpkeys=('D8272EF51DA223E4D05B466989AB63D48277377A')
 
 prepare() {
   cd ${source_dir}
-  # autoreconf -fi
+
+  # Regenerate autotools files
+  autoreconf -fiv
 }
 
 build() {
