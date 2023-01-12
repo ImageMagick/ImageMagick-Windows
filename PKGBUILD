@@ -15,6 +15,7 @@ makedepends=("${MINGW_PACKAGE_PREFIX}-cairo"
              "${MINGW_PACKAGE_PREFIX}-cc"
              "${MINGW_PACKAGE_PREFIX}-ghostscript"
              "${MINGW_PACKAGE_PREFIX}-graphviz"
+             "${MINGW_PACKAGE_PREFIX}-libjxl"
              "${MINGW_PACKAGE_PREFIX}-librsvg"
              "${MINGW_PACKAGE_PREFIX}-libxml2"
              "${MINGW_PACKAGE_PREFIX}-openexr"
@@ -49,9 +50,10 @@ depends=("${MINGW_PACKAGE_PREFIX}-bzip2"
          "${MINGW_PACKAGE_PREFIX}-zlib"
          "${MINGW_PACKAGE_PREFIX}-zstd")
 optdepends=("${MINGW_PACKAGE_PREFIX}-ghostscript: for Ghostscript support"
-            "${MINGW_PACKAGE_PREFIX}-openexr: for OpenEXR support"
+            "${MINGW_PACKAGE_PREFIX}-graphviz: for GVC support"
+            "${MINGW_PACKAGE_PREFIX}-libjxl: for JPEG XL support"
             "${MINGW_PACKAGE_PREFIX}-librsvg: for SVG support"
-            "${MINGW_PACKAGE_PREFIX}-graphviz: for GVC support")
+            "${MINGW_PACKAGE_PREFIX}-openexr: for OpenEXR support")
 options=('staticlibs' 'strip' '!debug' 'libtool')
 source_dir="$GITHUB_WORKSPACE"
 validpgpkeys=('D8272EF51DA223E4D05B466989AB63D48277377A')
