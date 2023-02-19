@@ -26,4 +26,4 @@ echo %BASH%
 exit /b 1
 
 :EXECUTE
-%BASH% --login -i -c "./CheckReleases.sh %REPOS% %TYPE%"
+%BASH% --login -c "./CheckReleases.sh %REPOS% %TYPE%"

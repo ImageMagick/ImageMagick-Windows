@@ -26,4 +26,4 @@ echo %BASH%
 exit /b 1
 
 :EXECUTE
-%BASH% --login -i -c "./CloneRepositories.sh %REPOS% %TYPE%"
+%BASH% --login -c "./CloneRepositories.sh %REPOS% %TYPE%"
