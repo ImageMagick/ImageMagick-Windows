@@ -1,0 +1,23 @@
+on:
+  workflow_dispatch:
+  schedule:
+  - cron: 0 6 * * *
+
+name: daily
+jobs:
+  dependency_releases:
+    runs-on: windows-2022
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Clone repositories
+      shell: cmd
+      run: CloneRepositories.cmd https://github.com/ImageMagick shallow
+
+    - name: Check for new releases of dependencies
+      shell: cmd
+      run: CheckVersions.cmd
