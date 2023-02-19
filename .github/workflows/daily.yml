@@ -20,4 +20,4 @@ jobs:
 
     - name: Check for new releases of dependencies
       shell: cmd
-      run: CheckVersions.cmd
+      run: CheckReleases.cmd
