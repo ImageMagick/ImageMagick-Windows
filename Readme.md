@@ -17,12 +17,12 @@ To build ImageMagick with Visual Studio the following components should be insta
 - Visual C++ MFC for x86 and x64
 - Windows XP support for C++ (optional if the output needs to run on Windows XP)
 
-Nameing of these components might differ between version of Visual Studio. The example above use the Visual Studio
+Naming of these components might differ between versions of Visual Studio. The example above use the Visual Studio
 2017 names.
 
 ### Clone the dependencies
 
-The ImageMagick library is build with a number of third party libraries. Run `CloneRepositories.cmd` to clone
+The ImageMagick library is built with a number of third party libraries. Run `CloneRepositories.cmd` to clone
 these libraries and the ImageMagick library.
 
 ### Build configure.exe
@@ -35,7 +35,7 @@ will start a Wizard that allows configuration of ImageMagick and its individual 
 
 ### Build ImageMagick
 
-Depending on which options where chosen when running `configure.exe` one of the following solutions will be created
+Depending on which options were chosen when running `configure.exe` one of the following solutions will be created
 in the `VisualMagick` folder:
 
 - VisualDynamicMT.sln (Dynamic Multi-threaded DLL runtimes)
