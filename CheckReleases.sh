@@ -39,6 +39,9 @@ exit_code=0
 
 for f in $(find . -name "release-info"); do
   check_release $f
+  if [ $? != 0 ]; then
+    exit_code=1
+  fi
 done
 
 exit $exit_code
