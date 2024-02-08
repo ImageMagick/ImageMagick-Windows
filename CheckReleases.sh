@@ -15,8 +15,8 @@ check_release()
   fi
 
   regex=$(tail -n 1 $1)
-  if [[ $data =~ $regex ]]; then
-    latest=${BASH_REMATCH[1]}
+  latest=$(echo "$data" | grep -E "$regex" | grep -o -E "[0-9]+\.[0-9]+(\.[0-9]+)?" | sort -V | tail -n 1)
+  if [ -n "$latest" ]; then
     dot_count=$(echo $latest | grep -o "\." | wc -l)
     if [ "$dot_count" = "1" ]; then
       latest="$latest.0"
@@ -25,12 +25,11 @@ check_release()
     latest="unable to load version"
   fi
 
-  project=$(basename $(dirname $(dirname $1)))
-
   if [ "$current" = "$latest" ]; then
     return 0
   fi
 
+  project=$(basename $(dirname $(dirname $1)))
   echo "$project ${current} => ${latest} (${release_url})"
   return 1
 }
