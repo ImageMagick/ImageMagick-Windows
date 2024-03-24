@@ -29,16 +29,10 @@
 #define IDC_EXCLUDE_DEPRECATED          1015
 #define IDC_INSTALLED_SUPPORT           1016
 #define IDC_ZERO_CONFIGURATION_SUPPORT  1017
-#define IDC_BIN_DIR                     1018
-#define IDC_BIN_DIR_BROWSE              1019
-#define IDC_FUZZ_BIN_DIR                1020
-#define IDC_FUZZ_BIN_DIR_BROWSE         1021
-#define IDC_LIB_DIR                     1022
-#define IDC_LIB_DIR_BROWSE              1023
-#define IDC_FINISHED_TEXT               1024
-#define IDD_WAITDIALOG                  1025
-#define IDC_MSGCTRL                     1026
-#define IDC_PROGRESSCTRL                1027
+#define IDC_FINISHED_TEXT               1018
+#define IDD_WAITDIALOG                  1019
+#define IDC_MSGCTRL                     1020
+#define IDC_PROGRESSCTRL                1021
 
 // Next default values for new objects
 // 
