@@ -107,7 +107,11 @@ static inline wstring trim(const wstring &s)
 
 static inline void throwException(const wstring& message)
 {
-  throw runtime_error(string(message.begin(), message.end()));
+  string
+    errorMessage;
+
+  transform(message.begin(), message.end(), std::back_inserter(errorMessage), [] (wchar_t c) { return (char)c; });
+  throw runtime_error(errorMessage);
 }
 
 static inline wstring readLine(wifstream &stream)
