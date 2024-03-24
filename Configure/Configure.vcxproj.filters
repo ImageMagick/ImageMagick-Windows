@@ -109,15 +109,15 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\configure.ico">
+    <None Include="Resources\Configure.ico">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="Resources\magick.bmp">
+    <None Include="Resources\Magick.bmp">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="configure.rc">
+    <ResourceCompile Include="Configure.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>

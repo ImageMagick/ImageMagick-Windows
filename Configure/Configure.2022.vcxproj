@@ -51,7 +51,7 @@
     <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
     <LinkIncremental Condition="'$(Configuration)'=='Debug'">true</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)'=='Release'">false</LinkIncremental>
-    <TargetName>configure</TargetName>
+    <TargetName>Configure</TargetName>
   </PropertyGroup>
   <PropertyGroup>
     <OutDir>$(SolutionDir)</OutDir>
@@ -63,10 +63,10 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <PrecompiledHeaderOutputFile>.\Debug\configure/configure.pch</PrecompiledHeaderOutputFile>
-      <AssemblerListingLocation>.\Debug\configure/</AssemblerListingLocation>
-      <ObjectFileName>.\Debug\configure/</ObjectFileName>
-      <ProgramDataBaseFileName>.\Debug\configure/</ProgramDataBaseFileName>
+      <PrecompiledHeaderOutputFile>.\Debug\Configure/Configure.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\Debug\Configure/</AssemblerListingLocation>
+      <ObjectFileName>.\Debug\Configure/</ObjectFileName>
+      <ProgramDataBaseFileName>.\Debug\Configure/</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -77,14 +77,14 @@
       <AdditionalDependencies>rpcrt4.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>.\Debug\configure/configure.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>.\Debug\Configure/Configure.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
     </Link>
     <Midl>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MkTypLibCompatible>true</MkTypLibCompatible>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <TypeLibraryName>.\Debug\configure/configure.tlb</TypeLibraryName>
+      <TypeLibraryName>.\Debug\Configure/Configure.tlb</TypeLibraryName>
     </Midl>
     <ResourceCompile>
       <PreprocessorDefinitions>_AFXDLL;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -99,10 +99,10 @@
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
-      <PrecompiledHeaderOutputFile>.\Release\configure/configure.pch</PrecompiledHeaderOutputFile>
-      <AssemblerListingLocation>.\Release\configure/</AssemblerListingLocation>
-      <ObjectFileName>.\Release\configure/</ObjectFileName>
-      <ProgramDataBaseFileName>.\Release\configure/</ProgramDataBaseFileName>
+      <PrecompiledHeaderOutputFile>.\Release\Configure/Configure.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\Release\Configure/</AssemblerListingLocation>
+      <ObjectFileName>.\Release\Configure/</ObjectFileName>
+      <ProgramDataBaseFileName>.\Release\Configure/</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -112,14 +112,14 @@
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalDependencies>rpcrt4.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <ProgramDatabaseFile>.\Release\configure/configure.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>.\Release\Configure/Configure.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
     </Link>
     <Midl>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MkTypLibCompatible>true</MkTypLibCompatible>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <TypeLibraryName>.\Release\configure/configure.tlb</TypeLibraryName>
+      <TypeLibraryName>.\Release\Configure/Configure.tlb</TypeLibraryName>
     </Midl>
     <ResourceCompile>
       <PreprocessorDefinitions>_AFXDLL;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -134,10 +134,10 @@
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
-      <PrecompiledHeaderOutputFile>.\Release\configure/configure.pch</PrecompiledHeaderOutputFile>
-      <AssemblerListingLocation>.\Release\configure/</AssemblerListingLocation>
-      <ObjectFileName>.\Release\configure/</ObjectFileName>
-      <ProgramDataBaseFileName>.\Release\configure/</ProgramDataBaseFileName>
+      <PrecompiledHeaderOutputFile>.\Release\Configure/Configure.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\Release\Configure/</AssemblerListingLocation>
+      <ObjectFileName>.\Release\Configure/</ObjectFileName>
+      <ProgramDataBaseFileName>.\Release\Configure/</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -147,14 +147,14 @@
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalDependencies>rpcrt4.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <ProgramDatabaseFile>.\Release\configure/configure.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>.\Release\Configure/Configure.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
     </Link>
     <Midl>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MkTypLibCompatible>true</MkTypLibCompatible>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <TypeLibraryName>.\Release\configure/configure.tlb</TypeLibraryName>
+      <TypeLibraryName>.\Release\Configure/Configure.tlb</TypeLibraryName>
     </Midl>
     <ResourceCompile>
       <PreprocessorDefinitions>_AFXDLL;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -203,7 +203,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="configure.rc" />
+    <ResourceCompile Include="Configure.rc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Pages\FinishedPage.h" />
@@ -223,8 +223,8 @@
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\configure.ico" />
-    <None Include="Resources\magick.bmp" />
+    <None Include="Resources\Configure.ico" />
+    <None Include="Resources\Magick.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

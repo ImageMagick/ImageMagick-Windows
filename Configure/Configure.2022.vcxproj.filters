@@ -49,13 +49,13 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="configure.rc" />
+    <ResourceCompile Include="Configure.rc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\configure.ico">
+    <None Include="Resources\Configure.ico">
       <Filter>Resources</Filter>
     </None>
-    <None Include="Resources\magick.bmp">
+    <None Include="Resources\Magick.bmp">
       <Filter>Resources</Filter>
     </None>
   </ItemGroup>
