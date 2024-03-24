@@ -25,7 +25,7 @@ VersionInfo::VersionInfo()
 {
 }
 
-wstring VersionInfo::executeCommand(const wchar_t* command)
+wstring VersionInfo::executeCommand(const wstring &command)
 {
   FILE
     *pipe;
@@ -33,7 +33,7 @@ wstring VersionInfo::executeCommand(const wchar_t* command)
   wstring
     result;
 
-  pipe=_wpopen(command, L"rt");
+  pipe=_wpopen(command.c_str(), L"rt");
   if (pipe == (FILE *) NULL)
     return(L"");
   try
@@ -58,7 +58,7 @@ wstring VersionInfo::executeCommand(const wchar_t* command)
   return(result);
 }
 
-wstring VersionInfo::getFileModificationDate(const wchar_t *fileName,const wchar_t *format)
+wstring VersionInfo::getFileModificationDate(const wstring &fileName,const wstring &format)
 {
   wchar_t
     buffer[20];
@@ -69,10 +69,10 @@ wstring VersionInfo::getFileModificationDate(const wchar_t *fileName,const wchar
   struct _stat64
     attributes;
 
-  if (_wstati64(fileName,&attributes) != 0)
+  if (_wstati64(fileName.c_str(),&attributes) != 0)
     return(L"");
   (void) localtime_s(&tm,&attributes.st_mtime);
-  (void) wcsftime(buffer,20,format,&tm);
+  (void) wcsftime(buffer,20,format.c_str(),&tm);
   return(wstring(buffer));
 }
 
@@ -117,7 +117,7 @@ bool VersionInfo::load()
   wstring
     line;
 
-  version.open(L"..\\..\\ImageMagick\\m4\\version.m4");
+  version.open(pathFromRoot(L"ImageMagick\\m4\\version.m4"));
   if (!version)
     return(false);
 
@@ -147,7 +147,7 @@ bool VersionInfo::load()
          _ppLibraryRevision != L"" && _ppLibraryAge != L"" && _gitRevision != L"" && _releaseDate != L"");
 }
 
-void VersionInfo::loadValue(const wstring line,const wstring keyword,wstring *value)
+void VersionInfo::loadValue(const wstring &line,const wstring &keyword,wstring *value)
 {
   size_t
     index;
@@ -184,18 +184,18 @@ wstring VersionInfo::releaseDate() const
 
 void VersionInfo::setGitRevision()
 {
-  _gitRevision=executeCommand(L"cd ..\\..\\ImageMagick && git rev-parse --short HEAD");
+  _gitRevision=executeCommand(L"cd " + pathFromRoot(L"ImageMagick") + L" && git rev-parse --short HEAD");
   if (_gitRevision != L"")
-    _gitRevision+=executeCommand(L"cd ..\\..\\ImageMagick && git log -1 --format=:%cd --date=format:%Y%m%d");
+    _gitRevision+=executeCommand(L"cd " + pathFromRoot(L"ImageMagick") + L" && git log -1 --format=:%cd --date=format:%Y%m%d");
   if (_gitRevision == L"")
-    _gitRevision=getFileModificationDate(L"..\\..\\ImageMagick\\m4\\version.m4",L"%Y%m%d");
+    _gitRevision=getFileModificationDate(pathFromRoot(L"ImageMagick\\m4\\version.m4"),L"%Y%m%d");
 }
 
 void VersionInfo::setReleaseDate()
 {
-  _releaseDate=executeCommand(L"cd ..\\..\\ImageMagick && git log -1 --format=%cd --date=format:%Y-%m-%d");
+  _releaseDate=executeCommand(L"cd " + pathFromRoot(L"ImageMagick") + L" && git log -1 --format=%cd --date=format:%Y-%m-%d");
   if (_releaseDate == L"")
-    _releaseDate=getFileModificationDate(L"..\\..\\ImageMagick\\m4\\version.m4",L"%Y-%m-%d");
+    _releaseDate=getFileModificationDate(pathFromRoot(L"ImageMagick\\m4\\version.m4"),L"%Y-%m-%d");
 }
 
 wstring VersionInfo::version() const

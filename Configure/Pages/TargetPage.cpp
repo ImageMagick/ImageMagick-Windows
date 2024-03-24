@@ -47,7 +47,7 @@ TargetPage::TargetPage() : CPropertyPage(IDD_TARGET_PAGE)
   _policyConfig=PolicyConfig::OPEN;
   _quantumDepth=QuantumDepth::Q16;
   _solutionType=SolutionType::DYNAMIC_MT;
-  _useHDRI=PathFileExists(L"..\\MagickCore") ? TRUE : FALSE;
+  _useHDRI=PathFileExists(pathFromRoot(L"VisualMagick\\MagickCore").c_str()) ? TRUE : FALSE;
   _useOpenCL=TRUE;
   _useOpenMP=TRUE;
   _zeroConfigurationSupport=FALSE;

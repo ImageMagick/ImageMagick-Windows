@@ -26,9 +26,9 @@ IMPLEMENT_DYNCREATE(SystemPage, CPropertyPage)
 
 SystemPage::SystemPage() : CPropertyPage(IDD_SYSTEM_PAGE)
 {
-  _binDirectory="..\\..\\bin\\";
-  _fuzzBinDirectory="..\\..\\fuzz\\bin\\";
-  _libDirectory="..\\..\\lib\\";
+  _binDirectory=L"Output\\ImageMagick\\bin\\";
+  _fuzzBinDirectory="Output\\Fuzz\\bin\\";
+  _libDirectory="Output\\ImageMagick\\lib\\";
 }
 
 SystemPage::~SystemPage()

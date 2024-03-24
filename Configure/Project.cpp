@@ -216,7 +216,7 @@ Project* Project::create(wstring name)
   wifstream
     config;
 
-  config.open(L"..\\" + name + L"\\Config.txt");
+  config.open(pathFromRoot(L"VisualMagick\\" + name + L"\\Config.txt"));
   if (!config)
     return((Project *) NULL);
 
@@ -426,7 +426,7 @@ void Project::loadModules(const ConfigureWizard &wizard)
   foreach (wstring,dir,_directories)
   {
     const wstring
-      fileDir(L"..\\..\\" + *dir);
+      fileDir(pathFromRoot(*dir));
 
     if (!directoryExists(fileDir))
       throwException(L"Invalid folder specified: " + fileDir);
@@ -479,7 +479,7 @@ vector<wstring> Project::readLicenseFilenames(const wstring &line)
   while(getline(wss, fileName, L';'))
   {
     wstring
-      filePath(L"..\\..\\" + name() + L"\\" + fileName);
+      filePath(pathFromRoot(name() + L"\\" + fileName));
 
     filesystem::path
       file(filePath);

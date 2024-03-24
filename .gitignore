@@ -1,6 +1,16 @@
-/configure/x64
-/configure/Debug
-/configure/Release
+/Configure/Configure.2022
+/Configure/Debug
+/Configure/Release
+/Configure/*.user
+/Configure/*.exe
+
+/Output/*
+
+/VisualStudioProjects/*
+
+/*.sln
+
+.vs
 
 /aom
 /brotli

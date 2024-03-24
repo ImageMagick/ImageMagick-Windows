@@ -42,7 +42,7 @@ private:
 
   wstring getFileName(const ConfigureWizard &wizard);
 
-  wstring getFolder();
+  wstring getMagickFolderName();
 
   bool isImageMagick7(const ConfigureWizard &wizard);
 

@@ -54,11 +54,11 @@ public:
 
 private:
 
-  wstring executeCommand(const wchar_t *command);
+  wstring executeCommand(const wstring &command);
 
-  wstring getFileModificationDate(const wchar_t *fileName,const wchar_t *format);
+  wstring getFileModificationDate(const wstring &fileName,const wstring &format);
 
-  void loadValue(const wstring line,const wstring keyword,wstring *value);
+  void loadValue(const wstring &line,const wstring &keyword,wstring *value);
 
   void setGitRevision();
 

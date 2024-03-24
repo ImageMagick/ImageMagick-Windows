@@ -24,10 +24,8 @@
 #include <algorithm>
 #include <map>
 
-
 static const wstring
-  relativePathForConfigure(L"..\\..\\"),
-  relativePathForProject(L"..\\..\\..\\");
+  relativePathForProject(L"..\\..\\");
 
 ProjectFile::ProjectFile(const ConfigureWizard *wizard,Project *project,
   const wstring &prefix,const wstring &name)
@@ -134,7 +132,7 @@ void ProjectFile::loadAliases()
   if (!_project->isExe() || !_project->isModule())
     return;
 
-  fileName=L"..\\" + _project->name() + L"\\Aliases." + _name + L".txt";
+  fileName=pathFromRoot(L"VisualMagick\\" + _project->name() + L"\\Aliases." + _name + L".txt");
 
   aliases.open(fileName);
   if (!aliases)
@@ -167,7 +165,7 @@ void ProjectFile::loadConfig()
   if (!_project->isModule())
     return;
 
-  fileName=L"..\\" + _project->name() + L"\\Config." + _name + L".txt";
+  fileName=pathFromRoot(L"VisualMagick\\" + _project->name() + L"\\Config." + _name + L".txt");
 
   config.open(fileName);
   if (!config)
@@ -205,7 +203,7 @@ void ProjectFile::write(const vector<Project*> &allprojects)
     file;
 
   wstring
-    projectDir(L"..\\VisualStudioProjects\\" + name());
+    projectDir(pathFromRoot(L"VisualStudioProjects\\" + name()));
 
   CreateDirectoryW(projectDir.c_str(), NULL);
 
@@ -248,12 +246,12 @@ bool ProjectFile::isLib() const
 wstring ProjectFile::outputDirectory() const
 {
   if (_project->isFuzz())
-    return(_wizard->fuzzBinDirectory());
+    return(relativePathForProject + _wizard->fuzzBinDirectory());
 
   if (isLib())
-    return(_wizard->libDirectory());
+    return(relativePathForProject + _wizard->libDirectory() + _project->name() + L"\\");
 
-  return(_wizard->binDirectory());
+  return(relativePathForProject + _wizard->binDirectory());
 }
 
 void ProjectFile::addFile(const wstring &directory, const wstring &name)
@@ -266,12 +264,12 @@ void ProjectFile::addFile(const wstring &directory, const wstring &name)
   {
     src_file=directory + L"\\" + name + *ext;
 
-    if (PathFileExists((relativePathForConfigure + src_file).c_str()))
+    if (PathFileExists(pathFromRoot(src_file).c_str()))
     {
-      _srcFiles.push_back(relativePathForProject + src_file);
+      _srcFiles.push_back(pathFromRoot(src_file));
 
       header_file=directory + L"\\" + name + L".h";
-      if (PathFileExists((relativePathForConfigure + header_file).c_str()))
+      if (PathFileExists(pathFromRoot(header_file).c_str()))
         _includeFiles.push_back(relativePathForProject + header_file);
 
       break;
@@ -285,12 +283,12 @@ void ProjectFile::addFile(const wstring &directory, const wstring &name)
   {
     src_file=directory + L"\\main" + *ext;
 
-    if (PathFileExists((relativePathForConfigure + src_file).c_str()))
+    if (PathFileExists(pathFromRoot(src_file).c_str()))
     {
       _srcFiles.push_back(relativePathForProject + src_file);
 
       header_file=directory + L"\\" + name + L".h";
-      if (PathFileExists((relativePathForConfigure + header_file).c_str()))
+      if (PathFileExists(pathFromRoot(header_file).c_str()))
         _includeFiles.push_back(relativePathForProject + header_file);
 
       break;
@@ -415,7 +413,7 @@ void ProjectFile::loadSource(const wstring &directory)
   if (contains(_project->platformExcludes(_wizard->platform()),directory))
     return;
 
-  fileHandle=FindFirstFile((relativePathForConfigure + directory + L"\\*.*").c_str(),&data);
+  fileHandle=FindFirstFile(pathFromRoot(directory + L"\\*.*").c_str(),&data);
   do
   {
     if (fileHandle == INVALID_HANDLE_VALUE)
@@ -447,7 +445,7 @@ wstring ProjectFile::nasmOptions(const wstring &folder)
   if (_wizard->platform() == Platform::ARM64)
     return(result);
 
-  result += L"..\\build\\nasm -i\"" + folder +L"\"";
+  result += L"..\\Build\\nasm -i\"" + folder +L"\"";
 
   if (_wizard->platform() == Platform::X86)
     result += L" -fwin32 -DWIN32";

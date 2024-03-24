@@ -179,4 +179,9 @@ static inline bool isValidSrcFile(const wstring &fileName)
   return(false);
 }
 
+static inline const wstring pathFromRoot(const wstring &path)
+{
+  return(L"..\\" + path);
+}
+
 #endif // __Shared__

@@ -62,7 +62,7 @@ void Solution::loadProjects()
   WIN32_FIND_DATA
     data;
 
-  fileHandle=FindFirstFile(L"..\\*.*",&data);
+  fileHandle=FindFirstFile(pathFromRoot(L"VisualMagick\\*.*").c_str(),&data);
   do
   {
     if (fileHandle == INVALID_HANDLE_VALUE)
@@ -143,21 +143,16 @@ void Solution::write(const ConfigureWizard &wizard,WaitDialog &waitDialog)
 
 wstring Solution::getFileName(const ConfigureWizard &wizard)
 {
-  wstring
-    fileName;
-
-  fileName=L"..\\Visual" + wizard.solutionName();
-
-  return(fileName+L".sln");
+  return(pathFromRoot(L"Visual" + wizard.solutionName() + L".sln"));
 }
 
-wstring Solution::getFolder()
+wstring Solution::getMagickFolderName()
 {
   wstring
     folder;
 
   folder=L"MagickCore";
-  if (!PathFileExists((L"..\\..\\ImageMagick\\" + folder).c_str()))
+  if (!PathFileExists(pathFromRoot(L"ImageMagick\\MagickCore").c_str()))
     folder=L"magick";
   return(folder);
 }
@@ -184,13 +179,15 @@ void Solution::writeMagickBaseConfig(const ConfigureWizard &wizard)
   wofstream
     config;
 
-  folder=getFolder();
+  wstring
+    folderName;
 
-  configIn.open(L"..\\" + folder + L"\\magick-baseconfig.h.in");
+  folderName=getMagickFolderName();
+  configIn.open(pathFromRoot(L"ImageMagick\\" + folderName + L"\\magick-baseconfig.h.in"));
   if (!configIn)
     return;
 
-  config.open(L"..\\..\\ImageMagick\\" + folder + L"\\magick-baseconfig.h");
+  config.open(pathFromRoot(L"ImageMagick\\" + folderName + L"\\magick-baseconfig.h"));
   if (!config)
     return;
 
@@ -313,25 +310,25 @@ void Solution::writeMakeFile(const ConfigureWizard &wizard)
     libName,
     line;
 
-  libName=L"CORE_RL_" + getFolder()+ L"_";
+  libName=L"CORE_RL_" + getMagickFolderName()+ L"_";
 
-  lib=wofstream(L"..\\..\\ImageMagick\\PerlMagick\\" + libName + L".a");
+  lib=wofstream(pathFromRoot(L"ImageMagick\\PerlMagick\\" + libName + L".a"));
   if (!lib)
     return;
   lib.close();
 
-  zipIn=wifstream(L"..\\PerlMagick\\Zip.ps1", std::ios::binary);
+  zipIn=wifstream(pathFromRoot(L"VisualMagick\\PerlMagick\\Zip.ps1"), std::ios::binary);
   if (!zipIn)
     return;
-  zip=wofstream(L"..\\..\\ImageMagick\\PerlMagick\\Zip.ps1", std::ios::binary);
+  zip=wofstream(pathFromRoot(L"ImageMagick\\PerlMagick\\Zip.ps1"), std::ios::binary);
   zip << zipIn.rdbuf();
   zip.close();
 
-  makeFileIn.open(L"..\\PerlMagick\\Makefile.PL.in");
+  makeFileIn.open(pathFromRoot(L"VisualMagick\\PerlMagick\\Makefile.PL.in"));
   if (!makeFileIn)
     return;
 
-  makeFile.open(L"..\\..\\ImageMagick\\PerlMagick\\Makefile.PL");
+  makeFile.open(pathFromRoot(L"ImageMagick\\PerlMagick\\Makefile.PL"));
   if (!makeFile)
     return;
 
@@ -349,13 +346,13 @@ void Solution::writeNotice(const ConfigureWizard &wizard,const VersionInfo &vers
   wofstream
     notice;
 
-  notice.open(L"..\\..\\VisualMagick\\NOTICE.txt");
+  notice.open(pathFromRoot(L"VisualMagick\\NOTICE.txt"));
   if (!notice)
     return;
 
   notice << "* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *" << endl << endl;
   notice << "[ Imagemagick " << versionInfo.version() << versionInfo.libAddendum() << "] copyright:" << endl << endl;
-  notice << readLicense(L"..\\..\\ImageMagick\\LICENSE");
+  notice << readLicense(pathFromRoot(L"ImageMagick\\LICENSE"));
   notice << endl << "* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *" << endl << endl;
 
   foreach (Project*,p,_projects)
@@ -384,21 +381,21 @@ void Solution::writePolicyConfig(const ConfigureWizard &wizard)
   switch(wizard.policyConfig())
   {
   case PolicyConfig::LIMITED:
-    infile=wifstream(L"..\\..\\ImageMagick\\config\\policy-limited.xml");
+    infile=wifstream(pathFromRoot(L"ImageMagick\\config\\policy-limited.xml"));
     break;
   case PolicyConfig::OPEN:
-    infile=wifstream(L"..\\..\\ImageMagick\\config\\policy-open.xml");
+    infile=wifstream(pathFromRoot(L"ImageMagick\\config\\policy-open.xml"));
     break;
   case PolicyConfig::SECURE:
-    infile=wifstream(L"..\\..\\ImageMagick\\config\\policy-secure.xml");
+    infile=wifstream(pathFromRoot(L"ImageMagick\\config\\policy-secure.xml"));
     break;
   case PolicyConfig::WEBSAFE:
-    infile=wifstream(L"..\\..\\ImageMagick\\config\\policy-websafe.xml");
+    infile=wifstream(pathFromRoot(L"ImageMagick\\config\\policy-websafe.xml"));
     break;
   }
   if (!infile)
     throwException(L"Unable to open policy file");
-  outfile=wofstream(L"..\\bin\\policy.xml");
+  outfile=wofstream(wizard.binDirectory() + L"policy.xml");
   while (infile.read(buffer, 512))
     outfile.write(buffer, infile.gcount());
   outfile.write(buffer, infile.gcount());
@@ -420,11 +417,11 @@ void Solution::writeThresholdMap(const ConfigureWizard &wizard)
   if (!wizard.zeroConfigurationSupport())
     return;
 
-  inputStream.open(L"..\\bin\\thresholds.xml");
+  inputStream.open(wizard.binDirectory() + L"thresholds.xml");
   if (!inputStream)
     return;
 
-  outputStream.open(L"..\\..\\ImageMagick\\MagickCore\\threshold-map.h");
+  outputStream.open(pathFromRoot(L"ImageMagick\\MagickCore\\threshold-map.h"));
   if (!outputStream)
     {
       inputStream.close();
@@ -450,17 +447,15 @@ void Solution::writeThresholdMap(const ConfigureWizard &wizard)
 
 void Solution::writeVersion(const ConfigureWizard &wizard,const VersionInfo &versionInfo)
 {
-
   wstring
-    folder,
+    folderName,
     line;
 
-  folder=getFolder();
-
-  writeVersion(wizard,versionInfo,L"..\\..\\ImageMagick\\"+folder+L"\\version.h.in",L"..\\..\\ImageMagick\\"+folder+L"\\version.h");
-  writeVersion(wizard,versionInfo,L"..\\..\\ImageMagick\\config\\configure.xml.in",L"..\\bin\\configure.xml");
-  writeVersion(wizard,versionInfo,L"..\\installer\\inc\\version.isx.in",L"..\\installer\\inc\\version.isx");
-  writeVersion(wizard,versionInfo,L"..\\utilities\\ImageMagick.version.h.in",L"..\\utilities\\ImageMagick.version.h");
+  folderName=getMagickFolderName();
+  writeVersion(wizard,versionInfo,pathFromRoot(L"ImageMagick\\" + folderName + L"\\version.h.in"),pathFromRoot(L"ImageMagick\\" + folderName + L"\\version.h"));
+  writeVersion(wizard,versionInfo,pathFromRoot(L"ImageMagick\\config\\configure.xml.in"),wizard.binDirectory() + L"configure.xml");
+  writeVersion(wizard,versionInfo,pathFromRoot(L"VisualMagick\\installer\\inc\\version.isx.in"),pathFromRoot(L"VisualMagick\\installer\\inc\\version.isx"));
+  writeVersion(wizard,versionInfo,pathFromRoot(L"VisualMagick\\utilities\\ImageMagick.version.h.in"),pathFromRoot(L"VisualMagick\\utilities\\ImageMagick.version.h"));
 }
 
 void Solution::writeVersion(const ConfigureWizard &wizard,const VersionInfo &versionInfo,wstring input,wstring output)
