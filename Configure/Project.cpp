@@ -153,6 +153,17 @@ wstring Project::notice() const
   return(_notice);
 }
 
+wstring Project::path(const wstring &subPath) const
+{
+  wstring
+    path = _folder + L"\\" + _name;
+
+  if (subPath == L".")
+    return(path);
+
+  return(path + L"\\" + subPath);
+}
+
 vector<wstring> &Project::references()
 {
   return(_references);
@@ -211,16 +222,16 @@ void Project::mergeProjectFiles(const ConfigureWizard &wizard)
   _files.push_back(projectFile);
 }
 
-Project* Project::create(wstring name)
+Project* Project::create(wstring folder, wstring name)
 {
   wifstream
     config;
 
-  config.open(pathFromRoot(L"VisualMagick\\" + name + L"\\Config.txt"));
+  config.open(pathFromRoot(folder + L"\\" + name + L"\\ImageMagick\\Config.txt"));
   if (!config)
     return((Project *) NULL);
 
-  Project* project = new Project(name);
+  Project* project = new Project(folder,name);
   project->loadConfig(config);
   project->setNoticeAndVersion();
 
@@ -288,8 +299,9 @@ bool Project::shouldSkip(const ConfigureWizard &wizard)
   return(false);
 }
 
-Project::Project(wstring name)
+Project::Project(const wstring &folder,const wstring &name)
 {
+  _folder=folder;
   _name=name;
 
   _disabledARM64=false;
@@ -426,7 +438,7 @@ void Project::loadModules(const ConfigureWizard &wizard)
   foreach (wstring,dir,_directories)
   {
     const wstring
-      fileDir(pathFromRoot(*dir));
+      fileDir(pathFromRoot(path(*dir)));
 
     if (!directoryExists(fileDir))
       throwException(L"Invalid folder specified: " + fileDir);
@@ -479,7 +491,7 @@ vector<wstring> Project::readLicenseFilenames(const wstring &line)
   while(getline(wss, fileName, L';'))
   {
     wstring
-      filePath(pathFromRoot(name() + L"\\" + fileName));
+      filePath(pathFromRoot(path(fileName)));
 
     filesystem::path
       file(filePath);

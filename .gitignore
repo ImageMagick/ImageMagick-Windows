@@ -4,56 +4,18 @@
 /Configure/*.user
 /Configure/*.exe
 
-/DynamicMT/*
+/Dependencies/*
+
+/DynamicMT
 
 /Output/*
 
-/StaticMT/*
+/ImageMagick
 
-/StaticMTD/*
+/StaticMT
+
+/StaticMTD
 
 /*.sln
 
 .vs
-
-/aom
-/brotli
-/bzlib
-/cairo
-/contrib
-/croco
-/dcraw
-/de265
-/deflate
-/exr
-/ffi
-/flif
-/fftw
-/freetype
-/fribidi
-/glib
-/harfbuzz
-/highway
-/heif
-/ImageMagick
-/jasper
-/jbig
-/jpeg-turbo
-/jpeg-xl
-/lcms
-/lqr
-/lzma
-/openjpeg
-/pango
-/pixman
-/png
-/raqm
-/raw
-/rsvg
-/tiff
-/VisualMagick
-/webp
-/win2k
-/xml
-/zip
-/zlib

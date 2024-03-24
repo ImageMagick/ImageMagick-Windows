@@ -78,6 +78,8 @@ public:
 
   wstring notice() const;
 
+  wstring path(const wstring &subPath) const;
+
   vector<wstring> &references();
 
   bool treatWarningAsError() const;
@@ -92,7 +94,7 @@ public:
 
   void checkFiles(const VisualStudioVersion visualStudioVersion);
 
-  static Project* create(wstring name);
+  static Project* create(wstring folder, wstring name);
 
   bool loadFiles(const ConfigureWizard &wizard);
 
@@ -102,7 +104,7 @@ public:
 
 
 private:
-  Project(wstring name);
+  Project(const wstring &folder,const wstring &name);
 
   void addLines(wifstream &config,wstring &value);
 
@@ -128,6 +130,7 @@ private:
   vector<wstring>      _excludesX86;
   vector<wstring>      _excludesX64;
   vector<wstring>      _excludesARM64;
+  wstring              _folder;
   vector<ProjectFile*> _files;
   bool                 _hasIncompatibleLicense;
   wstring              _icon;

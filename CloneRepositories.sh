@@ -3,11 +3,6 @@ set -e
 
 commit=$1
 
-if [ "$2" == "source" ]; then
-    mkdir -p "source"
-    cd "source"
-fi
-
 clone()
 {
     local repo=$1
@@ -86,6 +81,12 @@ fi
 declare -r commitDate=`git -C ImageMagick log -1 --format=%ci`
 echo "Set latest commit date as $commitDate"
 
+if [ ! -d "Dependencies" ]; then
+    mkdir -p "Dependencies"
+fi
+
+cd "Dependencies"
+
 clone_date 'aom' "$commitDate"
 clone_date 'brotli' "$commitDate"
 clone_date 'bzlib' "$commitDate"
@@ -122,7 +123,6 @@ clone_date 'rsvg' "$commitDate"
 clone_date 'tiff' "$commitDate"
 clone_date 'VisualMagick' "$commitDate"
 clone_date 'webp' "$commitDate"
-clone_date 'win2k' "$commitDate"
 clone_date 'xml' "$commitDate"
 clone_date 'zip' "$commitDate"
 clone_date 'zlib' "$commitDate"

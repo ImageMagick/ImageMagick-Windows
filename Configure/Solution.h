@@ -46,6 +46,8 @@ private:
 
   bool isImageMagick7(const ConfigureWizard &wizard);
 
+  void loadProjectsFromFolder(const wstring &folder);
+
   void writeMagickBaseConfig(const ConfigureWizard &wizard);
 
   void writeMakeFile(const ConfigureWizard &wizard);

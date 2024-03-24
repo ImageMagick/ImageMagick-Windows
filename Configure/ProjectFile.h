@@ -105,9 +105,9 @@ private:
 
   void writeAdditionalDependencies(wofstream &file,const wstring &separator);
 
-  void writeAdditionalIncludeDirectories(wofstream &file,const wstring &separator);
+  void writeAdditionalIncludeDirectories(wofstream &file,const wstring &separator,const vector<Project*> &allProjects);
 
-  void writeItemDefinitionGroup(wofstream &file,const bool debug);
+  void writeItemDefinitionGroup(wofstream &file,const bool debug,const vector<Project*> &allProjects);
 
   void writePreprocessorDefinitions(wofstream &file,const bool debug);
 

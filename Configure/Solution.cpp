@@ -56,33 +56,7 @@ int Solution::loadProjectFiles(const ConfigureWizard &wizard)
 
 void Solution::loadProjects()
 {
-  HANDLE
-    fileHandle;
-
-  WIN32_FIND_DATA
-    data;
-
-  fileHandle=FindFirstFile(pathFromRoot(L"VisualMagick\\*.*").c_str(),&data);
-  do
-  {
-    if (fileHandle == INVALID_HANDLE_VALUE)
-      return;
-
-    if ((data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) != FILE_ATTRIBUTE_DIRECTORY)
-      continue;
-
-    if (_wcsicmp(data.cFileName,L".") == 0)
-      continue;
-
-    if (_wcsicmp(data.cFileName,L"..") == 0)
-      continue;
-
-     Project* project = Project::create(data.cFileName);
-     if (project != (Project *) NULL)
-       _projects.push_back(project);
-  } while (FindNextFile(fileHandle,&data));
-
-  FindClose(fileHandle);
+  loadProjectsFromFolder(L"Dependencies");
 }
 
 void Solution::write(const ConfigureWizard &wizard,WaitDialog &waitDialog)
@@ -164,7 +138,23 @@ bool Solution::isImageMagick7(const ConfigureWizard &wizard)
     if ((*p)->name().compare(L"MagickCore") == 0)
       return(true);
   }
-    return(false);
+  return(false);
+}
+
+void Solution::loadProjectsFromFolder(const wstring &folder)
+{
+  Project
+    *project;
+
+  for(auto& p : filesystem::directory_iterator(pathFromRoot(folder)))
+  {
+    if (p.is_directory())
+    {
+      project=Project::create(folder,p.path().filename());
+      if (project != (Project *) NULL)
+        _projects.push_back(project);
+    }
+  }
 }
 
 void Solution::writeMagickBaseConfig(const ConfigureWizard &wizard)

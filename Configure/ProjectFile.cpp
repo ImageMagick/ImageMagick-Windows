@@ -137,7 +137,7 @@ void ProjectFile::loadAliases()
   if (!_project->isExe() || !_project->isModule())
     return;
 
-  fileName=pathFromRoot(L"VisualMagick\\" + _project->name() + L"\\Aliases." + _name + L".txt");
+  fileName=pathFromRoot(_project->path(L"ImageMagick\\Aliases." + _name + L".txt"));
 
   aliases.open(fileName);
   if (!aliases)
@@ -170,7 +170,7 @@ void ProjectFile::loadConfig()
   if (!_project->isModule())
     return;
 
-  fileName=pathFromRoot(L"VisualMagick\\" + _project->name() + L"\\Config." + _name + L".txt");
+  fileName=pathFromRoot(_project->path(L"ImageMagick\\Config." + _name + L".txt"));
 
   config.open(fileName);
   if (!config)
@@ -396,49 +396,42 @@ void ProjectFile::loadSource()
       loadSource(*dir);
   }
 
-  resourceFile=rootPath + _project->name() + L"\\ImageMagick\\ImageMagick.rc";
-  if (PathFileExists(resourceFile.c_str()))
-    _resourceFiles.push_back(resourceFile);
+  resourceFile=_project->path(L"ImageMagick\\ImageMagick.rc");
+  if (PathFileExists(pathFromRoot(resourceFile).c_str()))
+    _resourceFiles.push_back(rootPath + resourceFile);
 
   /* This resource file is used by the ImageMagick projects */
-  resourceFile=rootPath + _project->name() + L"\\ImageMagick.rc";
-  if (PathFileExists(resourceFile.c_str()))
-    _resourceFiles.push_back(resourceFile);
+  resourceFile=_project->path(L"ImageMagick.rc");
+  if (PathFileExists(pathFromRoot(resourceFile).c_str()))
+    _resourceFiles.push_back(rootPath + resourceFile);
 }
 
 void ProjectFile::loadSource(const wstring &directory)
 {
-  HANDLE
-    fileHandle;
-
-  WIN32_FIND_DATA
-    data;
+  wstring
+    fileName,
+    path;
 
   if (contains(_project->platformExcludes(_wizard->platform()),directory))
     return;
 
-  fileHandle=FindFirstFile(pathFromRoot(directory + L"\\*.*").c_str(),&data);
-  do
+  path=_project->path(directory);
+  for (const auto& entry : std::filesystem::directory_iterator(pathFromRoot(path)))
   {
-    if (fileHandle == INVALID_HANDLE_VALUE)
-      return;
-
-    if ((data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) == FILE_ATTRIBUTE_DIRECTORY)
-      continue;
-
-    if (isExcluded(data.cFileName))
-      continue;
-
-    if (isSrcFile(data.cFileName))
-      _srcFiles.push_back(rootPath + directory + L"\\" + data.cFileName);
-    else if (endsWith(data.cFileName,L".h"))
-      _includeFiles.push_back(rootPath + directory + L"\\" + data.cFileName);
-    else if (endsWith(data.cFileName,L".rc"))
-      _resourceFiles.push_back(rootPath + directory + L"\\" + data.cFileName);
-
-  } while (FindNextFile(fileHandle,&data));
-
-  FindClose(fileHandle);
+    if (entry.is_regular_file())
+    {
+      fileName=entry.path().filename();
+      if (isExcluded(fileName))
+        continue;
+    
+      if (isSrcFile(fileName))
+        _srcFiles.push_back(rootPath + path + L"\\" +fileName);
+      else if (endsWith(fileName,L".h"))
+        _includeFiles.push_back(rootPath + path + L"\\" + fileName);
+      else if (endsWith(fileName,L".rc"))
+        _resourceFiles.push_back(rootPath + path + L"\\" + fileName);
+    } 
+  }
 }
 
 wstring ProjectFile::nasmOptions(const wstring &folder)
@@ -557,8 +550,8 @@ void ProjectFile::write(wofstream &file,const vector<Project*> &allProjects)
     file << "    <UseDebugLibraries Condition=\"'$(Configuration)|$(Platform)'=='Debug|" << _wizard->platformName() << "'\">true</UseDebugLibraries>" << endl;
   file << "  </PropertyGroup>" << endl;
 
-  writeItemDefinitionGroup(file,true);
-  writeItemDefinitionGroup(file,false);
+  writeItemDefinitionGroup(file,true,allProjects);
+  writeItemDefinitionGroup(file,false,allProjects);
 
   writeFiles(file,_srcFiles);
   writeFiles(file,_includeFiles);
@@ -575,34 +568,50 @@ void ProjectFile::writeAdditionalDependencies(wofstream &file,const wstring &sep
 {
   foreach (wstring,lib,_project->libraries())
   {
-    file << separator << *lib;
+    file << separator << _project->path(*lib);
   }
 }
 
-void ProjectFile::writeAdditionalIncludeDirectories(wofstream &file,const wstring &separator)
+void ProjectFile::writeAdditionalIncludeDirectories(wofstream &file,const wstring &separator,const vector<Project*> &allProjects)
 {
-  foreach (wstring,projectDir,_project->directories())
-  {
-    bool
-      skip;
+  size_t
+    index;
 
-    skip=false;
-    foreach (wstring,includeDir,_includes)
+  foreach_const (wstring,includeDir,_includes)
+  {
+    const Project
+      *project;
+
+    wstring
+      directory;
+
+    project=_project;
+    directory=(*includeDir);
+    index=(*includeDir).find(L"->");
+    if (index != -1)
     {
-      if ((*projectDir).find(*includeDir) == 0)
+      wstring
+        projectName;
+
+      project=(const Project *) NULL;
+      projectName=directory.substr(0,index);
+      foreach_const (Project*,depp,allProjects)
       {
-        skip=true;
+        if ((*depp)->name() != projectName)
+          continue;
+
+        directory=directory.substr(index+2);
+        project=*depp;
         break;
       }
-    }
 
-    if (!skip)
-      file << separator << rootPath <<  *projectDir;
+      if (project == (const Project *) NULL)
+        throwException(L"Invalid dependency specified: " + projectName);
+    }
+    
+    file << separator << rootPath << project->path(directory);
   }
-  foreach (wstring,includeDir,_includes)
-  {
-    file << separator << rootPath << *includeDir;
-  }
+
   if (_wizard->useOpenCL())
     file << separator << rootPath << L"VisualMagick\\OpenCL";
 }
@@ -614,7 +623,7 @@ void ProjectFile::writeIcon(wofstream &file)
 
   file << "  <ItemGroup>" << endl;
   file << "    <ResourceCompile Include=\"" << name() << ".rc\" />" << endl;
-  file << "    <Image Include=\"" << rootPath << _project->icon() << "\" />" << endl;
+  file << "    <Image Include=\"" << _project->path(_project->icon()) << "\" />" << endl;
   file << "  </ItemGroup>" << endl;
 }
 
@@ -741,7 +750,7 @@ void ProjectFile::writeFilter(wofstream &file)
   file << "</Project>" << endl;
 }
 
-void ProjectFile::writeItemDefinitionGroup(wofstream &file,const bool debug)
+void ProjectFile::writeItemDefinitionGroup(wofstream &file,const bool debug,const vector<Project*> &allProjects)
 {
   wstring
     name;
@@ -770,7 +779,7 @@ void ProjectFile::writeItemDefinitionGroup(wofstream &file,const bool debug)
   file << "      <OmitFramePointers>" << (debug ? "false" : "true") << "</OmitFramePointers>" << endl;
   file << "      <Optimization>" << (debug || _project->isOptimizationDisable() ? "Disabled" : "MaxSpeed") << "</Optimization>" << endl;
   file << "      <AdditionalIncludeDirectories>";
-  writeAdditionalIncludeDirectories(file,L";");
+  writeAdditionalIncludeDirectories(file,L";",allProjects);
   file << ";%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>" << endl;
   file << "      <PreprocessorDefinitions>";
   writePreprocessorDefinitions(file,debug);
