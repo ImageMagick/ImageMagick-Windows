@@ -1,10 +1,12 @@
 @echo off
 
-set REPOS="https://github.com/ImageMagick"
-if not "%1"=="" set REPOS=%1
+if not "%1"=="" goto SETCOMMIT
 
-set TYPE="full"
-if not "%2"=="" set TYPE=%2
+echo Commit not specified
+exit /b 1
+
+:SETCOMMIT
+set COMMIT=%1
 
 set BASH="%PROGRAMFILES%\Git\bin\bash.exe"
 if exist %BASH% goto EXECUTE
@@ -26,4 +28,4 @@ echo %BASH%
 exit /b 1
 
 :EXECUTE
-%BASH% --login -c "./CloneRepositories.sh %REPOS% %TYPE%"
+%BASH% --login -c "./CloneRepositories.sh %COMMIT% %2"

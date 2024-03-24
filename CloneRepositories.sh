@@ -1,94 +1,99 @@
 #/bin/bash
 
-clone_repository()
-{
-  echo ''
-  echo "Cloning $3"
+commit=$1
 
-  branch="main"
-  dir="$3"
+if [ "$2" == "source" ]; then
+    mkdir -p "source"
+    cd "source"
+fi
 
-  if [ "$2" == "full" ]; then
-    if [ ! -d "$dir" ]; then
-      git clone -b $branch $1/$3.git $dir
+clone() {
+    local repo=$1
+
+    echo ''
+    echo "Cloning $repo"
+
+    if [ ! -d "$repo" ]; then
+        git clone https://github.com/ImageMagick/$repo.git $repo
+        if [ $? != 0 ]; then echo "Error during checkout"; exit; fi
     fi
-    cd $dir
-    git pull
+    cd $repo
+    git reset --hard
+    git pull origin main
     cd ..
-  else
-    if [ ! -d "$dir" ]; then
-      git clone -b $branch --depth 1 $1/$3.git $dir
-    fi
-  fi
-  cd $dir
-  git show --oneline -s
-  cd ..
 }
 
-clone_imagemagick()
+clone_commit()
 {
-  if [ ! -d "../ImageMagick" ]; then
-    clone_repository $1 $2 'ImageMagick'
-  else
-    cp -R ../ImageMagick ImageMagick
-  fi
+    local repo=$1
+    local commit=$2
+
+    clone $repo
+
+    cd $repo
+    git checkout $commit
+    cd ..
 }
 
-if [ "$2" == "source" ]; then
-  mkdir -p "source"
-  cd "source"
-fi
+clone_date()
+{
+    local repo=$1
+    local date=$2
 
-clone_repository $1 $2 'aom'
-clone_repository $1 $2 'brotli'
-clone_repository $1 $2 'bzlib'
-clone_repository $1 $2 'cairo'
-clone_repository $1 $2 'contrib'
-clone_repository $1 $2 'croco'
-clone_repository $1 $2 'dcraw'
-clone_repository $1 $2 'de265'
-clone_repository $1 $2 'deflate'
-clone_repository $1 $2 'exr'
-clone_repository $1 $2 'ffi'
-clone_repository $1 $2 'fftw'
-clone_repository $1 $2 'flif'
-clone_repository $1 $2 'freetype'
-clone_repository $1 $2 'fribidi'
-clone_repository $1 $2 'glib'
-clone_repository $1 $2 'harfbuzz'
-clone_repository $1 $2 'heif'
-clone_repository $1 $2 'highway'
-clone_repository $1 $2 'jasper'
-clone_repository $1 $2 'jbig'
-clone_repository $1 $2 'jpeg-turbo'
-clone_repository $1 $2 'jpeg-xl'
-clone_repository $1 $2 'lcms'
-clone_repository $1 $2 'lqr'
-clone_repository $1 $2 'lzma'
-clone_repository $1 $2 'openjpeg'
-clone_repository $1 $2 'pango'
-clone_repository $1 $2 'pixman'
-clone_repository $1 $2 'png'
-clone_repository $1 $2 'raqm'
-clone_repository $1 $2 'raw'
-clone_repository $1 $2 'rsvg'
-clone_repository $1 $2 'tiff'
-clone_repository $1 $2 'VisualMagick'
-clone_repository $1 $2 'webp'
-clone_repository $1 $2 'win2k'
-clone_repository $1 $2 'xml'
-clone_repository $1 $2 'zip'
-clone_repository $1 $2 'zlib'
+    clone $repo
 
-clone_imagemagick $1 $2
+    cd $repo
+    git checkout `git rev-list -n 1 --before="$date" origin/main`
+    cd ..
+}
 
-if [ "$2" == "source" ]; then
-  for folder in *; do
-    if [ -d "$folder" ]; then
-       cd $folder
-       rm -Rf .git
-       cd ..
-    fi
-  done
-fi
+git config --global advice.detachedHead false
 
+clone_commit 'ImageMagick' "$commit"
+
+# get a commit date from the current ImageMagick checkout
+cd ImageMagick
+declare -r commitDate=`git log -1 --format=%ci`
+echo "Set latest commit date as $commitDate"
+cd ..
+
+clone_date 'aom' "$commitDate"
+clone_date 'brotli' "$commitDate"
+clone_date 'bzlib' "$commitDate"
+clone_date 'cairo' "$commitDate"
+clone_date 'contrib' "$commitDate"
+clone_date 'croco' "$commitDate"
+clone_date 'dcraw' "$commitDate"
+clone_date 'de265' "$commitDate"
+clone_date 'deflate' "$commitDate"
+clone_date 'exr' "$commitDate"
+clone_date 'ffi' "$commitDate"
+clone_date 'fftw' "$commitDate"
+clone_date 'flif' "$commitDate"
+clone_date 'freetype' "$commitDate"
+clone_date 'fribidi' "$commitDate"
+clone_date 'glib' "$commitDate"
+clone_date 'harfbuzz' "$commitDate"
+clone_date 'heif' "$commitDate"
+clone_date 'highway' "$commitDate"
+clone_date 'jasper' "$commitDate"
+clone_date 'jbig' "$commitDate"
+clone_date 'jpeg-turbo' "$commitDate"
+clone_date 'jpeg-xl' "$commitDate"
+clone_date 'lcms' "$commitDate"
+clone_date 'lqr' "$commitDate"
+clone_date 'lzma' "$commitDate"
+clone_date 'openjpeg' "$commitDate"
+clone_date 'pango' "$commitDate"
+clone_date 'pixman' "$commitDate"
+clone_date 'png' "$commitDate"
+clone_date 'raqm' "$commitDate"
+clone_date 'raw' "$commitDate"
+clone_date 'rsvg' "$commitDate"
+clone_date 'tiff' "$commitDate"
+clone_date 'VisualMagick' "$commitDate"
+clone_date 'webp' "$commitDate"
+clone_date 'win2k' "$commitDate"
+clone_date 'xml' "$commitDate"
+clone_date 'zip' "$commitDate"
+clone_date 'zlib' "$commitDate"
