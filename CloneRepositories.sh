@@ -1,4 +1,5 @@
 #/bin/bash
+set -e
 
 commit=$1
 
@@ -7,7 +8,8 @@ if [ "$2" == "source" ]; then
     cd "source"
 fi
 
-clone() {
+clone()
+{
     local repo=$1
 
     echo ''
@@ -47,7 +49,9 @@ clone_date()
     cd ..
 }
 
-git config --global advice.detachedHead false
+if [ -z "$commit" ]; then
+    commit=$(git ls-remote "https://github.com/ImageMagick/ImageMagick" "main" | cut -f 1)
+fi
 
 clone_commit 'ImageMagick' "$commit"
 

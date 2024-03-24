@@ -1,12 +1,7 @@
 @echo off
 
-if not "%1"=="" goto SETCOMMIT
-
-echo Commit not specified
-exit /b 1
-
-:SETCOMMIT
 set COMMIT=%1
+set FOLDER=%2
 
 set BASH="%PROGRAMFILES%\Git\bin\bash.exe"
 if exist %BASH% goto EXECUTE
@@ -28,4 +23,4 @@ echo %BASH%
 exit /b 1
 
 :EXECUTE
-%BASH% --login -c "./CloneRepositories.sh %COMMIT% %2"
+%BASH% --login -c "./CloneRepositories.sh %COMMIT% %FOLDER%"
