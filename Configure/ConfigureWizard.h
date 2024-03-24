@@ -36,7 +36,7 @@ public:
 
   virtual ~ConfigureWizard();
 
-  wstring binDirectoryy() const;
+  wstring binDirectory() const;
 
   wstring channelMaskDepth() const;
 

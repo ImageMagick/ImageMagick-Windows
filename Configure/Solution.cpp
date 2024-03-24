@@ -183,7 +183,7 @@ void Solution::writeMagickBaseConfig(const ConfigureWizard &wizard)
     folderName;
 
   folderName=getMagickFolderName();
-  configIn.open(pathFromRoot(L"ImageMagick\\" + folderName + L"\\magick-baseconfig.h.in"));
+  configIn.open(pathFromRoot(L"VisualMagick\\" + folderName + L"\\magick-baseconfig.h.in"));
   if (!configIn)
     return;
 
@@ -395,7 +395,7 @@ void Solution::writePolicyConfig(const ConfigureWizard &wizard)
   }
   if (!infile)
     throwException(L"Unable to open policy file");
-  outfile=wofstream(pathFromRoot(wizard.binDirectoryy() + L"policy.xml"));
+  outfile=wofstream(pathFromRoot(wizard.binDirectory() + L"policy.xml"));
   while (infile.read(buffer, 512))
     outfile.write(buffer, infile.gcount());
   outfile.write(buffer, infile.gcount());
@@ -417,7 +417,7 @@ void Solution::writeThresholdMap(const ConfigureWizard &wizard)
   if (!wizard.zeroConfigurationSupport())
     return;
 
-  inputStream.open(pathFromRoot(wizard.binDirectoryy() + L"thresholds.xml"));
+  inputStream.open(pathFromRoot(wizard.binDirectory() + L"thresholds.xml"));
   if (!inputStream)
     return;
 
@@ -453,7 +453,7 @@ void Solution::writeVersion(const ConfigureWizard &wizard,const VersionInfo &ver
 
   folderName=getMagickFolderName();
   writeVersion(wizard,versionInfo,pathFromRoot(L"ImageMagick\\" + folderName + L"\\version.h.in"),pathFromRoot(L"ImageMagick\\" + folderName + L"\\version.h"));
-  writeVersion(wizard,versionInfo,pathFromRoot(L"ImageMagick\\config\\configure.xml.in"),pathFromRoot(wizard.binDirectoryy() + L"configure.xml"));
+  writeVersion(wizard,versionInfo,pathFromRoot(L"ImageMagick\\config\\configure.xml.in"),pathFromRoot(wizard.binDirectory() + L"configure.xml"));
   writeVersion(wizard,versionInfo,pathFromRoot(L"VisualMagick\\installer\\inc\\version.isx.in"),pathFromRoot(L"VisualMagick\\installer\\inc\\version.isx"));
   writeVersion(wizard,versionInfo,pathFromRoot(L"VisualMagick\\utilities\\ImageMagick.version.h.in"),pathFromRoot(L"VisualMagick\\utilities\\ImageMagick.version.h"));
 }
@@ -559,7 +559,7 @@ void Solution::write(const ConfigureWizard &wizard,wofstream &file)
     foreach (ProjectFile*,pf,(*p)->files())
     {
       file << "Project(\"{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}\") = \"" << (*pf)->name() << "\", ";
-      file << "\"VisualStudioProjects\\" << (*pf)->name() << "\\" << (*pf)->fileName() << "\", \"{" << (*pf)->guid() << "}\"" << endl;
+      file << "\"" << wizard.solutionName() << "\\" << (*pf)->name() << "\\" << (*pf)->fileName() << "\", \"{" << (*pf)->guid() << "}\"" << endl;
       file << "EndProject" << endl;
     }
   }

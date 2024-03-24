@@ -208,9 +208,9 @@ void ProjectFile::write(const vector<Project*> &allprojects)
     file;
 
   wstring
-    projectDir(pathFromRoot(L"VisualStudioProjects\\" + name()));
+    projectDir(pathFromRoot(_wizard->solutionName() + L"\\" + name()));
 
-  CreateDirectoryW(projectDir.c_str(), NULL);
+  filesystem::create_directories(projectDir.c_str());
 
   file.open(projectDir + L"\\" + _fileName);
   if (!file)
@@ -276,7 +276,7 @@ void ProjectFile::addFile(const wstring &directory, const wstring &name)
 
     if (PathFileExists(pathFromRoot(src_file).c_str()))
     {
-      _srcFiles.push_back(pathFromRoot(src_file));
+      _srcFiles.push_back(rootPath + src_file);
 
       header_file=directory + L"\\" + name + L".h";
       if (PathFileExists(pathFromRoot(header_file).c_str()))
@@ -360,13 +360,7 @@ wstring ProjectFile::getFilter(const wstring &fileName,vector<wstring> &filters)
 
 wstring ProjectFile::getIntermediateDirectoryName(const bool debug)
 {
-  wstring
-    directoryName;
-
-  directoryName = (debug ? L"Debug\\" : L"Release\\");
-  directoryName += _wizard->solutionName() + L"-" + _wizard->platformName() + L"\\";
-  directoryName += _prefix + L"_" + _name + L"\\";
-  return(directoryName);
+  return((debug ? L"Debug\\" : L"Release\\") + _wizard->platformName() + L"\\");
 }
 
 wstring ProjectFile::getTargetName(const bool debug)
@@ -455,7 +449,7 @@ wstring ProjectFile::nasmOptions(const wstring &folder)
   if (_wizard->platform() == Platform::ARM64)
     return(result);
 
-  result += L"..\\Build\\nasm -i\"" + folder +L"\"";
+  result += rootPath + L"Build\\nasm -i\"" + folder +L"\"";
 
   if (_wizard->platform() == Platform::X86)
     result += L" -fwin32 -DWIN32";
@@ -480,7 +474,7 @@ void ProjectFile::merge(vector<wstring> &input, vector<wstring> &output)
 
 void ProjectFile::setFileName()
 {
-  _fileName=_prefix+L"_"+_name+L"_"+_wizard->solutionName()+L".vcxproj";
+  _fileName=_prefix+L"_"+_name+L".vcxproj";
 }
 
 wstring ProjectFile::createGuid()
@@ -812,7 +806,7 @@ void ProjectFile::writeItemDefinitionGroup(wofstream &file,const bool debug)
     file << "      <TargetMachine>Machine" << _wizard->machineName() << "</TargetMachine>" << endl;
     file << "      <GenerateDebugInformation>" << (debug ? "true" : "false") << "</GenerateDebugInformation>" << endl;
     file << "      <ProgramDatabaseFile>" << binDirectory() << (_project->isExe() ? _name : name) << ".pdb</ProgramDatabaseFile>" << endl;
-    file << "      <ImportLibrary>" << libDirectory() << name << ".lib</ImportLibrary>" << endl;
+    file << "      <ImportLibrary>" << name << ".lib</ImportLibrary>" << endl;
     if (!_project->isConsole())
     {
       if (_project->isDll())

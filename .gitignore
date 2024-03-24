@@ -4,9 +4,13 @@
 /Configure/*.user
 /Configure/*.exe
 
+/DynamicMT/*
+
 /Output/*
 
-/VisualStudioProjects/*
+/StaticMT/*
+
+/StaticMTD/*
 
 /*.sln
 

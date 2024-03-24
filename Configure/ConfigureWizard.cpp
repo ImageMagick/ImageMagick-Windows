@@ -38,7 +38,7 @@ ConfigureWizard::~ConfigureWizard()
 {
 }
 
-wstring ConfigureWizard::binDirectoryy() const
+wstring ConfigureWizard::binDirectory() const
 {
   return(L"Output\\ImageMagick\\bin\\");
 }
