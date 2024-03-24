@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="CommandLineInfo.cpp" />
+    <ClCompile Include="Project.cpp" />
+    <ClCompile Include="ProjectFile.cpp" />
+    <ClCompile Include="Solution.cpp" />
+    <ClCompile Include="VersionInfo.cpp" />
+    <ClCompile Include="WaitDialog.cpp" />
+    <ClCompile Include="ConfigureApp.cpp" />
+    <ClCompile Include="ConfigureWizard.cpp" />
+    <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="Pages\FinishedPage.cpp">
+      <Filter>Pages</Filter>
+    </ClCompile>
+    <ClCompile Include="Pages\SystemPage.cpp">
+      <Filter>Pages</Filter>
+    </ClCompile>
+    <ClCompile Include="Pages\TargetPage.cpp">
+      <Filter>Pages</Filter>
+    </ClCompile>
+    <ClCompile Include="Pages\WelcomePage.cpp">
+      <Filter>Pages</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CommandLineInfo.h" />
+    <ClInclude Include="Project.h" />
+    <ClInclude Include="ProjectFile.h" />
+    <ClInclude Include="Shared.h" />
+    <ClInclude Include="Solution.h" />
+    <ClInclude Include="VersionInfo.h" />
+    <ClInclude Include="WaitDialog.h" />
+    <ClInclude Include="ConfigureApp.h" />
+    <ClInclude Include="ConfigureWizard.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Pages\FinishedPage.h">
+      <Filter>Pages</Filter>
+    </ClInclude>
+    <ClInclude Include="Pages\SystemPage.h">
+      <Filter>Pages</Filter>
+    </ClInclude>
+    <ClInclude Include="Pages\TargetPage.h">
+      <Filter>Pages</Filter>
+    </ClInclude>
+    <ClInclude Include="Pages\WelcomePage.h">
+      <Filter>Pages</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="configure.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\configure.ico">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="Resources\magick.bmp">
+      <Filter>Resources</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Pages">
+      <UniqueIdentifier>{aa8b20b4-f213-496c-96c0-35caeafd423a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{10260d48-b755-4264-a83e-2a30affce106}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

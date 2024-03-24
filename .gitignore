@@ -1,3 +1,7 @@
+/configure/x64
+/configure/Debug
+/configure/Release
+
 /aom
 /brotli
 /bzlib

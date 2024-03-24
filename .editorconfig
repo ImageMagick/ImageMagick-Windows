@@ -9,7 +9,7 @@ trim_trailing_whitespace = true
 indent_size = 4
 tab_width = 4
 
-[*.{yml}]
+[*.{c,cpp,h,txt,md,yml}]
 
 indent_size = 2
 tab_width = 2
