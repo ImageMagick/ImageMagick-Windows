@@ -49,6 +49,18 @@ clone_date()
     cd ..
 }
 
+clone_branch()
+{
+    local repo=$1
+    local branch=$2
+
+    clone $repo
+
+    cd $repo
+    git checkout -b branch
+    cd ..
+}
+
 if [ -z "$commit" ]; then
     commit=$(git ls-remote "https://github.com/ImageMagick/ImageMagick" "main" | cut -f 1)
 fi
