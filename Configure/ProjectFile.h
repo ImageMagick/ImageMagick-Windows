@@ -53,7 +53,11 @@ public:
 
 private:
 
+  wstring binDirectory() const;
+
   bool isLib() const;
+
+  wstring libDirectory() const;
 
   wstring outputDirectory() const;
 

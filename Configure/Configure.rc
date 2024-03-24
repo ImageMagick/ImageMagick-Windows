@@ -145,25 +145,6 @@ BEGIN
                     15,220,240,10
 END
 
-IDD_SYSTEM_PAGE DIALOG  0, 0, 318, 233
-STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
-CAPTION "System Setup"
-FONT 8, "MS Sans Serif"
-BEGIN
-    GROUPBOX        "Output files directory setup:",IDC_STATIC,7,7,304,117
-    LTEXT           "Please specify were the executables, libraries, and DLL's should be placed:",
-                    IDC_STATIC,13,21,291,11
-    LTEXT           "Exe and DLL directory:",IDC_STATIC,13,38,147,9
-    EDITTEXT        IDC_BIN_DIR,13,49,259,12,ES_AUTOHSCROLL
-    PUSHBUTTON      "Browse",IDC_BIN_DIR_BROWSE,275,48,30,13
-    LTEXT           "Fuzz exe directory:",IDC_STATIC,13,65,147,9
-    EDITTEXT        IDC_FUZZ_BIN_DIR,13,77,259,12,ES_AUTOHSCROLL
-    PUSHBUTTON      "Browse",IDC_FUZZ_BIN_DIR_BROWSE,275,76,30,13
-    LTEXT           "Library directory:",IDC_STATIC,13,93,147,9
-    EDITTEXT        IDC_LIB_DIR,13,105,259,12,ES_AUTOHSCROLL
-    PUSHBUTTON      "Browse",IDC_LIB_DIR_BROWSE,275,104,30,13
-END
-
 IDD_FINISHED_PAGE DIALOG  0, 0, 318, 233
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "VisualMagick configuration finished."
@@ -200,14 +181,6 @@ BEGIN
     END
 
     IDD_TARGET_PAGE, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 311
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 226
-    END
-
-    IDD_SYSTEM_PAGE, DIALOG
     BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 311

@@ -25,7 +25,7 @@
 #include <map>
 
 static const wstring
-  relativePathForProject(L"..\\..\\");
+  rootPath(L"..\\..\\");
 
 ProjectFile::ProjectFile(const ConfigureWizard *wizard,Project *project,
   const wstring &prefix,const wstring &name)
@@ -49,6 +49,11 @@ ProjectFile::ProjectFile(const ConfigureWizard *wizard,Project *project,
     _reference(reference)
 {
   initialize(project);
+}
+
+wstring ProjectFile::binDirectory() const
+{
+    return(rootPath + L"Output\\ImageMagick\\bin\\");
 }
 
 vector<wstring> &ProjectFile::dependencies()
@@ -232,7 +237,7 @@ void ProjectFile::write(const vector<Project*> &allprojects)
       return;
 
     file << "#define IDI_ICON1 101" << endl;
-    file << "IDI_ICON1 ICON \"" << relativePathForProject <<  _project->icon() << "\"" << endl;
+    file << "IDI_ICON1 ICON \"" << rootPath <<  _project->icon() << "\"" << endl;
   }
 
   file.close();
@@ -243,15 +248,20 @@ bool ProjectFile::isLib() const
   return(_project->isLib() || (_wizard->solutionType() != SolutionType::DYNAMIC_MT && _project->isDll()));
 }
 
+wstring ProjectFile::libDirectory() const
+{
+    return(rootPath + L"Output\\ImageMagick\\lib\\");
+}
+
 wstring ProjectFile::outputDirectory() const
 {
   if (_project->isFuzz())
-    return(relativePathForProject + _wizard->fuzzBinDirectory());
+    return(rootPath + L"Output\\Fuzz\\bin\\");
 
   if (isLib())
-    return(relativePathForProject + _wizard->libDirectory() + _project->name() + L"\\");
+    return(libDirectory());
 
-  return(relativePathForProject + _wizard->binDirectory());
+  return(binDirectory());
 }
 
 void ProjectFile::addFile(const wstring &directory, const wstring &name)
@@ -270,7 +280,7 @@ void ProjectFile::addFile(const wstring &directory, const wstring &name)
 
       header_file=directory + L"\\" + name + L".h";
       if (PathFileExists(pathFromRoot(header_file).c_str()))
-        _includeFiles.push_back(relativePathForProject + header_file);
+        _includeFiles.push_back(rootPath + header_file);
 
       break;
     }
@@ -285,11 +295,11 @@ void ProjectFile::addFile(const wstring &directory, const wstring &name)
 
     if (PathFileExists(pathFromRoot(src_file).c_str()))
     {
-      _srcFiles.push_back(relativePathForProject + src_file);
+      _srcFiles.push_back(rootPath + src_file);
 
       header_file=directory + L"\\" + name + L".h";
       if (PathFileExists(pathFromRoot(header_file).c_str()))
-        _includeFiles.push_back(relativePathForProject + header_file);
+        _includeFiles.push_back(rootPath + header_file);
 
       break;
     }
@@ -392,12 +402,12 @@ void ProjectFile::loadSource()
       loadSource(*dir);
   }
 
-  resourceFile=relativePathForProject + _project->name() + L"\\ImageMagick\\ImageMagick.rc";
+  resourceFile=rootPath + _project->name() + L"\\ImageMagick\\ImageMagick.rc";
   if (PathFileExists(resourceFile.c_str()))
     _resourceFiles.push_back(resourceFile);
 
   /* This resource file is used by the ImageMagick projects */
-  resourceFile=relativePathForProject + _project->name() + L"\\ImageMagick.rc";
+  resourceFile=rootPath + _project->name() + L"\\ImageMagick.rc";
   if (PathFileExists(resourceFile.c_str()))
     _resourceFiles.push_back(resourceFile);
 }
@@ -426,11 +436,11 @@ void ProjectFile::loadSource(const wstring &directory)
       continue;
 
     if (isSrcFile(data.cFileName))
-      _srcFiles.push_back(relativePathForProject + directory + L"\\" + data.cFileName);
+      _srcFiles.push_back(rootPath + directory + L"\\" + data.cFileName);
     else if (endsWith(data.cFileName,L".h"))
-      _includeFiles.push_back(relativePathForProject + directory + L"\\" + data.cFileName);
+      _includeFiles.push_back(rootPath + directory + L"\\" + data.cFileName);
     else if (endsWith(data.cFileName,L".rc"))
-      _resourceFiles.push_back(relativePathForProject + directory + L"\\" + data.cFileName);
+      _resourceFiles.push_back(rootPath + directory + L"\\" + data.cFileName);
 
   } while (FindNextFile(fileHandle,&data));
 
@@ -453,7 +463,7 @@ wstring ProjectFile::nasmOptions(const wstring &folder)
     result += L" -fwin64 -DWIN64 -D__x86_64__";
 
   foreach_const(wstring,include,_project->includesNasm())
-    result += L" -i\"" + relativePathForProject + *include + L"\"";
+    result += L" -i\"" + rootPath + *include + L"\"";
 
   result += L" -o \"$(IntDir)%(Filename).obj\" \"%(FullPath)\"";
   return(result);
@@ -593,14 +603,14 @@ void ProjectFile::writeAdditionalIncludeDirectories(wofstream &file,const wstrin
     }
 
     if (!skip)
-      file << separator << relativePathForProject <<  *projectDir;
+      file << separator << rootPath <<  *projectDir;
   }
   foreach (wstring,includeDir,_includes)
   {
-    file << separator << relativePathForProject << *includeDir;
+    file << separator << rootPath << *includeDir;
   }
   if (_wizard->useOpenCL())
-    file << separator << relativePathForProject << L"VisualMagick\\OpenCL";
+    file << separator << rootPath << L"VisualMagick\\OpenCL";
 }
 
 void ProjectFile::writeIcon(wofstream &file)
@@ -610,7 +620,7 @@ void ProjectFile::writeIcon(wofstream &file)
 
   file << "  <ItemGroup>" << endl;
   file << "    <ResourceCompile Include=\"" << name() << ".rc\" />" << endl;
-  file << "    <Image Include=\"" << relativePathForProject << _project->icon() << "\" />" << endl;
+  file << "    <Image Include=\"" << rootPath << _project->icon() << "\" />" << endl;
   file << "  </ItemGroup>" << endl;
 }
 
@@ -761,7 +771,7 @@ void ProjectFile::writeItemDefinitionGroup(wofstream &file,const bool debug)
   file << "      <InlineFunctionExpansion>" << (debug ? "Disabled" : "AnySuitable") << "</InlineFunctionExpansion>" << endl;
   file << "      <OpenMPSupport>" << (_wizard->useOpenMP() ? "true" : "false") << "</OpenMPSupport>" << endl;
   file << "      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>" << endl;
-  file << "      <ProgramDatabaseFileName>" << _wizard->binDirectory() << (_project->isExe() ? _name : name) << ".pdb</ProgramDatabaseFileName>" << endl;
+  file << "      <ProgramDatabaseFileName>" << binDirectory() << (_project->isExe() ? _name : name) << ".pdb</ProgramDatabaseFileName>" << endl;
   file << "      <BasicRuntimeChecks>" << (debug ? "EnableFastChecks" : "Default") << "</BasicRuntimeChecks>" << endl;
   file << "      <OmitFramePointers>" << (debug ? "false" : "true") << "</OmitFramePointers>" << endl;
   file << "      <Optimization>" << (debug || _project->isOptimizationDisable() ? "Disabled" : "MaxSpeed") << "</Optimization>" << endl;
@@ -784,7 +794,7 @@ void ProjectFile::writeItemDefinitionGroup(wofstream &file,const bool debug)
   if (isLib())
   {
     file << "    <Lib>" << endl;
-    file << "      <AdditionalLibraryDirectories>" << _wizard->libDirectory() << ";%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>" << endl;
+    file << "      <AdditionalLibraryDirectories>" << libDirectory() << ";%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>" << endl;
     file << "      <AdditionalDependencies>/MACHINE:" << (_wizard->machineName());
     writeAdditionalDependencies(file,L";");
     file << ";%(AdditionalDependencies)</AdditionalDependencies>" << endl;
@@ -794,15 +804,15 @@ void ProjectFile::writeItemDefinitionGroup(wofstream &file,const bool debug)
   else
   {
     file << "    <Link>" << endl;
-    file << "      <AdditionalLibraryDirectories>" << _wizard->libDirectory() << ";%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>" << endl;
+    file << "      <AdditionalLibraryDirectories>" << libDirectory() << ";%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>" << endl;
     file << "      <AdditionalDependencies>/MACHINE:" << _wizard->machineName();
     writeAdditionalDependencies(file,L";");
     file << ";%(AdditionalDependencies)</AdditionalDependencies>" << endl;
     file << "      <SuppressStartupBanner>true</SuppressStartupBanner>" << endl;
     file << "      <TargetMachine>Machine" << _wizard->machineName() << "</TargetMachine>" << endl;
     file << "      <GenerateDebugInformation>" << (debug ? "true" : "false") << "</GenerateDebugInformation>" << endl;
-    file << "      <ProgramDatabaseFile>" << _wizard->binDirectory() << (_project->isExe() ? _name : name) << ".pdb</ProgramDatabaseFile>" << endl;
-    file << "      <ImportLibrary>" << _wizard->libDirectory() << name << ".lib</ImportLibrary>" << endl;
+    file << "      <ProgramDatabaseFile>" << binDirectory() << (_project->isExe() ? _name : name) << ".pdb</ProgramDatabaseFile>" << endl;
+    file << "      <ImportLibrary>" << libDirectory() << name << ".lib</ImportLibrary>" << endl;
     if (!_project->isConsole())
     {
       if (_project->isDll())
@@ -811,7 +821,7 @@ void ProjectFile::writeItemDefinitionGroup(wofstream &file,const bool debug)
         file << "    <EntryPointSymbol>wWinMainCRTStartup</EntryPointSymbol>" << endl;
       file << "      <SubSystem>Windows</SubSystem>" << endl;
       if ((_project->isDll()) && (!_project->moduleDefinitionFile().empty()))
-        file << "      <ModuleDefinitionFile>" << relativePathForProject <<  _project->moduleDefinitionFile() << "</ModuleDefinitionFile>" << endl;
+        file << "      <ModuleDefinitionFile>" << rootPath <<  _project->moduleDefinitionFile() << "</ModuleDefinitionFile>" << endl;
     }
     else
       file << "      <SubSystem>Console</SubSystem>" << endl;

@@ -22,7 +22,6 @@
 
 #include "Pages\WelcomePage.h"
 #include "Pages\TargetPage.h"
-#include "Pages\SystemPage.h"
 #include "Pages\FinishedPage.h"
 #include "Shared.h"
 
@@ -37,7 +36,7 @@ public:
 
   virtual ~ConfigureWizard();
 
-  wstring binDirectory() const;
+  wstring binDirectoryy() const;
 
   wstring channelMaskDepth() const;
 
@@ -47,15 +46,11 @@ public:
 
   bool excludeDeprecated() const;
 
-  wstring fuzzBinDirectory() const;
-
   bool includeIncompatibleLicense() const;
 
   bool includeOptional() const;
 
   bool installedSupport() const;
-
-  wstring libDirectory() const;
 
   wstring machineName() const;
 
@@ -94,7 +89,6 @@ protected:
 private:
 
   FinishedPage _finishedPage;
-  SystemPage   _systemPage;
   TargetPage   _targetPage;
   WelcomePage  _welcomePage;
 };

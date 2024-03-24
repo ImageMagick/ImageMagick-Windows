@@ -165,9 +165,6 @@
     <ClCompile Include="Pages\FinishedPage.cpp">
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
-    <ClCompile Include="Pages\SystemPage.cpp">
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
-    </ClCompile>
     <ClCompile Include="Pages\TargetPage.cpp">
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
@@ -208,7 +205,6 @@
   <ItemGroup>
     <ClInclude Include="Pages\FinishedPage.h" />
     <ClInclude Include="Pages\TargetPage.h" />
-    <ClInclude Include="Pages\SystemPage.h" />
     <ClInclude Include="Pages\WelcomePage.h" />
     <ClInclude Include="CommandLineInfo.h" />
     <ClInclude Include="Project.h" />

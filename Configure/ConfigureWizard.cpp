@@ -29,7 +29,6 @@ ConfigureWizard::ConfigureWizard(CWnd* pWndParent)
 {
   AddPage(&_welcomePage);
   AddPage(&_targetPage);
-  AddPage(&_systemPage);
   AddPage(&_finishedPage);
 
   SetWizardMode();
@@ -39,9 +38,9 @@ ConfigureWizard::~ConfigureWizard()
 {
 }
 
-wstring ConfigureWizard::binDirectory() const
+wstring ConfigureWizard::binDirectoryy() const
 {
-  return(_systemPage.binDirectory());
+  return(L"Output\\ImageMagick\\bin\\");
 }
 
 wstring ConfigureWizard::channelMaskDepth() const
@@ -67,11 +66,6 @@ bool ConfigureWizard::excludeDeprecated() const
   return(_targetPage.excludeDeprecated());
 }
 
-wstring ConfigureWizard::fuzzBinDirectory() const
-{
-  return(_systemPage.fuzzBinDirectory());
-}
-
 bool ConfigureWizard::includeIncompatibleLicense() const
 {
   return(_targetPage.includeIncompatibleLicense());
@@ -85,11 +79,6 @@ bool ConfigureWizard::includeOptional() const
 bool ConfigureWizard::installedSupport() const
 {
 	return(_targetPage.installedSupport());
-}
-
-wstring ConfigureWizard::libDirectory() const
-{
-  return(_systemPage.libDirectory());
 }
 
 wstring ConfigureWizard::machineName() const

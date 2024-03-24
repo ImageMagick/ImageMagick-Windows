@@ -395,7 +395,7 @@ void Solution::writePolicyConfig(const ConfigureWizard &wizard)
   }
   if (!infile)
     throwException(L"Unable to open policy file");
-  outfile=wofstream(wizard.binDirectory() + L"policy.xml");
+  outfile=wofstream(pathFromRoot(wizard.binDirectoryy() + L"policy.xml"));
   while (infile.read(buffer, 512))
     outfile.write(buffer, infile.gcount());
   outfile.write(buffer, infile.gcount());
@@ -417,7 +417,7 @@ void Solution::writeThresholdMap(const ConfigureWizard &wizard)
   if (!wizard.zeroConfigurationSupport())
     return;
 
-  inputStream.open(wizard.binDirectory() + L"thresholds.xml");
+  inputStream.open(pathFromRoot(wizard.binDirectoryy() + L"thresholds.xml"));
   if (!inputStream)
     return;
 
@@ -453,7 +453,7 @@ void Solution::writeVersion(const ConfigureWizard &wizard,const VersionInfo &ver
 
   folderName=getMagickFolderName();
   writeVersion(wizard,versionInfo,pathFromRoot(L"ImageMagick\\" + folderName + L"\\version.h.in"),pathFromRoot(L"ImageMagick\\" + folderName + L"\\version.h"));
-  writeVersion(wizard,versionInfo,pathFromRoot(L"ImageMagick\\config\\configure.xml.in"),wizard.binDirectory() + L"configure.xml");
+  writeVersion(wizard,versionInfo,pathFromRoot(L"ImageMagick\\config\\configure.xml.in"),pathFromRoot(wizard.binDirectoryy() + L"configure.xml"));
   writeVersion(wizard,versionInfo,pathFromRoot(L"VisualMagick\\installer\\inc\\version.isx.in"),pathFromRoot(L"VisualMagick\\installer\\inc\\version.isx"));
   writeVersion(wizard,versionInfo,pathFromRoot(L"VisualMagick\\utilities\\ImageMagick.version.h.in"),pathFromRoot(L"VisualMagick\\utilities\\ImageMagick.version.h"));
 }

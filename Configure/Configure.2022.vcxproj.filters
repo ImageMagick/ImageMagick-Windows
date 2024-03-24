@@ -13,9 +13,6 @@
     <ClCompile Include="Pages\FinishedPage.cpp">
       <Filter>Pages</Filter>
     </ClCompile>
-    <ClCompile Include="Pages\SystemPage.cpp">
-      <Filter>Pages</Filter>
-    </ClCompile>
     <ClCompile Include="Pages\TargetPage.cpp">
       <Filter>Pages</Filter>
     </ClCompile>
@@ -36,9 +33,6 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Pages\FinishedPage.h">
-      <Filter>Pages</Filter>
-    </ClInclude>
-    <ClInclude Include="Pages\SystemPage.h">
       <Filter>Pages</Filter>
     </ClInclude>
     <ClInclude Include="Pages\TargetPage.h">
