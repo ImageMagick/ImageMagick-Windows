@@ -57,7 +57,7 @@ clone_branch()
     clone $repo
 
     cd $repo
-    git checkout -b branch
+    git checkout $branch
     cd ..
 }
 
