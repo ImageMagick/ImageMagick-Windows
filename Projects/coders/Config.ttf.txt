@@ -1,0 +1,5 @@
+[INCLUDES]
+freetype->include
+
+[DEPENDENCIES]
+freetype

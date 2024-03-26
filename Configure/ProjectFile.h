@@ -61,7 +61,7 @@ private:
 
   wstring outputDirectory() const;
 
-  void addFile(const wstring &directory, const wstring &name);
+  void addFile(const wstring &name);
 
   void addLines(wifstream &config,vector<wstring> &container);
 
@@ -83,7 +83,7 @@ private:
 
   void loadAliases();
 
-  void loadModule(const wstring &directory);
+  void loadModule();
 
   void loadSource();
 

@@ -147,14 +147,14 @@ void Solution::loadProjectsFromFolder(const wstring &configFolder, const wstring
   Project
     *project;
 
-  for(auto& p : filesystem::directory_iterator(pathFromRoot(configFolder)))
+  for (const auto& entry : std::filesystem::directory_iterator(pathFromRoot(configFolder)))
   {
-    if (p.is_directory())
-    {
-      project=Project::create(configFolder,filesFolder,p.path().filename());
-      if (project != (Project *) NULL)
-        _projects.push_back(project);
-    }
+    if (!entry.is_directory())
+      continue;
+
+    project=Project::create(configFolder,filesFolder,entry.path().filename());
+    if (project != (Project *) NULL)
+      _projects.push_back(project);
   }
 }
 

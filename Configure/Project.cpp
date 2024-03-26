@@ -449,47 +449,32 @@ void Project::loadConfig(wifstream &config)
 
 void Project::loadModules(const ConfigureWizard &wizard)
 {
-  HANDLE
-    fileHandle;
-
   ProjectFile
     *projectAlias,
     *projectFile;
 
-  wstring
-    name;
-
-  WIN32_FIND_DATA
-    data;
-
   foreach (wstring,dir,_directories)
   {
     const wstring
-      fileDir(pathFromRoot(filePath(*dir)));
+      path(pathFromRoot(filePath(*dir)));
 
-    if (!directoryExists(fileDir))
-      throwException(L"Invalid folder specified: " + fileDir);
-
-    fileHandle=FindFirstFile((fileDir + L"\\*.*").c_str(),&data);
-    do
+    if (!directoryExists(path))
+      throwException(L"Invalid folder specified: " + path);
+    
+    for (const auto& entry : std::filesystem::directory_iterator(path))
     {
-      if (fileHandle == INVALID_HANDLE_VALUE)
-        return;
+      wstring
+        fileName,
+        name;
 
-      if ((data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) == FILE_ATTRIBUTE_DIRECTORY)
+      if (!entry.is_regular_file())
         continue;
 
-      if (contains(_excludes,data.cFileName))
+      fileName=entry.path().filename();
+      if (contains(_excludes,fileName) || startsWith(fileName,L"main.") || !isValidSrcFile(fileName))
         continue;
 
-      if (startsWith(data.cFileName,L"main."))
-        continue;
-
-      name=data.cFileName;
-
-      if (!isValidSrcFile(data.cFileName))
-        continue;
-
+      name=fileName;
       name=name.substr(0,name.find_last_of(L"."));
       projectFile=new ProjectFile(&wizard,this,_modulePrefix,name);
       _files.push_back(projectFile);
@@ -499,8 +484,7 @@ void Project::loadModules(const ConfigureWizard &wizard)
         projectAlias=new ProjectFile(&wizard,this,_modulePrefix,*alias,name);
         _files.push_back(projectAlias);
       }
-
-    } while (FindNextFile(fileHandle,&data));
+    }
   }
 }
 

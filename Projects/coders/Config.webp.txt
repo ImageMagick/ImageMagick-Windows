@@ -1,0 +1,5 @@
+[INCLUDES]
+webp->src
+
+[DEPENDENCIES]
+webp

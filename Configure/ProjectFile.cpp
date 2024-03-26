@@ -264,7 +264,7 @@ wstring ProjectFile::outputDirectory() const
   return(binDirectory());
 }
 
-void ProjectFile::addFile(const wstring &directory, const wstring &name)
+void ProjectFile::addFile(const wstring &name)
 {
   wstring
     header_file,
@@ -272,13 +272,13 @@ void ProjectFile::addFile(const wstring &directory, const wstring &name)
 
   foreach_const(wstring,ext,validSrcFiles)
   {
-    src_file=directory + L"\\" + name + *ext;
+    src_file=_project->filePath(name + *ext);
 
     if (filesystem::exists(pathFromRoot(src_file)))
     {
       _srcFiles.push_back(rootPath + src_file);
 
-      header_file=directory + L"\\" + name + L".h";
+      header_file=_project->filePath(name + L".h");
       if (filesystem::exists(pathFromRoot(header_file)))
         _includeFiles.push_back(rootPath + header_file);
 
@@ -291,13 +291,13 @@ void ProjectFile::addFile(const wstring &directory, const wstring &name)
 
   foreach_const(wstring,ext,validSrcFiles)
   {
-    src_file=directory + L"\\main" + *ext;
+    src_file=_project->filePath(L"main" + *ext);
 
     if (filesystem::exists(pathFromRoot(src_file)))
     {
       _srcFiles.push_back(rootPath + src_file);
 
-      header_file=directory + L"\\" + name + L".h";
+      header_file=_project->filePath(name + L".h");
       if (filesystem::exists(pathFromRoot(header_file)))
         _includeFiles.push_back(rootPath + header_file);
 
@@ -375,12 +375,12 @@ wstring ProjectFile::getTargetName(const bool debug)
   return(targetName);
 }
 
-void ProjectFile::loadModule(const wstring &directory)
+void ProjectFile::loadModule()
 {
   if (!_reference.empty())
-    addFile(directory, _reference);
+    addFile(_reference);
   else
-    addFile(directory, _name);
+    addFile(_name);
 }
 
 void ProjectFile::loadSource()
@@ -391,7 +391,7 @@ void ProjectFile::loadSource()
   foreach (wstring,dir,_project->directories())
   {
     if ((_project->isModule()) && (_project->isExe() || (_project->isDll() && _wizard->solutionType() == SolutionType::DYNAMIC_MT)))
-      loadModule(*dir);
+      loadModule();
     else
       loadSource(*dir);
   }
@@ -404,28 +404,32 @@ void ProjectFile::loadSource()
 void ProjectFile::loadSource(const wstring &directory)
 {
   wstring
-    fileName,
-    path;
+    path=_project->filePath(directory);
 
   if (contains(_project->platformExcludes(_wizard->platform()),directory))
     return;
 
-  path=_project->filePath(directory);
+  if (!directoryExists(pathFromRoot(path)))
+    throwException(L"Invalid folder specified: " + path);
+
   for (const auto& entry : std::filesystem::directory_iterator(pathFromRoot(path)))
   {
-    if (entry.is_regular_file())
-    {
-      fileName=entry.path().filename();
-      if (isExcluded(fileName))
-        continue;
-    
-      if (isSrcFile(fileName))
-        _srcFiles.push_back(rootPath + path + L"\\" +fileName);
-      else if (endsWith(fileName,L".h"))
-        _includeFiles.push_back(rootPath + path + L"\\" + fileName);
-      else if (endsWith(fileName,L".rc"))
-        _resourceFiles.push_back(rootPath + path + L"\\" + fileName);
-    } 
+    wstring
+      fileName;
+
+    if (!entry.is_regular_file())
+      continue;
+
+    fileName=entry.path().filename();
+    if (isExcluded(fileName))
+      continue;
+
+    if (isSrcFile(fileName))
+      _srcFiles.push_back(rootPath + path + L"\\" +fileName);
+    else if (endsWith(fileName,L".h"))
+      _includeFiles.push_back(rootPath + path + L"\\" + fileName);
+    else if (endsWith(fileName,L".rc"))
+      _resourceFiles.push_back(rootPath + path + L"\\" + fileName);
   }
 }
 

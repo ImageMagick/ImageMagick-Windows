@@ -1,0 +1,6 @@
+[INCLUDES]
+tiff->libtiff
+
+[DEPENDENCIES]
+tiff
+coders>psd

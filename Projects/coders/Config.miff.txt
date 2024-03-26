@@ -1,0 +1,12 @@
+[INCLUDES]
+bzlib->.
+lzma->src\liblzma\api
+zlib->.
+
+[DEFINES_LIB]
+LZMA_API_STATIC
+
+[DEPENDENCIES]
+bzlib
+lzma
+zlib

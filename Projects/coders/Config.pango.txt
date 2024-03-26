@@ -1,0 +1,11 @@
+[INCLUDES]
+cairo->src
+glib->.
+glib->glib
+harfbuzz->src
+pango->.
+
+[DEPENDENCIES]
+cairo
+glib
+pango
