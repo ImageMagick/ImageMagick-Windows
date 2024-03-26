@@ -127,7 +127,7 @@ wstring Solution::getMagickFolderName()
     folder;
 
   folder=L"MagickCore";
-  if (!PathFileExists(pathFromRoot(L"ImageMagick\\MagickCore").c_str()))
+  if (!filesystem::exists(pathFromRoot(L"ImageMagick\\MagickCore")))
     folder=L"magick";
   return(folder);
 }

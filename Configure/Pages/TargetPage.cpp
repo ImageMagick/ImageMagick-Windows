@@ -47,7 +47,7 @@ TargetPage::TargetPage() : CPropertyPage(IDD_TARGET_PAGE)
   _policyConfig=PolicyConfig::OPEN;
   _quantumDepth=QuantumDepth::Q16;
   _solutionType=SolutionType::DYNAMIC_MT;
-  _useHDRI=PathFileExists(pathFromRoot(L"VisualMagick\\MagickCore").c_str()) ? TRUE : FALSE;
+  _useHDRI=filesystem::exists(pathFromRoot(L"VisualMagick\\MagickCore")) ? TRUE : FALSE;
   _useOpenCL=TRUE;
   _useOpenMP=TRUE;
   _zeroConfigurationSupport=FALSE;
@@ -269,10 +269,10 @@ bool TargetPage::hasVisualStudioFolder(const wchar_t *name)
     path;
 
   path=getEnvironmentVariable(L"ProgramW6432") + L"\\Microsoft Visual Studio\\" + name;
-  if (PathFileExists(path.c_str()))
+  if (filesystem::exists(path))
     return(true);
   path=getEnvironmentVariable(L"ProgramFiles(x86)") + L"\\Microsoft Visual Studio\\" + name;
-  return(PathFileExists(path.c_str()) ? true : false);
+  return(filesystem::exists(path) ? true : false);
 }
 
 void TargetPage::setVisualStudioVersion()

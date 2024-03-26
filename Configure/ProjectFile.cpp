@@ -274,12 +274,12 @@ void ProjectFile::addFile(const wstring &directory, const wstring &name)
   {
     src_file=directory + L"\\" + name + *ext;
 
-    if (PathFileExists(pathFromRoot(src_file).c_str()))
+    if (filesystem::exists(pathFromRoot(src_file)))
     {
       _srcFiles.push_back(rootPath + src_file);
 
       header_file=directory + L"\\" + name + L".h";
-      if (PathFileExists(pathFromRoot(header_file).c_str()))
+      if (filesystem::exists(pathFromRoot(header_file)))
         _includeFiles.push_back(rootPath + header_file);
 
       break;
@@ -293,12 +293,12 @@ void ProjectFile::addFile(const wstring &directory, const wstring &name)
   {
     src_file=directory + L"\\main" + *ext;
 
-    if (PathFileExists(pathFromRoot(src_file).c_str()))
+    if (filesystem::exists(pathFromRoot(src_file)))
     {
       _srcFiles.push_back(rootPath + src_file);
 
       header_file=directory + L"\\" + name + L".h";
-      if (PathFileExists(pathFromRoot(header_file).c_str()))
+      if (filesystem::exists(pathFromRoot(header_file)))
         _includeFiles.push_back(rootPath + header_file);
 
       break;
@@ -397,7 +397,7 @@ void ProjectFile::loadSource()
   }
 
   resourceFile=_project->configPath(L"ImageMagick.rc");
-  if (PathFileExists(pathFromRoot(resourceFile).c_str()))
+  if (filesystem::exists(pathFromRoot(resourceFile)))
     _resourceFiles.push_back(rootPath + resourceFile);
 }
 
