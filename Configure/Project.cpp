@@ -177,6 +177,11 @@ bool Project::treatWarningAsError() const
 bool Project::useNasm() const
 {
   return(_useNasm);
+};
+
+bool Project::useOpenCL() const
+{
+  return(_useOpenCL);
 }
 
 bool Project::useUnicode() const
@@ -311,6 +316,7 @@ Project::Project(const wstring &folder,const wstring &name)
   _minimumVisualStudioVersion=VSEARLIEST;
   _type=ProjectType::UNDEFINEDTYPE;
   _useNasm=false;
+  _useOpenCL=false;
   _useUnicode=false;
   _magickProject=false;
 }
@@ -411,6 +417,8 @@ void Project::loadConfig(wifstream &config)
       addLines(config,_references);
     else if (line == L"[UNICODE]")
       _useUnicode=true;
+    else if (line == L"[OPENCL]")
+      _useOpenCL=true;
     else if (line == L"[VISUAL_STUDIO]")
       _minimumVisualStudioVersion=parseVisualStudioVersion(readLine(config));
     else if (line == L"[MAGICK_PROJECT]")

@@ -612,8 +612,8 @@ void ProjectFile::writeAdditionalIncludeDirectories(wofstream &file,const wstrin
     file << separator << rootPath << project->path(directory);
   }
 
-  if (_wizard->useOpenCL())
-    file << separator << rootPath << L"VisualMagick\\OpenCL";
+  if (_wizard->useOpenCL() && _project->useOpenCL())
+    file << separator << rootPath << L"Build\\OpenCL";
 }
 
 void ProjectFile::writeIcon(wofstream &file)

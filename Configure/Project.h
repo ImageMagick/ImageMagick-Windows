@@ -86,6 +86,8 @@ public:
 
   bool useNasm() const;
 
+  bool useOpenCL() const;
+
   bool useUnicode() const;
 
   wstring version() const;
@@ -101,7 +103,6 @@ public:
   void mergeProjectFiles(const ConfigureWizard &wizard);
 
   bool shouldSkip(const ConfigureWizard &wizard);
-
 
 private:
   Project(const wstring &folder,const wstring &name);
@@ -148,6 +149,7 @@ private:
   vector<wstring>      _references;
   ProjectType          _type;
   bool                 _useNasm;
+  bool                 _useOpenCL;
   bool                 _useUnicode;
   vector<wstring>      _versions;
 };
