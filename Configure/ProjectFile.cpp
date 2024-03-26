@@ -450,7 +450,7 @@ wstring ProjectFile::nasmOptions(const wstring &folder)
     result += L" -fwin64 -DWIN64 -D__x86_64__";
 
   foreach_const(wstring,include,_project->includesNasm())
-    result += L" -i\"" + rootPath + *include + L"\"";
+    result += L" -i\"" + rootPath + L"\\" + _project->path(*include) + L"\"";
 
   result += L" -o \"$(IntDir)%(Filename).obj\" \"%(FullPath)\"";
   return(result);
@@ -568,7 +568,7 @@ void ProjectFile::writeAdditionalDependencies(wofstream &file,const wstring &sep
 {
   foreach (wstring,lib,_project->libraries())
   {
-    file << separator << _project->path(*lib);
+    file << separator << *lib;
   }
 }
 
@@ -824,7 +824,7 @@ void ProjectFile::writeItemDefinitionGroup(wofstream &file,const bool debug,cons
         file << "    <EntryPointSymbol>wWinMainCRTStartup</EntryPointSymbol>" << endl;
       file << "      <SubSystem>Windows</SubSystem>" << endl;
       if ((_project->isDll()) && (!_project->moduleDefinitionFile().empty()))
-        file << "      <ModuleDefinitionFile>" << rootPath <<  _project->moduleDefinitionFile() << "</ModuleDefinitionFile>" << endl;
+        file << "      <ModuleDefinitionFile>" << rootPath <<  _project->path(_project->moduleDefinitionFile()) << "</ModuleDefinitionFile>" << endl;
     }
     else
       file << "      <SubSystem>Console</SubSystem>" << endl;
