@@ -137,7 +137,7 @@ void ProjectFile::loadAliases()
   if (!_project->isExe() || !_project->isModule())
     return;
 
-  fileName=pathFromRoot(_project->path(L"ImageMagick\\Aliases." + _name + L".txt"));
+  fileName=pathFromRoot(_project->configPath(L"Aliases." + _name + L".txt"));
 
   aliases.open(fileName);
   if (!aliases)
@@ -170,7 +170,7 @@ void ProjectFile::loadConfig()
   if (!_project->isModule())
     return;
 
-  fileName=pathFromRoot(_project->path(L"ImageMagick\\Config." + _name + L".txt"));
+  fileName=pathFromRoot(_project->configPath(L"Config." + _name + L".txt"));
 
   config.open(fileName);
   if (!config)
@@ -396,12 +396,7 @@ void ProjectFile::loadSource()
       loadSource(*dir);
   }
 
-  resourceFile=_project->path(L"ImageMagick\\ImageMagick.rc");
-  if (PathFileExists(pathFromRoot(resourceFile).c_str()))
-    _resourceFiles.push_back(rootPath + resourceFile);
-
-  /* This resource file is used by the ImageMagick projects */
-  resourceFile=_project->path(L"ImageMagick.rc");
+  resourceFile=_project->configPath(L"ImageMagick.rc");
   if (PathFileExists(pathFromRoot(resourceFile).c_str()))
     _resourceFiles.push_back(rootPath + resourceFile);
 }
@@ -415,7 +410,7 @@ void ProjectFile::loadSource(const wstring &directory)
   if (contains(_project->platformExcludes(_wizard->platform()),directory))
     return;
 
-  path=_project->path(directory);
+  path=_project->filePath(directory);
   for (const auto& entry : std::filesystem::directory_iterator(pathFromRoot(path)))
   {
     if (entry.is_regular_file())
@@ -450,7 +445,7 @@ wstring ProjectFile::nasmOptions(const wstring &folder)
     result += L" -fwin64 -DWIN64 -D__x86_64__";
 
   foreach_const(wstring,include,_project->includesNasm())
-    result += L" -i\"" + rootPath + L"\\" + _project->path(*include) + L"\"";
+    result += L" -i\"" + rootPath + L"\\" + _project->filePath(*include) + L"\"";
 
   result += L" -o \"$(IntDir)%(Filename).obj\" \"%(FullPath)\"";
   return(result);
@@ -609,7 +604,7 @@ void ProjectFile::writeAdditionalIncludeDirectories(wofstream &file,const wstrin
         throwException(L"Invalid dependency specified: " + projectName);
     }
     
-    file << separator << rootPath << project->path(directory);
+    file << separator << rootPath << project->filePath(directory);
   }
 
   if (_wizard->useOpenCL() && _project->useOpenCL())
@@ -623,7 +618,7 @@ void ProjectFile::writeIcon(wofstream &file)
 
   file << "  <ItemGroup>" << endl;
   file << "    <ResourceCompile Include=\"" << name() << ".rc\" />" << endl;
-  file << "    <Image Include=\"" << _project->path(_project->icon()) << "\" />" << endl;
+  file << "    <Image Include=\"" << _project->filePath(_project->icon()) << "\" />" << endl;
   file << "  </ItemGroup>" << endl;
 }
 
@@ -824,7 +819,7 @@ void ProjectFile::writeItemDefinitionGroup(wofstream &file,const bool debug,cons
         file << "    <EntryPointSymbol>wWinMainCRTStartup</EntryPointSymbol>" << endl;
       file << "      <SubSystem>Windows</SubSystem>" << endl;
       if ((_project->isDll()) && (!_project->moduleDefinitionFile().empty()))
-        file << "      <ModuleDefinitionFile>" << rootPath <<  _project->path(_project->moduleDefinitionFile()) << "</ModuleDefinitionFile>" << endl;
+        file << "      <ModuleDefinitionFile>" << rootPath <<  _project->filePath(_project->moduleDefinitionFile()) << "</ModuleDefinitionFile>" << endl;
     }
     else
       file << "      <SubSystem>Console</SubSystem>" << endl;

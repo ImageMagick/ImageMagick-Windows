@@ -52,6 +52,10 @@ public:
 
   vector<wstring> &platformExcludes(Platform platform);
 
+  wstring configPath(const wstring &subPath) const;
+
+  wstring filePath(const wstring &subPath) const;
+
   wstring icon() const;
 
   bool isConsole() const;
@@ -78,8 +82,6 @@ public:
 
   wstring notice() const;
 
-  wstring path(const wstring &subPath) const;
-
   vector<wstring> &references();
 
   bool treatWarningAsError() const;
@@ -96,7 +98,7 @@ public:
 
   void checkFiles(const VisualStudioVersion visualStudioVersion);
 
-  static Project* create(wstring folder, wstring name);
+  static Project* create(const wstring &configFolder,const wstring &filesFolder,const wstring& name);
 
   bool loadFiles(const ConfigureWizard &wizard);
 
@@ -105,7 +107,7 @@ public:
   bool shouldSkip(const ConfigureWizard &wizard);
 
 private:
-  Project(const wstring &folder,const wstring &name);
+  Project(const wstring &configFolder,const wstring &filesFolder,const wstring &name);
 
   void addLines(wifstream &config,wstring &value);
 
@@ -120,6 +122,7 @@ private:
   void setNoticeAndVersion();
 
   wstring              _configDefine;
+  wstring              _configFolder;
   vector<wstring>      _defines;
   vector<wstring>      _definesDll;
   vector<wstring>      _definesLib;
@@ -131,8 +134,8 @@ private:
   vector<wstring>      _excludesX86;
   vector<wstring>      _excludesX64;
   vector<wstring>      _excludesARM64;
-  wstring              _folder;
   vector<ProjectFile*> _files;
+  wstring              _filesFolder;
   bool                 _hasIncompatibleLicense;
   wstring              _icon;
   vector<wstring>      _includes;

@@ -1,0 +1,14 @@
+[DLL]
+
+[DIRECTORIES]
+lib
+lib\Magick++
+
+[INCLUDES]
+..
+
+[DEPENDENCIES]
+MagickCore
+MagickWand
+
+[MAGICK_PROJECT]

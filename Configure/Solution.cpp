@@ -56,7 +56,8 @@ int Solution::loadProjectFiles(const ConfigureWizard &wizard)
 
 void Solution::loadProjects()
 {
-  loadProjectsFromFolder(L"Dependencies");
+  loadProjectsFromFolder(L"Dependencies", L"Dependencies");
+  loadProjectsFromFolder(L"Projects", L"ImageMagick");
 }
 
 void Solution::write(const ConfigureWizard &wizard,WaitDialog &waitDialog)
@@ -141,16 +142,16 @@ bool Solution::isImageMagick7(const ConfigureWizard &wizard)
   return(false);
 }
 
-void Solution::loadProjectsFromFolder(const wstring &folder)
+void Solution::loadProjectsFromFolder(const wstring &configFolder, const wstring &filesFolder)
 {
   Project
     *project;
 
-  for(auto& p : filesystem::directory_iterator(pathFromRoot(folder)))
+  for(auto& p : filesystem::directory_iterator(pathFromRoot(configFolder)))
   {
     if (p.is_directory())
     {
-      project=Project::create(folder,p.path().filename());
+      project=Project::create(configFolder,filesFolder,p.path().filename());
       if (project != (Project *) NULL)
         _projects.push_back(project);
     }
@@ -173,7 +174,7 @@ void Solution::writeMagickBaseConfig(const ConfigureWizard &wizard)
     folderName;
 
   folderName=getMagickFolderName();
-  configIn.open(pathFromRoot(L"VisualMagick\\" + folderName + L"\\magick-baseconfig.h.in"));
+  configIn.open(pathFromRoot(L"Projects\\" + folderName + L"\\magick-baseconfig.h.in"));
   if (!configIn)
     return;
 
