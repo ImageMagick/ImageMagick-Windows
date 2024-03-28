@@ -6,6 +6,7 @@ lib\Magick++
 
 [INCLUDES]
 ..
+lib
 
 [DEPENDENCIES]
 MagickCore
