@@ -61,11 +61,21 @@ clone_branch()
     cd ..
 }
 
-if [ -z "$commit" ]; then
-    commit=$(git ls-remote "https://github.com/ImageMagick/ImageMagick" "main" | cut -f 1)
+if [ -d "../ImageMagick" ]; then
+    branch_name=$(git symbolic-ref --short HEAD)
+
+    if [ "$branch_name" != "main" ]; then
+        cp -R ../ImageMagick ImageMagick
+    fi
 fi
 
-clone_commit 'ImageMagick' "$commit"
+if [ ! -d "ImageMagick" ]; then
+    if [ -z "$commit" ]; then
+        commit=$(git ls-remote "https://github.com/ImageMagick/ImageMagick" "main" | cut -f 1)
+    fi
+
+    clone_commit 'ImageMagick' "$commit"
+fi
 
 # get a commit date from the current ImageMagick checkout
 cd ImageMagick
