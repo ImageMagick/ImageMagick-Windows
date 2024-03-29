@@ -16,4 +16,4 @@
 ;  Copyright (C) 2003 - 2008 GraphicsMagick Group
 #endif
 
-Name: install_Devel; Description: "Install development headers and libraries for C and C++"; Flags: unchecked
+Name: install_Devel; Description: "Install development headers for C and C++"; Flags: unchecked
