@@ -149,6 +149,7 @@ private:
   wstring              _modulePrefix;
   wstring              _name;
   wstring              _notice;
+  wstring              _path;
   vector<wstring>      _references;
   ProjectType          _type;
   bool                 _useNasm;

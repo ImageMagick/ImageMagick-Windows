@@ -94,7 +94,9 @@ wstring Project::configPath(const wstring &subPath) const
 wstring Project::filePath(const wstring &subPath) const
 {
   wstring
-    path = _filesFolder + L"\\" + _name;
+    path = _filesFolder + L"\\";
+
+  path += _path != L"" ? _path : _name;
 
   if (subPath == L".")
     return(path);
@@ -432,6 +434,8 @@ void Project::loadConfig(wifstream &config)
       _useNasm=true;
     else if (line == L"[OPTIONAL]")
       _isOptional=true;
+    else if (line == L"[PATH]")
+      _path=readLine(config);
     else if (line == L"[REFERENCES]")
       addLines(config,_references);
     else if (line == L"[UNICODE]")
