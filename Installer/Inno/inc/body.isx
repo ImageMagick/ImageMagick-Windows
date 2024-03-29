@@ -1,0 +1,94 @@
+#ifdef COPYRIGHT
+;  Copyright @ 1999 ImageMagick Studio LLC, a non-profit organization
+;  dedicated to making software imaging solutions freely available.
+;
+;  You may not use this file except in compliance with the License.  You may
+;  obtain a copy of the License at
+;
+;    https://imagemagick.org/script/license.php
+;
+;  Unless required by applicable law or agreed to in writing, software
+;  distributed under the License is distributed on an "AS IS" BASIS,
+;  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+;  See the License for the specific language governing permissions and
+;  limitations under the License.
+;
+;  Copyright (C) 2003 - 2008 GraphicsMagick Group
+#endif
+
+#ifdef MagickStaticPackage
+  #define MagickPackageType "static"
+  #define MagickAppDirectory "{app}"
+  #define MagickLibDirectory "{app}"
+  #define MagickConfigDirectory "{app}"
+#else
+  #define MagickPackageType "dll"
+  #define MagickAppDirectory "{app}"
+  #define MagickLibDirectory "{app}"
+  #define MagickConfigDirectory "{app}"
+  #define MagickCodersDirectory "{app}\modules\coders"
+  #define MagickFiltersDirectory "{app}\modules\filters"
+#endif
+
+#include "version.isx"
+
+[Setup]
+#include "setup.isx"
+
+; Optional Tasks
+[Tasks]
+#include "tasks-desktopicon.isx"
+#include "tasks-update-path.isx"
+#include "tasks-extensions.isx"
+#ifdef MagickDynamicPackage
+  #include "tasks-legacy.isx"
+  #include "tasks-install-devel.isx"
+#endif
+#ifdef MagickPerlMagick
+  #include "tasks-install-perlmagick.isx"
+#endif
+
+
+; Windows registry settings
+[Registry]
+#include "registry-application.isx"
+#include "registry-associations.isx"
+
+[Files]
+#include "files-base.isx"
+#include "files-configs.isx"
+#include "files-documentation.isx"
+#include "files-licenses.isx"
+#include "files-dlls.isx"
+#ifdef MagickPerlMagick
+  #include "files-perlmagick.isx"
+#endif
+#ifdef MagickDynamicPackage
+  #include "files-development.isx"
+#endif
+
+[Icons]
+#include "icons-associate.isx"
+
+[Run]
+#include "run-pathtool.isx"
+#ifdef MagickPerlMagick
+  #include "run-ppm.isx"
+#endif
+
+[UninstallRun]
+#include "uninstallrun-pathtool.isx"
+#ifdef MagickPerlMagick
+  #include "uninstallrun-ppm.isx"
+#endif
+
+[Code]
+function ModPathDir(): TArrayOfString;
+var
+    Dir: TArrayOfString;
+begin
+    setArrayLength(Dir, 1)
+    Dir[0] := ExpandConstant('{app}');
+    Result := Dir;
+end;
+#include "modpath.iss"

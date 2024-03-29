@@ -1,0 +1,29 @@
+#ifdef COPYRIGHT
+;  Copyright @ 1999 ImageMagick Studio LLC, a non-profit organization
+;  dedicated to making software imaging solutions freely available.
+;
+;  You may not use this file except in compliance with the License.  You may
+;  obtain a copy of the License at
+;
+;    https://imagemagick.org/script/license.php
+;
+;  Unless required by applicable law or agreed to in writing, software
+;  distributed under the License is distributed on an "AS IS" BASIS,
+;  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+;  See the License for the specific language governing permissions and
+;  limitations under the License.
+;
+;  Copyright (C) 2003 - 2008 GraphicsMagick Group
+#endif
+
+#ifdef Magick64BitArchitecture
+  #define  public MagickArchitecture "x64"
+#else
+  #define  public MagickArchitecture "x86"
+#endif
+
+; PerlMagick Perl module
+Source: "..\..\ImageMagick\PerlMagick\Image-Magick.ppd"; DestDir: "{app}\PerlMagick"; Tasks: install_PerlMagick; Flags: ignoreversion
+Source: "..\..\ImageMagick\PerlMagick\{#MagickArchitecture}\Image-Magick.zip"; DestDir: "{app}\PerlMagick\{#MagickArchitecture}"; Tasks: install_PerlMagick; Flags: ignoreversion
+Source: "..\..\ImageMagick\PerlMagick\demo\*"; DestDir: "{app}\PerlMagick\demo"; Tasks: install_PerlMagick; Flags: ignoreversion
+Source: "PerlMagick-PPM.txt"; DestDir: "{app}\PerlMagick"; DestName: "README.txt"; Tasks: install_PerlMagick; Flags: ignoreversion

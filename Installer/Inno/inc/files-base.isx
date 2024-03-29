@@ -1,0 +1,39 @@
+#ifdef COPYRIGHT
+;  Copyright @ 1999 ImageMagick Studio LLC, a non-profit organization
+;  dedicated to making software imaging solutions freely available.
+;
+;  You may not use this file except in compliance with the License.  You may
+;  obtain a copy of the License at
+;
+;    https://imagemagick.org/script/license.php
+;
+;  Unless required by applicable law or agreed to in writing, software
+;  distributed under the License is distributed on an "AS IS" BASIS,
+;  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+;  See the License for the specific language governing permissions and
+;  limitations under the License.
+;
+;  Copyright (C) 2003 - 2008 GraphicsMagick Group
+#endif
+
+; Executables
+Source: "..\bin\imdisplay.exe"; DestDir: {#MagickAppDirectory}; DestName: "imdisplay.exe"; Flags: ignoreversion
+Source: "..\bin\magick.exe"; DestDir: {#MagickAppDirectory}; Flags: ignoreversion
+Source: "..\bin\hp2xx.exe"; DestDir: {#MagickAppDirectory}; Flags: ignoreversion
+Source: "..\bin\dcraw.exe"; DestDir: {#MagickAppDirectory}; Flags: ignoreversion
+#ifdef MagickDynamicPackage
+Source: "..\bin\convert.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
+Source: "..\bin\compare.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
+Source: "..\bin\composite.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
+Source: "..\bin\conjure.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
+Source: "..\bin\identify.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
+Source: "..\bin\mogrify.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
+Source: "..\bin\montage.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
+Source: "..\bin\stream.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
+#endif
+
+; Path Tool
+Source: "..\..\contrib\win32\PathTool\PathTool.exe"; DestDir: "{app}\uninstall"; Flags: ignoreversion
+
+; Icon file
+Source: "..\..\ImageMagick\images\ImageMagick.ico"; DestDir: {#MagickAppDirectory}; Flags: ignoreversion

@@ -1,0 +1,60 @@
+#ifdef COPYRIGHT
+;  Copyright @ 1999 ImageMagick Studio LLC, a non-profit organization
+;  dedicated to making software imaging solutions freely available.
+;
+;  You may not use this file except in compliance with the License.  You may
+;  obtain a copy of the License at
+;
+;    https://imagemagick.org/script/license.php
+;
+;  Unless required by applicable law or agreed to in writing, software
+;  distributed under the License is distributed on an "AS IS" BASIS,
+;  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+;  See the License for the specific language governing permissions and
+;  limitations under the License.
+;
+;  Copyright (C) 2003 - 2008 GraphicsMagick Group
+#endif
+
+;
+; Record installation paths
+;
+
+#define private KeyBase          "Software\" + MagickPackageName
+#define private KeyVersion       KeyBase + "\" + MagickPackageVersion
+#define private KeyVersionDepth  KeyVersion + "\Q:" + QuantumDepth
+#define private KeyCurrent       KeyBase + "\Current"
+
+Root: HKLM; Subkey: {#KeyBase}; ValueType: none; Flags: uninsdeletekeyifempty
+Root: HKLM; Subkey: {#KeyVersion}; ValueType: none; Flags: uninsdeletekeyifempty
+Root: HKLM; Subkey: {#KeyVersionDepth}; ValueType: none; Flags: uninsdeletekey
+Root: HKLM; Subkey: {#KeyVersionDepth}; ValueType: string; ValueName: "BinPath"; ValueData: "{app}"
+Root: HKLM; Subkey: {#KeyVersionDepth}; ValueType: string; ValueName: "ConfigurePath"; ValueData: {#MagickConfigDirectory}
+Root: HKLM; Subkey: {#KeyVersionDepth}; ValueType: string; ValueName: "LibPath"; ValueData: "{app}"
+#ifdef MagickCodersDirectory
+Root: HKLM; Subkey: {#KeyVersionDepth}; ValueType: string; ValueName: "CoderModulesPath"; ValueData: {#MagickCodersDirectory}
+#endif
+#ifdef MagickFiltersDirectory
+Root: HKLM; Subkey: {#KeyVersionDepth}; ValueType: string; ValueName: "FilterModulesPath"; ValueData: {#MagickFiltersDirectory}
+#endif
+
+
+Root: HKLM; Subkey: {#KeyCurrent}; ValueType: none; Flags: uninsdeletekey
+Root: HKLM; Subkey: {#KeyCurrent}; ValueType: string; ValueName: "Version"; ValueData: {#MagickPackageVersion}
+Root: HKLM; Subkey: {#KeyCurrent}; ValueType: dword; ValueName: "QuantumDepth"; ValueData: {#QuantumDepth}
+
+Root: HKLM; Subkey: {#KeyCurrent}; ValueType: string; ValueName: "BinPath"; ValueData: "{app}"
+Root: HKLM; Subkey: {#KeyCurrent}; ValueType: string; ValueName: "ConfigurePath"; ValueData: {#MagickConfigDirectory}
+Root: HKLM; Subkey: {#KeyCurrent}; ValueType: string; ValueName: "LibPath"; ValueData: "{app}"
+#ifdef MagickCodersDirectory
+Root: HKLM; Subkey: {#KeyCurrent}; ValueType: string; ValueName: "CoderModulesPath"; ValueData: {#MagickCodersDirectory}
+#endif
+#ifdef MagickFiltersDirectory
+Root: HKLM; Subkey: {#KeyCurrent}; ValueType: string; ValueName: "FilterModulesPath"; ValueData: {#MagickFiltersDirectory}
+#endif
+
+; Tell windows to use our convert.exe
+;
+#ifdef MagickDynamicPackage
+Root: HKLM; Subkey: "Software\Classes\Applications"; ValueType: string; ValueName: "AutoRun"; ValueData: "{app}\convert.exe $*"; Tasks: legacy_support
+#endif
