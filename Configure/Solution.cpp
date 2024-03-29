@@ -297,16 +297,18 @@ void Solution::writeMakeFile(const ConfigureWizard &wizard)
   lib=wofstream(pathFromRoot(L"ImageMagick\\PerlMagick\\" + libName + L".a"));
   if (!lib)
     return;
+
   lib.close();
 
-  zipIn=wifstream(pathFromRoot(L"VisualMagick\\PerlMagick\\Zip.ps1"), std::ios::binary);
+  zipIn=wifstream(pathFromRoot(L"Projects\\PerlMagick\\Zip.ps1"), std::ios::binary);
   if (!zipIn)
     return;
+
   zip=wofstream(pathFromRoot(L"ImageMagick\\PerlMagick\\Zip.ps1"), std::ios::binary);
   zip << zipIn.rdbuf();
   zip.close();
 
-  makeFileIn.open(pathFromRoot(L"VisualMagick\\PerlMagick\\Makefile.PL.in"));
+  makeFileIn.open(pathFromRoot(L"Projects\\PerlMagick\\Makefile.PL.in"));
   if (!makeFileIn)
     return;
 
@@ -436,7 +438,7 @@ void Solution::writeVersion(const ConfigureWizard &wizard,const VersionInfo &ver
   folderName=getMagickFolderName();
   writeVersion(wizard,versionInfo,pathFromRoot(L"ImageMagick\\" + folderName + L"\\version.h.in"),pathFromRoot(L"ImageMagick\\" + folderName + L"\\version.h"));
   writeVersion(wizard,versionInfo,pathFromRoot(L"ImageMagick\\config\\configure.xml.in"),pathFromRoot(wizard.binDirectory() + L"configure.xml"));
-  writeVersion(wizard,versionInfo,pathFromRoot(L"VisualMagick\\installer\\inc\\version.isx.in"),pathFromRoot(L"VisualMagick\\installer\\inc\\version.isx"));
+  writeVersion(wizard,versionInfo,pathFromRoot(L"Installer\\Inno\\inc\\version.isx.in"),pathFromRoot(L"Installer\\Inno\\inc\\version.isx"));
   writeVersion(wizard,versionInfo,pathFromRoot(L"Projects\\utilities\\ImageMagick.version.h.in"),pathFromRoot(L"Projects\\utilities\\ImageMagick.version.h"));
 }
 
