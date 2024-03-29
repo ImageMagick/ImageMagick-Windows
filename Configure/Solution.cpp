@@ -57,6 +57,7 @@ int Solution::loadProjectFiles(const ConfigureWizard &wizard)
 void Solution::loadProjects()
 {
   loadProjectsFromFolder(L"Dependencies", L"Dependencies");
+  loadProjectsFromFolder(L"OptionalDependencies", L"OptionalDependencies");
   loadProjectsFromFolder(L"Projects", L"ImageMagick");
 }
 

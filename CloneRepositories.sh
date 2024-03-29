@@ -93,13 +93,10 @@ clone_date 'bzlib' "$commitDate"
 clone_date 'cairo' "$commitDate"
 clone_date 'contrib' "$commitDate"
 clone_date 'croco' "$commitDate"
-clone_date 'dcraw' "$commitDate"
 clone_date 'de265' "$commitDate"
 clone_date 'deflate' "$commitDate"
 clone_date 'exr' "$commitDate"
 clone_date 'ffi' "$commitDate"
-clone_date 'fftw' "$commitDate"
-clone_date 'flif' "$commitDate"
 clone_date 'freetype' "$commitDate"
 clone_date 'fribidi' "$commitDate"
 clone_date 'glib' "$commitDate"
@@ -126,3 +123,15 @@ clone_date 'webp' "$commitDate"
 clone_date 'xml' "$commitDate"
 clone_date 'zip' "$commitDate"
 clone_date 'zlib' "$commitDate"
+
+cd ..
+
+if [ ! -d "OptionalDependencies" ]; then
+    mkdir -p "OptionalDependencies"
+fi
+
+cd "OptionalDependencies"
+
+clone_date 'dcraw' "$commitDate"
+clone_date 'fftw' "$commitDate"
+clone_date 'flif' "$commitDate"
