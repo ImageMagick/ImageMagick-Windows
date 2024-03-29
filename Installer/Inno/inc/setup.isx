@@ -42,7 +42,7 @@ AppName={#MagickPackageName} {#MagickPackageVersion} Q{#QuantumDepth}{#Hdri} {#M
 ; the [Registry] section
 AppVerName={#MagickPackageName} {#MagickPackageFullVersionText} Q{#QuantumDepth}{#Hdri} {#MagickArchitectureDescription} ({#MagickPackageReleaseDate})
 AppVersion={#MagickPackageFullVersion}
-AppCopyright=Copyright (C) 1999-2016 ImageMagick Studio LLC
+AppCopyright=Copyright (C) 1999 ImageMagick Studio LLC
 AppPublisher=ImageMagick Studio LLC
 AppPublisherURL=http://www.imagemagick.org/
 AppSupportURL=http://www.imagemagick.org/
