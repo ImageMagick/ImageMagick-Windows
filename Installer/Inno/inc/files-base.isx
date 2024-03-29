@@ -17,10 +17,7 @@
 #endif
 
 ; Executables
-Source: "..\bin\imdisplay.exe"; DestDir: {#MagickAppDirectory}; DestName: "imdisplay.exe"; Flags: ignoreversion
 Source: "..\bin\magick.exe"; DestDir: {#MagickAppDirectory}; Flags: ignoreversion
-Source: "..\bin\hp2xx.exe"; DestDir: {#MagickAppDirectory}; Flags: ignoreversion
-Source: "..\bin\dcraw.exe"; DestDir: {#MagickAppDirectory}; Flags: ignoreversion
 #ifdef MagickDynamicPackage
 Source: "..\bin\convert.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
 Source: "..\bin\compare.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
