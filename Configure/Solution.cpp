@@ -446,7 +446,7 @@ void Solution::writeVersion(const ConfigureWizard &wizard,const VersionInfo &ver
   writeVersion(wizard,versionInfo,pathFromRoot(L"ImageMagick\\" + folderName + L"\\version.h.in"),pathFromRoot(L"ImageMagick\\" + folderName + L"\\version.h"));
   writeVersion(wizard,versionInfo,pathFromRoot(L"ImageMagick\\config\\configure.xml.in"),pathFromRoot(wizard.binDirectory() + L"configure.xml"));
   writeVersion(wizard,versionInfo,pathFromRoot(L"VisualMagick\\installer\\inc\\version.isx.in"),pathFromRoot(L"VisualMagick\\installer\\inc\\version.isx"));
-  writeVersion(wizard,versionInfo,pathFromRoot(L"VisualMagick\\utilities\\ImageMagick.version.h.in"),pathFromRoot(L"VisualMagick\\utilities\\ImageMagick.version.h"));
+  writeVersion(wizard,versionInfo,pathFromRoot(L"Projects\\utilities\\ImageMagick.version.h.in"),pathFromRoot(L"Projects\\utilities\\ImageMagick.version.h"));
 }
 
 void Solution::writeVersion(const ConfigureWizard &wizard,const VersionInfo &versionInfo,wstring input,wstring output)

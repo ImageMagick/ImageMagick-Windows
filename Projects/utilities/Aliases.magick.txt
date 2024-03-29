@@ -1,0 +1,8 @@
+compare
+composite
+conjure
+convert
+identify
+mogrify
+montage
+stream
