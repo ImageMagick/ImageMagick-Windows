@@ -62,10 +62,12 @@ clone_branch()
 }
 
 if [ -d "../ImageMagick" ]; then
-    branch_name=$(git symbolic-ref --short HEAD)
+    branch_name=$(git -C ../ImageMagick symbolic-ref --short HEAD 2>/dev/null || true)
 
     if [ "$branch_name" != "main" ]; then
+        echo "Copying repository from ../ImageMagick"
         cp -R ../ImageMagick ImageMagick
+        git -C ImageMagick show --oneline -s
     fi
 fi
 
@@ -78,10 +80,8 @@ if [ ! -d "ImageMagick" ]; then
 fi
 
 # get a commit date from the current ImageMagick checkout
-cd ImageMagick
-declare -r commitDate=`git log -1 --format=%ci`
+declare -r commitDate=`git -C ImageMagick log -1 --format=%ci`
 echo "Set latest commit date as $commitDate"
-cd ..
 
 clone_date 'aom' "$commitDate"
 clone_date 'brotli' "$commitDate"
