@@ -228,18 +228,6 @@ void ProjectFile::write(const vector<Project*> &allprojects)
 
   writeFilter(file);
 
-  if (_project->isExe() && _project->icon() != L"")
-  {
-    file.close();
-
-    file.open(projectDir + L"\\" + name() + L".rc");
-    if (!file)
-      return;
-
-    file << "#define IDI_ICON1 101" << endl;
-    file << "IDI_ICON1 ICON \"" << rootPath <<  _project->icon() << "\"" << endl;
-  }
-
   file.close();
 }
 
@@ -561,7 +549,6 @@ void ProjectFile::write(wofstream &file,const vector<Project*> &allProjects)
   writeFiles(file,_srcFiles);
   writeFiles(file,_includeFiles);
   writeFiles(file,_resourceFiles);
-  writeIcon(file);
 
   writeProjectReferences(file,allProjects);
 
@@ -619,17 +606,6 @@ void ProjectFile::writeAdditionalIncludeDirectories(wofstream &file,const wstrin
 
   if (_wizard->useOpenCL() && _project->useOpenCL())
     file << separator << rootPath << L"Build\\OpenCL";
-}
-
-void ProjectFile::writeIcon(wofstream &file)
-{
-  if (!_project->isExe() || _project->icon() == L"")
-    return;
-
-  file << "  <ItemGroup>" << endl;
-  file << "    <ResourceCompile Include=\"" << name() << ".rc\" />" << endl;
-  file << "    <Image Include=\"" << _project->filePath(_project->icon()) << "\" />" << endl;
-  file << "  </ItemGroup>" << endl;
 }
 
 void ProjectFile::writeFiles(wofstream &file,const vector<wstring> &collection)

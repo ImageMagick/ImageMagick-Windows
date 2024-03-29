@@ -97,8 +97,6 @@ private:
 
   void write(wofstream &file,const vector<Project*> &allProjects);
 
-  void writeIcon(wofstream &file);
-
   void writeFiles(wofstream &file,const vector<wstring> &collection);
 
   void writeFilter(wofstream &file);

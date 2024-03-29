@@ -56,8 +56,6 @@ public:
 
   wstring filePath(const wstring &subPath) const;
 
-  wstring icon() const;
-
   bool isConsole() const;
 
   bool isDll() const;
@@ -137,7 +135,6 @@ private:
   vector<ProjectFile*> _files;
   wstring              _filesFolder;
   bool                 _hasIncompatibleLicense;
-  wstring              _icon;
   vector<wstring>      _includes;
   vector<wstring>      _includesNasm;
   bool                 _isOptional;
