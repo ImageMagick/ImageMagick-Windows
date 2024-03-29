@@ -31,6 +31,9 @@ ConfigureWizard::ConfigureWizard(CWnd* pWndParent)
   AddPage(&_targetPage);
   AddPage(&_finishedPage);
 
+  _isImageMagick7=filesystem::exists(pathFromRoot(L"ImageMagick\\MagickCore"));
+  _targetPage.useHDRI(_isImageMagick7);
+
   SetWizardMode();
 }
 
@@ -45,6 +48,9 @@ wstring ConfigureWizard::binDirectory() const
 
 wstring ConfigureWizard::channelMaskDepth() const
 {
+  if (!_isImageMagick7)
+    return(L"");
+
   if ((visualStudioVersion() >= VisualStudioVersion::VS2022) && (platform() != Platform::X86))
     return(L"64");
   else

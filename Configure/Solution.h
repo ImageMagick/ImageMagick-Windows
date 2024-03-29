@@ -44,8 +44,6 @@ private:
 
   wstring getMagickFolderName();
 
-  bool isImageMagick7(const ConfigureWizard &wizard);
-
   void loadProjectsFromFolder(const wstring &folder, const wstring &filesFolder);
 
   void writeMagickBaseConfig(const ConfigureWizard &wizard);

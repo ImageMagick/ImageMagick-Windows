@@ -89,6 +89,7 @@ protected:
 private:
 
   FinishedPage _finishedPage;
+  bool         _isImageMagick7; 
   TargetPage   _targetPage;
   WelcomePage  _welcomePage;
 };

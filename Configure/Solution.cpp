@@ -133,16 +133,6 @@ wstring Solution::getMagickFolderName()
   return(folder);
 }
 
-bool Solution::isImageMagick7(const ConfigureWizard &wizard)
-{
-  foreach (Project*,p,_projects)
-  {
-    if ((*p)->name().compare(L"MagickCore") == 0)
-      return(true);
-  }
-  return(false);
-}
-
 void Solution::loadProjectsFromFolder(const wstring &configFolder, const wstring &filesFolder)
 {
   Project
@@ -220,7 +210,7 @@ void Solution::writeMagickBaseConfig(const ConfigureWizard &wizard)
       config << "#define MAGICKCORE_QUANTUM_DEPTH 64" << endl;
     config << endl;
 
-    if (isImageMagick7(wizard))
+    if (wizard.channelMaskDepth() != L"")
       {
         config << "/*" << endl;
         config << "  Channel mask depth" << endl;
