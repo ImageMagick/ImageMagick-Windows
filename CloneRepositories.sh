@@ -34,6 +34,7 @@ clone_commit()
 
     cd $repo
     git checkout $commit
+    git show --oneline -s
     cd ..
 }
 
@@ -46,6 +47,7 @@ clone_date()
 
     cd $repo
     git checkout `git rev-list -n 1 --before="$date" origin/main`
+    git show --oneline -s
     cd ..
 }
 
@@ -58,6 +60,7 @@ clone_branch()
 
     cd $repo
     git checkout $branch
+    git show --oneline -s
     cd ..
 }
 
