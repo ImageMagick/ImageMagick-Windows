@@ -39,7 +39,6 @@
 [Tasks]
 #include "tasks-desktopicon.isx"
 #include "tasks-update-path.isx"
-#include "tasks-extensions.isx"
 #ifdef MagickDynamicPackage
   #include "tasks-legacy.isx"
   #include "tasks-install-devel.isx"
@@ -52,7 +51,6 @@
 ; Windows registry settings
 [Registry]
 #include "registry-application.isx"
-#include "registry-associations.isx"
 
 [Files]
 #include "files-base.isx"
