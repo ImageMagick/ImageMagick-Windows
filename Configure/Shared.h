@@ -105,13 +105,18 @@ static inline wstring trim(const wstring &s)
   return(result);
 }
 
-static inline void throwException(const wstring& message)
+static inline string wstringToString(const wstring &ws)
 {
   string
-    errorMessage;
+    result;
 
-  transform(message.begin(), message.end(), std::back_inserter(errorMessage), [] (wchar_t c) { return (char)c; });
-  throw runtime_error(errorMessage);
+  transform(ws.begin(), ws.end(), std::back_inserter(result), [] (wchar_t c) { return (char)c; }); 
+  return(result);
+}
+
+static inline void throwException(const wstring& message)
+{
+  throw runtime_error(wstringToString(message));
 }
 
 static inline wstring readLine(wifstream &stream)

@@ -471,21 +471,27 @@ void ProjectFile::setFileName()
 
 wstring ProjectFile::createGuid()
 {
-  GUID
-    guid;
+  hash<string>
+    hash;
 
-  RPC_WSTR
-    guidStr;
+  size_t
+    hash_value;
+
+  wstringstream
+    wss;
 
   wstring
-    result;
+    guid;
 
-  (void) CoCreateGuid(&guid);
-  (void) UuidToString(&guid,&guidStr);
-  result=wstring((wchar_t *) guidStr);
-  transform(result.begin(),result.end(),result.begin(),::toupper);
-  RpcStringFree(&guidStr);
-  return result;
+  hash_value=hash(wstringToString(name()));
+  wss << hex << setw(16) << setfill(L'0') << hash_value;
+  wss << hex << setw(16) << setfill(L'0') << hash_value;
+  guid=wss.str();
+  guid.insert(20, 1, '-');
+  guid.insert(16, 1, '-');
+  guid.insert(12, 1, '-');
+  guid.insert(8, 1, '-');
+  return(guid);
 }
 
 void ProjectFile::write(wofstream &file,const vector<Project*> &allProjects)
