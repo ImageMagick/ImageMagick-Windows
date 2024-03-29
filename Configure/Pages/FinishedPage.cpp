@@ -56,14 +56,11 @@ BOOL FinishedPage::OnInitDialog()
 
   _text  = "Congratulations!\n\n";
 
-  _text += "You have finished the VisualMagick configuration. Now press finish to finally";
+  _text += "You have finished the ImageMagick configuration. Now press finish to finally";
   _text += " produce the Visual Studio compatible files.\n\n";
-  _text += "You will find different files in the VisualMagick folder based on the build";
-  _text += " options you selected. The dynamic (DLL) build is named VisualDynamicMT";
-  _text += " while the static build configurations are named VisualStaticXX, were the XX";
-  _text += " indicates the type: (MT: multi-threaded and MTD: multi-threaded DLL).\n\n";
-  _text += "NOTE: MTD is the most common and the recommended static build option\n\n";
-  _text += "\n\nGood luck!";
+  _text += "The dynamic (DLL) build is named ImageMagickDynamic while the static build";
+  _text += " configurations are named ImageMagickStatic and ImageMagickStaticDLL.\n\n";
+  _text += "Good luck!";
 
   UpdateData(FALSE);
 

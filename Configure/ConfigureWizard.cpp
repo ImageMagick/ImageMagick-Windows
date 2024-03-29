@@ -138,11 +138,11 @@ QuantumDepth ConfigureWizard::quantumDepth() const
 wstring ConfigureWizard::solutionName() const
 {
   if (solutionType() == SolutionType::DYNAMIC_MT)
-    return(L"DynamicMT");
+    return(L"Dynamic");
   else if (solutionType() == SolutionType::STATIC_MTD)
-    return(L"StaticMTD");
+    return(L"StaticDLL");
   else if (solutionType() == SolutionType::STATIC_MT)
-    return(L"StaticMT");
+    return(L"Static");
   else
     return(L"ThisShouldNeverHappen");
 }

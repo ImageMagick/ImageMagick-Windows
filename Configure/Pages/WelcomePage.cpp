@@ -51,7 +51,7 @@ BOOL WelcomePage::OnInitDialog()
 
   _welcomeText  = "Welcome!\n\n";
 
-  _welcomeText += "This is the VisualMagick configuration wizard. It will help you set up ";
+  _welcomeText += "This is the ImageMagick configuration wizard. It will help you set up ";
   _welcomeText += "your build environment and customize the build process for your needs.";
   _welcomeText += "Its purpose is to create Visual Studio project and solution files.\n\n";
 

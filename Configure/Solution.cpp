@@ -119,7 +119,7 @@ void Solution::write(const ConfigureWizard &wizard,WaitDialog &waitDialog)
 
 wstring Solution::getFileName(const ConfigureWizard &wizard)
 {
-  return(pathFromRoot(L"Visual" + wizard.solutionName() + L".sln"));
+  return(pathFromRoot(L"ImageMagick" + wizard.solutionName() + L".sln"));
 }
 
 wstring Solution::getMagickFolderName()
@@ -330,7 +330,7 @@ void Solution::writeNotice(const ConfigureWizard &wizard,const VersionInfo &vers
   wofstream
     notice;
 
-  notice.open(pathFromRoot(L"VisualMagick\\NOTICE.txt"));
+  notice.open(pathFromRoot(L"Output\\NOTICE.txt"));
   if (!notice)
     return;
 

@@ -86,7 +86,7 @@ IDR_MAINFRAME           ICON                    "Resources\\Configure.ico"
 
 IDD_WELCOME_PAGE DIALOG  0, 0, 318, 240
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
-CAPTION "Welcome to the VisualMagick configuration tool."
+CAPTION "Welcome to the ImageMagick configuration tool."
 FONT 8, "MS Sans Serif"
 BEGIN
     LTEXT           "welcome text string...",IDC_WELCOME_TEXT,7,137,304,88
@@ -147,7 +147,7 @@ END
 
 IDD_FINISHED_PAGE DIALOG  0, 0, 318, 233
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
-CAPTION "VisualMagick configuration finished."
+CAPTION "ImageMagick configuration finished."
 FONT 8, "MS Sans Serif"
 BEGIN
     LTEXT           "some finish text...",IDC_FINISHED_TEXT,7,7,304,192

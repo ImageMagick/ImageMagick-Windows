@@ -6,7 +6,7 @@
 
 /Dependencies/*
 
-/DynamicMT
+/Dynamic
 
 /ImageMagick
 
@@ -18,9 +18,9 @@
 
 /Projects/utilities/ImageMagick.version.h
 
-/StaticMT
+/Static
 
-/StaticMTD
+/StaticDLL
 
 /*.sln
 
