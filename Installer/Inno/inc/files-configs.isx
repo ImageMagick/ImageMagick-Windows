@@ -24,7 +24,6 @@ Source: "..\..\ImageMagick\config\log.xml"; DestDir: {#MagickConfigDirectory}; F
 Source: "..\..\ImageMagick\config\mime.xml"; DestDir: {#MagickConfigDirectory}; Flags: confirmoverwrite
 Source: "..\..\ImageMagick\config\quantization-table.xml"; DestDir: {#MagickConfigDirectory}; Flags: confirmoverwrite
 Source: "..\..\Output\bin\configure.xml"; DestDir: {#MagickConfigDirectory}; Flags: confirmoverwrite
-Source: "..\..\Output\bin\ImageMagick.rdf"; DestDir: {#MagickConfigDirectory}; Flags: confirmoverwrite
 Source: "..\..\Output\bin\delegates.xml"; DestDir: {#MagickConfigDirectory}; Flags: confirmoverwrite
 Source: "..\..\Output\bin\policy.xml"; DestDir: {#MagickConfigDirectory}; Flags: confirmoverwrite
 Source: "..\..\Output\bin\sRGB.icc"; DestDir: {#MagickConfigDirectory}; Flags: confirmoverwrite
