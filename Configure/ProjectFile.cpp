@@ -796,7 +796,7 @@ void ProjectFile::writeItemDefinitionGroup(wofstream &file,const bool debug,cons
     file << "      <TargetMachine>Machine" << _wizard->machineName() << "</TargetMachine>" << endl;
     file << "      <GenerateDebugInformation>" << (debug ? "true" : "false") << "</GenerateDebugInformation>" << endl;
     file << "      <ProgramDatabaseFile>" << binDirectory() << (_project->isExe() ? _name : name) << ".pdb</ProgramDatabaseFile>" << endl;
-    file << "      <ImportLibrary>" << name << ".lib</ImportLibrary>" << endl;
+    file << "      <ImportLibrary>" << libDirectory() << name << ".lib</ImportLibrary>" << endl;
     if (!_project->isConsole())
     {
       if (_project->isDll())
