@@ -28,10 +28,6 @@ class CommandLineInfo : public CCommandLineInfo
 public:
   CommandLineInfo(const ConfigureWizard &wizard);
 
-  CommandLineInfo(const CommandLineInfo& obj);
-
-  CommandLineInfo& operator =(const CommandLineInfo& obj);
-
   bool enableDpc() const;
 
   bool excludeAliases() const;

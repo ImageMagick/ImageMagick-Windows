@@ -40,16 +40,6 @@ CommandLineInfo::CommandLineInfo(const ConfigureWizard &wizard)
   _zeroConfigurationSupport=wizard.zeroConfigurationSupport();
 }
 
-CommandLineInfo::CommandLineInfo(const CommandLineInfo& obj)
-{
-  *this = obj;
-}
-
-CommandLineInfo& CommandLineInfo::operator=(const CommandLineInfo& obj)
-{
-  return *this;
-}
-
 bool CommandLineInfo::enableDpc() const
 {
   return(_enableDpc);
