@@ -28,41 +28,42 @@
 class Solution
 {
 public:
-  Solution();
+  Solution(const ConfigureWizard &wizard);
 
-  int loadProjectFiles(const ConfigureWizard &wizard);
+  int loadProjectFiles();
 
   void loadProjects();
 
-  void write(const ConfigureWizard &wizard,WaitDialog &waitDialog);
+  void write(WaitDialog &waitDialog);
 
 private:
 
   void checkKeyword(const wstring keyword);
 
-  wstring getFileName(const ConfigureWizard &wizard);
+  wstring getFileName();
 
   wstring getMagickFolderName();
 
   void loadProjectsFromFolder(const wstring &folder, const wstring &filesFolder);
 
-  void writeMagickBaseConfig(const ConfigureWizard &wizard);
+  void writeMagickBaseConfig();
 
-  void writeMakeFile(const ConfigureWizard &wizard);
+  void writeMakeFile();
 
-  void writeNotice(const ConfigureWizard &wizard,const VersionInfo &versionInfo);
+  void writeNotice(const VersionInfo &versionInfo);
 
-  void writePolicyConfig(const ConfigureWizard &wizard);
+  void writePolicyConfig();
 
-  void writeThresholdMap(const ConfigureWizard &wizard);
+  void writeThresholdMap();
 
-  void writeVersion(const ConfigureWizard &wizard,const VersionInfo &versionInfo);
+  void writeVersion(const VersionInfo &versionInfo);
 
-  void writeVersion(const ConfigureWizard &wizard,const VersionInfo &versionInfo,wstring input,wstring output);
+  void writeVersion(const VersionInfo &versionInfo,wstring input,wstring output);
 
-  void write(const ConfigureWizard &wizard,wofstream &file);
+  void write(wofstream &file);
 
   vector<Project*> _projects;
+  const ConfigureWizard &_wizard;
 };
 
 #endif // __Solution__

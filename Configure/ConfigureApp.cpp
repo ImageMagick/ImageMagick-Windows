@@ -43,7 +43,7 @@ BOOL ConfigureApp::Init()
     response;
 
   Solution
-    solution;
+    solution(wizard);
 
   WaitDialog
     waitDialog;
@@ -53,7 +53,6 @@ BOOL ConfigureApp::Init()
 
   wizard.parseCommandLineInfo(info);
 
-  solution=Solution();
   solution.loadProjects();
 
   response=ID_WIZFINISH;
@@ -63,7 +62,7 @@ BOOL ConfigureApp::Init()
   if (response != ID_WIZFINISH)
     return(FALSE);
 
-  solution.write(wizard,waitDialog);
+  solution.write(waitDialog);
   return(TRUE);
 }
 

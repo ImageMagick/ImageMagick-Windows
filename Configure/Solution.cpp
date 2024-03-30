@@ -22,11 +22,12 @@
 #include "Shared.h"
 #include "VersionInfo.h"
 
-Solution::Solution()
+Solution::Solution(const ConfigureWizard &wizard)
+  : _wizard(wizard)
 {
 }
 
-int Solution::loadProjectFiles(const ConfigureWizard &wizard)
+int Solution::loadProjectFiles()
 {
   int
     count;
@@ -34,10 +35,10 @@ int Solution::loadProjectFiles(const ConfigureWizard &wizard)
   count=0;
   foreach (Project*,p,_projects)
   {
-    if (!(*p)->isSupported(wizard.visualStudioVersion()))
+    if (!(*p)->isSupported(_wizard.visualStudioVersion()))
       continue;
 
-    if (!(*p)->loadFiles(wizard))
+    if (!(*p)->loadFiles(_wizard))
       continue;
 
     foreach (ProjectFile*,pf,(*p)->files())
@@ -46,9 +47,9 @@ int Solution::loadProjectFiles(const ConfigureWizard &wizard)
       count++;
     }
 
-    (*p)->checkFiles(wizard.visualStudioVersion());
+    (*p)->checkFiles(_wizard.visualStudioVersion());
 
-    (*p)->mergeProjectFiles(wizard);
+    (*p)->mergeProjectFiles(_wizard);
   }
 
   return(count);
@@ -61,7 +62,7 @@ void Solution::loadProjects()
   loadProjectsFromFolder(L"Projects", L"ImageMagick");
 }
 
-void Solution::write(const ConfigureWizard &wizard,WaitDialog &waitDialog)
+void Solution::write(WaitDialog &waitDialog)
 {
   int
     steps;
@@ -72,17 +73,17 @@ void Solution::write(const ConfigureWizard &wizard,WaitDialog &waitDialog)
   wofstream
     file;
 
-  steps=loadProjectFiles(wizard);
+  steps=loadProjectFiles();
   /* write solution, configuration, MakeFile.PL and version */
   waitDialog.setSteps(steps+4);
 
-  file.open(getFileName(wizard));
+  file.open(getFileName());
   if (!file)
     return;
 
   waitDialog.nextStep(L"Writing solution");
 
-  write(wizard,file);
+  write(file);
 
   file.close();
 
@@ -96,30 +97,30 @@ void Solution::write(const ConfigureWizard &wizard,WaitDialog &waitDialog)
   }
 
   waitDialog.nextStep(L"Writing configuration");
-  writeMagickBaseConfig(wizard);
+  writeMagickBaseConfig();
 
   waitDialog.nextStep(L"Writing threshold-map.h");
-  writeThresholdMap(wizard);
+  writeThresholdMap();
 
   waitDialog.nextStep(L"Writing Makefile.PL");
-  writeMakeFile(wizard);
+  writeMakeFile();
 
   waitDialog.nextStep(L"Writing policy config");
-  writePolicyConfig(wizard);
+  writePolicyConfig();
 
   if (!versionInfo.load())
     return;
 
   waitDialog.nextStep(L"Writing version");
-  writeVersion(wizard,versionInfo);
+  writeVersion(versionInfo);
 
   waitDialog.nextStep(L"Writing NOTICE.txt");
-  writeNotice(wizard,versionInfo);
+  writeNotice(versionInfo);
 }
 
-wstring Solution::getFileName(const ConfigureWizard &wizard)
+wstring Solution::getFileName()
 {
-  return(pathFromRoot(L"ImageMagick" + wizard.solutionName() + L".sln"));
+  return(pathFromRoot(L"ImageMagick" + _wizard.solutionName() + L".sln"));
 }
 
 wstring Solution::getMagickFolderName()
@@ -149,7 +150,7 @@ void Solution::loadProjectsFromFolder(const wstring &configFolder, const wstring
   }
 }
 
-void Solution::writeMagickBaseConfig(const ConfigureWizard &wizard)
+void Solution::writeMagickBaseConfig()
 {
   wstring
     folder,
@@ -189,7 +190,7 @@ void Solution::writeMagickBaseConfig(const ConfigureWizard &wizard)
     config << "  the built ImageMagick to any directory on any directory on any machine," << endl;
     config << "  then do not use this setting." << endl;
     config << "*/" << endl;
-    if (wizard.installedSupport())
+    if (_wizard.installedSupport())
       config << "#define MAGICKCORE_INSTALLED_SUPPORT" << endl;
     else
       config << "#undef MAGICKCORE_INSTALLED_SUPPORT" << endl;
@@ -200,29 +201,29 @@ void Solution::writeMagickBaseConfig(const ConfigureWizard &wizard)
     config << "  A value of 8 uses half the memory than 16 and typically runs 30% faster," << endl;
     config << "  but provides 256 times less color resolution than a value of 16." << endl;
     config << "*/" << endl;
-    if (wizard.quantumDepth() == QuantumDepth::Q8)
+    if (_wizard.quantumDepth() == QuantumDepth::Q8)
       config << "#define MAGICKCORE_QUANTUM_DEPTH 8" << endl;
-    else if (wizard.quantumDepth() == QuantumDepth::Q16)
+    else if (_wizard.quantumDepth() == QuantumDepth::Q16)
       config << "#define MAGICKCORE_QUANTUM_DEPTH 16" << endl;
-    else if (wizard.quantumDepth() == QuantumDepth::Q32)
+    else if (_wizard.quantumDepth() == QuantumDepth::Q32)
       config << "#define MAGICKCORE_QUANTUM_DEPTH 32" << endl;
-    else if (wizard.quantumDepth() == QuantumDepth::Q64)
+    else if (_wizard.quantumDepth() == QuantumDepth::Q64)
       config << "#define MAGICKCORE_QUANTUM_DEPTH 64" << endl;
     config << endl;
 
-    if (wizard.channelMaskDepth() != L"")
+    if (_wizard.channelMaskDepth() != L"")
       {
         config << "/*" << endl;
         config << "  Channel mask depth" << endl;
         config << "*/" << endl;
-        config << "#define MAGICKCORE_CHANNEL_MASK_DEPTH " << wizard.channelMaskDepth() << endl;
+        config << "#define MAGICKCORE_CHANNEL_MASK_DEPTH " << _wizard.channelMaskDepth() << endl;
         config << endl;
       }
 
     config << "/*" << endl;
     config << "  Define to enable high dynamic range imagery (HDRI)" << endl;
     config << "*/" << endl;
-    if (wizard.useHDRI())
+    if (_wizard.useHDRI())
       config << "#define MAGICKCORE_HDRI_ENABLE 1" << endl;
     else
       config << "#define MAGICKCORE_HDRI_ENABLE 0" << endl;
@@ -231,7 +232,7 @@ void Solution::writeMagickBaseConfig(const ConfigureWizard &wizard)
     config << "/*" << endl;
     config << "  Define to enable OpenCL" << endl;
     config << "*/" << endl;
-    if (wizard.useOpenCL())
+    if (_wizard.useOpenCL())
       config << "#define MAGICKCORE_HAVE_CL_CL_H" << endl;
     else
       config << "#undef MAGICKCORE_HAVE_CL_CL_H" << endl;
@@ -240,7 +241,7 @@ void Solution::writeMagickBaseConfig(const ConfigureWizard &wizard)
     config << "/*" << endl;
     config << "  Define to enable Distributed Pixel Cache" << endl;
     config << "*/" << endl;
-    if (wizard.enableDpc())
+    if (_wizard.enableDpc())
       config << "#define MAGICKCORE_DPC_SUPPORT" << endl;
     else
       config << "#undef MAGICKCORE_DPC_SUPPORT" << endl;
@@ -249,7 +250,7 @@ void Solution::writeMagickBaseConfig(const ConfigureWizard &wizard)
     config << "/*" << endl;
     config << "  Exclude deprecated methods in MagickCore API" << endl;
     config << "*/" << endl;
-    if (wizard.excludeDeprecated())
+    if (_wizard.excludeDeprecated())
       config << "#define MAGICKCORE_EXCLUDE_DEPRECATED" << endl;
     else
       config << "#undef MAGICKCORE_EXCLUDE_DEPRECATED" << endl;
@@ -258,7 +259,7 @@ void Solution::writeMagickBaseConfig(const ConfigureWizard &wizard)
     config << "/*" << endl;
     config << "  Define to only use the built-in (in-memory) settings." << endl;
     config << "*/" << endl;
-    if (wizard.zeroConfigurationSupport())
+    if (_wizard.zeroConfigurationSupport())
       config << "#define MAGICKCORE_ZERO_CONFIGURATION_SUPPORT 1" << endl;
     else
       config << "#define MAGICKCORE_ZERO_CONFIGURATION_SUPPORT 0" << endl;
@@ -277,7 +278,7 @@ void Solution::writeMagickBaseConfig(const ConfigureWizard &wizard)
   }
 }
 
-void Solution::writeMakeFile(const ConfigureWizard &wizard)
+void Solution::writeMakeFile()
 {
   wifstream
     makeFileIn,
@@ -319,13 +320,13 @@ void Solution::writeMakeFile(const ConfigureWizard &wizard)
   while (getline(makeFileIn,line))
   {
     line=replace(line,L"$$LIB_NAME$$",libName);
-    line=replace(line,L"$$PLATFORM$$",wizard.platformAlias());
+    line=replace(line,L"$$PLATFORM$$",_wizard.platformAlias());
     makeFile << line << endl;
   }
   makeFile.close();
 }
 
-void Solution::writeNotice(const ConfigureWizard &wizard,const VersionInfo &versionInfo)
+void Solution::writeNotice(const VersionInfo &versionInfo)
 {
   wofstream
     notice;
@@ -341,7 +342,7 @@ void Solution::writeNotice(const ConfigureWizard &wizard,const VersionInfo &vers
 
   foreach (Project*,p,_projects)
   {
-    if (((*p)->notice() == L"") || (*p)->shouldSkip(wizard))
+    if (((*p)->notice() == L"") || (*p)->shouldSkip(_wizard))
       continue;
 
     notice << (*p)->notice();
@@ -351,7 +352,7 @@ void Solution::writeNotice(const ConfigureWizard &wizard,const VersionInfo &vers
   notice.close();
 }
 
-void Solution::writePolicyConfig(const ConfigureWizard &wizard)
+void Solution::writePolicyConfig()
 {
   wchar_t
     buffer[512];
@@ -362,7 +363,7 @@ void Solution::writePolicyConfig(const ConfigureWizard &wizard)
   wofstream
     outfile;
 
-  switch(wizard.policyConfig())
+  switch(_wizard.policyConfig())
   {
   case PolicyConfig::LIMITED:
     infile=wifstream(pathFromRoot(L"ImageMagick\\config\\policy-limited.xml"));
@@ -379,7 +380,7 @@ void Solution::writePolicyConfig(const ConfigureWizard &wizard)
   }
   if (!infile)
     throwException(L"Unable to open policy file");
-  outfile=wofstream(pathFromRoot(wizard.binDirectory() + L"policy.xml"));
+  outfile=wofstream(pathFromRoot(_wizard.binDirectory() + L"policy.xml"));
   while (infile.read(buffer, 512))
     outfile.write(buffer, infile.gcount());
   outfile.write(buffer, infile.gcount());
@@ -387,7 +388,7 @@ void Solution::writePolicyConfig(const ConfigureWizard &wizard)
   outfile.close();
 }
 
-void Solution::writeThresholdMap(const ConfigureWizard &wizard)
+void Solution::writeThresholdMap()
 {
   wifstream
     inputStream;
@@ -398,10 +399,10 @@ void Solution::writeThresholdMap(const ConfigureWizard &wizard)
   wstring
     line;
 
-  if (!wizard.zeroConfigurationSupport())
+  if (!_wizard.zeroConfigurationSupport())
     return;
 
-  inputStream.open(pathFromRoot(wizard.binDirectory() + L"thresholds.xml"));
+  inputStream.open(pathFromRoot(_wizard.binDirectory() + L"thresholds.xml"));
   if (!inputStream)
     return;
 
@@ -429,20 +430,20 @@ void Solution::writeThresholdMap(const ConfigureWizard &wizard)
   outputStream.close();
 }
 
-void Solution::writeVersion(const ConfigureWizard &wizard,const VersionInfo &versionInfo)
+void Solution::writeVersion(const VersionInfo &versionInfo)
 {
   wstring
     folderName,
     line;
 
   folderName=getMagickFolderName();
-  writeVersion(wizard,versionInfo,pathFromRoot(L"ImageMagick\\" + folderName + L"\\version.h.in"),pathFromRoot(L"ImageMagick\\" + folderName + L"\\version.h"));
-  writeVersion(wizard,versionInfo,pathFromRoot(L"ImageMagick\\config\\configure.xml.in"),pathFromRoot(wizard.binDirectory() + L"configure.xml"));
-  writeVersion(wizard,versionInfo,pathFromRoot(L"Installer\\Inno\\inc\\version.isx.in"),pathFromRoot(L"Installer\\Inno\\inc\\version.isx"));
-  writeVersion(wizard,versionInfo,pathFromRoot(L"Projects\\utilities\\ImageMagick.version.h.in"),pathFromRoot(L"Projects\\utilities\\ImageMagick.version.h"));
+  writeVersion(versionInfo,pathFromRoot(L"ImageMagick\\" + folderName + L"\\version.h.in"),pathFromRoot(L"ImageMagick\\" + folderName + L"\\version.h"));
+  writeVersion(versionInfo,pathFromRoot(L"ImageMagick\\config\\configure.xml.in"),pathFromRoot(_wizard.binDirectory() + L"configure.xml"));
+  writeVersion(versionInfo,pathFromRoot(L"Installer\\Inno\\inc\\version.isx.in"),pathFromRoot(L"Installer\\Inno\\inc\\version.isx"));
+  writeVersion(versionInfo,pathFromRoot(L"Projects\\utilities\\ImageMagick.version.h.in"),pathFromRoot(L"Projects\\utilities\\ImageMagick.version.h"));
 }
 
-void Solution::writeVersion(const ConfigureWizard &wizard,const VersionInfo &versionInfo,wstring input,wstring output)
+void Solution::writeVersion(const VersionInfo &versionInfo,wstring input,wstring output)
 {
   size_t
     start,
@@ -470,9 +471,9 @@ void Solution::writeVersion(const ConfigureWizard &wizard,const VersionInfo &ver
 
   while (getline(inputStream,line))
   {
-    line=replace(line,L"@CC@",wizard.visualStudioVersionName());
-    line=replace(line,L"@CHANNEL_MASK_DEPTH@",wizard.channelMaskDepth());
-    line=replace(line,L"@CXX@",wizard.visualStudioVersionName());
+    line=replace(line,L"@CC@",_wizard.visualStudioVersionName());
+    line=replace(line,L"@CHANNEL_MASK_DEPTH@",_wizard.channelMaskDepth());
+    line=replace(line,L"@CXX@",_wizard.visualStudioVersionName());
     line=replace(line,L"@DOCUMENTATION_PATH@",L"unavailable");
     line=replace(line,L"@LIB_VERSION@",versionInfo.version());
     line=replace(line,L"@MAGICK_GIT_REVISION@",versionInfo.gitRevision());
@@ -480,7 +481,7 @@ void Solution::writeVersion(const ConfigureWizard &wizard,const VersionInfo &ver
     line=replace(line,L"@MAGICK_LIB_VERSION_TEXT@",versionInfo.version());
     line=replace(line,L"@MAGICK_LIBRARY_CURRENT@",versionInfo.interfaceVersion());
     line=replace(line,L"@MAGICK_LIBRARY_CURRENT_MIN@",versionInfo.interfaceVersion());
-    line=replace(line,L"@MAGICK_TARGET_CPU@",wizard.platformAlias());
+    line=replace(line,L"@MAGICK_TARGET_CPU@",_wizard.platformAlias());
     line=replace(line,L"@MAGICK_TARGET_OS@",L"Windows");
     line=replace(line,L"@MAGICKPP_LIB_VERSION_TEXT@",versionInfo.version());
     line=replace(line,L"@MAGICKPP_LIBRARY_CURRENT@",versionInfo.ppInterfaceVersion());
@@ -494,7 +495,7 @@ void Solution::writeVersion(const ConfigureWizard &wizard,const VersionInfo &ver
     line=replace(line,L"@PACKAGE_NAME@",L"ImageMagick");
     line=replace(line,L"@PACKAGE_VERSION_ADDENDUM@",versionInfo.libAddendum());
     line=replace(line,L"@PACKAGE_RELEASE_DATE@",versionInfo.releaseDate());
-    line=replace(line,L"@QUANTUM_DEPTH@",to_wstring((int) wizard.quantumDepth()));
+    line=replace(line,L"@QUANTUM_DEPTH@",to_wstring((int) _wizard.quantumDepth()));
     line=replace(line,L"@RELEASE_DATE@",versionInfo.releaseDate());
     line=replace(line,L"@TARGET_OS@",L"Windows");
     start=line.find(L"@");
@@ -528,14 +529,14 @@ void Solution::checkKeyword(const wstring keyword)
   throwException(L"Invalid keyword: " + keyword);
 }
 
-void Solution::write(const ConfigureWizard &wizard,wofstream &file)
+void Solution::write(wofstream &file)
 {
   file << "Microsoft Visual Studio Solution File, Format Version 12.00" << endl;
-  if (wizard.visualStudioVersion() == VisualStudioVersion::VS2017)
+  if (_wizard.visualStudioVersion() == VisualStudioVersion::VS2017)
     file << "# Visual Studio 2017" << endl;
-  else if (wizard.visualStudioVersion() == VisualStudioVersion::VS2019)
+  else if (_wizard.visualStudioVersion() == VisualStudioVersion::VS2019)
     file << "# Visual Studio 2019" << endl;
-  else if (wizard.visualStudioVersion() == VisualStudioVersion::VS2022)
+  else if (_wizard.visualStudioVersion() == VisualStudioVersion::VS2022)
     file << "# Visual Studio 2022" << endl;
 
   foreach (Project*,p,_projects)
@@ -543,7 +544,7 @@ void Solution::write(const ConfigureWizard &wizard,wofstream &file)
     foreach (ProjectFile*,pf,(*p)->files())
     {
       file << "Project(\"{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}\") = \"" << (*pf)->name() << "\", ";
-      file << "\"" << wizard.solutionName() << "\\" << (*pf)->name() << "\\" << (*pf)->fileName() << "\", \"{" << (*pf)->guid() << "}\"" << endl;
+      file << "\"" << _wizard.solutionName() << "\\" << (*pf)->name() << "\\" << (*pf)->fileName() << "\", \"{" << (*pf)->guid() << "}\"" << endl;
       file << "EndProject" << endl;
     }
   }
@@ -551,8 +552,8 @@ void Solution::write(const ConfigureWizard &wizard,wofstream &file)
 
   file << "Global" << endl;
   file << "\tGlobalSection(SolutionConfigurationPlatforms) = preSolution" << endl;
-  file << "\t\tDebug|" << wizard.platformAlias() << " = Debug|" << wizard.platformAlias() << endl;
-  file << "\t\tRelease|" << wizard.platformAlias() << " = Release|" << wizard.platformAlias() << endl;
+  file << "\t\tDebug|" << _wizard.platformAlias() << " = Debug|" << _wizard.platformAlias() << endl;
+  file << "\t\tRelease|" << _wizard.platformAlias() << " = Release|" << _wizard.platformAlias() << endl;
   file << "\tEndGlobalSection" << endl;
 
   file << "\tGlobalSection(ProjectConfigurationPlatforms) = postSolution" << endl;
@@ -560,10 +561,10 @@ void Solution::write(const ConfigureWizard &wizard,wofstream &file)
   {
     foreach (ProjectFile*,pf,(*p)->files())
     {
-      file << "\t\t{" << (*pf)->guid() << "}.Debug|" << wizard.platformAlias() << ".ActiveCfg = Debug|" << wizard.platformName() << endl;
-      file << "\t\t{" << (*pf)->guid() << "}.Debug|" << wizard.platformAlias() << ".Build.0 = Debug|" << wizard.platformName() << endl;
-      file << "\t\t{" << (*pf)->guid() << "}.Release|" << wizard.platformAlias() << ".ActiveCfg = Release|" << wizard.platformName() << endl;
-      file << "\t\t{" << (*pf)->guid() << "}.Release|" << wizard.platformAlias() << ".Build.0 = Release|" << wizard.platformName() << endl;
+      file << "\t\t{" << (*pf)->guid() << "}.Debug|" << _wizard.platformAlias() << ".ActiveCfg = Debug|" << _wizard.platformName() << endl;
+      file << "\t\t{" << (*pf)->guid() << "}.Debug|" << _wizard.platformAlias() << ".Build.0 = Debug|" << _wizard.platformName() << endl;
+      file << "\t\t{" << (*pf)->guid() << "}.Release|" << _wizard.platformAlias() << ".ActiveCfg = Release|" << _wizard.platformName() << endl;
+      file << "\t\t{" << (*pf)->guid() << "}.Release|" << _wizard.platformAlias() << ".Build.0 = Release|" << _wizard.platformName() << endl;
     }
   }
   file << "\tEndGlobalSection" << endl;
