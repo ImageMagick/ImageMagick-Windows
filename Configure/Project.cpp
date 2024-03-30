@@ -25,37 +25,37 @@ Compiler Project::compiler(VisualStudioVersion visualStudioVersion) const
   return(_magickProject && visualStudioVersion >= VisualStudioVersion::VS2022 ? Compiler::CPP : Compiler::Default);
 }
 
-wstring Project::configDefine() const
+const wstring Project::configDefine() const
 {
   return(_configDefine);
 }
 
-vector<wstring> &Project::defines()
+const vector<wstring> &Project::defines()
 {
   return(_defines);
 }
 
-vector<wstring> &Project::definesDll()
+const vector<wstring> &Project::definesDll()
 {
   return(_definesDll);
 }
 
-vector<wstring> &Project::definesLib()
+const vector<wstring> &Project::definesLib()
 {
   return(_definesLib);
 }
 
-vector<wstring> &Project::dependencies()
+const vector<wstring> &Project::dependencies()
 {
   return(_dependencies);
 }
 
-vector<wstring> &Project::directories()
+const vector<wstring> &Project::directories()
 {
   return(_directories);
 }
 
-vector<wstring> &Project::excludes()
+const vector<wstring> &Project::excludes()
 {
   return(_excludes);
 }
@@ -65,17 +65,17 @@ const vector<ProjectFile*> &Project::files() const
   return(_files);
 }
 
-vector<wstring> &Project::includes()
+const vector<wstring> &Project::includes()
 {
   return(_includes);
 }
 
-vector<wstring> &Project::includesNasm()
+const vector<wstring> &Project::includesNasm()
 {
   return(_includesNasm);
 }
 
-vector<wstring> &Project::platformExcludes(Platform platform)
+const vector<wstring> &Project::platformExcludes(Platform platform)
 {
   switch (platform)
   {
@@ -86,12 +86,12 @@ vector<wstring> &Project::platformExcludes(Platform platform)
   }
 }
 
-wstring Project::configPath(const wstring &subPath) const
+const wstring Project::configPath(const wstring &subPath) const
 {
   return(_configFolder + L"\\" + subPath);
 }
 
-wstring Project::filePath(const wstring &subPath) const
+const wstring Project::filePath(const wstring &subPath) const
 {
   wstring
     path = _filesFolder + L"\\";
@@ -149,27 +149,27 @@ bool Project::isSupported(const VisualStudioVersion visualStudioVersion) const
   return(visualStudioVersion >= _minimumVisualStudioVersion);
 }
 
-vector<wstring> &Project::libraries()
+const vector<wstring> &Project::libraries()
 {
   return(_libraries);
 }
 
-wstring Project::moduleDefinitionFile() const
+const wstring Project::moduleDefinitionFile() const
 {
   return(_moduleDefinitionFile);
 }
 
-wstring Project::name() const
+const wstring Project::name() const
 {
   return(_name);
 }
 
-wstring Project::notice() const
+const wstring Project::notice() const
 {
   return(_notice);
 }
 
-vector<wstring> &Project::references()
+const vector<wstring> &Project::references()
 {
   return(_references);
 }
@@ -194,7 +194,7 @@ bool Project::useUnicode() const
   return(_useUnicode);
 }
 
-wstring Project::version() const
+const wstring Project::version() const
 {
   return _versions[0];
 }
@@ -224,9 +224,9 @@ void Project::mergeProjectFiles(const ConfigureWizard &wizard)
     return;
 
   projectFile=new ProjectFile(&wizard,this,L"CORE",_name);
-  foreach (ProjectFile*,pf,_files)
+  for (auto& file : _files)
   {
-    projectFile->merge((*pf));
+    projectFile->merge(file);
   }
   _files.clear();
   _files.push_back(projectFile);
@@ -450,10 +450,10 @@ void Project::loadModules(const ConfigureWizard &wizard)
     *projectAlias,
     *projectFile;
 
-  foreach (wstring,dir,_directories)
+  for (auto& dir :_directories)
   {
     const wstring
-      path(pathFromRoot(filePath(*dir)));
+      path(pathFromRoot(filePath(dir)));
 
     if (!directoryExists(path))
       throwException(L"Invalid folder specified: " + path);
@@ -485,7 +485,7 @@ void Project::loadModules(const ConfigureWizard &wizard)
   }
 }
 
-vector<wstring> Project::readLicenseFilenames(const wstring &line)
+const vector<wstring> Project::readLicenseFilenames(const wstring &line) const
 {
   wstring
     fileName;
@@ -516,7 +516,7 @@ vector<wstring> Project::readLicenseFilenames(const wstring &line)
 void Project::setNoticeAndVersion()
 {
   _notice=L"";
-  foreach(wstring,licenseFileName,_licenseFileNames)
+  for (auto& licenseFileName : _licenseFileNames)
   {
     filesystem::path
       folder,
@@ -528,7 +528,7 @@ void Project::setNoticeAndVersion()
     wstring
       versionFileName;
 
-    folder=filesystem::path(*licenseFileName).parent_path();
+    folder=filesystem::path(licenseFileName).parent_path();
     versionFileName=folder.wstring()+L"\\ImageMagick\\ImageMagick.version.h";
     versionFile=filesystem::path(versionFileName).wstring();
     if (!filesystem::exists(versionFile))
@@ -558,6 +558,6 @@ void Project::setNoticeAndVersion()
     version.close();
 
     _notice+=L"[ "+folder.stem().wstring()+_versions.back()+L" ] copyright:\r\n";
-    _notice+=readLicense(*licenseFileName)+L"\r\n";
+    _notice+=readLicense(licenseFileName)+L"\r\n";
   }
 }

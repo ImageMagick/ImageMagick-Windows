@@ -46,9 +46,6 @@ enum class VisualStudioVersion {VS2017, VS2019, VS2022};
 static const wstring validSrcFilesArr[] = {L".c", L".cpp", L".cc"};
 const vector<wstring> validSrcFiles(validSrcFilesArr, std::end(validSrcFilesArr));
 
-#define foreach(type,var,collection) for(std::vector<type>::iterator var = collection.begin(); var != collection.end(); var++)
-#define foreach_const(type,var,collection) for(std::vector<type>::const_iterator var = collection.begin(); var != collection.end(); var++)
-
 static inline bool endsWith(const wstring &s,const wstring &end)
 {
   size_t
@@ -72,13 +69,13 @@ static inline bool startsWith(const wstring &s,const wstring &start)
 
 static inline bool contains(const vector<wstring> &container, const wstring s)
 {
-  foreach_const(wstring,c,container)
+  for (auto& c : container)
   {
-    if (*c == s)
+    if (c == s)
       return(true);
-    if (((*c)[0] == '*') && (endsWith(s,(*c).substr(1))))
+    if ((c[0] == '*') && (endsWith(s,c.substr(1))))
       return(true);
-    if (((*c)[(*c).length()-1] == '*') && (startsWith(s,(*c).substr(0,(*c).length()-1))))
+    if ((c[c.length()-1] == '*') && (startsWith(s,c.substr(0,c.length()-1))))
       return(true);
   }
   return(false);
@@ -179,9 +176,9 @@ static inline VisualStudioVersion parseVisualStudioVersion(const wstring &versio
 
 static inline bool isValidSrcFile(const wstring &fileName)
 {
-  foreach_const(wstring,ext,validSrcFiles)
+  for (auto& ext : validSrcFiles)
   {
-    if (endsWith(fileName,*ext))
+    if (endsWith(fileName,ext))
       return(true);
   }
 

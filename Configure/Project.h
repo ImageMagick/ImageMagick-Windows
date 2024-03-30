@@ -30,31 +30,31 @@ public:
 
   Compiler compiler(VisualStudioVersion visualStudioVersion) const;
 
-  wstring configDefine() const;
+  const wstring configDefine() const;
 
-  vector<wstring> &defines();
+  const vector<wstring> &defines();
 
-  vector<wstring> &definesDll();
+  const vector<wstring> &definesDll();
 
-  vector<wstring> &definesLib();
+  const vector<wstring> &definesLib();
 
-  vector<wstring> &dependencies();
+  const vector<wstring> &dependencies();
 
-  vector<wstring> &directories();
+  const vector<wstring> &directories();
 
-  vector<wstring> &excludes();
+  const vector<wstring> &excludes();
 
   const vector<ProjectFile*> &files() const;
 
-  vector<wstring> &includes();
+  const vector<wstring> &includes();
 
-  vector<wstring> &includesNasm();
+  const vector<wstring> &includesNasm();
 
-  vector<wstring> &platformExcludes(Platform platform);
+  const vector<wstring> &platformExcludes(Platform platform);
 
-  wstring configPath(const wstring &subPath) const;
+  const wstring configPath(const wstring &subPath) const;
 
-  wstring filePath(const wstring &subPath) const;
+  const wstring filePath(const wstring &subPath) const;
 
   bool isConsole() const;
 
@@ -72,15 +72,15 @@ public:
 
   bool isSupported(const VisualStudioVersion visualStudioVersion) const;
 
-  vector<wstring> &libraries();
+  const vector<wstring> &libraries();
 
-  wstring moduleDefinitionFile() const;
+  const wstring moduleDefinitionFile() const;
 
-  wstring name() const;
+  const wstring name() const;
 
-  wstring notice() const;
+  const wstring notice() const;
 
-  vector<wstring> &references();
+  const vector<wstring> &references();
 
   bool treatWarningAsError() const;
 
@@ -90,7 +90,7 @@ public:
 
   bool useUnicode() const;
 
-  wstring version() const;
+  const wstring version() const;
 
   int warningLevel() const;
 
@@ -115,7 +115,7 @@ private:
 
   void loadModules(const ConfigureWizard &wizard);
 
-  vector<wstring> readLicenseFilenames(const wstring &line);
+  const vector<wstring> readLicenseFilenames(const wstring &line) const;
 
   void setNoticeAndVersion();
 
