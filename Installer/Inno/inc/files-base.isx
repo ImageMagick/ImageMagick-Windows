@@ -30,7 +30,7 @@ Source: "..\..\Output\bin\stream.exe"; DestDir: {#MagickAppDirectory}; Tasks: le
 #endif
 
 ; Path Tool
-Source: "..\..\contrib\win32\PathTool\PathTool.exe"; DestDir: "{app}\uninstall"; Flags: ignoreversion
+Source: "PathTool\PathTool.exe"; DestDir: "{app}\uninstall"; Flags: ignoreversion
 
 ; Icon file
 Source: "..\..\ImageMagick\images\ImageMagick.ico"; DestDir: {#MagickAppDirectory}; Flags: ignoreversion
