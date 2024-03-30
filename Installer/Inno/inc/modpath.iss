@@ -124,7 +124,7 @@ end;
 procedure CurStepChanged(CurStep: TSetupStep);
 begin
   if CurStep = ssPostInstall then
-    if IsTaskSelected('modifypath') then
+    if WizardIsTaskSelected('modifypath') then
       ModPath();
 end;
 
@@ -137,7 +137,7 @@ end;
 
 function NeedRestart(): Boolean;
 begin
-  if IsTaskSelected('modifypath') and not UsingWinNT() then begin
+  if WizardIsTaskSelected('modifypath') and not UsingWinNT() then begin
     Result := True;
   end else begin
     Result := False;

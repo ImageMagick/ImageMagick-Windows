@@ -48,7 +48,7 @@ AppPublisherURL=http://www.imagemagick.org/
 AppSupportURL=http://www.imagemagick.org/
 AppUpdatesURL=http://www.imagemagick.org/script/download.php
 ; Default install is similiar to "C:\Program Files\ImageMagick-7.0.0-Q16":
-DefaultDirName={pf}\{#MagickPackageName}-{#MagickPackageVersion}-Q{#QuantumDepth}{#Hdri}
+DefaultDirName={commonpf}\{#MagickPackageName}-{#MagickPackageVersion}-Q{#QuantumDepth}{#Hdri}
 DefaultGroupName={#MagickPackageName} {#MagickPackageVersion} Q{#QuantumDepth}{#Hdri} {#MagickArchitectureDescription}
 Compression=lzma/max
 ChangesAssociations=1
