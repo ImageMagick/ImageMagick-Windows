@@ -36,9 +36,9 @@ public:
 
   virtual ~ConfigureWizard();
 
-  wstring binDirectory() const;
+  const wstring binDirectory() const;
 
-  wstring channelMaskDepth() const;
+  const wstring channelMaskDepth() const;
 
   bool enableDpc() const;
 
@@ -52,19 +52,19 @@ public:
 
   bool installedSupport() const;
 
-  wstring machineName() const;
+  const wstring machineName() const;
 
   Platform platform() const;
 
-  wstring platformName() const;
+  const wstring platformName() const;
 
-  wstring platformAlias() const;
+  const wstring platformAlias() const;
 
   PolicyConfig policyConfig() const;
 
   QuantumDepth quantumDepth() const;
 
-  wstring solutionName() const;
+  const wstring solutionName() const;
 
   SolutionType solutionType() const;
 
@@ -76,7 +76,7 @@ public:
 
   VisualStudioVersion visualStudioVersion() const;
 
-  wstring visualStudioVersionName() const;
+  const wstring visualStudioVersionName() const;
 
   bool zeroConfigurationSupport() const;
 

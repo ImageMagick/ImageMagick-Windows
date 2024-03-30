@@ -41,12 +41,12 @@ ConfigureWizard::~ConfigureWizard()
 {
 }
 
-wstring ConfigureWizard::binDirectory() const
+const wstring ConfigureWizard::binDirectory() const
 {
   return(L"Output\\bin\\");
 }
 
-wstring ConfigureWizard::channelMaskDepth() const
+const wstring ConfigureWizard::channelMaskDepth() const
 {
   if (!_isImageMagick7)
     return(L"");
@@ -87,7 +87,7 @@ bool ConfigureWizard::installedSupport() const
 	return(_targetPage.installedSupport());
 }
 
-wstring ConfigureWizard::machineName() const
+const wstring ConfigureWizard::machineName() const
 {
   switch (platform())
   {
@@ -103,7 +103,7 @@ Platform ConfigureWizard::platform() const
   return(_targetPage.platform());
 }
 
-wstring ConfigureWizard::platformName() const
+const wstring ConfigureWizard::platformName() const
 {
   switch (platform())
   {
@@ -114,7 +114,7 @@ wstring ConfigureWizard::platformName() const
   }
 }
 
-wstring ConfigureWizard::platformAlias() const
+const wstring ConfigureWizard::platformAlias() const
 {
   switch (platform())
   {
@@ -135,7 +135,7 @@ QuantumDepth ConfigureWizard::quantumDepth() const
   return(_targetPage.quantumDepth());
 }
 
-wstring ConfigureWizard::solutionName() const
+const wstring ConfigureWizard::solutionName() const
 {
   if (solutionType() == SolutionType::DYNAMIC_MT)
     return(L"Dynamic");
@@ -172,7 +172,7 @@ VisualStudioVersion ConfigureWizard::visualStudioVersion() const
   return(_targetPage.visualStudioVersion());
 }
 
-wstring ConfigureWizard::visualStudioVersionName() const
+const wstring ConfigureWizard::visualStudioVersionName() const
 {
   switch(_targetPage.visualStudioVersion())
   {
