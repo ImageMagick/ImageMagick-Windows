@@ -476,9 +476,9 @@ void Project::loadModules(const ConfigureWizard &wizard)
       projectFile=new ProjectFile(&wizard,this,_modulePrefix,name);
       _files.push_back(projectFile);
 
-      foreach(wstring,alias,projectFile->aliases())
+      for (auto& alias : projectFile->aliases())
       {
-        projectAlias=new ProjectFile(&wizard,this,_modulePrefix,*alias,name);
+        projectAlias=new ProjectFile(&wizard,this,_modulePrefix,alias,name);
         _files.push_back(projectAlias);
       }
     }

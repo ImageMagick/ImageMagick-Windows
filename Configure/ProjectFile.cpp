@@ -51,32 +51,32 @@ ProjectFile::ProjectFile(const ConfigureWizard *wizard,Project *project,
   initialize(project);
 }
 
-wstring ProjectFile::binDirectory() const
+const wstring ProjectFile::binDirectory() const
 {
     return(rootPath + _wizard->binDirectory());
 }
 
-vector<wstring> &ProjectFile::dependencies()
+const vector<wstring> &ProjectFile::dependencies() const
 {
   return(_dependencies);
 }
 
-wstring ProjectFile::fileName() const
+const wstring ProjectFile::fileName() const
 {
   return(_fileName);
 }
 
-wstring ProjectFile::guid() const
+const wstring ProjectFile::guid() const
 {
   return(_guid);
 }
 
-wstring ProjectFile::name() const
+const wstring ProjectFile::name() const
 {
   return(_prefix+L"_"+_name);
 }
 
-vector<wstring> &ProjectFile::aliases()
+const vector<wstring> &ProjectFile::aliases() const
 {
   return(_aliases);
 }
@@ -87,19 +87,19 @@ void ProjectFile::initialize(Project* project)
   setFileName();
   _guid=createGuid();
 
-  foreach(wstring,dep,project->dependencies())
+  for (auto& dep : project->dependencies())
   {
-    _dependencies.push_back(*dep);
+    _dependencies.push_back(dep);
   }
 
-  foreach(wstring,inc,project->includes())
+  for (auto& inc : project->includes())
   {
-    _includes.push_back(*inc);
+    _includes.push_back(inc);
   }
 
-  foreach(wstring,inc,project->definesLib())
+  for (auto& inc : project->definesLib())
   {
-    _definesLib.push_back(*inc);
+    _definesLib.push_back(inc);
   }
 }
 
@@ -236,12 +236,12 @@ bool ProjectFile::isLib() const
   return(_project->isLib() || (_wizard->solutionType() != SolutionType::DYNAMIC_MT && _project->isDll()));
 }
 
-wstring ProjectFile::libDirectory() const
+const wstring ProjectFile::libDirectory() const
 {
     return(rootPath + L"Output\\lib\\");
 }
 
-wstring ProjectFile::outputDirectory() const
+const wstring ProjectFile::outputDirectory() const
 {
   if (_project->isFuzz())
     return(rootPath + L"Output\\fuzz\\");
@@ -258,9 +258,9 @@ void ProjectFile::addFile(const wstring &name)
     header_file,
     src_file;
 
-  foreach_const(wstring,ext,validSrcFiles)
+  for (auto& ext : validSrcFiles)
   {
-    src_file=_project->filePath(name + *ext);
+    src_file=_project->filePath(name + ext);
 
     if (filesystem::exists(pathFromRoot(src_file)))
     {
@@ -277,9 +277,9 @@ void ProjectFile::addFile(const wstring &name)
   if (!_project->isExe())
     return;
 
-  foreach_const(wstring,ext,validSrcFiles)
+  for (auto& ext : validSrcFiles)
   {
-    src_file=_project->filePath(L"main" + *ext);
+    src_file=_project->filePath(L"main" + ext);
 
     if (filesystem::exists(pathFromRoot(src_file)))
     {
@@ -310,7 +310,7 @@ void ProjectFile::addLines(wifstream &config,vector<wstring> &container)
   }
 }
 
-wstring ProjectFile::asmOptions()
+const wstring ProjectFile::asmOptions() const
 {
   switch (_wizard->platform())
   {
@@ -321,7 +321,7 @@ wstring ProjectFile::asmOptions()
   }
 }
 
-wstring ProjectFile::getFilter(const wstring &fileName,vector<wstring> &filters)
+const wstring ProjectFile::getFilter(const wstring &fileName,vector<wstring> &filters) const
 {
   wstring
     filter,
@@ -346,12 +346,12 @@ wstring ProjectFile::getFilter(const wstring &fileName,vector<wstring> &filters)
   return filter;
 }
 
-wstring ProjectFile::getIntermediateDirectoryName(const bool debug)
+const wstring ProjectFile::getIntermediateDirectoryName(const bool debug) const
 {
   return((debug ? L"Debug\\" : L"Release\\") + _wizard->platformName() + L"\\");
 }
 
-wstring ProjectFile::getTargetName(const bool debug)
+const wstring ProjectFile::getTargetName(const bool debug) const
 {
   wstring
     targetName;
@@ -376,12 +376,12 @@ void ProjectFile::loadSource()
   wstring
     resourceFile;
 
-  foreach (wstring,dir,_project->directories())
+  for (auto& dir : _project->directories())
   {
     if ((_project->isModule()) && (_project->isExe() || (_project->isDll() && _wizard->solutionType() == SolutionType::DYNAMIC_MT)))
       loadModule();
     else
-      loadSource(*dir);
+      loadSource(dir);
   }
 
   resourceFile=_project->configPath(L"ImageMagick.rc");
@@ -421,7 +421,7 @@ void ProjectFile::loadSource(const wstring &directory)
   }
 }
 
-wstring ProjectFile::nasmOptions(const wstring &folder)
+const wstring ProjectFile::nasmOptions(const wstring &folder) const
 {
   wstring
     result=L"";
@@ -436,8 +436,8 @@ wstring ProjectFile::nasmOptions(const wstring &folder)
   else
     result += L" -fwin64 -DWIN64 -D__x86_64__";
 
-  foreach_const(wstring,include,_project->includesNasm())
-    result += L" -i\"" + rootPath + L"\\" + _project->filePath(*include) + L"\"";
+  for (auto& include : _project->includesNasm())
+    result += L" -i\"" + rootPath + L"\\" + _project->filePath(include) + L"\"";
 
   result += L" -o \"$(IntDir)%(Filename).obj\" \"%(FullPath)\"";
   return(result);
@@ -445,10 +445,10 @@ wstring ProjectFile::nasmOptions(const wstring &folder)
 
 void ProjectFile::merge(vector<wstring> &input, vector<wstring> &output)
 {
-  foreach (wstring,value,input)
+  for (auto& value : input)
   {
-    if (!contains(output,*value))
-      output.push_back(*value);
+    if (!contains(output,value))
+      output.push_back(value);
   }
 }
 
@@ -457,7 +457,7 @@ void ProjectFile::setFileName()
   _fileName=_prefix+L"_"+_name+L".vcxproj";
 }
 
-wstring ProjectFile::createGuid()
+const wstring ProjectFile::createGuid() const
 {
   hash<string>
     hash;
@@ -482,7 +482,7 @@ wstring ProjectFile::createGuid()
   return(guid);
 }
 
-void ProjectFile::write(wofstream &file,const vector<Project*> &allProjects)
+void ProjectFile::write(wofstream &file,const vector<Project*> &allProjects) const
 {
   file << "<?xml version=\"1.0\" encoding=\"utf-8\"?>" << endl;
   file << "<Project DefaultTargets=\"Build\" ToolsVersion=\"4.0\" xmlns=\"http://schemas.microsoft.com/developer/msbuild/2003\">" << endl;
@@ -556,20 +556,18 @@ void ProjectFile::write(wofstream &file,const vector<Project*> &allProjects)
   file << "</Project>" << endl;
 }
 
-void ProjectFile::writeAdditionalDependencies(wofstream &file,const wstring &separator)
+void ProjectFile::writeAdditionalDependencies(wofstream &file,const wstring &separator) const
 {
-  foreach (wstring,lib,_project->libraries())
-  {
-    file << separator << *lib;
-  }
+  for (auto& lib : _project->libraries())
+    file << separator << lib;
 }
 
-void ProjectFile::writeAdditionalIncludeDirectories(wofstream &file,const wstring &separator,const vector<Project*> &allProjects)
+void ProjectFile::writeAdditionalIncludeDirectories(wofstream &file,const wstring &separator,const vector<Project*> &allProjects) const
 {
   size_t
     index;
 
-  foreach_const (wstring,includeDir,_includes)
+  for (auto& includeDir :_includes)
   {
     const Project
       *project;
@@ -578,8 +576,8 @@ void ProjectFile::writeAdditionalIncludeDirectories(wofstream &file,const wstrin
       directory;
 
     project=_project;
-    directory=(*includeDir);
-    index=(*includeDir).find(L"->");
+    directory=includeDir;
+    index=includeDir.find(L"->");
     if (index != -1)
     {
       wstring
@@ -608,7 +606,7 @@ void ProjectFile::writeAdditionalIncludeDirectories(wofstream &file,const wstrin
     file << separator << rootPath << L"Build\\OpenCL";
 }
 
-void ProjectFile::writeFiles(wofstream &file,const vector<wstring> &collection)
+void ProjectFile::writeFiles(wofstream &file,const vector<wstring> &collection) const
 {
   int
     count;
@@ -625,25 +623,25 @@ void ProjectFile::writeFiles(wofstream &file,const vector<wstring> &collection)
     return;
 
   file << "  <ItemGroup>" << endl;
-  foreach_const (wstring,f,collection)
+  for (auto& f : collection)
   {
-    if (endsWith((*f),L".rc"))
-      file << "    <ResourceCompile Include=\"" << *f << "\" />" << endl;
-    else if (endsWith((*f),L".h"))
-      file << "    <ClInclude Include=\"" << *f << "\" />" << endl;
-    else if (endsWith((*f),L".asm"))
+    if (endsWith(f,L".rc"))
+      file << "    <ResourceCompile Include=\"" << f << "\" />" << endl;
+    else if (endsWith(f,L".h"))
+      file << "    <ClInclude Include=\"" << f << "\" />" << endl;
+    else if (endsWith(f,L".asm"))
     {
       if (!_project->useNasm())
       {
-        file << "    <CustomBuild Include=\"" << *f << "\">" << endl;
+        file << "    <CustomBuild Include=\"" << f << "\">" << endl;
         file << "      <Command>" << asmOptions() << "</Command>" << endl;
         file << "      <Outputs>$(IntDir)%(Filename).obj;%(Outputs)</Outputs>" << endl;
         file << "    </CustomBuild>" << endl;
       }
       else
       {
-        folder=(*f).substr(0,(*f).find_last_of(L"\\"));
-        file << "    <CustomBuild Include=\"" << *f << "\">" << endl;
+        folder=f.substr(0,f.find_last_of(L"\\"));
+        file << "    <CustomBuild Include=\"" << f << "\">" << endl;
         file << "      <Command>" << nasmOptions(folder) << "</Command>" << endl;
         file << "      <Outputs>$(IntDir)%(Filename).obj;%(Outputs)</Outputs>" << endl;
         file << "    </CustomBuild>" << endl;
@@ -651,7 +649,7 @@ void ProjectFile::writeFiles(wofstream &file,const vector<wstring> &collection)
     }
     else
     {
-      fileName=(*f).substr((*f).find_last_of(L"\\") + 1);
+      fileName=f.substr(f.find_last_of(L"\\") + 1);
 
       count=1;
       if (fileCount.find(fileName) == fileCount.end())
@@ -659,13 +657,13 @@ void ProjectFile::writeFiles(wofstream &file,const vector<wstring> &collection)
       else
         count=++fileCount[fileName];
 
-      file << "    <ClCompile Include=\"" << *f << "\">" << endl;
-      name=replace(*f,L"..\\",L"");
+      file << "    <ClCompile Include=\"" << f << "\">" << endl;
+      name=replace(f,L"..\\",L"");
       if (contains(_cppFiles,name))
         file << "      <CompileAs>CompileAsCpp</CompileAs>" << endl;
       else if (count > 1)
       {
-        name=(*f).substr(0,(*f).find_last_of(L"."));
+        name=f.substr(0,f.find_last_of(L"."));
         name=name.substr(name.find_last_of(L"\\") + 1);
         file << "      <ObjectFileName>$(IntDir)" << name << "_" << count << ".obj</ObjectFileName>" << endl;
       }
@@ -676,7 +674,7 @@ void ProjectFile::writeFiles(wofstream &file,const vector<wstring> &collection)
   file << "  </ItemGroup>" << endl;
 }
 
-void ProjectFile::writeFilter(wofstream &file)
+void ProjectFile::writeFilter(wofstream &file) const
 {
   wstring
     filter;
@@ -687,43 +685,43 @@ void ProjectFile::writeFilter(wofstream &file)
   file << "<?xml version=\"1.0\" encoding=\"utf-8\"?>" << endl;
   file << "<Project ToolsVersion=\"4.0\" xmlns=\"http://schemas.microsoft.com/developer/msbuild/2003\">" << endl;
   file << "  <ItemGroup>" << endl;
-  foreach_const (wstring,f,_srcFiles)
+  for (auto& f : _srcFiles)
   {
     wstring
       tagName(L"ClCompile");
 
-    if (endsWith((*f),L".asm"))
+    if (endsWith(f,L".asm"))
       tagName=L"CustomBuild";
 
-    filter=getFilter(*f,filters);
+    filter=getFilter(f,filters);
     if (filter != L"")
     {
-      file << "    <" << tagName << L" Include=\"" << *f << "\">" << endl;
+      file << "    <" << tagName << L" Include=\"" << f << "\">" << endl;
       file << "      <Filter>" << filter << "</Filter>" << endl;
       file << "    </" << tagName << L">" << endl;
     }
     else
-      file << "    <" << tagName << L" Include=\"" << *f << "\" />" << endl;
+      file << "    <" << tagName << L" Include=\"" << f << "\" />" << endl;
   }
   file << "  </ItemGroup>" << endl;
   file << "  <ItemGroup>" << endl;
-  foreach_const (wstring,f,_includeFiles)
+  for (auto& f : _includeFiles)
   {
-    filter=getFilter(*f,filters);
+    filter=getFilter(f,filters);
     if (filter != L"")
     {
-      file << "    <CLInclude Include=\"" << *f << "\">" << endl;
+      file << "    <CLInclude Include=\"" << f << "\">" << endl;
       file << "      <Filter>" << filter << "</Filter>" << endl;
       file << "    </CLInclude>" << endl;
     }
     else
-      file << "    <CLInclude Include=\"" << *f << "\" />" << endl;
+      file << "    <CLInclude Include=\"" << f << "\" />" << endl;
   }
   file << "  </ItemGroup>" << endl;
   file << "  <ItemGroup>" << endl;
-  foreach_const (wstring,f,filters)
+  for (auto& f : filters)
   {
-    file << "    <Filter Include=\"" << *f << "\">" << endl;
+    file << "    <Filter Include=\"" << f << "\">" << endl;
     file << "      <UniqueIdentifier>{" << createGuid() << "}</UniqueIdentifier>" << endl;
     file << "    </Filter>" << endl;
   }
@@ -731,7 +729,7 @@ void ProjectFile::writeFilter(wofstream &file)
   file << "</Project>" << endl;
 }
 
-void ProjectFile::writeItemDefinitionGroup(wofstream &file,const bool debug,const vector<Project*> &allProjects)
+void ProjectFile::writeItemDefinitionGroup(wofstream &file,const bool debug,const vector<Project*> &allProjects) const
 {
   wstring
     name;
@@ -814,26 +812,26 @@ void ProjectFile::writeItemDefinitionGroup(wofstream &file,const bool debug,cons
   file << "  </ItemDefinitionGroup>" << endl;
 }
 
-void ProjectFile::writePreprocessorDefinitions(wofstream &file,const bool debug)
+void ProjectFile::writePreprocessorDefinitions(wofstream &file,const bool debug) const
 {
   file << (debug ? "_DEBUG" : "NDEBUG") << ";_WINDOWS;WIN32;_VISUALC_;NeedFunctionPrototypes";
-  foreach (wstring,def,_project->defines())
+  for (auto& def : _project->defines())
   {
-    file << ";" << *def;
+    file << ";" << def;
   }
   if (isLib() || (_wizard->solutionType() != SolutionType::DYNAMIC_MT && (_project->isExe())))
   {
-    foreach (wstring,def,_definesLib)
+    for (auto& def : _definesLib)
     {
-      file << ";" << *def;
+      file << ";" << def;
     }
     file << ";_LIB";
   }
   else if (_project->isDll())
   {
-    foreach (wstring,def,_project->definesDll())
+    for (auto& def : _project->definesDll())
     {
-      file << ";" << *def;
+      file << ";" << def;
     }
     file << ";_DLL;_MAGICKMOD_";
   }
@@ -843,7 +841,7 @@ void ProjectFile::writePreprocessorDefinitions(wofstream &file,const bool debug)
     file << ";_MAGICK_INCOMPATIBLE_LICENSES_";
 }
 
-void ProjectFile::writeProjectReferences(wofstream &file,const vector<Project*> &allProjects)
+void ProjectFile::writeProjectReferences(wofstream &file,const vector<Project*> &allProjects) const
 {
   size_t
     index;

@@ -33,15 +33,15 @@ public:
   ProjectFile(const ConfigureWizard *wizard,Project *project,
     const wstring &prefix,const wstring &name,const wstring &reference);
 
-  vector<wstring> &dependencies();
+  const vector<wstring> &dependencies() const;
 
-  wstring fileName() const;
+  const wstring fileName() const;
 
-  wstring guid() const;
+  const wstring guid() const;
 
-  wstring name() const;
+  const wstring name() const;
 
-  vector<wstring> &aliases();
+  const vector<wstring> &aliases() const;
 
   bool isSupported(const VisualStudioVersion visualStudioVersion) const;
 
@@ -53,27 +53,27 @@ public:
 
 private:
 
-  wstring binDirectory() const;
+  const wstring binDirectory() const;
 
   bool isLib() const;
 
-  wstring libDirectory() const;
+  const wstring libDirectory() const;
 
-  wstring outputDirectory() const;
+  const wstring outputDirectory() const;
 
   void addFile(const wstring &name);
 
   void addLines(wifstream &config,vector<wstring> &container);
 
-  wstring asmOptions();
+  const wstring asmOptions() const;
 
-  wstring createGuid();
+  const wstring createGuid() const;
 
-  wstring getFilter(const wstring &fileName,vector<wstring> &filters);
+  const wstring getFilter(const wstring &fileName,vector<wstring> &filters) const;
 
-  wstring getIntermediateDirectoryName(const bool debug);
+  const wstring getIntermediateDirectoryName(const bool debug) const;
 
-  wstring getTargetName(const bool debug);
+  const wstring getTargetName(const bool debug) const;
 
   void initialize(Project* project);
 
@@ -89,27 +89,27 @@ private:
 
   void loadSource(const wstring &directory);
 
-  wstring nasmOptions(const wstring &folder);
+  const wstring nasmOptions(const wstring &folder) const;
 
   void merge(vector<wstring> &input, vector<wstring> &output);
 
   void setFileName();
 
-  void write(wofstream &file,const vector<Project*> &allProjects);
+  void write(wofstream &file,const vector<Project*> &allProjects) const;
 
-  void writeFiles(wofstream &file,const vector<wstring> &collection);
+  void writeFiles(wofstream &file,const vector<wstring> &collection) const;
 
-  void writeFilter(wofstream &file);
+  void writeFilter(wofstream &file) const;
 
-  void writeAdditionalDependencies(wofstream &file,const wstring &separator);
+  void writeAdditionalDependencies(wofstream &file,const wstring &separator) const;
 
-  void writeAdditionalIncludeDirectories(wofstream &file,const wstring &separator,const vector<Project*> &allProjects);
+  void writeAdditionalIncludeDirectories(wofstream &file,const wstring &separator,const vector<Project*> &allProjects) const;
 
-  void writeItemDefinitionGroup(wofstream &file,const bool debug,const vector<Project*> &allProjects);
+  void writeItemDefinitionGroup(wofstream &file,const bool debug,const vector<Project*> &allProjects) const;
 
-  void writePreprocessorDefinitions(wofstream &file,const bool debug);
+  void writePreprocessorDefinitions(wofstream &file,const bool debug) const;
 
-  void writeProjectReferences(wofstream &file,const vector<Project*> &allProjects);
+  void writeProjectReferences(wofstream &file,const vector<Project*> &allProjects) const;
 
   vector<wstring>        _aliases;
   vector<wstring>        _cppFiles;
