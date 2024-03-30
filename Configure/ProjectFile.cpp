@@ -53,7 +53,7 @@ ProjectFile::ProjectFile(const ConfigureWizard *wizard,Project *project,
 
 wstring ProjectFile::binDirectory() const
 {
-    return(rootPath + L"Output\\ImageMagick\\bin\\");
+    return(rootPath + _wizard->binDirectory());
 }
 
 vector<wstring> &ProjectFile::dependencies()
@@ -238,13 +238,13 @@ bool ProjectFile::isLib() const
 
 wstring ProjectFile::libDirectory() const
 {
-    return(rootPath + L"Output\\ImageMagick\\lib\\");
+    return(rootPath + L"Output\\lib\\");
 }
 
 wstring ProjectFile::outputDirectory() const
 {
   if (_project->isFuzz())
-    return(rootPath + L"Output\\Fuzz\\bin\\");
+    return(rootPath + L"Output\\fuzz\\");
 
   if (isLib())
     return(libDirectory());

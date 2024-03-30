@@ -64,7 +64,7 @@ sub MY::postamble
 {
   '
 create-import-library:
-  pexports ../../VisualMagick/bin/$$LIB_NAME$$.dll > $$LIB_NAME$$.def
+  pexports ../../Output/bin/$$LIB_NAME$$.dll > $$LIB_NAME$$.def
   dlltool -d $$LIB_NAME$$.def -l $$LIB_NAME$$.a
 
 Magick.pm: create-import-library

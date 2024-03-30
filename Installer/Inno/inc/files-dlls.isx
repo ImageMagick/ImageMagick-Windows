@@ -45,7 +45,7 @@ Source: {#MSVCRedist}\{#MagickArchitecture}\Microsoft.VC143.MFC\mfc140u.dll; Des
 
 ; DLLs
 #ifdef MagickDynamicPackage
-Source: "..\bin\CORE_RL*.dll"; DestDir: {#MagickLibDirectory}; Flags: ignoreversion
-Source: "..\bin\IM_MOD_RL*.dll"; DestDir: {#MagickCodersDirectory}; Flags: ignoreversion
-Source: "..\bin\FILTER_*.dll"; DestDir: {#MagickFiltersDirectory}; Flags: ignoreversion
+Source: "..\..\Output\bin\CORE_RL*.dll"; DestDir: {#MagickLibDirectory}; Flags: ignoreversion
+Source: "..\..\Output\bin\IM_MOD_RL*.dll"; DestDir: {#MagickCodersDirectory}; Flags: ignoreversion
+Source: "..\..\Output\bin\FILTER_*.dll"; DestDir: {#MagickFiltersDirectory}; Flags: ignoreversion
 #endif

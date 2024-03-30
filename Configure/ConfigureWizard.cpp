@@ -43,7 +43,7 @@ ConfigureWizard::~ConfigureWizard()
 
 wstring ConfigureWizard::binDirectory() const
 {
-  return(L"Output\\ImageMagick\\bin\\");
+  return(L"Output\\bin\\");
 }
 
 wstring ConfigureWizard::channelMaskDepth() const

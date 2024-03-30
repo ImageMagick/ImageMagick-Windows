@@ -17,16 +17,16 @@
 #endif
 
 ; Executables
-Source: "..\bin\magick.exe"; DestDir: {#MagickAppDirectory}; Flags: ignoreversion
+Source: "..\..\Output\bin\magick.exe"; DestDir: {#MagickAppDirectory}; Flags: ignoreversion
 #ifdef MagickDynamicPackage
-Source: "..\bin\convert.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
-Source: "..\bin\compare.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
-Source: "..\bin\composite.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
-Source: "..\bin\conjure.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
-Source: "..\bin\identify.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
-Source: "..\bin\mogrify.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
-Source: "..\bin\montage.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
-Source: "..\bin\stream.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
+Source: "..\..\Output\bin\convert.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
+Source: "..\..\Output\bin\compare.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
+Source: "..\..\Output\bin\composite.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
+Source: "..\..\Output\bin\conjure.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
+Source: "..\..\Output\bin\identify.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
+Source: "..\..\Output\bin\mogrify.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
+Source: "..\..\Output\bin\montage.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
+Source: "..\..\Output\bin\stream.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
 #endif
 
 ; Path Tool
