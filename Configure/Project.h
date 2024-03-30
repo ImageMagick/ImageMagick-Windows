@@ -27,7 +27,6 @@
 class Project
 {
 public:
-
   Compiler compiler(VisualStudioVersion visualStudioVersion) const;
 
   const wstring configDefine() const;
@@ -96,16 +95,16 @@ public:
 
   void checkFiles(const VisualStudioVersion visualStudioVersion);
 
-  static Project* create(const wstring &configFolder,const wstring &filesFolder,const wstring& name);
+  static Project* create(const ConfigureWizard &wizard,const wstring &configFolder,const wstring &filesFolder,const wstring& name);
 
-  bool loadFiles(const ConfigureWizard &wizard);
+  bool loadFiles();
 
-  void mergeProjectFiles(const ConfigureWizard &wizard);
+  void mergeProjectFiles();
 
-  bool shouldSkip(const ConfigureWizard &wizard) const;
+  bool shouldSkip() const;
 
 private:
-  Project(const wstring &configFolder,const wstring &filesFolder,const wstring &name);
+  Project(const ConfigureWizard &wizard,const wstring &configFolder,const wstring &filesFolder,const wstring &name);
 
   void addLines(wifstream &config,wstring &value);
 
@@ -113,46 +112,47 @@ private:
 
   void loadConfig(wifstream &config);
 
-  void loadModules(const ConfigureWizard &wizard);
+  void loadModules();
 
   const vector<wstring> readLicenseFilenames(const wstring &line) const;
 
   void setNoticeAndVersion();
 
-  wstring              _configDefine;
-  wstring              _configFolder;
-  vector<wstring>      _defines;
-  vector<wstring>      _definesDll;
-  vector<wstring>      _definesLib;
-  vector<wstring>      _dependencies;
-  vector<wstring>      _directories;
-  bool                 _disabledARM64;
-  bool                 _disableOptimization;
-  vector<wstring>      _excludes;
-  vector<wstring>      _excludesX86;
-  vector<wstring>      _excludesX64;
-  vector<wstring>      _excludesARM64;
-  vector<ProjectFile*> _files;
-  wstring              _filesFolder;
-  bool                 _hasIncompatibleLicense;
-  vector<wstring>      _includes;
-  vector<wstring>      _includesNasm;
-  bool                 _isOptional;
-  vector<wstring>      _libraries;
-  vector<wstring>      _licenseFileNames;
-  bool                 _magickProject;
-  VisualStudioVersion  _minimumVisualStudioVersion;
-  wstring              _moduleDefinitionFile;
-  wstring              _modulePrefix;
-  wstring              _name;
-  wstring              _notice;
-  wstring              _path;
-  vector<wstring>      _references;
-  ProjectType          _type;
-  bool                 _useNasm;
-  bool                 _useOpenCL;
-  bool                 _useUnicode;
-  vector<wstring>      _versions;
+  wstring               _configDefine;
+  wstring               _configFolder;
+  vector<wstring>       _defines;
+  vector<wstring>       _definesDll;
+  vector<wstring>       _definesLib;
+  vector<wstring>       _dependencies;
+  vector<wstring>       _directories;
+  bool                  _disabledARM64;
+  bool                  _disableOptimization;
+  vector<wstring>       _excludes;
+  vector<wstring>       _excludesX86;
+  vector<wstring>       _excludesX64;
+  vector<wstring>       _excludesARM64;
+  vector<ProjectFile*>  _files;
+  wstring               _filesFolder;
+  bool                  _hasIncompatibleLicense;
+  vector<wstring>       _includes;
+  vector<wstring>       _includesNasm;
+  bool                  _isOptional;
+  vector<wstring>       _libraries;
+  vector<wstring>       _licenseFileNames;
+  bool                  _magickProject;
+  VisualStudioVersion   _minimumVisualStudioVersion;
+  wstring               _moduleDefinitionFile;
+  wstring               _modulePrefix;
+  wstring               _name;
+  wstring               _notice;
+  wstring               _path;
+  vector<wstring>       _references;
+  ProjectType           _type;
+  bool                  _useNasm;
+  bool                  _useOpenCL;
+  bool                  _useUnicode;
+  vector<wstring>       _versions;
+  const ConfigureWizard &_wizard;
 };
 
 #endif // __Project__

@@ -215,15 +215,15 @@ void Project::checkFiles(const VisualStudioVersion visualStudioVersion)
   _files=newFiles;
 }
 
-void Project::mergeProjectFiles(const ConfigureWizard &wizard)
+void Project::mergeProjectFiles()
 {
   ProjectFile
     *projectFile;
 
-  if ((_type != ProjectType::DLLMODULETYPE) || (wizard.solutionType() == SolutionType::DYNAMIC_MT))
+  if ((_type != ProjectType::DLLMODULETYPE) || (_wizard.solutionType() == SolutionType::DYNAMIC_MT))
     return;
 
-  projectFile=new ProjectFile(&wizard,this,L"CORE",_name);
+  projectFile=new ProjectFile(&_wizard,this,L"CORE",_name);
   for (auto& file : _files)
   {
     projectFile->merge(file);
@@ -232,7 +232,7 @@ void Project::mergeProjectFiles(const ConfigureWizard &wizard)
   _files.push_back(projectFile);
 }
 
-Project* Project::create(const wstring &configFolder, const wstring &filesFolder, const wstring &name)
+Project* Project::create(const ConfigureWizard &wizard,const wstring &configFolder, const wstring &filesFolder, const wstring &name)
 {
   wifstream
     config;
@@ -251,7 +251,7 @@ Project* Project::create(const wstring &configFolder, const wstring &filesFolder
   if (!config)
     return((Project *) NULL);
 
-  Project* project = new Project(configPath,filesFolder,name);
+  Project* project = new Project(wizard,configPath,filesFolder,name);
   project->loadConfig(config);
   project->setNoticeAndVersion();
 
@@ -259,44 +259,44 @@ Project* Project::create(const wstring &configFolder, const wstring &filesFolder
   return(project);
 }
 
-bool Project::loadFiles(const ConfigureWizard &wizard)
+bool Project::loadFiles()
 {
   ProjectFile
     *projectFile;
 
   _files.clear();
 
-  if (shouldSkip(wizard))
+  if (shouldSkip())
     return(false);
 
   switch(_type)
   {
     case ProjectType::DLLMODULETYPE:
     {
-      loadModules(wizard);
+      loadModules();
       break;
     }
     case ProjectType::DLLTYPE:
     {
-      projectFile=new ProjectFile(&wizard,this,L"CORE",_name);
+      projectFile=new ProjectFile(&_wizard,this,L"CORE",_name);
       _files.push_back(projectFile);
       break;
     }
     case ProjectType::APPTYPE:
     case ProjectType::EXETYPE:
     {
-      projectFile=new ProjectFile(&wizard,this,L"UTIL",_name);
+      projectFile=new ProjectFile(&_wizard,this,L"UTIL",_name);
       _files.push_back(projectFile);
       break;
     }
     case ProjectType::EXEMODULETYPE:
     {
-      loadModules(wizard);
+      loadModules();
       break;
     }
     case ProjectType::STATICTYPE:
     {
-      projectFile=new ProjectFile(&wizard,this,L"CORE",_name);
+      projectFile=new ProjectFile(&_wizard,this,L"CORE",_name);
       _files.push_back(projectFile);
       break;
     }
@@ -305,21 +305,22 @@ bool Project::loadFiles(const ConfigureWizard &wizard)
   return(true);
 }
 
-bool Project::shouldSkip(const ConfigureWizard &wizard) const
+bool Project::shouldSkip() const
 {
-  if (_disabledARM64 && wizard.platform() == Platform::ARM64)
+  if (_disabledARM64 && _wizard.platform() == Platform::ARM64)
     return(true);
 
-  if (_hasIncompatibleLicense && !wizard.includeIncompatibleLicense())
+  if (_hasIncompatibleLicense && !_wizard.includeIncompatibleLicense())
     return(true);
 
-  if (_isOptional && !wizard.includeOptional())
+  if (_isOptional && !_wizard.includeOptional())
     return(true);
 
   return(false);
 }
 
-Project::Project(const wstring &configFolder,const wstring &filesFolder,const wstring &name)
+Project::Project(const ConfigureWizard &wizard,const wstring &configFolder,const wstring &filesFolder,const wstring &name)
+  : _wizard(wizard)
 {
   _configFolder=configFolder;
   _filesFolder=filesFolder;
@@ -444,7 +445,7 @@ void Project::loadConfig(wifstream &config)
   }
 }
 
-void Project::loadModules(const ConfigureWizard &wizard)
+void Project::loadModules()
 {
   ProjectFile
     *projectAlias,
@@ -473,12 +474,12 @@ void Project::loadModules(const ConfigureWizard &wizard)
 
       name=fileName;
       name=name.substr(0,name.find_last_of(L"."));
-      projectFile=new ProjectFile(&wizard,this,_modulePrefix,name);
+      projectFile=new ProjectFile(&_wizard,this,_modulePrefix,name);
       _files.push_back(projectFile);
 
       for (auto& alias : projectFile->aliases())
       {
-        projectAlias=new ProjectFile(&wizard,this,_modulePrefix,alias,name);
+        projectAlias=new ProjectFile(&_wizard,this,_modulePrefix,alias,name);
         _files.push_back(projectAlias);
       }
     }

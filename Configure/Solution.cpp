@@ -38,7 +38,7 @@ int Solution::loadProjectFiles() const
     if (!project->isSupported(_wizard.visualStudioVersion()))
       continue;
 
-    if (!project->loadFiles(_wizard))
+    if (!project->loadFiles())
       continue;
 
     for (auto& projectFile : project->files())
@@ -49,7 +49,7 @@ int Solution::loadProjectFiles() const
 
     project->checkFiles(_wizard.visualStudioVersion());
 
-    project->mergeProjectFiles(_wizard);
+    project->mergeProjectFiles();
   }
 
   return(count);
@@ -144,7 +144,7 @@ void Solution::loadProjectsFromFolder(const wstring &configFolder, const wstring
     if (!entry.is_directory())
       continue;
 
-    project=Project::create(configFolder,filesFolder,entry.path().filename());
+    project=Project::create(_wizard,configFolder,filesFolder,entry.path().filename());
     if (project != (Project *) NULL)
       _projects.push_back(project);
   }
@@ -342,7 +342,7 @@ void Solution::writeNotice(const VersionInfo &versionInfo) const
 
   for (const auto& project : _projects)
   {
-    if (project->notice() == L"" || project->shouldSkip(_wizard))
+    if (project->notice() == L"" || project->shouldSkip())
       continue;
 
     notice << project->notice();
