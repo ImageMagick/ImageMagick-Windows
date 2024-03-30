@@ -25,7 +25,7 @@ VersionInfo::VersionInfo()
 {
 }
 
-wstring VersionInfo::executeCommand(const wstring &command)
+const wstring VersionInfo::executeCommand(const wstring &command) const
 {
   FILE
     *pipe;
@@ -58,7 +58,7 @@ wstring VersionInfo::executeCommand(const wstring &command)
   return(result);
 }
 
-wstring VersionInfo::getFileModificationDate(const wstring &fileName,const wstring &format)
+const wstring VersionInfo::getFileModificationDate(const wstring &fileName,const wstring &format) const
 {
   wchar_t
     buffer[20];
@@ -76,22 +76,22 @@ wstring VersionInfo::getFileModificationDate(const wstring &fileName,const wstri
   return(wstring(buffer));
 }
 
-wstring VersionInfo::gitRevision() const
+const wstring VersionInfo::gitRevision() const
 {
   return(_gitRevision);
 }
 
-wstring VersionInfo::fullVersion() const
+const wstring VersionInfo::fullVersion() const
 {
   return(_major+L"."+_minor+L"."+_micro+L"."+_patchlevel);
 }
 
-wstring VersionInfo::interfaceVersion() const
+const wstring VersionInfo::interfaceVersion() const
 {
   return(_libraryCurrent);
 }
 
-wstring VersionInfo::libAddendum() const
+const wstring VersionInfo::libAddendum() const
 {
   if (_isBeta == L"y")
     return(L"-"+_patchlevel+L" (Beta)");
@@ -99,12 +99,12 @@ wstring VersionInfo::libAddendum() const
     return(L"-"+_patchlevel);
 }
 
-wstring VersionInfo::libVersion() const
+const wstring VersionInfo::libVersion() const
 {
   return(_libVersion);
 }
 
-wstring VersionInfo::libVersionNumber() const
+const  wstring VersionInfo::libVersionNumber() const
 {
   return(_libraryCurrent+L","+_libraryRevision+L","+_libraryAge);
 }
@@ -147,7 +147,7 @@ bool VersionInfo::load()
          _ppLibraryRevision != L"" && _ppLibraryAge != L"" && _gitRevision != L"" && _releaseDate != L"");
 }
 
-void VersionInfo::loadValue(const wstring &line,const wstring &keyword,wstring *value)
+void VersionInfo::loadValue(const wstring &line,const wstring &keyword,wstring *value) const
 {
   size_t
     index;
@@ -162,22 +162,22 @@ void VersionInfo::loadValue(const wstring &line,const wstring &keyword,wstring *
   *value=line.substr(line_start.length(),line.length()-line_start.length()-2);
 }
 
-wstring VersionInfo::majorVersion() const
+const wstring VersionInfo::majorVersion() const
 {
   return(_major);
 }
 
-wstring VersionInfo::ppLibVersionNumber() const
+const wstring VersionInfo::ppLibVersionNumber() const
 {
   return(_ppLibraryCurrent+L":"+_ppLibraryRevision+L":"+_ppLibraryAge);
 }
 
-wstring VersionInfo::ppInterfaceVersion() const
+const wstring VersionInfo::ppInterfaceVersion() const
 {
   return(_ppLibraryCurrent);
 }
 
-wstring VersionInfo::releaseDate() const
+const wstring VersionInfo::releaseDate() const
 {
   return(_releaseDate);
 }
@@ -198,12 +198,12 @@ void VersionInfo::setReleaseDate()
     _releaseDate=getFileModificationDate(pathFromRoot(L"ImageMagick\\m4\\version.m4"),L"%Y-%m-%d");
 }
 
-wstring VersionInfo::version() const
+const wstring VersionInfo::version() const
 {
   return(_major+L"."+_minor+L"."+_micro);
 }
 
-wstring VersionInfo::versionNumber() const
+const wstring VersionInfo::versionNumber() const
 {
   return(_major+L","+_minor+L","+_micro+L","+_patchlevel);
 }

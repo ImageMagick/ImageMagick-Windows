@@ -26,39 +26,39 @@ public:
 
   VersionInfo();
 
-  wstring fullVersion() const;
+  const wstring fullVersion() const;
 
-  wstring gitRevision() const;
+  const wstring gitRevision() const;
 
-  wstring interfaceVersion() const;
+  const wstring interfaceVersion() const;
 
-  wstring libAddendum() const;
+  const wstring libAddendum() const;
 
-  wstring libVersion() const;
+  const wstring libVersion() const;
 
-  wstring libVersionNumber() const;
+  const wstring libVersionNumber() const;
 
   bool load();
 
-  wstring majorVersion() const;
+  const wstring majorVersion() const;
 
-  wstring ppLibVersionNumber() const;
+  const wstring ppLibVersionNumber() const;
 
-  wstring ppInterfaceVersion() const;
+  const wstring ppInterfaceVersion() const;
 
-  wstring releaseDate() const;
+  const wstring releaseDate() const;
 
-  wstring version() const;
+  const wstring version() const;
 
-  wstring versionNumber() const;
+  const wstring versionNumber() const;
 
 private:
 
-  wstring executeCommand(const wstring &command);
+  const wstring executeCommand(const wstring &command) const;
 
-  wstring getFileModificationDate(const wstring &fileName,const wstring &format);
+  const wstring getFileModificationDate(const wstring &fileName,const wstring &format) const;
 
-  void loadValue(const wstring &line,const wstring &keyword,wstring *value);
+  void loadValue(const wstring &line,const wstring &keyword,wstring *value) const;
 
   void setGitRevision();
 
