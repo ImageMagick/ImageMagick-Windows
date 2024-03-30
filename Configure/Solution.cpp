@@ -27,29 +27,29 @@ Solution::Solution(const ConfigureWizard &wizard)
 {
 }
 
-int Solution::loadProjectFiles()
+int Solution::loadProjectFiles() const
 {
   int
     count;
 
   count=0;
-  foreach (Project*,p,_projects)
+  for (auto& project : _projects)
   {
-    if (!(*p)->isSupported(_wizard.visualStudioVersion()))
+    if (!project->isSupported(_wizard.visualStudioVersion()))
       continue;
 
-    if (!(*p)->loadFiles(_wizard))
+    if (!project->loadFiles(_wizard))
       continue;
 
-    foreach (ProjectFile*,pf,(*p)->files())
+    for (auto& projectFile : project->files())
     {
-      (*pf)->loadConfig();
+      projectFile->loadConfig();
       count++;
     }
 
-    (*p)->checkFiles(_wizard.visualStudioVersion());
+    project->checkFiles(_wizard.visualStudioVersion());
 
-    (*p)->mergeProjectFiles(_wizard);
+    project->mergeProjectFiles(_wizard);
   }
 
   return(count);
@@ -62,7 +62,7 @@ void Solution::loadProjects()
   loadProjectsFromFolder(L"Projects", L"ImageMagick");
 }
 
-void Solution::write(WaitDialog &waitDialog)
+void Solution::write(WaitDialog &waitDialog) const
 {
   int
     steps;
@@ -87,12 +87,12 @@ void Solution::write(WaitDialog &waitDialog)
 
   file.close();
 
-  foreach (Project*,p,_projects)
+  for (auto& project : _projects)
   {
-    foreach (ProjectFile*,pf,(*p)->files())
+    for (auto& projectFile : project->files())
     {
-      waitDialog.nextStep(L"Writing: " + (*pf)->fileName());
-      (*pf)->write(_projects);
+      waitDialog.nextStep(L"Writing: " + projectFile->fileName());
+      projectFile->write(_projects);
     }
   }
 
@@ -118,12 +118,12 @@ void Solution::write(WaitDialog &waitDialog)
   writeNotice(versionInfo);
 }
 
-wstring Solution::getFileName()
+const wstring Solution::getFileName() const
 {
   return(pathFromRoot(L"ImageMagick" + _wizard.solutionName() + L".sln"));
 }
 
-wstring Solution::getMagickFolderName()
+const wstring Solution::getMagickFolderName() const
 {
   wstring
     folder;
@@ -150,7 +150,7 @@ void Solution::loadProjectsFromFolder(const wstring &configFolder, const wstring
   }
 }
 
-void Solution::writeMagickBaseConfig()
+void Solution::writeMagickBaseConfig() const
 {
   wstring
     folder,
@@ -264,21 +264,21 @@ void Solution::writeMagickBaseConfig()
     else
       config << "#define MAGICKCORE_ZERO_CONFIGURATION_SUPPORT 0" << endl;
 
-    foreach (Project*,p,_projects)
+    for (const auto& project : _projects)
     {
-      if ((*p)->files().size() == 0)
+      if (project->files().size() == 0)
         continue;
 
-      if ((*p)->configDefine().empty())
+      if (project->configDefine().empty())
         continue;
 
       config << endl;
-      config << (*p)->configDefine();
+      config << project->configDefine();
     }
   }
 }
 
-void Solution::writeMakeFile()
+void Solution::writeMakeFile() const
 {
   wifstream
     makeFileIn,
@@ -326,7 +326,7 @@ void Solution::writeMakeFile()
   makeFile.close();
 }
 
-void Solution::writeNotice(const VersionInfo &versionInfo)
+void Solution::writeNotice(const VersionInfo &versionInfo) const
 {
   wofstream
     notice;
@@ -340,19 +340,19 @@ void Solution::writeNotice(const VersionInfo &versionInfo)
   notice << readLicense(pathFromRoot(L"ImageMagick\\LICENSE"));
   notice << endl << "* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *" << endl << endl;
 
-  foreach (Project*,p,_projects)
+  for (const auto& project : _projects)
   {
-    if (((*p)->notice() == L"") || (*p)->shouldSkip(_wizard))
+    if (project->notice() == L"" || project->shouldSkip(_wizard))
       continue;
 
-    notice << (*p)->notice();
+    notice << project->notice();
     notice << "* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *" << endl << endl;
   }
 
   notice.close();
 }
 
-void Solution::writePolicyConfig()
+void Solution::writePolicyConfig() const
 {
   wchar_t
     buffer[512];
@@ -388,7 +388,7 @@ void Solution::writePolicyConfig()
   outfile.close();
 }
 
-void Solution::writeThresholdMap()
+void Solution::writeThresholdMap() const
 {
   wifstream
     inputStream;
@@ -430,7 +430,7 @@ void Solution::writeThresholdMap()
   outputStream.close();
 }
 
-void Solution::writeVersion(const VersionInfo &versionInfo)
+void Solution::writeVersion(const VersionInfo &versionInfo) const
 {
   wstring
     folderName,
@@ -443,7 +443,7 @@ void Solution::writeVersion(const VersionInfo &versionInfo)
   writeVersion(versionInfo,pathFromRoot(L"Projects\\utilities\\ImageMagick.version.h.in"),pathFromRoot(L"Projects\\utilities\\ImageMagick.version.h"));
 }
 
-void Solution::writeVersion(const VersionInfo &versionInfo,wstring input,wstring output)
+void Solution::writeVersion(const VersionInfo &versionInfo,wstring input,wstring output) const
 {
   size_t
     start,
@@ -513,7 +513,7 @@ void Solution::writeVersion(const VersionInfo &versionInfo,wstring input,wstring
   outputStream.close();
 }
 
-void Solution::checkKeyword(const wstring keyword)
+void Solution::checkKeyword(const wstring keyword) const
 {
   vector<wstring> skipableKeywords={
     L"CODER_PATH",L"CONFIGURE_ARGS",L"CONFIGURE_PATH",L"CXXFLAGS",L"DEFS",L"DISTCHECK_CONFIG_FLAGS",
@@ -529,7 +529,7 @@ void Solution::checkKeyword(const wstring keyword)
   throwException(L"Invalid keyword: " + keyword);
 }
 
-void Solution::write(wofstream &file)
+void Solution::write(wofstream &file) const
 {
   file << "Microsoft Visual Studio Solution File, Format Version 12.00" << endl;
   if (_wizard.visualStudioVersion() == VisualStudioVersion::VS2017)
@@ -539,12 +539,12 @@ void Solution::write(wofstream &file)
   else if (_wizard.visualStudioVersion() == VisualStudioVersion::VS2022)
     file << "# Visual Studio 2022" << endl;
 
-  foreach (Project*,p,_projects)
+  for (auto& project : _projects)
   {
-    foreach (ProjectFile*,pf,(*p)->files())
+    for (auto& projectFile : project->files())
     {
-      file << "Project(\"{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}\") = \"" << (*pf)->name() << "\", ";
-      file << "\"" << _wizard.solutionName() << "\\" << (*pf)->name() << "\\" << (*pf)->fileName() << "\", \"{" << (*pf)->guid() << "}\"" << endl;
+      file << "Project(\"{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}\") = \"" << projectFile->name() << "\", ";
+      file << "\"" << _wizard.solutionName() << "\\" << projectFile->name() << "\\" << projectFile->fileName() << "\", \"{" << projectFile->guid() << "}\"" << endl;
       file << "EndProject" << endl;
     }
   }
@@ -557,14 +557,14 @@ void Solution::write(wofstream &file)
   file << "\tEndGlobalSection" << endl;
 
   file << "\tGlobalSection(ProjectConfigurationPlatforms) = postSolution" << endl;
-  foreach (Project*,p,_projects)
+  for (auto& project : _projects)
   {
-    foreach (ProjectFile*,pf,(*p)->files())
+    for (auto& projectFile : project->files())
     {
-      file << "\t\t{" << (*pf)->guid() << "}.Debug|" << _wizard.platformAlias() << ".ActiveCfg = Debug|" << _wizard.platformName() << endl;
-      file << "\t\t{" << (*pf)->guid() << "}.Debug|" << _wizard.platformAlias() << ".Build.0 = Debug|" << _wizard.platformName() << endl;
-      file << "\t\t{" << (*pf)->guid() << "}.Release|" << _wizard.platformAlias() << ".ActiveCfg = Release|" << _wizard.platformName() << endl;
-      file << "\t\t{" << (*pf)->guid() << "}.Release|" << _wizard.platformAlias() << ".Build.0 = Release|" << _wizard.platformName() << endl;
+      file << "\t\t{" << projectFile->guid() << "}.Debug|" << _wizard.platformAlias() << ".ActiveCfg = Debug|" << _wizard.platformName() << endl;
+      file << "\t\t{" << projectFile->guid() << "}.Debug|" << _wizard.platformAlias() << ".Build.0 = Debug|" << _wizard.platformName() << endl;
+      file << "\t\t{" << projectFile->guid() << "}.Release|" << _wizard.platformAlias() << ".ActiveCfg = Release|" << _wizard.platformName() << endl;
+      file << "\t\t{" << projectFile->guid() << "}.Release|" << _wizard.platformAlias() << ".Build.0 = Release|" << _wizard.platformName() << endl;
     }
   }
   file << "\tEndGlobalSection" << endl;

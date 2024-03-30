@@ -60,7 +60,7 @@ vector<wstring> &Project::excludes()
   return(_excludes);
 }
 
-vector<ProjectFile*> &Project::files()
+const vector<ProjectFile*> &Project::files() const
 {
   return(_files);
 }
@@ -305,7 +305,7 @@ bool Project::loadFiles(const ConfigureWizard &wizard)
   return(true);
 }
 
-bool Project::shouldSkip(const ConfigureWizard &wizard)
+bool Project::shouldSkip(const ConfigureWizard &wizard) const
 {
   if (_disabledARM64 && wizard.platform() == Platform::ARM64)
     return(true);

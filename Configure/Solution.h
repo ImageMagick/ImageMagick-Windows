@@ -30,37 +30,37 @@ class Solution
 public:
   Solution(const ConfigureWizard &wizard);
 
-  int loadProjectFiles();
+  int loadProjectFiles() const;
 
   void loadProjects();
 
-  void write(WaitDialog &waitDialog);
+  void write(WaitDialog &waitDialog) const;
 
 private:
 
-  void checkKeyword(const wstring keyword);
+  void checkKeyword(const wstring keyword) const;
 
-  wstring getFileName();
+  const wstring getFileName() const;
 
-  wstring getMagickFolderName();
+  const wstring getMagickFolderName() const;
 
   void loadProjectsFromFolder(const wstring &folder, const wstring &filesFolder);
 
-  void writeMagickBaseConfig();
+  void writeMagickBaseConfig() const;
 
-  void writeMakeFile();
+  void writeMakeFile() const;
 
-  void writeNotice(const VersionInfo &versionInfo);
+  void writeNotice(const VersionInfo &versionInfo) const;
 
-  void writePolicyConfig();
+  void writePolicyConfig() const;
 
-  void writeThresholdMap();
+  void writeThresholdMap() const;
 
-  void writeVersion(const VersionInfo &versionInfo);
+  void writeVersion(const VersionInfo &versionInfo) const;
 
-  void writeVersion(const VersionInfo &versionInfo,wstring input,wstring output);
+  void writeVersion(const VersionInfo &versionInfo,wstring input,wstring output) const;
 
-  void write(wofstream &file);
+  void write(wofstream &file) const;
 
   vector<Project*> _projects;
   const ConfigureWizard &_wizard;

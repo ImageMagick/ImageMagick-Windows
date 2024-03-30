@@ -587,13 +587,13 @@ void ProjectFile::writeAdditionalIncludeDirectories(wofstream &file,const wstrin
 
       project=(const Project *) NULL;
       projectName=directory.substr(0,index);
-      foreach_const (Project*,depp,allProjects)
+      for (const auto& depp : allProjects)
       {
-        if ((*depp)->name() != projectName)
+        if (depp->name() != projectName)
           continue;
 
         directory=directory.substr(index+2);
-        project=*depp;
+        project=depp;
         break;
       }
 
@@ -854,29 +854,29 @@ void ProjectFile::writeProjectReferences(wofstream &file,const vector<Project*> 
 
   file << "  <ItemGroup>" << endl;
 
-  foreach (wstring,dep,_dependencies)
+  for (auto& dep : _dependencies)
   {
-    projectName=*dep;
+    projectName=dep;
     projectFileName=L"";
-    index=(*dep).find(L">");
+    index=dep.find(L">");
     if (index != -1)
     {
-      projectName=(*dep).substr(0,index);
-      projectFileName=(*dep).substr(index+1);
+      projectName=dep.substr(0,index);
+      projectFileName=dep.substr(index+1);
     }
 
-    foreach_const (Project*,depp,allProjects)
+    for (auto& depp : allProjects)
     {
-      if ((*depp)->name() != projectName)
+      if (depp->name() != projectName)
         continue;
 
-      foreach (ProjectFile*,deppf,(*depp)->files())
+      for (auto& deppf : depp->files())
       {
-        if (projectFileName != L"" && (*deppf)->_name != projectFileName)
+        if (projectFileName != L"" && deppf->_name != projectFileName)
           continue;
 
-        file << "    <ProjectReference Include=\"..\\" << (*deppf)->name() << "\\" << (*deppf)->_fileName << "\">" << endl;
-        file << "      <Project>{" << (*deppf)->guid() << "}</Project>" << endl;
+        file << "    <ProjectReference Include=\"..\\" << deppf->name() << "\\" << deppf->_fileName << "\">" << endl;
+        file << "      <Project>{" << deppf->guid() << "}</Project>" << endl;
         file << "      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>" << endl;
         file << "    </ProjectReference>" << endl;
       }

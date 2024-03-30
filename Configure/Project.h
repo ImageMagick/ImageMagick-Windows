@@ -44,7 +44,7 @@ public:
 
   vector<wstring> &excludes();
 
-  vector<ProjectFile*> &files();
+  const vector<ProjectFile*> &files() const;
 
   vector<wstring> &includes();
 
@@ -102,7 +102,7 @@ public:
 
   void mergeProjectFiles(const ConfigureWizard &wizard);
 
-  bool shouldSkip(const ConfigureWizard &wizard);
+  bool shouldSkip(const ConfigureWizard &wizard) const;
 
 private:
   Project(const wstring &configFolder,const wstring &filesFolder,const wstring &name);
