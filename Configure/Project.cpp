@@ -240,7 +240,7 @@ Project* Project::create(const ConfigureWizard &wizard,const wstring &configFold
   wstring
     configPath;
 
-  configPath=configFolder + L"\\" + name + L"\\ImageMagick";
+  configPath=configFolder + L"\\" + name + L"\\.ImageMagick";
   config.open(pathFromRoot(configPath + L"\\Config.txt"));
   if (!config)
   {
@@ -553,12 +553,12 @@ void Project::setNoticeAndVersion()
       versionFileName;
 
     folder=filesystem::path(licenseFileName).parent_path();
-    versionFileName=folder.wstring()+L"\\ImageMagick\\ImageMagick.version.h";
+    versionFileName=folder.wstring()+L"\\.ImageMagick\\ImageMagick.version.h";
     versionFile=filesystem::path(versionFileName).wstring();
     if (!filesystem::exists(versionFile))
       {
         folder=folder.parent_path();
-        versionFileName=folder.wstring()+L"\\ImageMagick\\ImageMagick.version.h";
+        versionFileName=folder.wstring()+L"\\.ImageMagick\\ImageMagick.version.h";
         versionFile=filesystem::path(versionFileName).wstring();
         if (!filesystem::exists(versionFile))
           throwException(L"Unable to find version file for: " + _name);
