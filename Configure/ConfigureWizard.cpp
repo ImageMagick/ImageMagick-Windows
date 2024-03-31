@@ -137,12 +137,16 @@ QuantumDepth ConfigureWizard::quantumDepth() const
 
 const wstring ConfigureWizard::solutionName() const
 {
+  wstring
+    name;
+
+  name=_isImageMagick7 ? L"IM7." : L"IM6.";
   if (solutionType() == SolutionType::DYNAMIC_MT)
-    return(L"Dynamic");
+    return(name + L"Dynamic");
   else if (solutionType() == SolutionType::STATIC_MTD)
-    return(L"StaticDLL");
+    return(name + L"StaticDLL");
   else if (solutionType() == SolutionType::STATIC_MT)
-    return(L"Static");
+    return(name + L"Static");
   else
     return(L"ThisShouldNeverHappen");
 }

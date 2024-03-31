@@ -6,8 +6,6 @@
 
 /Dependencies/*
 
-/Dynamic
-
 /ImageMagick
 
 /Installer/Inno/inc/version.isx
@@ -18,9 +16,7 @@
 
 /Projects/utilities/ImageMagick.version.h
 
-/Static
-
-/StaticDLL
+/*.Projects/*
 
 /*.sln
 

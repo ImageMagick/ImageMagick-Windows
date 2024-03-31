@@ -120,7 +120,7 @@ void Solution::write(WaitDialog &waitDialog) const
 
 const wstring Solution::getFileName() const
 {
-  return(pathFromRoot(L"ImageMagick" + _wizard.solutionName() + L".sln"));
+  return(pathFromRoot(_wizard.solutionName() + L".sln"));
 }
 
 const wstring Solution::getMagickFolderName() const
@@ -544,7 +544,7 @@ void Solution::write(wofstream &file) const
     for (auto& projectFile : project->files())
     {
       file << "Project(\"{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}\") = \"" << projectFile->name() << "\", ";
-      file << "\"" << _wizard.solutionName() << "\\" << projectFile->name() << "\\" << projectFile->fileName() << "\", \"{" << projectFile->guid() << "}\"" << endl;
+      file << "\"" << _wizard.solutionName() << ".Projects\\" << projectFile->name() << "\\" << projectFile->fileName() << "\", \"{" << projectFile->guid() << "}\"" << endl;
       file << "EndProject" << endl;
     }
   }

@@ -208,7 +208,7 @@ void ProjectFile::write(const vector<Project*> &allprojects)
     file;
 
   wstring
-    projectDir(pathFromRoot(_wizard->solutionName() + L"\\" + name()));
+    projectDir(pathFromRoot(_wizard->solutionName() + L".Projects\\" + name()));
 
   filesystem::create_directories(projectDir.c_str());
 
