@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Configure", "Configure.vcxproj", "{EA8B95B3-D0CD-5FEC-5494-F47FE7DEE472}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Configure.2017", "Configure.2017.vcxproj", "{EA8B95B3-D0CD-5FEC-5494-F47FE7DEE472}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

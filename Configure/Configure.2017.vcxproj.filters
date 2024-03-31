@@ -48,9 +48,6 @@
     <ClCompile Include="Pages\WelcomePage.cpp">
       <Filter>Source Files\Pages</Filter>
     </ClCompile>
-    <ClCompile Include="Pages\SystemPage.cpp">
-      <Filter>Source Files\Pages</Filter>
-    </ClCompile>
     <ClCompile Include="WaitDialog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
