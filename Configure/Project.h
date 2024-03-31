@@ -103,6 +103,10 @@ public:
 
   bool shouldSkip() const;
 
+  void updateProjectNames();
+
+  void updateProjectNames(vector<wstring> &vector);
+
 private:
   Project(const ConfigureWizard &wizard,const wstring &configFolder,const wstring &filesFolder,const wstring &name);
 
@@ -145,6 +149,7 @@ private:
   wstring               _modulePrefix;
   wstring               _name;
   wstring               _notice;
+  bool                  _onlyImageMagick7;
   wstring               _path;
   vector<wstring>       _references;
   ProjectType           _type;

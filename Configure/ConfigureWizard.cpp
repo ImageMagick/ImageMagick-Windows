@@ -87,6 +87,11 @@ bool ConfigureWizard::installedSupport() const
 	return(_targetPage.installedSupport());
 }
 
+bool ConfigureWizard::isImageMagick7() const
+{
+  return(_isImageMagick7);
+}
+
 const wstring ConfigureWizard::machineName() const
 {
   switch (platform())
@@ -96,6 +101,11 @@ const wstring ConfigureWizard::machineName() const
     case Platform::ARM64: return(L"ARM64");
     default: throw;
   }
+}
+
+const wstring ConfigureWizard::magickCoreProjectName() const
+{
+  return(_isImageMagick7 ? L"MagickCore" : L"magick");
 }
 
 Platform ConfigureWizard::platform() const
@@ -169,6 +179,23 @@ bool ConfigureWizard::useOpenCL() const
 bool ConfigureWizard::useOpenMP() const
 {
   return(_targetPage.useOpenMP());
+}
+
+void ConfigureWizard::updateProjectNames(wstring &value) const
+{
+  size_t
+    pos;
+
+  if (_isImageMagick7)
+    return;
+
+  pos=value.find(L"MagickCore");
+  if (pos != std::wstring::npos)
+    value.replace(pos,10,L"magick");
+
+  pos=value.find(L"MagickWand");
+  if (pos != std::wstring::npos)
+    value.replace(pos,10,L"wand");
 }
 
 VisualStudioVersion ConfigureWizard::visualStudioVersion() const

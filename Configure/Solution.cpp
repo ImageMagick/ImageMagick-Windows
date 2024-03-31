@@ -123,17 +123,6 @@ const wstring Solution::getFileName() const
   return(pathFromRoot(_wizard.solutionName() + L".sln"));
 }
 
-const wstring Solution::getMagickFolderName() const
-{
-  wstring
-    folder;
-
-  folder=L"MagickCore";
-  if (!filesystem::exists(pathFromRoot(L"ImageMagick\\MagickCore")))
-    folder=L"magick";
-  return(folder);
-}
-
 void Solution::loadProjectsFromFolder(const wstring &configFolder, const wstring &filesFolder)
 {
   Project
@@ -146,7 +135,10 @@ void Solution::loadProjectsFromFolder(const wstring &configFolder, const wstring
 
     project=Project::create(_wizard,configFolder,filesFolder,entry.path().filename());
     if (project != (Project *) NULL)
+    {
+      project->updateProjectNames();
       _projects.push_back(project);
+    }
   }
 }
 
@@ -165,11 +157,11 @@ void Solution::writeMagickBaseConfig() const
   wstring
     folderName;
 
-  folderName=getMagickFolderName();
-  configIn.open(pathFromRoot(L"Projects\\" + folderName + L"\\magick-baseconfig.h.in"));
+  configIn.open(pathFromRoot(L"Projects\\MagickCore\\magick-baseconfig.h.in"));
   if (!configIn)
     return;
 
+  folderName=_wizard.magickCoreProjectName();
   config.open(pathFromRoot(L"ImageMagick\\" + folderName + L"\\magick-baseconfig.h"));
   if (!config)
     return;
@@ -293,7 +285,7 @@ void Solution::writeMakeFile() const
     libName,
     line;
 
-  libName=L"CORE_RL_" + getMagickFolderName()+ L"_";
+  libName=L"CORE_RL_" + _wizard.magickCoreProjectName()+ L"_";
 
   lib=wofstream(pathFromRoot(L"ImageMagick\\PerlMagick\\" + libName + L".a"));
   if (!lib)

@@ -176,7 +176,7 @@ const vector<wstring> &Project::references()
 
 bool Project::treatWarningAsError() const
 {
-  return(_magickProject);
+  return(_magickProject && _wizard.isImageMagick7());
 }
 
 bool Project::useNasm() const
@@ -201,7 +201,7 @@ const wstring Project::version() const
 
 int Project::warningLevel() const
 {
-  return(_magickProject ? 4 : 0);
+  return(_magickProject && _wizard.isImageMagick7() ? 4 : 0);
 }
 
 void Project::checkFiles(const VisualStudioVersion visualStudioVersion)
@@ -253,9 +253,13 @@ Project* Project::create(const ConfigureWizard &wizard,const wstring &configFold
 
   Project* project = new Project(wizard,configPath,filesFolder,name);
   project->loadConfig(config);
+  config.close();
+
+  if (project->_onlyImageMagick7 && !wizard.isImageMagick7())
+    return((Project *) NULL);
+
   project->setNoticeAndVersion();
 
-  config.close();
   return(project);
 }
 
@@ -319,6 +323,22 @@ bool Project::shouldSkip() const
   return(false);
 }
 
+void Project::updateProjectNames()
+{
+  _wizard.updateProjectNames(_name);
+
+  updateProjectNames(_dependencies);
+  updateProjectNames(_directories);
+  updateProjectNames(_includes);
+  updateProjectNames(_references);
+}
+
+void Project::updateProjectNames(vector<wstring> &vector)
+{
+  for (auto& value : vector)
+    _wizard.updateProjectNames(value);
+}
+
 Project::Project(const ConfigureWizard &wizard,const wstring &configFolder,const wstring &filesFolder,const wstring &name)
   : _wizard(wizard)
 {
@@ -330,12 +350,13 @@ Project::Project(const ConfigureWizard &wizard,const wstring &configFolder,const
   _disableOptimization=false;
   _hasIncompatibleLicense=false;
   _isOptional=false;
+  _magickProject=false;
   _minimumVisualStudioVersion=VSEARLIEST;
+  _onlyImageMagick7=false;
   _type=ProjectType::UNDEFINEDTYPE;
   _useNasm=false;
   _useOpenCL=false;
   _useUnicode=false;
-  _magickProject=false;
 }
 
 void Project::addLines(wifstream &config,wstring &value)
@@ -426,6 +447,8 @@ void Project::loadConfig(wifstream &config)
       _modulePrefix=readLine(config);
     else if (line == L"[NASM]")
       _useNasm=true;
+    else if (line == L"[ONLY_IMAGEMAGICK7]")
+      _onlyImageMagick7=true;
     else if (line == L"[OPTIONAL]")
       _isOptional=true;
     else if (line == L"[PATH]")

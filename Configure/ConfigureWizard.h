@@ -52,7 +52,11 @@ public:
 
   bool installedSupport() const;
 
+  bool isImageMagick7() const;
+
   const wstring machineName() const;
+
+  const wstring magickCoreProjectName() const;
 
   Platform platform() const;
 
@@ -73,6 +77,8 @@ public:
   bool useOpenCL() const;
 
   bool useOpenMP() const;
+
+  void updateProjectNames(wstring &value) const;
 
   VisualStudioVersion visualStudioVersion() const;
 

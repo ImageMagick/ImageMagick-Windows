@@ -26,3 +26,5 @@ coders
 filters
 Magick++
 MagickCore
+
+[ONLY_IMAGEMAGICK7]
