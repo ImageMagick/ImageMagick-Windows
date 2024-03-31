@@ -438,6 +438,7 @@ void Solution::writeVersion(const VersionInfo &versionInfo) const
 
   folderName=getMagickFolderName();
   writeVersion(versionInfo,pathFromRoot(L"ImageMagick\\" + folderName + L"\\version.h.in"),pathFromRoot(L"ImageMagick\\" + folderName + L"\\version.h"));
+  filesystem::copy_file(pathFromRoot(L"ImageMagick\\" + folderName + L"\\version.h"),pathFromRoot(L"Build\\version.h"));
   writeVersion(versionInfo,pathFromRoot(L"ImageMagick\\config\\configure.xml.in"),pathFromRoot(_wizard.binDirectory() + L"configure.xml"));
   writeVersion(versionInfo,pathFromRoot(L"Installer\\Inno\\inc\\version.isx.in"),pathFromRoot(L"Installer\\Inno\\inc\\version.isx"));
   writeVersion(versionInfo,pathFromRoot(L"Projects\\utilities\\ImageMagick.version.h.in"),pathFromRoot(L"Projects\\utilities\\ImageMagick.version.h"));
