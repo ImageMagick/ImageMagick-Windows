@@ -42,8 +42,6 @@ private:
 
   const wstring getFileName() const;
 
-  const wstring getMagickFolderName() const;
-
   void loadProjectsFromFolder(const wstring &folder, const wstring &filesFolder);
 
   void writeMagickBaseConfig() const;
