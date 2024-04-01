@@ -108,6 +108,11 @@ const wstring ConfigureWizard::magickCoreProjectName() const
   return(_isImageMagick7 ? L"MagickCore" : L"magick");
 }
 
+const wstring ConfigureWizard::magickWandProjectName() const
+{
+  return(_isImageMagick7 ? L"MagickWand" : L"wand");
+}
+
 Platform ConfigureWizard::platform() const
 {
   return(_targetPage.platform());

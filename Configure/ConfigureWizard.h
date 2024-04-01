@@ -58,6 +58,8 @@ public:
 
   const wstring magickCoreProjectName() const;
 
+  const wstring magickWandProjectName() const;
+
   Platform platform() const;
 
   const wstring platformName() const;

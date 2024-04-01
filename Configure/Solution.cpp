@@ -241,6 +241,8 @@ void Solution::writeInstallerConfig(const VersionInfo &versionInfo) const
   if (_wizard.useHDRI())
       outputStream << L"#define public MagickHDRI 1" << endl;
 
+  outputStream << L"#define public MagickCoreProjectName \"" << _wizard.magickCoreProjectName() << L"\"" << endl;
+
   inputStream.close();
   outputStream.close();
 }

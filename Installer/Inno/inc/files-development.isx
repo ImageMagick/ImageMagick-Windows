@@ -17,9 +17,9 @@
 #endif
 
 ;  Development headers
-Source: "..\..\ImageMagick\MagickCore\*.h"; DestDir: "{app}\include\MagickCore"; Tasks: install_Devel; Flags: ignoreversion
+Source: "..\..\ImageMagick\{MagickCoreProjectName}\*.h"; DestDir: "{app}\include\{MagickCoreProjectName}"; Tasks: install_Devel; Flags: ignoreversion
 ; MagickWand headers
-Source: "..\..\ImageMagick\MagickWand\*.h"; DestDir: "{app}\include\MagickWand"; Tasks: install_Devel; Flags: ignoreversion
+Source: "..\..\ImageMagick\{MagickWandProjectName}\*.h"; DestDir: "{app}\include\{MagickWandProjectName}"; Tasks: install_Devel; Flags: ignoreversion
 ; Magick++ headers
 Source: "..\..\ImageMagick\Magick++\lib\Magick++.h"; DestDir: "{app}\include"; Tasks: install_Devel; Flags: ignoreversion
 Source: "..\..\ImageMagick\Magick++\lib\Magick++\*.h"; DestDir: "{app}\include\Magick++"; Tasks: install_Devel; Flags: ignoreversion
