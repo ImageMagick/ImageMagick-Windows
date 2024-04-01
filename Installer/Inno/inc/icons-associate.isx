@@ -19,6 +19,4 @@
 Name: "{group}\ImageMagick Web Pages"; Filename: "{app}\index.html"
 ; Name: "{group}\ImageMagick Readme"; Filename: "{app}\README.txt"
 ; Name: "{group}\ImageMagick Quick Start"; Filename: "{app}\QuickStart.txt"
-; Name: "{group}\ImageMagick License"; Filename: "{app}\LICENSE"
-Name: "{group}\ImageMagick Display"; Filename: "{#MagickAppDirectory}\imdisplay.exe"; IconFilename: "{#MagickAppDirectory}\ImageMagick.ico"
-Name: "{userdesktop}\ImageMagick Display"; Filename: "{#MagickAppDirectory}\imdisplay.exe"; IconFilename: "{#MagickAppDirectory}\ImageMagick.ico"; Tasks: desktop_icon; MinVersion: 4,4
+; Name: "{group}\ImageMagick License"; Filename: "{app}\License.txt"
