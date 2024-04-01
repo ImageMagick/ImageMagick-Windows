@@ -32,10 +32,10 @@ Root: HKLM; Subkey: {#KeyVersionDepth}; ValueType: string; ValueName: "BinPath";
 Root: HKLM; Subkey: {#KeyVersionDepth}; ValueType: string; ValueName: "ConfigurePath"; ValueData: {#MagickConfigDirectory}
 Root: HKLM; Subkey: {#KeyVersionDepth}; ValueType: string; ValueName: "LibPath"; ValueData: "{app}"
 #ifdef MagickCodersDirectory
-Root: HKLM; Subkey: {#KeyVersionDepth}; ValueType: string; ValueName: "CoderModulesPath"; ValueData: {#MagickCodersDirectory}
+  Root: HKLM; Subkey: {#KeyVersionDepth}; ValueType: string; ValueName: "CoderModulesPath"; ValueData: {#MagickCodersDirectory}
 #endif
 #ifdef MagickFiltersDirectory
-Root: HKLM; Subkey: {#KeyVersionDepth}; ValueType: string; ValueName: "FilterModulesPath"; ValueData: {#MagickFiltersDirectory}
+  Root: HKLM; Subkey: {#KeyVersionDepth}; ValueType: string; ValueName: "FilterModulesPath"; ValueData: {#MagickFiltersDirectory}
 #endif
 
 
@@ -47,14 +47,20 @@ Root: HKLM; Subkey: {#KeyCurrent}; ValueType: string; ValueName: "BinPath"; Valu
 Root: HKLM; Subkey: {#KeyCurrent}; ValueType: string; ValueName: "ConfigurePath"; ValueData: {#MagickConfigDirectory}
 Root: HKLM; Subkey: {#KeyCurrent}; ValueType: string; ValueName: "LibPath"; ValueData: "{app}"
 #ifdef MagickCodersDirectory
-Root: HKLM; Subkey: {#KeyCurrent}; ValueType: string; ValueName: "CoderModulesPath"; ValueData: {#MagickCodersDirectory}
+  Root: HKLM; Subkey: {#KeyCurrent}; ValueType: string; ValueName: "CoderModulesPath"; ValueData: {#MagickCodersDirectory}
 #endif
 #ifdef MagickFiltersDirectory
-Root: HKLM; Subkey: {#KeyCurrent}; ValueType: string; ValueName: "FilterModulesPath"; ValueData: {#MagickFiltersDirectory}
+  Root: HKLM; Subkey: {#KeyCurrent}; ValueType: string; ValueName: "FilterModulesPath"; ValueData: {#MagickFiltersDirectory}
 #endif
 
 ; Tell windows to use our convert.exe
 ;
-#ifdef MagickDynamicPackage
-Root: HKLM; Subkey: "Software\Classes\Applications"; ValueType: string; ValueName: "AutoRun"; ValueData: "{app}\convert.exe $*"; Tasks: legacy_support
+#ifdef MagickVersion7
+  #ifdef MagickDynamicPackage
+    Root: HKLM; Subkey: "Software\Classes\Applications"; ValueType: string; ValueName: "AutoRun"; ValueData: "{app}\convert.exe $*"; Tasks: legacy_support
+  #endif
+else
+  Root: HKLM; Subkey: "Software\Classes\Applications"; ValueType: string; ValueName: "AutoRun"; ValueData: "{app}\convert.exe $*"
 #endif
+
+

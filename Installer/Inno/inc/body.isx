@@ -38,7 +38,9 @@
 #include "tasks-desktopicon.isx"
 #include "tasks-update-path.isx"
 #ifdef MagickDynamicPackage
-  #include "tasks-legacy.isx"
+  #ifdef MagickVersion7
+    #include "tasks-legacy.isx"
+  #endif
   #include "tasks-install-devel.isx"
 #endif
 #ifdef MagickPerlMagick

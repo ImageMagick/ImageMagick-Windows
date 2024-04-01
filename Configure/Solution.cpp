@@ -242,6 +242,8 @@ void Solution::writeInstallerConfig(const VersionInfo &versionInfo) const
       outputStream << L"#define public MagickHDRI 1" << endl;
 
   outputStream << L"#define public MagickCoreProjectName \"" << _wizard.magickCoreProjectName() << L"\"" << endl;
+  if (_wizard.isImageMagick7())
+    outputStream << L"#define public MagickVersion7 1" << endl;
 
   inputStream.close();
   outputStream.close();

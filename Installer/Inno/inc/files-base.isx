@@ -1,11 +1,11 @@
 #ifdef COPYRIGHT
-;  Copyright @ 1999 ImageMagick Studio LLC, a non-profit organization
+;  Copyright 1999-2018 ImageMagick Studio LLC, a non-profit organization
 ;  dedicated to making software imaging solutions freely available.
 ;
 ;  You may not use this file except in compliance with the License.  You may
 ;  obtain a copy of the License at
 ;
-;    https://imagemagick.org/script/license.php
+;    http://www.imagemagick.org/script/license.php
 ;
 ;  Unless required by applicable law or agreed to in writing, software
 ;  distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,16 +17,29 @@
 #endif
 
 ; Executables
-Source: "..\..\Output\bin\magick.exe"; DestDir: {#MagickAppDirectory}; Flags: ignoreversion
-#ifdef MagickDynamicPackage
-Source: "..\..\Output\bin\convert.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
-Source: "..\..\Output\bin\compare.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
-Source: "..\..\Output\bin\composite.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
-Source: "..\..\Output\bin\conjure.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
-Source: "..\..\Output\bin\identify.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
-Source: "..\..\Output\bin\mogrify.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
-Source: "..\..\Output\bin\montage.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
-Source: "..\..\Output\bin\stream.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
+#ifdef MagickVersion7
+  Source: "..\..\Output\bin\magick.exe"; DestDir: {#MagickAppDirectory}; Flags: ignoreversion
+  #ifdef MagickDynamicPackage
+    Source: "..\..\Output\bin\convert.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
+    Source: "..\..\Output\bin\compare.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
+    Source: "..\..\Output\bin\composite.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
+    Source: "..\..\Output\bin\conjure.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
+    Source: "..\..\Output\bin\identify.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
+    Source: "..\..\Output\bin\mogrify.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
+    Source: "..\..\Output\bin\montage.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
+    Source: "..\..\Output\bin\stream.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
+  #endif
+#else
+  Source: "..\..\Output\bin\convert.exe"; DestDir: {#MagickAppDirectory}; Flags: ignoreversion
+  Source: "..\..\Output\bin\compare.exe"; DestDir: {#MagickAppDirectory}; Flags: ignoreversion
+  Source: "..\..\Output\bin\composite.exe"; DestDir: {#MagickAppDirectory}; Flags: ignoreversion
+  Source: "..\..\Output\bin\conjure.exe"; DestDir: {#MagickAppDirectory}; Flags: ignoreversion
+  Source: "..\..\Output\bin\identify.exe"; DestDir: {#MagickAppDirectory}; Flags: ignoreversion
+  Source: "..\..\Output\bin\mogrify.exe"; DestDir: {#MagickAppDirectory}; Flags: ignoreversion
+  Source: "..\..\Output\bin\montage.exe"; DestDir: {#MagickAppDirectory}; Flags: ignoreversion
+  Source: "..\..\Output\bin\stream.exe"; DestDir: {#MagickAppDirectory}; Flags: ignoreversion
+#else
+
 #endif
 
 ; Path Tool
