@@ -38,8 +38,6 @@
   Source: "..\..\Output\bin\mogrify.exe"; DestDir: {#MagickAppDirectory}; Flags: ignoreversion
   Source: "..\..\Output\bin\montage.exe"; DestDir: {#MagickAppDirectory}; Flags: ignoreversion
   Source: "..\..\Output\bin\stream.exe"; DestDir: {#MagickAppDirectory}; Flags: ignoreversion
-#else
-
 #endif
 
 ; Path Tool
