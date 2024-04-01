@@ -40,6 +40,8 @@ private:
 
   void checkKeyword(const wstring keyword) const;
 
+  void createConfigFiles() const;
+
   const wstring getFileName() const;
 
   void loadProjectsFromFolder(const wstring &folder, const wstring &filesFolder);
@@ -53,8 +55,6 @@ private:
   void writeMakeFile() const;
 
   void writeNotice(const VersionInfo &versionInfo) const;
-
-  void writePolicyConfig() const;
 
   void writeThresholdMap() const;
 

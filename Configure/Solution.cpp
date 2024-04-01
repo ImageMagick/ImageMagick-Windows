@@ -105,7 +105,7 @@ void Solution::write(WaitDialog &waitDialog) const
   writeMakeFile();
 
   waitDialog.nextStep(L"Writing policy config");
-  writePolicyConfig();
+  createConfigFiles();
 
   if (!versionInfo.load())
     return;
@@ -447,42 +447,6 @@ void Solution::writeNotice(const VersionInfo &versionInfo) const
   notice.close();
 }
 
-void Solution::writePolicyConfig() const
-{
-  wchar_t
-    buffer[512];
-
-  wifstream
-    infile;
-
-  wofstream
-    outfile;
-
-  switch(_wizard.policyConfig())
-  {
-  case PolicyConfig::LIMITED:
-    infile=wifstream(pathFromRoot(L"ImageMagick\\config\\policy-limited.xml"));
-    break;
-  case PolicyConfig::OPEN:
-    infile=wifstream(pathFromRoot(L"ImageMagick\\config\\policy-open.xml"));
-    break;
-  case PolicyConfig::SECURE:
-    infile=wifstream(pathFromRoot(L"ImageMagick\\config\\policy-secure.xml"));
-    break;
-  case PolicyConfig::WEBSAFE:
-    infile=wifstream(pathFromRoot(L"ImageMagick\\config\\policy-websafe.xml"));
-    break;
-  }
-  if (!infile)
-    throwException(L"Unable to open policy file");
-  outfile=wofstream(pathFromRoot(_wizard.binDirectory() + L"policy.xml"));
-  while (infile.read(buffer, 512))
-    outfile.write(buffer, infile.gcount());
-  outfile.write(buffer, infile.gcount());
-  infile.close();
-  outfile.close();
-}
-
 void Solution::writeThresholdMap() const
 {
   wifstream
@@ -577,6 +541,38 @@ void Solution::checkKeyword(const wstring keyword) const
     return;
 
   throwException(L"Invalid keyword: " + keyword);
+}
+
+void Solution::createConfigFiles() const
+{
+  wstring
+    policyXml;
+
+  vector<wstring>
+    xmlFiles = { L"colors.xml", L"english.xml", L"locale.xml", L"log.xml", L"mime.xml", L"thresholds.xml", L"quantization-table.xml" };
+
+  switch(_wizard.policyConfig())
+  {
+    case PolicyConfig::LIMITED:
+      policyXml=pathFromRoot(L"ImageMagick\\config\\policy-limited.xml");
+      break;
+    case PolicyConfig::OPEN:
+      policyXml=pathFromRoot(L"ImageMagick\\config\\policy-open.xml");
+      break;
+    case PolicyConfig::SECURE:
+      policyXml=pathFromRoot(L"ImageMagick\\config\\policy-secure.xml");
+      break;
+    case PolicyConfig::WEBSAFE:
+      policyXml=pathFromRoot(L"ImageMagick\\config\\policy-websafe.xml");
+      break;
+  }
+  if (!filesystem::exists(policyXml))
+    throwException(L"Unable to open policy file");
+  filesystem::copy_file(policyXml,pathFromRoot(_wizard.binDirectory() + L"policy.xml"),filesystem::copy_options::overwrite_existing);
+  for (auto& xmlFile : xmlFiles)
+  {
+    filesystem::copy_file(pathFromRoot(L"ImageMagick\\config\\" + xmlFile),pathFromRoot(_wizard.binDirectory() + xmlFile),filesystem::copy_options::overwrite_existing);
+  }  
 }
 
 void Solution::write(wofstream &file) const
