@@ -400,7 +400,7 @@ void ProjectFile::loadSource(const wstring &directory)
   if (!directoryExists(pathFromRoot(path)))
     throwException(L"Invalid folder specified: " + path);
 
-  for (const auto& entry : std::filesystem::directory_iterator(pathFromRoot(path)))
+  for (const auto& entry : filesystem::directory_iterator(pathFromRoot(path)))
   {
     wstring
       fileName;

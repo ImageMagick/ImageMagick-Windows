@@ -482,7 +482,7 @@ void Project::loadModules()
     if (!directoryExists(path))
       throwException(L"Invalid folder specified: " + path);
     
-    for (const auto& entry : std::filesystem::directory_iterator(path))
+    for (const auto& entry : filesystem::directory_iterator(path))
     {
       wstring
         fileName,

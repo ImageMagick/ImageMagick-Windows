@@ -130,7 +130,7 @@ void Solution::loadProjectsFromFolder(const wstring &configFolder, const wstring
   Project
     *project;
 
-  for (const auto& entry : std::filesystem::directory_iterator(pathFromRoot(configFolder)))
+  for (const auto& entry : filesystem::directory_iterator(pathFromRoot(configFolder)))
   {
     if (!entry.is_directory())
       continue;
