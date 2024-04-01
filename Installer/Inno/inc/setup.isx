@@ -47,7 +47,6 @@ AppPublisher=ImageMagick Studio LLC
 AppPublisherURL=http://www.imagemagick.org/
 AppSupportURL=http://www.imagemagick.org/
 AppUpdatesURL=http://www.imagemagick.org/script/download.php
-; Default install is similiar to "C:\Program Files\ImageMagick-7.0.0-Q16":
 DefaultDirName={commonpf}\{#MagickPackageName}-{#MagickPackageVersion}-Q{#QuantumDepth}{#Hdri}
 DefaultGroupName={#MagickPackageName} {#MagickPackageVersion} Q{#QuantumDepth}{#Hdri} {#MagickArchitectureDescription}
 Compression=lzma/max
@@ -60,6 +59,3 @@ InfoAfterFile=txt\after.rtf
 UninstallDisplayIcon={#MagickAppDirectory}\ImageMagick.ico
 OutputDir=Output
 OutputBaseFilename={#MagickPackageName}-{#MagickPackageFullVersionText}-Q{#QuantumDepth}{#Hdri}-{#MagickArchitecture}-{#MagickPackageType}
-; uncomment the following line if you want your installation to run on NT 3.51 too.
-; MinVersion=4,3.51
-
