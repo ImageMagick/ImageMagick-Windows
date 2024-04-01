@@ -58,7 +58,7 @@ LicenseFile=txt\license.rtf
 InfoBeforeFile=txt\before.rtf
 InfoAfterFile=txt\after.rtf
 UninstallDisplayIcon={#MagickAppDirectory}\ImageMagick.ico
-OutputDir=output
+OutputDir=Output
 OutputBaseFilename={#MagickPackageName}-{#MagickPackageFullVersionText}-Q{#QuantumDepth}{#Hdri}-{#MagickArchitecture}-{#MagickPackageType}
 ; uncomment the following line if you want your installation to run on NT 3.51 too.
 ; MinVersion=4,3.51
