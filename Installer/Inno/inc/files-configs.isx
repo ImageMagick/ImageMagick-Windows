@@ -17,20 +17,20 @@
 #endif
 
 ; Configuration files
-Source: "..\..\ImageMagick\config\colors.xml"; DestDir: {#MagickConfigDirectory}; Flags: confirmoverwrite
-Source: "..\..\ImageMagick\config\english.xml"; DestDir: {#MagickConfigDirectory}; Flags: confirmoverwrite
-Source: "..\..\ImageMagick\config\locale.xml"; DestDir: {#MagickConfigDirectory}; Flags: confirmoverwrite
-Source: "..\..\ImageMagick\config\log.xml"; DestDir: {#MagickConfigDirectory}; Flags: confirmoverwrite
-Source: "..\..\ImageMagick\config\mime.xml"; DestDir: {#MagickConfigDirectory}; Flags: confirmoverwrite
-Source: "..\..\ImageMagick\config\quantization-table.xml"; DestDir: {#MagickConfigDirectory}; Flags: confirmoverwrite
+Source: "..\..\Output\bin\colors.xml"; DestDir: {#MagickConfigDirectory}; Flags: confirmoverwrite
 Source: "..\..\Output\bin\configure.xml"; DestDir: {#MagickConfigDirectory}; Flags: confirmoverwrite
+Source: "..\..\Output\bin\english.xml"; DestDir: {#MagickConfigDirectory}; Flags: confirmoverwrite
 Source: "..\..\Output\bin\delegates.xml"; DestDir: {#MagickConfigDirectory}; Flags: confirmoverwrite
+Source: "..\..\Output\bin\locale.xml"; DestDir: {#MagickConfigDirectory}; Flags: confirmoverwrite
+Source: "..\..\Output\bin\log.xml"; DestDir: {#MagickConfigDirectory}; Flags: confirmoverwrite
+Source: "..\..\Output\bin\mime.xml"; DestDir: {#MagickConfigDirectory}; Flags: confirmoverwrite
 Source: "..\..\Output\bin\policy.xml"; DestDir: {#MagickConfigDirectory}; Flags: confirmoverwrite
+Source: "..\..\Output\bin\quantization-table.xml"; DestDir: {#MagickConfigDirectory}; Flags: confirmoverwrite
 Source: "..\..\Output\bin\sRGB.icc"; DestDir: {#MagickConfigDirectory}; Flags: confirmoverwrite
 Source: "..\..\Output\bin\thresholds.xml"; DestDir: {#MagickConfigDirectory}; Flags: confirmoverwrite
-Source: "..\..\Output\bin\type-ghostscript.xml"; DestDir: {#MagickConfigDirectory}; Flags: confirmoverwrite
 Source: "..\..\Output\bin\type.xml"; DestDir: {#MagickConfigDirectory}; Flags: confirmoverwrite
+Source: "..\..\Output\bin\type-ghostscript.xml"; DestDir: {#MagickConfigDirectory}; Flags: confirmoverwrite
 
 #ifdef MagickCodersDirectory
-Source: "..\..\ImageMagick\config\coder.xml"; DestDir: {#MagickConfigDirectory}; Flags: confirmoverwrite
+Source: "..\..\Output\bin\coder.xml"; DestDir: {#MagickConfigDirectory}; Flags: confirmoverwrite
 #endif
