@@ -70,8 +70,8 @@ if [ -d "../$imagemagick" ]; then
 
     if [ "$branch_name" != "main" ]; then
         echo "Copying repository from ../$imagemagick"
-        cp -R ../$repo $repo
-        git -C $repo show --oneline -s
+        cp -R ../$imagemagick "ImageMagick"
+        git -C "ImageMagick" show --oneline -s
     fi
 fi
 
