@@ -68,6 +68,8 @@ public:
 
   QuantumDepth quantumDepth() const;
 
+  const wstring quantumDepthBits() const;
+
   const wstring solutionName() const;
 
   SolutionType solutionType() const;

@@ -18,11 +18,9 @@
 ; #pragma verboselevel 4
 ; #define DEBUG 1
 
-#define  public MagickStaticPackage 1
-#define  public Magick64BitArchitecture 1
-#define  public QuantumDepth "16"
+#include "config.isx"
 #include "inc\body.isx"
 
 #ifdef Debug
-  #expr SaveToFile(AddBackslash(SourcePath) + "im-x64-static-Q16.isp")
+  #expr SaveToFile(AddBackslash(SourcePath) + "im-arm64-dll-Q8.isp")
 #endif

@@ -1,0 +1,6 @@
+#define public MagickPackageName "@PACKAGE_NAME@"
+#define public MagickPackageVersion "@MAGICK_LIB_VERSION_TEXT@"
+#define public MagickPackageFullVersion "@PACKAGE_FULL_VERSION@"
+#define public MagickPackageFullVersionText "@MAGICK_LIB_VERSION_TEXT@@PACKAGE_VERSION_ADDENDUM@"
+#define public MagickPackageReleaseDate "@PACKAGE_RELEASE_DATE@"
+#define public QuantumDepth "@QUANTUM_DEPTH@"

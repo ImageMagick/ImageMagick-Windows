@@ -74,7 +74,6 @@ void Solution::write(WaitDialog &waitDialog) const
     file;
 
   steps=loadProjectFiles();
-  /* write solution, configuration, MakeFile.PL and version */
   waitDialog.setSteps(steps+4);
 
   file.open(getFileName());
@@ -114,6 +113,9 @@ void Solution::write(WaitDialog &waitDialog) const
   waitDialog.nextStep(L"Writing version");
   writeVersion(versionInfo);
 
+  waitDialog.nextStep(L"Writing installer config");
+  writeInstallerConfig(versionInfo);
+
   waitDialog.nextStep(L"Writing NOTICE.txt");
   writeNotice(versionInfo);
 }
@@ -140,6 +142,107 @@ void Solution::loadProjectsFromFolder(const wstring &configFolder, const wstring
       _projects.push_back(project);
     }
   }
+}
+
+void Solution::replaceVersionVariables(const VersionInfo &versionInfo,wifstream &input,wofstream &output) const
+{
+  size_t
+    start,
+    end;
+
+  wstring
+    line;
+
+  while (getline(input,line))
+  {
+    line=replace(line,L"@CC@",_wizard.visualStudioVersionName());
+    line=replace(line,L"@CHANNEL_MASK_DEPTH@",_wizard.channelMaskDepth());
+    line=replace(line,L"@CXX@",_wizard.visualStudioVersionName());
+    line=replace(line,L"@DOCUMENTATION_PATH@",L"unavailable");
+    line=replace(line,L"@LIB_VERSION@",versionInfo.version());
+    line=replace(line,L"@MAGICK_GIT_REVISION@",versionInfo.gitRevision());
+    line=replace(line,L"@MAGICK_LIB_VERSION_NUMBER@",versionInfo.libVersionNumber());
+    line=replace(line,L"@MAGICK_LIB_VERSION_TEXT@",versionInfo.version());
+    line=replace(line,L"@MAGICK_LIBRARY_CURRENT@",versionInfo.interfaceVersion());
+    line=replace(line,L"@MAGICK_LIBRARY_CURRENT_MIN@",versionInfo.interfaceVersion());
+    line=replace(line,L"@MAGICK_TARGET_CPU@",_wizard.platformAlias());
+    line=replace(line,L"@MAGICK_TARGET_OS@",L"Windows");
+    line=replace(line,L"@MAGICKPP_LIB_VERSION_TEXT@",versionInfo.version());
+    line=replace(line,L"@MAGICKPP_LIBRARY_CURRENT@",versionInfo.ppInterfaceVersion());
+    line=replace(line,L"@MAGICKPP_LIBRARY_CURRENT_MIN@",versionInfo.ppInterfaceVersion());
+    line=replace(line,L"@MAGICKPP_LIBRARY_VERSION_INFO@",versionInfo.ppLibVersionNumber());
+    line=replace(line,L"@MAGICKPP_LIBRARY_VERSION_TEXT@",versionInfo.version());
+    line=replace(line,L"@PACKAGE_BASE_VERSION@",versionInfo.version());
+    line=replace(line,L"@PACKAGE_FULL_VERSION@",versionInfo.fullVersion());
+    line=replace(line,L"@PACKAGE_LIB_VERSION@",versionInfo.libVersion());
+    line=replace(line,L"@PACKAGE_LIB_VERSION_NUMBER@",versionInfo.versionNumber());
+    line=replace(line,L"@PACKAGE_NAME@",L"ImageMagick");
+    line=replace(line,L"@PACKAGE_VERSION_ADDENDUM@",versionInfo.libAddendum());
+    line=replace(line,L"@PACKAGE_RELEASE_DATE@",versionInfo.releaseDate());
+    line=replace(line,L"@QUANTUM_DEPTH@",_wizard.quantumDepthBits());
+    line=replace(line,L"@RELEASE_DATE@",versionInfo.releaseDate());
+    line=replace(line,L"@TARGET_OS@",L"Windows");
+    start=line.find(L"@");
+    if (start != string::npos)
+    {
+      end=line.find(L"@",start+1);
+      if (end != string::npos)
+        checkKeyword(line.substr(start+1,end-start-1));
+      continue;
+    }
+    output << line << endl;
+  }
+}
+
+void Solution::writeInstallerConfig(const VersionInfo &versionInfo) const
+{
+  wifstream
+    inputStream;
+
+  wofstream
+    outputStream;
+
+  inputStream.open(pathFromRoot(L"Installer\\Inno\\config.isx.in"));
+  if (!inputStream)
+    throwException(L"Unable to open installer config input file");
+
+  outputStream.open(pathFromRoot(L"Installer\\Inno\\config.isx"));;
+  if (!outputStream)
+    {
+      inputStream.close();
+      throwException(L"Unable to open installer config output file");
+    }
+
+  replaceVersionVariables(versionInfo,inputStream,outputStream);
+
+  switch (_wizard.solutionType())
+  {
+    case SolutionType::DYNAMIC_MT:
+      outputStream << L"#define public MagickDynamicPackage 1" << endl;
+      if (_wizard.platform() != Platform::ARM64)
+        outputStream << L"#define public MagickPerlMagick 1" << endl;
+      break;
+    case SolutionType::STATIC_MT:
+    case SolutionType::STATIC_MTD:
+      outputStream << L"#define public MagickStaticPackage 1" << endl;
+      break;
+  }
+
+  switch (_wizard.platform())
+  {
+    case Platform::ARM64:
+      outputStream << L"#define public MagickArm64Architecture 1" << endl;
+      break;
+    case Platform::X64:
+      outputStream << L"#define public Magick64BitArchitecture 1" << endl;
+      break;
+  }
+
+  if (_wizard.useHDRI())
+      outputStream << L"#define public MagickHDRI 1" << endl;
+
+  inputStream.close();
+  outputStream.close();
 }
 
 void Solution::writeMagickBaseConfig() const
@@ -432,75 +535,29 @@ void Solution::writeVersion(const VersionInfo &versionInfo) const
   writeVersion(versionInfo,pathFromRoot(L"ImageMagick\\" + folderName + L"\\version.h.in"),pathFromRoot(L"ImageMagick\\" + folderName + L"\\version.h"));
   filesystem::copy_file(pathFromRoot(L"ImageMagick\\" + folderName + L"\\version.h"),pathFromRoot(L"Build\\version.h"),filesystem::copy_options::overwrite_existing);
   writeVersion(versionInfo,pathFromRoot(L"ImageMagick\\config\\configure.xml.in"),pathFromRoot(_wizard.binDirectory() + L"configure.xml"));
-  writeVersion(versionInfo,pathFromRoot(L"Installer\\Inno\\inc\\version.isx.in"),pathFromRoot(L"Installer\\Inno\\inc\\version.isx"));
   writeVersion(versionInfo,pathFromRoot(L"Projects\\utilities\\ImageMagick.version.h.in"),pathFromRoot(L"Projects\\utilities\\ImageMagick.version.h"));
 }
 
-void Solution::writeVersion(const VersionInfo &versionInfo,wstring input,wstring output) const
+void Solution::writeVersion(const VersionInfo &versionInfo,const wstring &input,const wstring &output) const
 {
-  size_t
-    start,
-    end;
-
   wifstream
     inputStream;
 
   wofstream
     outputStream;
 
-  wstring
-    line;
-
   inputStream.open(input);
   if (!inputStream)
-    return;
+    throwException(L"Unable to open: " + input);
 
   outputStream.open(output);
   if (!outputStream)
     {
       inputStream.close();
-      return;
+      throwException(L"Unable to open: " + output);
     }
 
-  while (getline(inputStream,line))
-  {
-    line=replace(line,L"@CC@",_wizard.visualStudioVersionName());
-    line=replace(line,L"@CHANNEL_MASK_DEPTH@",_wizard.channelMaskDepth());
-    line=replace(line,L"@CXX@",_wizard.visualStudioVersionName());
-    line=replace(line,L"@DOCUMENTATION_PATH@",L"unavailable");
-    line=replace(line,L"@LIB_VERSION@",versionInfo.version());
-    line=replace(line,L"@MAGICK_GIT_REVISION@",versionInfo.gitRevision());
-    line=replace(line,L"@MAGICK_LIB_VERSION_NUMBER@",versionInfo.libVersionNumber());
-    line=replace(line,L"@MAGICK_LIB_VERSION_TEXT@",versionInfo.version());
-    line=replace(line,L"@MAGICK_LIBRARY_CURRENT@",versionInfo.interfaceVersion());
-    line=replace(line,L"@MAGICK_LIBRARY_CURRENT_MIN@",versionInfo.interfaceVersion());
-    line=replace(line,L"@MAGICK_TARGET_CPU@",_wizard.platformAlias());
-    line=replace(line,L"@MAGICK_TARGET_OS@",L"Windows");
-    line=replace(line,L"@MAGICKPP_LIB_VERSION_TEXT@",versionInfo.version());
-    line=replace(line,L"@MAGICKPP_LIBRARY_CURRENT@",versionInfo.ppInterfaceVersion());
-    line=replace(line,L"@MAGICKPP_LIBRARY_CURRENT_MIN@",versionInfo.ppInterfaceVersion());
-    line=replace(line,L"@MAGICKPP_LIBRARY_VERSION_INFO@",versionInfo.ppLibVersionNumber());
-    line=replace(line,L"@MAGICKPP_LIBRARY_VERSION_TEXT@",versionInfo.version());
-    line=replace(line,L"@PACKAGE_BASE_VERSION@",versionInfo.version());
-    line=replace(line,L"@PACKAGE_FULL_VERSION@",versionInfo.fullVersion());
-    line=replace(line,L"@PACKAGE_LIB_VERSION@",versionInfo.libVersion());
-    line=replace(line,L"@PACKAGE_LIB_VERSION_NUMBER@",versionInfo.versionNumber());
-    line=replace(line,L"@PACKAGE_NAME@",L"ImageMagick");
-    line=replace(line,L"@PACKAGE_VERSION_ADDENDUM@",versionInfo.libAddendum());
-    line=replace(line,L"@PACKAGE_RELEASE_DATE@",versionInfo.releaseDate());
-    line=replace(line,L"@QUANTUM_DEPTH@",to_wstring((int) _wizard.quantumDepth()));
-    line=replace(line,L"@RELEASE_DATE@",versionInfo.releaseDate());
-    line=replace(line,L"@TARGET_OS@",L"Windows");
-    start=line.find(L"@");
-    if (start != string::npos)
-    {
-      end=line.find(L"@",start+1);
-      if (end != string::npos)
-        checkKeyword(line.substr(start+1,end-start-1));
-      continue;
-    }
-    outputStream << line << endl;
-  }
+  replaceVersionVariables(versionInfo,inputStream,outputStream);
 
   inputStream.close();
   outputStream.close();

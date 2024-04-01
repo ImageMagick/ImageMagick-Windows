@@ -145,6 +145,18 @@ QuantumDepth ConfigureWizard::quantumDepth() const
   return(_targetPage.quantumDepth());
 }
 
+const wstring ConfigureWizard::quantumDepthBits() const
+{
+  switch (quantumDepth())
+  {
+    case QuantumDepth::Q8: return(L"8");
+    case QuantumDepth::Q16: return(L"16"); 
+    case QuantumDepth::Q32: return(L"32"); 
+    case QuantumDepth::Q64: return(L"64"); 
+    default: throw;
+  }
+}
+
 const wstring ConfigureWizard::solutionName() const
 {
   wstring

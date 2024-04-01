@@ -11,7 +11,7 @@
 
 /ImageMagick
 
-/Installer/Inno/inc/version.isx
+/Installer/Inno/config.isx
 
 /OptionalDependencies/*
 

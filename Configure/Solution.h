@@ -44,6 +44,10 @@ private:
 
   void loadProjectsFromFolder(const wstring &folder, const wstring &filesFolder);
 
+  void replaceVersionVariables(const VersionInfo &versionInfo,wifstream &input,wofstream &output) const;
+
+  void writeInstallerConfig(const VersionInfo &versionInfo) const;
+
   void writeMagickBaseConfig() const;
 
   void writeMakeFile() const;
@@ -56,7 +60,7 @@ private:
 
   void writeVersion(const VersionInfo &versionInfo) const;
 
-  void writeVersion(const VersionInfo &versionInfo,wstring input,wstring output) const;
+  void writeVersion(const VersionInfo &versionInfo,const wstring &input,const wstring &output) const;
 
   void write(wofstream &file) const;
 

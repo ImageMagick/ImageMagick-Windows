@@ -30,8 +30,6 @@
   #define MagickFiltersDirectory "{app}\modules\filters"
 #endif
 
-#include "version.isx"
-
 [Setup]
 #include "setup.isx"
 
