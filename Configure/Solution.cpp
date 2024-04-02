@@ -98,14 +98,14 @@ void Solution::write(WaitDialog &waitDialog) const
   waitDialog.nextStep(L"Writing configuration");
   writeMagickBaseConfig();
 
-  waitDialog.nextStep(L"Writing threshold-map.h");
-  writeThresholdMap();
-
   waitDialog.nextStep(L"Writing Makefile.PL");
   writeMakeFile();
 
-  waitDialog.nextStep(L"Writing policy config");
+  waitDialog.nextStep(L"Writing config config");
   createConfigFiles();
+
+  waitDialog.nextStep(L"Writing threshold-map.h");
+  writeThresholdMap();
 
   if (!versionInfo.load())
     return;
@@ -459,20 +459,23 @@ void Solution::writeThresholdMap() const
     outputStream;
 
   wstring
+    fileName,
     line;
 
   if (!_wizard.zeroConfigurationSupport())
     return;
 
-  inputStream.open(pathFromRoot(_wizard.binDirectory() + L"thresholds.xml"));
+  fileName=pathFromRoot(_wizard.binDirectory() + L"thresholds.xml");
+  inputStream.open(fileName);
   if (!inputStream)
-    return;
+    throwException(L"Unable to open:" + fileName);
 
-  outputStream.open(pathFromRoot(L"ImageMagick\\MagickCore\\threshold-map.h"));
+  fileName=pathFromRoot(L"ImageMagick\\" + _wizard.magickCoreProjectName() + L"\\threshold-map.h");
+  outputStream.open(fileName);
   if (!outputStream)
     {
       inputStream.close();
-      return;
+      throwException(L"Unable to open:" + fileName);
     }
 
   outputStream << "static const char *const BuiltinMap=" << endl;
