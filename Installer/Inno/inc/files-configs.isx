@@ -30,7 +30,3 @@ Source: "..\..\Output\bin\sRGB.icc"; DestDir: {#MagickConfigDirectory}; Flags: c
 Source: "..\..\Output\bin\thresholds.xml"; DestDir: {#MagickConfigDirectory}; Flags: confirmoverwrite
 Source: "..\..\Output\bin\type.xml"; DestDir: {#MagickConfigDirectory}; Flags: confirmoverwrite
 Source: "..\..\Output\bin\type-ghostscript.xml"; DestDir: {#MagickConfigDirectory}; Flags: confirmoverwrite
-
-#ifdef MagickCodersDirectory
-Source: "..\..\Output\bin\coder.xml"; DestDir: {#MagickConfigDirectory}; Flags: confirmoverwrite
-#endif

@@ -555,7 +555,7 @@ void Solution::createConfigFiles() const
     policyXml;
 
   vector<wstring>
-    xmlFiles = { L"colors.xml", L"coder.xml", L"english.xml", L"locale.xml", L"log.xml", L"mime.xml", L"thresholds.xml", L"quantization-table.xml" };
+    xmlFiles = { L"colors.xml", L"english.xml", L"locale.xml", L"log.xml", L"thresholds.xml" };
 
   switch(_wizard.policyConfig())
   {
