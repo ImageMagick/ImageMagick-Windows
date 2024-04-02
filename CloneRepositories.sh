@@ -4,15 +4,17 @@ set -e
 clone()
 {
     local repo=$1
+    local folder=$2
 
     echo ''
     echo "Cloning $repo"
 
-    if [ ! -d "$repo" ]; then
-        git clone https://github.com/ImageMagick/$repo.git $repo
+    if [ ! -d "$folder" ]; then
+        git clone https://github.com/ImageMagick/$repo.git $folder
         if [ $? != 0 ]; then echo "Error during checkout"; exit; fi
     fi
-    cd $repo
+
+    cd $folder
     git reset --hard
     git pull origin main
     cd ..
@@ -22,8 +24,9 @@ clone_commit()
 {
     local repo=$1
     local commit=$2
+    local folder=$3
 
-    clone $repo
+    clone $repo $folder
 
     cd $repo
     git checkout $commit >/dev/null
@@ -36,23 +39,11 @@ clone_date()
     local repo=$1
     local date=$2
 
-    clone $repo
+    clone $repo $repo
 
     cd $repo
-    git checkout `git rev-list -n 1 --before="$date" origin/main >/dev/null`
-    git show --oneline -s
-    cd ..
-}
-
-clone_branch()
-{
-    local repo=$1
-    local branch=$2
-
-    clone $repo
-
-    cd $repo
-    git checkout $branch >/dev/null
+    local commit=$(git rev-list -n 1 --before="$date" origin/main)
+    git checkout $commit >/dev/null
     git show --oneline -s
     cd ..
 }
@@ -75,16 +66,11 @@ if [ -d "../$imagemagick" ]; then
     fi
 fi
 
-if [ ! -d "ImageMagick" ]; then
-    if [ -z "$commit" ]; then
-        commit=$(git ls-remote "https://github.com/ImageMagick/$imagemagick" "main" | cut -f 1)
-    fi
-
-    clone_commit "$imagemagick" "$commit"
-    if [ "$imagemagick" != "ImageMagick" ]; then
-      mv "$imagemagick" "ImageMagick"
-    fi
+if [ -z "$commit" ]; then
+    commit=$(git ls-remote "https://github.com/ImageMagick/$imagemagick" "main" | cut -f 1)
 fi
+
+clone_commit "$imagemagick" "$commit" "ImageMagick"
 
 # get a commit date from the current ImageMagick checkout
 declare -r commitDate=`git -C ImageMagick log -1 --format=%ci`
