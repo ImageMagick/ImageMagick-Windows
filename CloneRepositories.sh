@@ -28,7 +28,7 @@ clone_commit()
 
     clone $repo $folder
 
-    cd $repo
+    cd $folder
     git checkout $commit >/dev/null
     git show --oneline -s
     cd ..
