@@ -23,9 +23,7 @@ Source: "..\..\Output\bin\english.xml"; DestDir: {#MagickConfigDirectory}; Flags
 Source: "..\..\Output\bin\delegates.xml"; DestDir: {#MagickConfigDirectory}; Flags: confirmoverwrite
 Source: "..\..\Output\bin\locale.xml"; DestDir: {#MagickConfigDirectory}; Flags: confirmoverwrite
 Source: "..\..\Output\bin\log.xml"; DestDir: {#MagickConfigDirectory}; Flags: confirmoverwrite
-Source: "..\..\Output\bin\mime.xml"; DestDir: {#MagickConfigDirectory}; Flags: confirmoverwrite
 Source: "..\..\Output\bin\policy.xml"; DestDir: {#MagickConfigDirectory}; Flags: confirmoverwrite
-Source: "..\..\Output\bin\quantization-table.xml"; DestDir: {#MagickConfigDirectory}; Flags: confirmoverwrite
 Source: "..\..\Output\bin\sRGB.icc"; DestDir: {#MagickConfigDirectory}; Flags: confirmoverwrite
 Source: "..\..\Output\bin\thresholds.xml"; DestDir: {#MagickConfigDirectory}; Flags: confirmoverwrite
 Source: "..\..\Output\bin\type.xml"; DestDir: {#MagickConfigDirectory}; Flags: confirmoverwrite
