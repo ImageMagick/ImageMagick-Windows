@@ -59,7 +59,7 @@ Root: HKLM; Subkey: {#KeyCurrent}; ValueType: string; ValueName: "LibPath"; Valu
   #ifdef MagickDynamicPackage
     Root: HKLM; Subkey: "Software\Classes\Applications"; ValueType: string; ValueName: "AutoRun"; ValueData: "{app}\convert.exe $*"; Tasks: legacy_support
   #endif
-else
+#else
   Root: HKLM; Subkey: "Software\Classes\Applications"; ValueType: string; ValueName: "AutoRun"; ValueData: "{app}\convert.exe $*"
 #endif
 
