@@ -2,8 +2,13 @@ on:
   workflow_dispatch:
   schedule:
   - cron: 0 6 * * 1
+  push:
+    branches:
+    - main
+    paths:
+    - '.github/workflows/check-dependencies.yml'
 
-name: releases of dependencies
+name: Releases of dependencies
 jobs:
   dependency_releases:
     runs-on: windows-2022
@@ -16,7 +21,7 @@ jobs:
 
     - name: Clone repositories
       shell: cmd
-      run: CloneRepositories.cmd https://github.com/ImageMagick shallow
+      run: CloneRepositories.IM7.cmd
 
     - name: Check for new releases of dependencies
       shell: cmd
