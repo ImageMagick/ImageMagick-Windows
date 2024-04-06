@@ -4,7 +4,7 @@ This document describes the requirements and instructions to build ImageMagick f
 
 ### Requirements
 
-- Visual Studio 2013 (or newer)
+- Visual Studio 2017 (or newer)
 - Git for Windows
 - AMD APP SDK (optional for OpenCL support)
 
@@ -22,24 +22,24 @@ Naming of these components might differ between versions of Visual Studio. The e
 
 ### Clone the dependencies
 
-The ImageMagick library is built with a number of third party libraries. Run `CloneRepositories.cmd` to clone
-these libraries and the ImageMagick library.
+The ImageMagick library is built with a number of third party libraries. Run `CloneRepositories.IM7.cmd` to clone
+these libraries and the ImageMagick library. To clone the legacy ImageMagick 6 library and it's dependencies
+run `CloneRepositories.IM6.cmd`.
 
-### Build configure.exe
+### Build Cnfigure.exe
 
-One of the folders that was created in the previous step is called `VisualMagick` and this folder contains a
-folder called `configure`. This folder contains the solution file `configure.2022.sln` for the latest 2022
-version of Visual Studio, and `configure.sln` for older versions. Open one of those and start a `Release`
-build of the project. This will create a file called `configure.exe` in the folder. Running this program
-will start a Wizard that allows configuration of ImageMagick and its individual components.
+One of the folders in this project is called `Configure`. This folder contains the solution file `Configure.sln`
+for the latest 2022 version of Visual Studio, and `Configure.2017.sln` for older versions. Open one of those and
+start a `Release` build of the project. This will create a file called `Configure.exe` in the folder. Running this
+program will start a Wizard that allows configuration of ImageMagick and its individual components.
 
 ### Build ImageMagick
 
 Depending on which options were chosen when running `configure.exe` one of the following solutions will be created
-in the `VisualMagick` folder:
+in the root of the repository:
 
-- VisualDynamicMT.sln (Dynamic Multi-threaded DLL runtimes)
-- VisualStaticMTD.sln (Static Multi-threaded DLL runtimes)
-- VisualStaticMT.sln (Static Multi-threaded runtimes)
+- IM7.Dynamic.sln (Dynamic Multi-threaded DLL runtimes)
+- IM7.StaticDLL.sln (Static Multi-threaded DLL runtimes)
+- IM7.Static.sln (Static Multi-threaded runtimes)
 
-Open the solution to start building ImageMagick. The binaries will be created in the `VisualMagick\bin` folder.
+Open the solution to start building ImageMagick. The binaries will be created in the `Output\bin` folder.
