@@ -57,20 +57,16 @@ if [ -z "$imagemagick" ]; then
 fi
 
 if [ -d "../$imagemagick" ]; then
-    branch_name=$(git -C ../ImageMagick symbolic-ref --short HEAD 2>/dev/null || true)
-
-    if [ "$branch_name" != "main" ]; then
-        echo "Copying repository from ../$imagemagick"
-        cp -R ../$imagemagick "ImageMagick"
-        git -C "ImageMagick" show --oneline -s
+    echo "Copying repository from ../$imagemagick"
+    cp -R ../$imagemagick "ImageMagick"
+    git -C "ImageMagick" show --oneline -s
+else
+    if [ -z "$commit" ]; then
+        commit=$(git ls-remote "https://github.com/ImageMagick/$imagemagick" "main" | cut -f 1)
     fi
-fi
 
-if [ -z "$commit" ]; then
-    commit=$(git ls-remote "https://github.com/ImageMagick/$imagemagick" "main" | cut -f 1)
+    clone_commit "$imagemagick" "$commit" "ImageMagick"
 fi
-
-clone_commit "$imagemagick" "$commit" "ImageMagick"
 
 # get a commit date from the current ImageMagick checkout
 declare -r commitDate=`git -C ImageMagick log -1 --format=%ci`
