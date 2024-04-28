@@ -1,6 +1,9 @@
 [INCLUDES]
+exr->imath
+exr->imath\src\Imath
 exr->openexr
 exr->openexr\src\lib\OpenEXR
+exr->openexr\src\lib\OpenEXRCore
 
 [DEFINES_DLL]
 OPENEXR_DLL
