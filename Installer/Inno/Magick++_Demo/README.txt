@@ -5,8 +5,7 @@ To build the demos, open the Workspace file Magick++_Demo.dsw in Visual C++
 and select "build all".
 
 The batch script run_demos.bat runs all of the demos in the current directory.
-Output from the files use the naming scheme *_out.miff.  These files may be
-viewed via the imdisplay program (e.g. "imdisplay demo_out.miff").
+Output from the files use the naming scheme *_out.miff.
 
 The provided demos include:
 
