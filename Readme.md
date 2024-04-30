@@ -26,7 +26,7 @@ The ImageMagick library is built with a number of third party libraries. Run `Cl
 these libraries and the ImageMagick library. To clone the legacy ImageMagick 6 library and it's dependencies
 run `CloneRepositories.IM6.cmd`.
 
-### Build Cnfigure.exe
+### Build Configure.exe
 
 One of the folders in this project is called `Configure`. This folder contains the solution file `Configure.sln`
 for the latest 2022 version of Visual Studio, and `Configure.2017.sln` for older versions. Open one of those and
@@ -35,7 +35,7 @@ program will start a Wizard that allows configuration of ImageMagick and its ind
 
 ### Build ImageMagick
 
-Depending on which options were chosen when running `configure.exe` one of the following solutions will be created
+Depending on which options were chosen when running `Configure.exe` one of the following solutions will be created
 in the root of the repository:
 
 - IM7.Dynamic.sln (Dynamic Multi-threaded DLL runtimes)
