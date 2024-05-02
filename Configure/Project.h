@@ -27,7 +27,7 @@
 class Project
 {
 public:
-  Compiler compiler(VisualStudioVersion visualStudioVersion) const;
+  Compiler compiler() const;
 
   const wstring configDefine() const;
 

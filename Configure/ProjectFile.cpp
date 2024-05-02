@@ -748,7 +748,7 @@ void ProjectFile::writeItemDefinitionGroup(wofstream &file,const bool debug,cons
   if (_project->treatWarningAsError())
     file << "      <TreatWarningAsError>true</TreatWarningAsError>" << endl;
   file << "      <SuppressStartupBanner>true</SuppressStartupBanner>" << endl;
-  if (_project->compiler(_wizard->visualStudioVersion()) == Compiler::CPP)
+  if (_project->compiler() == Compiler::CPP)
     file << "      <CompileAs>CompileAsCpp</CompileAs>" << endl;
   file << "      <InlineFunctionExpansion>" << (debug ? "Disabled" : "AnySuitable") << "</InlineFunctionExpansion>" << endl;
   file << "      <OpenMPSupport>" << (_wizard->useOpenMP() ? "true" : "false") << "</OpenMPSupport>" << endl;
