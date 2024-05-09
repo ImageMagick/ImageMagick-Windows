@@ -16,6 +16,10 @@
 ;  Copyright (C) 2003 - 2008 GraphicsMagick Group
 #endif
 
+;  Development libraries
+Source: "..\..\Output\lib\CORE_RL_Magick++_.lib"; DestDir: "{app}\lib"; Tasks: install_Devel; Flags: ignoreversion
+Source: "..\..\Output\lib\CORE_RL_MagickCore_.lib"; DestDir: "{app}\lib"; Tasks: install_Devel; Flags: ignoreversion
+Source: "..\..\Output\lib\CORE_RL_MagickWand_.lib"; DestDir: "{app}\lib"; Tasks: install_Devel; Flags: ignoreversion
 ;  Development headers
 #ifdef MagickVersion7
   Source: "..\..\ImageMagick\MagickCore\*.h"; DestDir: "{app}\include\MagickCore"; Tasks: install_Devel; Flags: ignoreversion
