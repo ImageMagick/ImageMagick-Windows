@@ -814,7 +814,7 @@ void ProjectFile::writeItemDefinitionGroup(wofstream &file,const bool debug,cons
 
 void ProjectFile::writePreprocessorDefinitions(wofstream &file,const bool debug) const
 {
-  file << (debug ? "_DEBUG" : "NDEBUG") << ";_WINDOWS;WIN32;_VISUALC_;NeedFunctionPrototypes";
+  file << (debug ? "_DEBUG" : "NDEBUG") << ";_WINDOWS;WIN32;_VISUALC_;NeedFunctionPrototypes;_WIN32_WINNT=0x0601";
   for (auto& def : _project->defines())
   {
     file << ";" << def;
