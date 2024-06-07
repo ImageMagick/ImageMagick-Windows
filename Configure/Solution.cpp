@@ -122,7 +122,7 @@ void Solution::write(WaitDialog &waitDialog) const
 
 const wstring Solution::getFileName() const
 {
-  return(pathFromRoot(_wizard.solutionName() + L".sln"));
+  return(pathFromRoot(_wizard.solutionName() + L"." + _wizard.platformAlias() + L".sln"));
 }
 
 void Solution::loadProjectsFromFolder(const wstring &configFolder, const wstring &filesFolder)
