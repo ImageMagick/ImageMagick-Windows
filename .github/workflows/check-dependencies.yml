@@ -21,7 +21,7 @@ jobs:
 
     - name: Clone repositories
       shell: cmd
-      run: CloneRepositories.IM7.cmd
+      run: CloneRepositories.IM7.cmd latest
 
     - name: Check for new releases of dependencies
       shell: cmd
