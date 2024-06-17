@@ -49,10 +49,10 @@ clone_date()
 }
 
 imagemagick=$1
-commit=$2
+sha=$2
 
 if [ -z "$imagemagick" ]; then
-    echo "Usage: $0 ImageMagick/ImageMagick6 [<commit>]"
+    echo "Usage: $0 ImageMagick/ImageMagick6 [<commit>|latest]"
     exit 1
 fi
 
@@ -61,15 +61,21 @@ if [ -d "../$imagemagick" ]; then
     cp -R ../$imagemagick "ImageMagick"
     git -C "ImageMagick" show --oneline -s
 else
-    if [ -z "$commit" ]; then
+    if [ -z "$sha" ] || [ "$sha" = "latest" ]; then
         commit=$(git ls-remote "https://github.com/ImageMagick/$imagemagick" "main" | cut -f 1)
+    else
+        commit=$sha
     fi
 
     clone_commit "$imagemagick" "$commit" "ImageMagick"
 fi
 
-# get a commit date from the current ImageMagick checkout
-declare -r commitDate=`git -C ImageMagick log -1 --format=%ci`
+if [ "$sha" = "latest" ]; then
+    declare -r commitDate=`date "+%Y-%m-%d %H:%M:%S %z"`
+else
+    # get a commit date from the current ImageMagick checkout
+    declare -r commitDate=`git -C ImageMagick log -1 --format=%ci`
+fi
 echo "Set latest commit date as $commitDate"
 
 if [ ! -d "Dependencies" ]; then
