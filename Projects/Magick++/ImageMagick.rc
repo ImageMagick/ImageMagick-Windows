@@ -1,6 +1,6 @@
 #include "winver.h"
 #define __WINDOWS__
-#include "..\\..\\Build\\version.h"
+#include "..\\..\\Build\\package.version.h"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -10,7 +10,7 @@
 
 VS_VERSION_INFO VERSIONINFO
  FILEVERSION MagickppLibVersionNumber
- PRODUCTVERSION MagickppLibVersionNumber
+ PRODUCTVERSION MagickPackageVersionNumber
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -30,7 +30,7 @@ BEGIN
             VALUE "OriginalFilename", "ImageMagick\0"
             VALUE "InternalName", "ImageMagick\0"
             VALUE "FileVersion", MagickppLibVersionText "\0"
-            VALUE "ProductVersion", MagickppLibVersionText "\0"
+            VALUE "ProductVersion", MagickPackageVersionText "\0"
             VALUE "CompanyName", "ImageMagick Studio\0"
             VALUE "LegalCopyright", "Copyright Bob Friesenhahn 1999-2008, Dirk Lemstra 2013+\0"
             VALUE "Comments", MagickVersion "\0"
