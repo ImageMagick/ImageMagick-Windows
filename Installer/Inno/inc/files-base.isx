@@ -20,7 +20,6 @@
 #ifdef MagickVersion7
   Source: "..\..\Output\bin\magick.exe"; DestDir: {#MagickAppDirectory}; Flags: ignoreversion
   #ifdef MagickDynamicPackage
-    Source: "..\..\Output\bin\convert.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
     Source: "..\..\Output\bin\compare.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
     Source: "..\..\Output\bin\composite.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
     Source: "..\..\Output\bin\conjure.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
