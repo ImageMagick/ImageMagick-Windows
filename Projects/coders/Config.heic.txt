@@ -1,6 +1,6 @@
 [INCLUDES]
 heif->.
-heif->libheif
+heif->libheif\api
 
 [DEFINES_LIB]
 LIBHEIF_STATIC_BUILD
