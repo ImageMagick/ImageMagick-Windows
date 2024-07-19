@@ -85,7 +85,7 @@ void ProjectFile::initialize(Project* project)
 {
   _minimumVisualStudioVersion=VSEARLIEST;
   setFileName();
-  _guid=createGuid();
+  _guid=createGuid(name());
 
   for (auto& dep : project->dependencies())
   {
@@ -457,31 +457,6 @@ void ProjectFile::setFileName()
   _fileName=_prefix+L"_"+_name+L".vcxproj";
 }
 
-const wstring ProjectFile::createGuid() const
-{
-  hash<string>
-    hash;
-
-  size_t
-    hash_value;
-
-  wstringstream
-    wss;
-
-  wstring
-    guid;
-
-  hash_value=hash(wstringToString(name()));
-  wss << hex << setw(16) << setfill(L'0') << hash_value;
-  wss << hex << setw(16) << setfill(L'0') << hash_value;
-  guid=wss.str();
-  guid.insert(20, 1, '-');
-  guid.insert(16, 1, '-');
-  guid.insert(12, 1, '-');
-  guid.insert(8, 1, '-');
-  return(guid);
-}
-
 void ProjectFile::write(wofstream &file,const vector<Project*> &allProjects) const
 {
   file << "<?xml version=\"1.0\" encoding=\"utf-8\"?>" << endl;
@@ -722,7 +697,7 @@ void ProjectFile::writeFilter(wofstream &file) const
   for (auto& f : filters)
   {
     file << "    <Filter Include=\"" << f << "\">" << endl;
-    file << "      <UniqueIdentifier>{" << createGuid() << "}</UniqueIdentifier>" << endl;
+    file << "      <UniqueIdentifier>{" << _guid << "}</UniqueIdentifier>" << endl;
     file << "    </Filter>" << endl;
   }
   file << "  </ItemGroup>" << endl;

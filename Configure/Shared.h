@@ -190,4 +190,30 @@ static inline const wstring pathFromRoot(const wstring &path)
   return(L"..\\" + path);
 }
 
+static const wstring createGuid(const wstring &name)
+{
+  hash<string>
+    hash;
+
+  size_t
+    hash_value;
+
+  wstringstream
+    wss;
+
+  wstring
+    guid;
+
+  hash_value=hash(wstringToString(name));
+  wss << hex << setw(16) << setfill(L'0') << hash_value;
+  wss << hex << setw(16) << setfill(L'0') << hash_value;
+  guid=wss.str();
+  guid.insert(20, 1, '-');
+  guid.insert(16, 1, '-');
+  guid.insert(12, 1, '-');
+  guid.insert(8, 1, '-');
+  transform(guid.begin(),guid.end(),guid.begin(),[](wchar_t c) { return towupper(c); });
+  return(guid);
+}
+
 #endif // __Shared__

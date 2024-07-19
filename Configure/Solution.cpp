@@ -533,6 +533,56 @@ void Solution::writeVersion(const VersionInfo &versionInfo,const wstring &input,
   outputStream.close();
 }
 
+void Solution::addNestedProjects(wofstream &file,const wstring &name,const wstring &prefix) const
+{
+  wstring
+    guid;
+
+  guid=createGuid(name);
+  for (auto& project : _projects)
+  {
+    for (auto& projectFile : project->files())
+    {
+      if (startsWith(projectFile->name(),prefix))
+        {
+          file << "\t\t{" << projectFile->guid() << "} = {" << guid << "}" << endl;
+        }
+    }
+  }
+}
+
+void Solution::addProjects(wofstream &file,const wstring &prefix) const
+{
+  for (auto& project : _projects)
+  {
+    for (auto& projectFile : project->files())
+    {
+      if (startsWith(projectFile->name(),prefix))
+        {
+          file << "Project(\"{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}\") = \"" << projectFile->name() << "\", ";
+          file << "\"" << _wizard.solutionName() << ".Projects\\" << projectFile->name() << "\\" << projectFile->fileName() << "\", \"{" << projectFile->guid() << "}\"" << endl;
+          file << "EndProject" << endl;
+        }
+    }
+  }
+}
+
+void Solution::addSolutionFolder(wofstream &file,const wstring &name,const wstring &prefix) const
+{
+  for (auto& project : _projects)
+  {
+    for (auto& projectFile : project->files())
+    {
+      if (startsWith(projectFile->name(),prefix))
+        {
+          file << "Project(\"{2150E333-8FDC-42A3-9474-1A3956D46DE8}\") = \"" << name << "\", \"" << name << "\", \"{" << createGuid(name) << "}\"" << endl;
+          file << "EndProject" << endl;
+          return;
+        }
+    }
+  }
+}
+
 void Solution::checkKeyword(const wstring keyword) const
 {
   vector<wstring> skipableKeywords={
@@ -591,16 +641,19 @@ void Solution::write(wofstream &file) const
   else if (_wizard.visualStudioVersion() == VisualStudioVersion::VS2022)
     file << "# Visual Studio 2022" << endl;
 
-  for (auto& project : _projects)
-  {
-    for (auto& projectFile : project->files())
-    {
-      file << "Project(\"{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}\") = \"" << projectFile->name() << "\", ";
-      file << "\"" << _wizard.solutionName() << ".Projects\\" << projectFile->name() << "\\" << projectFile->fileName() << "\", \"{" << projectFile->guid() << "}\"" << endl;
-      file << "EndProject" << endl;
-    }
-  }
-  file << "EndProject" << endl;
+  addProjects(file,L"UTIL");
+  addProjects(file,L"CORE");
+  addProjects(file,L"DEMO");
+  addProjects(file,L"FILTER");
+  addProjects(file,L"FUZZ");
+  addProjects(file,L"IM_MOD");
+
+  addSolutionFolder(file,L"Applications",L"UTIL");
+  addSolutionFolder(file,L"Core",L"CORE");
+  addSolutionFolder(file,L"Demo",L"DEMO");
+  addSolutionFolder(file,L"Filter",L"FILTER");
+  addSolutionFolder(file,L"Fuzz",L"FUZZ");
+  addSolutionFolder(file,L"Modules",L"IM_MOD");
 
   file << "Global" << endl;
   file << "\tGlobalSection(SolutionConfigurationPlatforms) = preSolution" << endl;
@@ -620,5 +673,15 @@ void Solution::write(wofstream &file) const
     }
   }
   file << "\tEndGlobalSection" << endl;
+
+  file << "\tGlobalSection(NestedProjects) = preSolution" << endl;
+  addNestedProjects(file,L"Applications",L"UTIL");
+  addNestedProjects(file,L"Core",L"CORE");
+  addNestedProjects(file,L"Demo",L"DEMO");
+  addNestedProjects(file,L"Filter",L"FILTER");
+  addNestedProjects(file,L"Fuzz",L"FUZZ");
+  addNestedProjects(file,L"Modules",L"IM_MOD");
+  file << "\tEndGlobalSection" << endl;
+
   file << "EndGlobal" << endl;
 }

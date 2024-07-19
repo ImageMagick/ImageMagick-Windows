@@ -38,13 +38,19 @@ public:
 
 private:
 
+  void addNestedProjects(wofstream &file,const wstring &name,const wstring &prefix) const;
+
+  void addProjects(wofstream &file,const wstring &prefix) const;
+
+  void addSolutionFolder(wofstream &file,const wstring &name,const wstring &prefix) const;
+
   void checkKeyword(const wstring keyword) const;
 
   void createConfigFiles() const;
 
   const wstring getFileName() const;
 
-  void loadProjectsFromFolder(const wstring &folder, const wstring &filesFolder);
+  void loadProjectsFromFolder(const wstring &folder,const wstring &filesFolder);
 
   void replaceVersionVariables(const VersionInfo &versionInfo,wifstream &input,wofstream &output) const;
 

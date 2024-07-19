@@ -67,8 +67,6 @@ private:
 
   const wstring asmOptions() const;
 
-  const wstring createGuid() const;
-
   const wstring getFilter(const wstring &fileName,vector<wstring> &filters) const;
 
   const wstring getIntermediateDirectoryName(const bool debug) const;
