@@ -57,5 +57,5 @@ LicenseFile=txt\license.rtf
 InfoBeforeFile=txt\before.rtf
 InfoAfterFile=txt\after.rtf
 UninstallDisplayIcon={#MagickAppDirectory}\ImageMagick.ico
-OutputDir=Output
+OutputDir=Artifacts
 OutputBaseFilename={#MagickPackageName}-{#MagickPackageFullVersionText}-Q{#QuantumDepth}{#Hdri}-{#MagickArchitecture}-{#MagickPackageType}

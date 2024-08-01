@@ -50,5 +50,5 @@ prompt.
 5)
    Distribution package is available as
 
-     VisualMagick\installer\output\ImageMagick-7.X-X-X-Q8-dll.exe
+     Artifacts\ImageMagick-7.X-X-X-Q8-dll.exe
 

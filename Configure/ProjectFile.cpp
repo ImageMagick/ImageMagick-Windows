@@ -238,13 +238,13 @@ bool ProjectFile::isLib() const
 
 const wstring ProjectFile::libDirectory() const
 {
-    return(rootPath + L"Output\\lib\\");
+    return(rootPath + L"Artifacts\\lib\\");
 }
 
 const wstring ProjectFile::outputDirectory() const
 {
   if (_project->isFuzz())
-    return(rootPath + L"Output\\fuzz\\");
+    return(rootPath + L"Artifacts\\fuzz\\");
 
   if (isLib())
     return(libDirectory());

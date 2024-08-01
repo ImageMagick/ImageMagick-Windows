@@ -42,4 +42,4 @@ in the root of the repository:
 - IM7.StaticDLL.sln (Static Multi-threaded DLL runtimes)
 - IM7.Static.sln (Static Multi-threaded runtimes)
 
-Open the solution to start building ImageMagick. The binaries will be created in the `Output\bin` folder.
+Open the solution to start building ImageMagick. The binaries will be created in the `Artifacts\bin` folder.

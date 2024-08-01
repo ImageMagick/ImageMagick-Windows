@@ -18,25 +18,25 @@
 
 ; Executables
 #ifdef MagickVersion7
-  Source: "..\..\Output\bin\magick.exe"; DestDir: {#MagickAppDirectory}; Flags: ignoreversion
+  Source: "..\..\Artifacts\bin\magick.exe"; DestDir: {#MagickAppDirectory}; Flags: ignoreversion
   #ifdef MagickDynamicPackage
-    Source: "..\..\Output\bin\compare.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
-    Source: "..\..\Output\bin\composite.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
-    Source: "..\..\Output\bin\conjure.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
-    Source: "..\..\Output\bin\identify.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
-    Source: "..\..\Output\bin\mogrify.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
-    Source: "..\..\Output\bin\montage.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
-    Source: "..\..\Output\bin\stream.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
+    Source: "..\..\Artifacts\bin\compare.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
+    Source: "..\..\Artifacts\bin\composite.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
+    Source: "..\..\Artifacts\bin\conjure.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
+    Source: "..\..\Artifacts\bin\identify.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
+    Source: "..\..\Artifacts\bin\mogrify.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
+    Source: "..\..\Artifacts\bin\montage.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
+    Source: "..\..\Artifacts\bin\stream.exe"; DestDir: {#MagickAppDirectory}; Tasks: legacy_support; Flags: ignoreversion
   #endif
 #else
-  Source: "..\..\Output\bin\convert.exe"; DestDir: {#MagickAppDirectory}; Flags: ignoreversion
-  Source: "..\..\Output\bin\compare.exe"; DestDir: {#MagickAppDirectory}; Flags: ignoreversion
-  Source: "..\..\Output\bin\composite.exe"; DestDir: {#MagickAppDirectory}; Flags: ignoreversion
-  Source: "..\..\Output\bin\conjure.exe"; DestDir: {#MagickAppDirectory}; Flags: ignoreversion
-  Source: "..\..\Output\bin\identify.exe"; DestDir: {#MagickAppDirectory}; Flags: ignoreversion
-  Source: "..\..\Output\bin\mogrify.exe"; DestDir: {#MagickAppDirectory}; Flags: ignoreversion
-  Source: "..\..\Output\bin\montage.exe"; DestDir: {#MagickAppDirectory}; Flags: ignoreversion
-  Source: "..\..\Output\bin\stream.exe"; DestDir: {#MagickAppDirectory}; Flags: ignoreversion
+  Source: "..\..\Artifacts\bin\convert.exe"; DestDir: {#MagickAppDirectory}; Flags: ignoreversion
+  Source: "..\..\Artifacts\bin\compare.exe"; DestDir: {#MagickAppDirectory}; Flags: ignoreversion
+  Source: "..\..\Artifacts\bin\composite.exe"; DestDir: {#MagickAppDirectory}; Flags: ignoreversion
+  Source: "..\..\Artifacts\bin\conjure.exe"; DestDir: {#MagickAppDirectory}; Flags: ignoreversion
+  Source: "..\..\Artifacts\bin\identify.exe"; DestDir: {#MagickAppDirectory}; Flags: ignoreversion
+  Source: "..\..\Artifacts\bin\mogrify.exe"; DestDir: {#MagickAppDirectory}; Flags: ignoreversion
+  Source: "..\..\Artifacts\bin\montage.exe"; DestDir: {#MagickAppDirectory}; Flags: ignoreversion
+  Source: "..\..\Artifacts\bin\stream.exe"; DestDir: {#MagickAppDirectory}; Flags: ignoreversion
 #endif
 
 ; Path Tool

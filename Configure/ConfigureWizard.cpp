@@ -43,7 +43,7 @@ ConfigureWizard::~ConfigureWizard()
 
 const wstring ConfigureWizard::binDirectory() const
 {
-  return(L"Output\\bin\\");
+  return(L"Artifacts\\bin\\");
 }
 
 const wstring ConfigureWizard::channelMaskDepth() const

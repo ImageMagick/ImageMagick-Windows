@@ -429,7 +429,7 @@ void Solution::writeNotice(const VersionInfo &versionInfo) const
   wofstream
     notice;
 
-  notice.open(pathFromRoot(L"Output\\NOTICE.txt"));
+  notice.open(pathFromRoot(L"Artifacts\\NOTICE.txt"));
   if (!notice)
     return;
 
