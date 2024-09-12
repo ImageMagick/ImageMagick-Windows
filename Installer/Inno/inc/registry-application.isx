@@ -56,9 +56,6 @@ Root: HKLM; Subkey: {#KeyCurrent}; ValueType: string; ValueName: "LibPath"; Valu
 ; Tell windows to use our convert.exe
 ;
 #ifdef MagickVersion7
-  #ifdef MagickDynamicPackage
-    Root: HKLM; Subkey: "Software\Classes\Applications"; ValueType: string; ValueName: "AutoRun"; ValueData: "{app}\convert.exe $*"; Tasks: legacy_support
-  #endif
 #else
   Root: HKLM; Subkey: "Software\Classes\Applications"; ValueType: string; ValueName: "AutoRun"; ValueData: "{app}\convert.exe $*"
 #endif
