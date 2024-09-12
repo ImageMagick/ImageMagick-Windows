@@ -14,4 +14,4 @@
 ;  limitations under the License.
 #endif
 
-Name: legacy_support; Description: "Install legacy utilities (e.g. convert)"; Flags: unchecked
+Name: legacy_support; Description: "Install legacy utilities (e.g. identify)"; Flags: unchecked
