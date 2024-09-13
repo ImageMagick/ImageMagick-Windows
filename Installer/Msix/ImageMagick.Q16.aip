@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<DOCUMENT Type="Advanced Installer" CreateVersion="21.5" version="21.6" Modules="architect" RootPath="." Language="en" Id="{42A4A35A-DF45-439B-B73C-13598854D2EA}">
+  <COMPONENT cid="caphyon.advinst.msicomp.ProjectOptionsComponent">
+    <ROW Name="Application_AssetGenDestFolderPath" Value="Generated Assets" ValueType="1"/>
+    <ROW Name="Application_WorkingDir" Value="APPDIR"/>
+    <ROW Name="AssetGenPkgDestFolderPath" Value="Generated Assets" ValueType="1"/>
+    <ROW Name="HiddenItems" Value="ActSyncAppComponent;CPLAppletComponent;AutorunComponent;GameUxComponent;SilverlightSlnComponent;SharePointSlnComponent"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiPropsComponent">
+    <ROW Property="AI_BITMAP_DISPLAY_MODE" Value="0"/>
+    <ROW Property="AI_PROPPATH_PERBUILD_magick.exe" Value="x64\magick.exe" MultiBuildValue="Build_MSIXSubBuild_1:arm64\magick.exe"/>
+    <ROW Property="ALLUSERS" Value="1"/>
+    <ROW Property="ARPCOMMENTS" Value="This installer database contains the logic and data required to install [|ProductName]." ValueLocId="*"/>
+    <ROW Property="ARPURLINFOABOUT" Value="https://github.com/ImageMagick/ImageMagick/discussions"/>
+    <ROW Property="AiLicenseAgreementLink" Value="https://imagemagick.org/script/license.php" Type="4"/>
+    <ROW Property="IAgree" Value="No" Type="4"/>
+    <ROW Property="Manufacturer" Value="ImageMagick"/>
+    <ROW Property="ProductCode" Value="1033:{6C9AA94F-E455-4107-A5C3-9FAF7623343F} " Type="16"/>
+    <ROW Property="ProductLanguage" Value="1033"/>
+    <ROW Property="ProductName" Value="ImageMagick.Q16"/>
+    <ROW Property="ProductVersion" Value="1.0.0" Options="32"/>
+    <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
+    <ROW Property="UpgradeCode" Value="{7C17F9CE-6862-45E0-B488-70D227399D70}"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiDirsComponent">
+    <ROW Directory="APPDIR" Directory_Parent="TARGETDIR" DefaultDir="APPDIR:." IsPseudoRoot="1"/>
+    <ROW Directory="Assets" Directory_Parent="TARGETDIR" DefaultDir="Assets" IsPseudoRoot="1"/>
+    <ROW Directory="TARGETDIR" DefaultDir="SourceDir"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.SideBySideGuidComponent">
+    <ROW Component="APPDIR" Value="{58068334-440E-4634-A6DA-9D9E99F92872}"/>
+    <ROW Component="ProductInformation" Value="{58B18363-4474-4AC9-92B8-60513DE4AD08}"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiCompsComponent">
+    <ROW Component="APPDIR" ComponentId="{58068334-440E-4634-A6DA-9D9E99F92872}" Directory_="APPDIR" Attributes="0"/>
+    <ROW Component="ProductInformation" ComponentId="{58B18363-4474-4AC9-92B8-60513DE4AD08}" Directory_="APPDIR" Attributes="4" KeyPath="Version"/>
+    <ROW Component="Store50x50Logo.scale100.png" ComponentId="{53CB1911-2DD9-493F-908B-B1F64B0CFCAD}" Directory_="Assets" Attributes="0" KeyPath="Store50x50Logo.scale100.png" Type="0"/>
+    <ROW Component="colors.xml" ComponentId="{FD8FFC29-9BBA-470F-A95F-1DECCFF65C2D}" Directory_="APPDIR" Attributes="0" KeyPath="colors.xml" Type="0"/>
+    <ROW Component="magick.exe" ComponentId="{3A41AFBB-F1B2-4203-9670-1B14A24DC872}" Directory_="APPDIR" Attributes="256" KeyPath="magick.exe"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
+    <ROW Feature="AiAppXAssets" Title="AiAppXAssets" Description="Description" Display="3" Level="0" Directory_="APPDIR" Attributes="0" Options="271" Builds="Build_MSIX"/>
+    <ROW Feature="MainFeature" Title="MainFeature" Description="Description" Display="1" Level="1" Directory_="APPDIR" Attributes="0"/>
+    <ATTRIBUTE name="CurrentFeature" value="MainFeature"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
+    <ROW File="Store50x50Logo.scale100.png" Component_="Store50x50Logo.scale100.png" FileName="STORE5~6.PNG|Store50x50Logo.scale-100.png" Attributes="0" SourcePath="Assets\Logo\50x50.png" SelfReg="false"/>
+    <ROW File="Q16Square44x44Logo.scale100.png" Component_="Store50x50Logo.scale100.png" FileName="Q16HD~26.PNG|Q16Square44x44Logo.scale-100.png" Attributes="0" SourcePath="Assets\Logo\44x44.png" SelfReg="false"/>
+    <ROW File="Q16Square150x150Logo.scale100.png" Component_="Store50x50Logo.scale100.png" FileName="Q16HD~11.PNG|Q16Square150x150Logo.scale-100.png" Attributes="0" SourcePath="Assets\Logo\150x150.png" SelfReg="false"/>
+    <ROW File="magick.exe" Component_="magick.exe" FileName="magick.exe" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_magick.exe&gt;" SelfReg="false" DigSign="true"/>
+    <ROW File="colors.xml" Component_="colors.xml" FileName="colors.xml" Attributes="0" SourcePath="x64\colors.xml" SelfReg="false"/>
+    <ROW File="configure.xml" Component_="colors.xml" FileName="CONFIG~1.XML|configure.xml" Attributes="0" SourcePath="x64\configure.xml" SelfReg="false"/>
+    <ROW File="delegates.xml" Component_="colors.xml" FileName="DELEGA~1.XML|delegates.xml" Attributes="0" SourcePath="x64\delegates.xml" SelfReg="false"/>
+    <ROW File="english.xml" Component_="colors.xml" FileName="english.xml" Attributes="0" SourcePath="x64\english.xml" SelfReg="false"/>
+    <ROW File="locale.xml" Component_="colors.xml" FileName="locale.xml" Attributes="0" SourcePath="x64\locale.xml" SelfReg="false"/>
+    <ROW File="log.xml" Component_="colors.xml" FileName="log.xml" Attributes="0" SourcePath="x64\log.xml" SelfReg="false"/>
+    <ROW File="policy.xml" Component_="colors.xml" FileName="policy.xml" Attributes="0" SourcePath="x64\policy.xml" SelfReg="false"/>
+    <ROW File="thresholds.xml" Component_="colors.xml" FileName="THRESH~1.XML|thresholds.xml" Attributes="0" SourcePath="x64\thresholds.xml" SelfReg="false"/>
+    <ROW File="type.xml" Component_="colors.xml" FileName="type.xml" Attributes="0" SourcePath="x64\type.xml" SelfReg="false"/>
+    <ROW File="typeghostscript.xml" Component_="colors.xml" FileName="TYPE-G~1.XML|type-ghostscript.xml" Attributes="0" SourcePath="x64\type-ghostscript.xml" SelfReg="false"/>
+    <ROW File="Store50x50Logo.scale125.jpg" Component_="Store50x50Logo.scale100.png" FileName="STORE5~5.PNG|Store50x50Logo.scale-125.png" Attributes="0" SourcePath="Assets\Logo\63x63.png" SelfReg="false"/>
+    <ROW File="Store50x50Logo.scale150.jpg" Component_="Store50x50Logo.scale100.png" FileName="STORE5~4.PNG|Store50x50Logo.scale-150.png" Attributes="0" SourcePath="Assets\Logo\75x75.png" SelfReg="false"/>
+    <ROW File="Store50x50Logo.scale200.jpg" Component_="Store50x50Logo.scale100.png" FileName="STORE5~3.PNG|Store50x50Logo.scale-200.png" Attributes="0" SourcePath="Assets\Logo\100x100.png" SelfReg="false"/>
+    <ROW File="Store50x50Logo.scale400.jpg" Component_="Store50x50Logo.scale100.png" FileName="STORE5~2.PNG|Store50x50Logo.scale-400.png" Attributes="0" SourcePath="Assets\Logo\200x200.png" SelfReg="false"/>
+    <ROW File="Q16Square150x150Logo.scale125.png" Component_="Store50x50Logo.scale100.png" FileName="Q16HDR~3.PNG|Q16Square150x150Logo.scale-125.png" Attributes="0" SourcePath="Assets\Logo\188x188.png" SelfReg="false"/>
+    <ROW File="Q16Square150x150Logo.scale150.png" Component_="Store50x50Logo.scale100.png" FileName="Q16HDR~2.PNG|Q16Square150x150Logo.scale-150.png" Attributes="0" SourcePath="Assets\Logo\225x225.png" SelfReg="false"/>
+    <ROW File="Q16Square150x150Logo.scale400.png" Component_="Store50x50Logo.scale100.png" FileName="Q16HDR~5.PNG|Q16Square150x150Logo.scale-400.png" Attributes="0" SourcePath="Assets\Logo\600x600.png" SelfReg="false"/>
+    <ROW File="Q16Square44x44Logo.scale125.png" Component_="Store50x50Logo.scale100.png" FileName="Q16HDR~7.PNG|Q16Square44x44Logo.scale-125.png" Attributes="0" SourcePath="Assets\Logo\55x55.png" SelfReg="false"/>
+    <ROW File="Q16Square44x44Logo.scale150.png" Component_="Store50x50Logo.scale100.png" FileName="Q16HDR~1.PNG|Q16Square44x44Logo.scale-150.png" Attributes="0" SourcePath="Assets\Logo\66x66.png" SelfReg="false"/>
+    <ROW File="Q16Square44x44Logo.scale200.png" Component_="Store50x50Logo.scale100.png" FileName="Q16HDR~8.PNG|Q16Square44x44Logo.scale-200.png" Attributes="0" SourcePath="Assets\Logo\88x88.png" SelfReg="false"/>
+    <ROW File="Q16Square44x44Logo.scale400.png" Component_="Store50x50Logo.scale100.png" FileName="Q16HDR~9.PNG|Q16Square44x44Logo.scale-400.png" Attributes="0" SourcePath="Assets\Logo\176x176.png" SelfReg="false"/>
+    <ROW File="Q16Square150x150Logo.scale200.png" Component_="Store50x50Logo.scale100.png" FileName="Q16HDR~4.PNG|Q16Square150x150Logo.scale-200.png" Attributes="0" SourcePath="Assets\Logo\300x300.png" SelfReg="false"/>
+    <ROW File="Q16Square71x71Logo.scale100.png" Component_="Store50x50Logo.scale100.png" FileName="Q16HDR~6.PNG|Q16Square71x71Logo.scale-100.png" Attributes="0" SourcePath="Assets\Logo\71x71.png" SelfReg="false"/>
+    <ROW File="Q16Square71x71Logo.scale125.png" Component_="Store50x50Logo.scale100.png" FileName="Q16HD~12.PNG|Q16Square71x71Logo.scale-125.png" Attributes="0" SourcePath="Assets\Logo\89x89.png" SelfReg="false"/>
+    <ROW File="Q16Square71x71Logo.scale150.png" Component_="Store50x50Logo.scale100.png" FileName="Q16HD~13.PNG|Q16Square71x71Logo.scale-150.png" Attributes="0" SourcePath="Assets\Logo\107x107.png" SelfReg="false"/>
+    <ROW File="Q16Square71x71Logo.scale200.png" Component_="Store50x50Logo.scale100.png" FileName="Q16HD~14.PNG|Q16Square71x71Logo.scale-200.png" Attributes="0" SourcePath="Assets\Logo\142x142.png" SelfReg="false"/>
+    <ROW File="Q16Square71x71Logo.scale400.png" Component_="Store50x50Logo.scale100.png" FileName="Q16HD~15.PNG|Q16Square71x71Logo.scale-400.png" Attributes="0" SourcePath="Assets\Logo\284x284.png" SelfReg="false"/>
+    <ROW File="Q16Wide310x150Logo.scale100.png" Component_="Store50x50Logo.scale100.png" FileName="Q16HD~16.PNG|Q16Wide310x150Logo.scale-100.png" Attributes="0" SourcePath="Assets\Logo\310x150.png" SelfReg="false"/>
+    <ROW File="Q16Wide310x150Logo.scale125.png" Component_="Store50x50Logo.scale100.png" FileName="Q16HD~17.PNG|Q16Wide310x150Logo.scale-125.png" Attributes="0" SourcePath="Assets\Logo\388x188.png" SelfReg="false"/>
+    <ROW File="Q16Wide310x150Logo.scale150.png" Component_="Store50x50Logo.scale100.png" FileName="Q16HD~18.PNG|Q16Wide310x150Logo.scale-150.png" Attributes="0" SourcePath="Assets\Logo\465x225.png" SelfReg="false"/>
+    <ROW File="Q16Wide310x150Logo.scale200.png" Component_="Store50x50Logo.scale100.png" FileName="Q16HD~19.PNG|Q16Wide310x150Logo.scale-200.png" Attributes="0" SourcePath="Assets\Logo\620x300.png" SelfReg="false"/>
+    <ROW File="Q16Wide310x150Logo.scale400.png" Component_="Store50x50Logo.scale100.png" FileName="Q16HD~20.PNG|Q16Wide310x150Logo.scale-400.png" Attributes="0" SourcePath="Assets\Logo\1240x600.png" SelfReg="false"/>
+    <ROW File="Q16Square310x310Logo.scale100.png" Component_="Store50x50Logo.scale100.png" FileName="Q16HD~21.PNG|Q16Square310x310Logo.scale-100.png" Attributes="0" SourcePath="Assets\Logo\310x310.png" SelfReg="false"/>
+    <ROW File="Q16Square310x310Logo.scale125.png" Component_="Store50x50Logo.scale100.png" FileName="Q16HD~22.PNG|Q16Square310x310Logo.scale-125.png" Attributes="0" SourcePath="Assets\Logo\388x388.png" SelfReg="false"/>
+    <ROW File="Q16Square310x310Logo.scale150.png" Component_="Store50x50Logo.scale100.png" FileName="Q16HD~23.PNG|Q16Square310x310Logo.scale-150.png" Attributes="0" SourcePath="Assets\Logo\465x465.png" SelfReg="false"/>
+    <ROW File="Q16Square310x310Logo.scale200.png" Component_="Store50x50Logo.scale100.png" FileName="Q16HD~24.PNG|Q16Square310x310Logo.scale-200.png" Attributes="0" SourcePath="Assets\Logo\620x620.png" SelfReg="false"/>
+    <ROW File="Q16Square310x310Logo.scale400.png" Component_="Store50x50Logo.scale100.png" FileName="Q16HD~25.PNG|Q16Square310x310Logo.scale-400.png" Attributes="0" SourcePath="Assets\Logo\1240x1240.png" SelfReg="false"/>
+    <ROW File="Q16Square44x44Logo.targetsize16.png" Component_="Store50x50Logo.scale100.png" FileName="Q16HD~10.PNG|Q16Square44x44Logo.targetsize-16.png" Attributes="0" SourcePath="Assets\Logo\16x16.png" SelfReg="false"/>
+    <ROW File="Q16Square44x44Logo.targetsize24.png" Component_="Store50x50Logo.scale100.png" FileName="Q16HD~27.PNG|Q16Square44x44Logo.targetsize-24.png" Attributes="0" SourcePath="Assets\Logo\24x24.png" SelfReg="false"/>
+    <ROW File="Q16Square44x44Logo.targetsize32.png" Component_="Store50x50Logo.scale100.png" FileName="Q16HD~28.PNG|Q16Square44x44Logo.targetsize-32.png" Attributes="0" SourcePath="Assets\Logo\32x32.png" SelfReg="false"/>
+    <ROW File="Q16Square44x44Logo.targetsize48.png" Component_="Store50x50Logo.scale100.png" FileName="Q16HD~29.PNG|Q16Square44x44Logo.targetsize-48.png" Attributes="0" SourcePath="Assets\Logo\48x48.png" SelfReg="false"/>
+    <ROW File="Q16Square44x44Logo.targetsize256.png" Component_="Store50x50Logo.scale100.png" FileName="Q16HD~30.PNG|Q16Square44x44Logo.targetsize-256.png" Attributes="0" SourcePath="Assets\Logo\256x256.png" SelfReg="false"/>
+    <ROW File="Q16Square44x44Logo.targetsize16_altformunplated.png" Component_="Store50x50Logo.scale100.png" FileName="Q16HD~31.PNG|Q16Square44x44Logo.targetsize-16_altform-unplated.png" Attributes="0" SourcePath="Assets\Logo\16x16.png" SelfReg="false"/>
+    <ROW File="Q16Square44x44Logo.targetsize24_altformunplated.png" Component_="Store50x50Logo.scale100.png" FileName="Q16HD~32.PNG|Q16Square44x44Logo.targetsize-24_altform-unplated.png" Attributes="0" SourcePath="Assets\Logo\24x24.png" SelfReg="false"/>
+    <ROW File="Q16Square44x44Logo.targetsize32_altformunplated.png" Component_="Store50x50Logo.scale100.png" FileName="Q16HD~33.PNG|Q16Square44x44Logo.targetsize-32_altform-unplated.png" Attributes="0" SourcePath="Assets\Logo\32x32.png" SelfReg="false"/>
+    <ROW File="Q16Square44x44Logo.targetsize48_altformunplated.png" Component_="Store50x50Logo.scale100.png" FileName="Q16HD~34.PNG|Q16Square44x44Logo.targetsize-48_altform-unplated.png" Attributes="0" SourcePath="Assets\Logo\48x48.png" SelfReg="false"/>
+    <ROW File="Q16Square44x44Logo.targetsize256_altformunplated.png" Component_="Store50x50Logo.scale100.png" FileName="Q16HD~35.PNG|Q16Square44x44Logo.targetsize-256_altform-unplated.png" Attributes="0" SourcePath="Assets\Logo\256x256.png" SelfReg="false"/>
+    <ROW File="Q16Square44x44Logo.targetsize16_altformlightunplated.png" Component_="Store50x50Logo.scale100.png" FileName="Q16HD~36.PNG|Q16Square44x44Logo.targetsize-16_altform-lightunplated.png" Attributes="0" SourcePath="Assets\Logo\16x16.png" SelfReg="false"/>
+    <ROW File="Q16Square44x44Logo.targetsize24_altformlightunplated.png" Component_="Store50x50Logo.scale100.png" FileName="Q16HD~37.PNG|Q16Square44x44Logo.targetsize-24_altform-lightunplated.png" Attributes="0" SourcePath="Assets\Logo\24x24.png" SelfReg="false"/>
+    <ROW File="Q16Square44x44Logo.targetsize32_altformlightunplated.png" Component_="Store50x50Logo.scale100.png" FileName="Q16HD~38.PNG|Q16Square44x44Logo.targetsize-32_altform-lightunplated.png" Attributes="0" SourcePath="Assets\Logo\32x32.png" SelfReg="false"/>
+    <ROW File="Q16Square44x44Logo.targetsize48_altformlightunplated.png" Component_="Store50x50Logo.scale100.png" FileName="Q16HD~39.PNG|Q16Square44x44Logo.targetsize-48_altform-lightunplated.png" Attributes="0" SourcePath="Assets\Logo\48x48.png" SelfReg="false"/>
+    <ROW File="Q16Square44x44Logo.targetsize256_altformlightunplated.png" Component_="Store50x50Logo.scale100.png" FileName="Q16HD~40.PNG|Q16Square44x44Logo.targetsize-256_altform-lightunplated.png" Attributes="0" SourcePath="Assets\Logo\256x256.png" SelfReg="false"/>
+    <ROW File="Q16SplashScreen.scale100.png" Component_="Store50x50Logo.scale100.png" FileName="Q16HD~41.PNG|Q16SplashScreen.scale-100.png" Attributes="0" SourcePath="Assets\Logo\620x300.png" SelfReg="false"/>
+    <ROW File="Q16SplashScreen.scale125.png" Component_="Store50x50Logo.scale100.png" FileName="Q16HD~42.PNG|Q16SplashScreen.scale-125.png" Attributes="0" SourcePath="Assets\Logo\775x375.png" SelfReg="false"/>
+    <ROW File="Q16SplashScreen.scale150.png" Component_="Store50x50Logo.scale100.png" FileName="Q16HD~43.PNG|Q16SplashScreen.scale-150.png" Attributes="0" SourcePath="Assets\Logo\930x450.png" SelfReg="false"/>
+    <ROW File="Q16SplashScreen.scale200.png" Component_="Store50x50Logo.scale100.png" FileName="Q16HD~44.PNG|Q16SplashScreen.scale-200.png" Attributes="0" SourcePath="Assets\Logo\1240x600.png" SelfReg="false"/>
+    <ROW File="Q16SplashScreen.scale400.png" Component_="Store50x50Logo.scale100.png" FileName="Q16HD~45.PNG|Q16SplashScreen.scale-400.png" Attributes="0" SourcePath="Assets\Logo\2480x1200.png" SelfReg="false"/>
+    <ROW File="Q16BadgeLogo.scale100.png" Component_="Store50x50Logo.scale100.png" FileName="Q16HD~46.PNG|Q16BadgeLogo.scale-100.png" Attributes="0" SourcePath="Assets\Logo\24x24.png" SelfReg="false"/>
+    <ROW File="Q16BadgeLogo.scale125.png" Component_="Store50x50Logo.scale100.png" FileName="Q16HD~47.PNG|Q16BadgeLogo.scale-125.png" Attributes="0" SourcePath="Assets\Logo\30x30.png" SelfReg="false"/>
+    <ROW File="Q16BadgeLogo.scale150.png" Component_="Store50x50Logo.scale100.png" FileName="Q16HD~48.PNG|Q16BadgeLogo.scale-150.png" Attributes="0" SourcePath="Assets\Logo\36x36.png" SelfReg="false"/>
+    <ROW File="Q16BadgeLogo.scale200.png" Component_="Store50x50Logo.scale100.png" FileName="Q16HD~49.PNG|Q16BadgeLogo.scale-200.png" Attributes="0" SourcePath="Assets\Logo\48x48.png" SelfReg="false"/>
+    <ROW File="Q16BadgeLogo.scale400.png" Component_="Store50x50Logo.scale100.png" FileName="Q16HD~50.PNG|Q16BadgeLogo.scale-400.png" Attributes="0" SourcePath="Assets\Logo\96x96.png" SelfReg="false"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.AppPathsComponent">
+    <ROW Name="AI_APPPATH_PERBUILD_magick.exe" Path="[|AI_PROPPATH_PERBUILD_magick.exe]" Type="2" Content="0"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.AppXCfgComponent">
+    <ROW ID="Configuration" Order="1" ManifestFile="AppxManifest.xml" TargetOs="4" AutoUpdatesFrequency="0" AutoUpdatesOptions="0" ManifestBundleFile="AppxBundleManifest.xml"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.BootstrOptComponent">
+    <ROW BootstrOptKey="GlobalOptions" DownloadFolder="[AppDataFolder][|Manufacturer]\[|ProductName]\prerequisites" Options="2"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.BuildComponent">
+    <ROW BuildKey="Build_MSIX" BuildName="Build_MSIX" BuildOrder="1" BuildType="7" PackageFolder="Artifacts" PackageFileName="ImageMagick.Q16" Languages="en" UwpTargetDesktop="TargetDeviceFamily" UwpAppXBuildPackageBundle="true" UwpAppInstallerManifestFile="MsixAppInstallerData.xml"/>
+    <ROW BuildKey="Build_MSIXSubBuild" BuildName="x64" BuildOrder="2" BuildType="8" ParentBuild="Build_MSIX"/>
+    <ROW BuildKey="Build_MSIXSubBuild_1" BuildName="arm64" BuildOrder="3" BuildType="8" ParentBuild="Build_MSIX"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.DictionaryComponent">
+    <ROW Path="&lt;AI_DICTS&gt;ui.ail"/>
+    <ROW Path="&lt;AI_DICTS&gt;ui_en.ail"/>
+    <ATTRIBUTE name="TranslateSegments" value="0b00000000000000000000000000000000000000000000000000000000000000000110000000000000000000000000000000000000000000000000000000000000"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.DigCertStoreComponent">
+    <ROW TimeStampUrl="http://timestamp.digicert.com" SignerDescription="[|ProductName]" SignOptions="7" SignTool="7" UseSha256="1" TSEndPoint="https://eus.codesigning.azure.net/" TSAccountName="ImageMagick" TSCertName="ImageMagick" TSCertSubject="CN=ImageMagick Studio LLC, O=ImageMagick Studio LLC, L=Landenberg, S=Pennsylvania, C=US"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.FragmentComponent">
+    <ROW Fragment="CommonUI.aip" Path="&lt;AI_FRAGS&gt;CommonUI.aip"/>
+    <ROW Fragment="InstallDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\InstallDlg.aip"/>
+    <ROW Fragment="LicenseAgreementDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\LicenseAgreementDlg.aip"/>
+    <ROW Fragment="MaintenanceTypeDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\MaintenanceTypeDlg.aip"/>
+    <ROW Fragment="MaintenanceWelcomeDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\MaintenanceWelcomeDlg.aip"/>
+    <ROW Fragment="SequenceDialogs.aip" Path="&lt;AI_THEMES&gt;classic\fragments\SequenceDialogs.aip"/>
+    <ROW Fragment="Sequences.aip" Path="&lt;AI_FRAGS&gt;Sequences.aip"/>
+    <ROW Fragment="StaticUIStrings.aip" Path="&lt;AI_FRAGS&gt;StaticUIStrings.aip"/>
+    <ROW Fragment="Themes.aip" Path="&lt;AI_FRAGS&gt;Themes.aip"/>
+    <ROW Fragment="UI.aip" Path="&lt;AI_THEMES&gt;classic\fragments\UI.aip"/>
+    <ROW Fragment="Validation.aip" Path="&lt;AI_FRAGS&gt;Validation.aip"/>
+    <ROW Fragment="VerifyRemoveDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\VerifyRemoveDlg.aip"/>
+    <ROW Fragment="VerifyRepairDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\VerifyRepairDlg.aip"/>
+    <ROW Fragment="WelcomeDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\WelcomeDlg.aip"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.GenericXmlAttributeComponent">
+    <ROW XmlAttribute="Alias" XmlElement="ExecutionAlias" Name="Alias" Flags="0" Order="0" Value="identify.exe"/>
+    <ROW XmlAttribute="Alias_1" XmlElement="ExecutionAlias_1" Name="Alias" Flags="0" Order="0" Value="compare.exe"/>
+    <ROW XmlAttribute="Alias_2" XmlElement="ExecutionAlias_2" Name="Alias" Flags="0" Order="0" Value="composite.exe"/>
+    <ROW XmlAttribute="Alias_3" XmlElement="ExecutionAlias_3" Name="Alias" Flags="0" Order="0" Value="conjure.exe"/>
+    <ROW XmlAttribute="Alias_4" XmlElement="ExecutionAlias_4" Name="Alias" Flags="0" Order="0" Value="mogrify.exe"/>
+    <ROW XmlAttribute="Alias_5" XmlElement="ExecutionAlias_5" Name="Alias" Flags="0" Order="0" Value="montage.exe"/>
+    <ROW XmlAttribute="Alias_6" XmlElement="ExecutionAlias_6" Name="Alias" Flags="0" Order="0" Value="stream.exe"/>
+    <ROW XmlAttribute="Alias_7" XmlElement="ExecutionAlias_7" Name="Alias" Flags="0" Order="0" Value="magick.exe"/>
+    <ROW XmlAttribute="AppListEntry" XmlElement="VisualElements" Name="AppListEntry" Flags="0" Order="0" Value="default"/>
+    <ROW XmlAttribute="BackgroundColor" XmlElement="VisualElements" Name="BackgroundColor" Flags="0" Order="0" Value="transparent"/>
+    <ROW XmlAttribute="BadgeLogo" XmlElement="LockScreen" Name="BadgeLogo" Flags="0" Order="0" FileId="Q16BadgeLogo.scale100.png"/>
+    <ROW XmlAttribute="Category" XmlElement="Extension" Name="Category" Flags="0" Order="0" Value="windows.appExecutionAlias"/>
+    <ROW XmlAttribute="Description" XmlElement="VisualElements" Name="Description" Flags="0" Order="0" Value="ImageMagick Q16"/>
+    <ROW XmlAttribute="DisplayName" XmlElement="VisualElements" Name="DisplayName" Flags="0" Order="0" Value="ImageMagick Q16"/>
+    <ROW XmlAttribute="EntryPoint" XmlElement="Application" Name="EntryPoint" Flags="0" Order="0" Value="Windows.FullTrustApplication"/>
+    <ROW XmlAttribute="EntryPoint_1" XmlElement="Extension" Name="EntryPoint" Flags="0" Order="0" Value="Windows.FullTrustApplication"/>
+    <ROW XmlAttribute="Executable" XmlElement="Application" Name="Executable" Flags="0" Order="0" FileId="magick.exe"/>
+    <ROW XmlAttribute="Executable_1" XmlElement="Extension" Name="Executable" Flags="0" Order="0" FileId="magick.exe"/>
+    <ROW XmlAttribute="Id" XmlElement="Application" Name="Id" Flags="0" Order="0" Value="ImageMagick.Q16"/>
+    <ROW XmlAttribute="IgnorableNamespaces" XmlElement="AppInstallerUX" Name="IgnorableNamespaces" Flags="0" Order="0" Value="ux ux2"/>
+    <ROW XmlAttribute="Image" XmlElement="SplashScreen" Name="Image" Flags="0" Order="0" FileId="Q16SplashScreen.scale100.png"/>
+    <ROW XmlAttribute="Language" XmlElement="Resource" Name="Language" Flags="0" Order="0" Value="en-US"/>
+    <ROW XmlAttribute="MaxVersionTested" XmlElement="TargetDeviceFamily" Name="MaxVersionTested" Flags="0" Order="0" Value="10.0.22621.0"/>
+    <ROW XmlAttribute="MinVersion" XmlElement="TargetDeviceFamily" Name="MinVersion" Flags="0" Order="0" Value="10.0.17763.0"/>
+    <ROW XmlAttribute="Name" XmlElement="Identity" Name="Name" Flags="0" Order="0" Value="ImageMagick.Q16"/>
+    <ROW XmlAttribute="Name_1" XmlElement="TargetDeviceFamily" Name="Name" Flags="0" Order="0" Value="Windows.Desktop"/>
+    <ROW XmlAttribute="Name_2" XmlElement="Capability" Name="Name" Flags="0" Order="0" Value="runFullTrust"/>
+    <ROW XmlAttribute="Notification" XmlElement="LockScreen" Name="Notification" Flags="0" Order="0" Value="badge"/>
+    <ROW XmlAttribute="Preference" XmlElement="Rotation" Name="Preference" Flags="0" Order="0" Value="portrait"/>
+    <ROW XmlAttribute="Preference_1" XmlElement="Rotation_1" Name="Preference" Flags="0" Order="0" Value="landscape"/>
+    <ROW XmlAttribute="ProcessorArchitecture" XmlElement="Identity" Name="ProcessorArchitecture" Flags="0" Order="0" Value="x64"/>
+    <ROW XmlAttribute="Publisher" XmlElement="Identity" Name="Publisher" Flags="0" Order="0" Value="CN=ImageMagick Studio LLC, O=ImageMagick Studio LLC, L=Landenberg, S=Pennsylvania, C=US"/>
+    <ROW XmlAttribute="Scale" XmlElement="Resource_1" Name="Scale" Flags="0" Order="0" Value="100"/>
+    <ROW XmlAttribute="Square150x150Logo" XmlElement="VisualElements" Name="Square150x150Logo" Flags="0" Order="0" FileId="Q16Square150x150Logo.scale100.png"/>
+    <ROW XmlAttribute="Square310x310Logo" XmlElement="DefaultTile" Name="Square310x310Logo" Flags="0" Order="0" FileId="Q16Square310x310Logo.scale100.png"/>
+    <ROW XmlAttribute="Square44x44Logo" XmlElement="VisualElements" Name="Square44x44Logo" Flags="0" Order="0" FileId="Q16Square44x44Logo.scale100.png"/>
+    <ROW XmlAttribute="Square71x71Logo" XmlElement="DefaultTile" Name="Square71x71Logo" Flags="0" Order="0" FileId="Q16Square71x71Logo.scale100.png"/>
+    <ROW XmlAttribute="Subsystem" XmlElement="Application" Name="Subsystem" Flags="0" Order="0" Value="console"/>
+    <ROW XmlAttribute="Subsystem_1" XmlElement="AppExecutionAlias" Name="Subsystem" Flags="0" Order="0" Value="console"/>
+    <ROW XmlAttribute="SupportsMultipleInstances" XmlElement="Application" Name="SupportsMultipleInstances" Flags="0" Order="0" Value="true"/>
+    <ROW XmlAttribute="Version" XmlElement="Identity" Name="Version" Flags="0" Order="0" Value="1.0.0.0"/>
+    <ROW XmlAttribute="Version_1" XmlElement="AppInstallerUX" Name="Version" Flags="0" Order="0" Value="1.0.0"/>
+    <ROW XmlAttribute="Wide310x150Logo" XmlElement="DefaultTile" Name="Wide310x150Logo" Flags="0" Order="0" FileId="Q16Wide310x150Logo.scale100.png"/>
+    <ROW XmlAttribute="xmlns" XmlElement="AppInstallerUX" Name="xmlns" Flags="0" Order="0" Value="http://schemas.microsoft.com/msix/appinstallerux"/>
+    <ROW XmlAttribute="xmlnsux" XmlElement="AppInstallerUX" Name="xmlns:ux" Flags="0" Order="0" Value="http://schemas.microsoft.com/msix/appinstallerux"/>
+    <ROW XmlAttribute="xmlnsux2" XmlElement="AppInstallerUX" Name="xmlns:ux2" Flags="0" Order="0" Value="http://schemas.microsoft.com/msix/appinstallerux"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.GenericXmlElementComponent">
+    <ROW XmlElement="AppExecutionAlias" ParentElement="Extension" Name="AppExecutionAlias" Order="1" Flags="0" Type="0"/>
+    <ROW XmlElement="AppInstallerUX" Name="AppInstallerUX" Order="0" Flags="0" Type="0"/>
+    <ROW XmlElement="Application" ParentElement="Applications" Name="Application" Order="0" Flags="0" Type="4"/>
+    <ROW XmlElement="Applications" ParentElement="Package" Name="Applications" Order="4" Flags="0" Type="3"/>
+    <ROW XmlElement="Bundle" Name="Bundle" Order="0" Flags="0" Type="0"/>
+    <ROW XmlElement="Capabilities" ParentElement="Package" Name="Capabilities" Order="6" Flags="0" Type="0"/>
+    <ROW XmlElement="Capability" ParentElement="Capabilities" Name="Capability" Order="0" Flags="0" Type="0"/>
+    <ROW XmlElement="DefaultTile" ParentElement="VisualElements" Name="DefaultTile" Order="2" Flags="0" Type="0"/>
+    <ROW XmlElement="Dependencies" ParentElement="Package" Name="Dependencies" Order="5" Flags="0" Type="0"/>
+    <ROW XmlElement="DisplayName" ParentElement="Properties" Name="DisplayName" Order="2" Flags="0" Text="ImageMagick Q16" Type="0"/>
+    <ROW XmlElement="ExecutionAlias" ParentElement="AppExecutionAlias" Name="ExecutionAlias" Order="1" Flags="0" Type="0"/>
+    <ROW XmlElement="ExecutionAlias_1" ParentElement="AppExecutionAlias" Name="ExecutionAlias" Order="2" Flags="0" Type="0"/>
+    <ROW XmlElement="ExecutionAlias_2" ParentElement="AppExecutionAlias" Name="ExecutionAlias" Order="3" Flags="0" Type="0"/>
+    <ROW XmlElement="ExecutionAlias_3" ParentElement="AppExecutionAlias" Name="ExecutionAlias" Order="4" Flags="0" Type="0"/>
+    <ROW XmlElement="ExecutionAlias_4" ParentElement="AppExecutionAlias" Name="ExecutionAlias" Order="5" Flags="0" Type="0"/>
+    <ROW XmlElement="ExecutionAlias_5" ParentElement="AppExecutionAlias" Name="ExecutionAlias" Order="6" Flags="0" Type="0"/>
+    <ROW XmlElement="ExecutionAlias_6" ParentElement="AppExecutionAlias" Name="ExecutionAlias" Order="7" Flags="0" Type="0"/>
+    <ROW XmlElement="ExecutionAlias_7" ParentElement="AppExecutionAlias" Name="ExecutionAlias" Order="8" Flags="0" Type="0"/>
+    <ROW XmlElement="Extension" ParentElement="Extensions" Name="Extension" Order="1" Flags="0" Type="54"/>
+    <ROW XmlElement="Extensions" ParentElement="Application" Name="Extensions" Order="2" Flags="0" Type="0"/>
+    <ROW XmlElement="Identity" ParentElement="Package" Name="Identity" Order="1" Flags="0" Type="0"/>
+    <ROW XmlElement="InitialRotationPreference" ParentElement="VisualElements" Name="InitialRotationPreference" Order="1" Flags="0" Type="0"/>
+    <ROW XmlElement="LockScreen" ParentElement="VisualElements" Name="LockScreen" Order="4" Flags="0" Type="0"/>
+    <ROW XmlElement="Logo" ParentElement="Properties" Name="Logo" Order="3" Flags="0" FileId="Store50x50Logo.scale100.png" Type="0"/>
+    <ROW XmlElement="Package" Name="Package" Order="0" Flags="0" Type="6"/>
+    <ROW XmlElement="Properties" ParentElement="Package" Name="Properties" Order="3" Flags="0" Type="0"/>
+    <ROW XmlElement="PublisherDisplayName" ParentElement="Properties" Name="PublisherDisplayName" Order="1" Flags="0" Text="ImageMagick" Type="0"/>
+    <ROW XmlElement="Resource" ParentElement="Resources" Name="Resource" Order="1" Flags="0" Type="0"/>
+    <ROW XmlElement="Resource_1" ParentElement="Resources" Name="Resource" Order="2" Flags="0" Type="0"/>
+    <ROW XmlElement="Resources" ParentElement="Package" Name="Resources" Order="2" Flags="0" Type="0"/>
+    <ROW XmlElement="Rotation" ParentElement="InitialRotationPreference" Name="Rotation" Order="1" Flags="0" Type="0"/>
+    <ROW XmlElement="Rotation_1" ParentElement="InitialRotationPreference" Name="Rotation" Order="2" Flags="0" Type="0"/>
+    <ROW XmlElement="SplashScreen" ParentElement="VisualElements" Name="SplashScreen" Order="3" Flags="0" Type="0"/>
+    <ROW XmlElement="TargetDeviceFamily" ParentElement="Dependencies" Name="TargetDeviceFamily" Order="0" Flags="0" Type="28"/>
+    <ROW XmlElement="VisualElements" ParentElement="Application" Name="VisualElements" Order="1" Flags="0" Type="0"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.GenericXmlFileComponent">
+    <ROW XmlFile="AppxBundleManifest.xml" FileName="AppxBundleManifest.xml" RootElement="Bundle" Flags="89" Version="1.0" Encoding="UTF-8" IndentUnits="2"/>
+    <ROW XmlFile="AppxManifest.xml" FileName="AppxManifest.xml" RootElement="Package" Flags="89" Version="1.0" Encoding="UTF-8" IndentUnits="2"/>
+    <ROW XmlFile="MsixAppInstallerData.xml" FileName="MsixAppInstallerData.xml" RootElement="AppInstallerUX" Flags="89" Version="1.0" Encoding="UTF-8" IndentUnits="2"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiBinaryComponent">
+    <ROW Name="aicustact.dll" SourcePath="&lt;AI_CUSTACTS&gt;aicustact.dll"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiControlComponent">
+    <ROW Dialog_="LicenseAgreementDlg" Control="AgreementText" Type="ScrollableText" X="20" Y="60" Width="330" Height="120" Attributes="7" Order="400" TextLocId="Control.Text.LicenseAgreementDlg#AgreementText" MsiKey="LicenseAgreementDlg#AgreementText"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiControlEventComponent">
+    <ROW Dialog_="WelcomeDlg" Control_="Next" Event="NewDialog" Argument="InstallDlg" Condition="AI_INSTALL" Ordering="1"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_INSTALL" Ordering="197"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="InstallDlg" Condition="AI_INSTALL" Ordering="201"/>
+    <ROW Dialog_="MaintenanceWelcomeDlg" Control_="Next" Event="NewDialog" Argument="MaintenanceTypeDlg" Condition="AI_MAINT" Ordering="99"/>
+    <ROW Dialog_="CustomizeDlg" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_MAINT" Ordering="101"/>
+    <ROW Dialog_="CustomizeDlg" Control_="Back" Event="NewDialog" Argument="MaintenanceTypeDlg" Condition="AI_MAINT" Ordering="1"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_MAINT" Ordering="198"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="CustomizeDlg" Condition="AI_MAINT" Ordering="203"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control_="ChangeButton" Event="NewDialog" Argument="CustomizeDlg" Condition="AI_MAINT" Ordering="501"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control_="Back" Event="NewDialog" Argument="MaintenanceWelcomeDlg" Condition="AI_MAINT" Ordering="1"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control_="RemoveButton" Event="NewDialog" Argument="VerifyRemoveDlg" Condition="AI_MAINT AND InstallMode=&quot;Remove&quot;" Ordering="601"/>
+    <ROW Dialog_="VerifyRemoveDlg" Control_="Back" Event="NewDialog" Argument="MaintenanceTypeDlg" Condition="AI_MAINT AND InstallMode=&quot;Remove&quot;" Ordering="1"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control_="RepairButton" Event="NewDialog" Argument="VerifyRepairDlg" Condition="AI_MAINT AND InstallMode=&quot;Repair&quot;" Ordering="601"/>
+    <ROW Dialog_="VerifyRepairDlg" Control_="Back" Event="NewDialog" Argument="MaintenanceTypeDlg" Condition="AI_MAINT AND InstallMode=&quot;Repair&quot;" Ordering="1"/>
+    <ROW Dialog_="VerifyRepairDlg" Control_="Repair" Event="EndDialog" Argument="Return" Condition="AI_MAINT AND InstallMode=&quot;Repair&quot;" Ordering="399" Options="1"/>
+    <ROW Dialog_="VerifyRemoveDlg" Control_="Remove" Event="EndDialog" Argument="Return" Condition="AI_MAINT AND InstallMode=&quot;Remove&quot;" Ordering="299" Options="1"/>
+    <ROW Dialog_="PatchWelcomeDlg" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_PATCH" Ordering="201"/>
+    <ROW Dialog_="ResumeDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_RESUME" Ordering="299"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_PATCH" Ordering="199"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="PatchWelcomeDlg" Condition="AI_PATCH" Ordering="204"/>
+    <ROW Dialog_="InstallDlg" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_INSTALL" Ordering="201"/>
+    <ROW Dialog_="InstallDlg" Control_="Back" Event="NewDialog" Argument="WelcomeDlg" Condition="AI_INSTALL" Ordering="1"/>
+    <ROW Dialog_="InstallDlg" Control_="Hyperlink" Event="NewDialog" Argument="LicenseAgreementDlg" Condition="AI_INSTALL AND ReadLicense" Ordering="201"/>
+    <ROW Dialog_="LicenseAgreementDlg" Control_="Back" Event="NewDialog" Argument="InstallDlg" Condition="AI_INSTALL AND ReadLicense" Ordering="1"/>
+    <ROW Dialog_="LicenseAgreementDlg" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_INSTALL AND ReadLicense" Ordering="1"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="LicenseAgreementDlg" Condition="AI_INSTALL AND ReadLicense" Ordering="202"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiCreateFolderComponent">
+    <ROW Directory_="APPDIR" Component_="APPDIR" ManualDelete="true"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiCustActComponent">
+    <ROW Action="AI_DOWNGRADE" Type="19" Target="4010"/>
+    <ROW Action="AI_DpiContentScale" Type="1" Source="aicustact.dll" Target="DpiContentScale"/>
+    <ROW Action="AI_EnableDebugLog" Type="321" Source="aicustact.dll" Target="EnableDebugLog"/>
+    <ROW Action="AI_InstallModeCheck" Type="1" Source="aicustact.dll" Target="UpdateInstallMode" WithoutSeq="true"/>
+    <ROW Action="AI_PREPARE_UPGRADE" Type="65" Source="aicustact.dll" Target="PrepareUpgrade"/>
+    <ROW Action="AI_PRESERVE_INSTALL_TYPE" Type="65" Source="aicustact.dll" Target="PreserveInstallType"/>
+    <ROW Action="AI_RESTORE_LOCATION" Type="65" Source="aicustact.dll" Target="RestoreLocation"/>
+    <ROW Action="AI_ResolveKnownFolders" Type="1" Source="aicustact.dll" Target="AI_ResolveKnownFolders"/>
+    <ROW Action="AI_SHOW_LOG" Type="65" Source="aicustact.dll" Target="LaunchLogFile" WithoutSeq="true"/>
+    <ROW Action="AI_STORE_LOCATION" Type="51" Source="ARPINSTALLLOCATION" Target="[APPDIR]"/>
+    <ROW Action="SET_APPDIR" Type="307" Source="APPDIR" Target="[ProgramFilesFolder][Manufacturer]\[ProductName]" MultiBuildTarget="Build_MSIX:"/>
+    <ROW Action="SET_SHORTCUTDIR" Type="307" Source="SHORTCUTDIR" Target="[ProgramMenuFolder][ProductName]"/>
+    <ROW Action="SET_TARGETDIR_TO_APPDIR" Type="51" Source="TARGETDIR" Target="[APPDIR]"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatCompsComponent">
+    <ROW Feature_="MainFeature" Component_="APPDIR"/>
+    <ROW Feature_="MainFeature" Component_="ProductInformation"/>
+    <ROW Feature_="AiAppXAssets" Component_="Store50x50Logo.scale100.png"/>
+    <ROW Feature_="MainFeature" Component_="magick.exe"/>
+    <ROW Feature_="MainFeature" Component_="colors.xml"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiInstExSeqComponent">
+    <ROW Action="AI_DOWNGRADE" Condition="AI_NEWERPRODUCTFOUND AND (UILevel &lt;&gt; 5)" Sequence="210"/>
+    <ROW Action="AI_RESTORE_LOCATION" Condition="APPDIR=&quot;&quot;" Sequence="749"/>
+    <ROW Action="AI_STORE_LOCATION" Condition="(Not Installed) OR REINSTALL" Sequence="1501"/>
+    <ROW Action="AI_PREPARE_UPGRADE" Condition="AI_UPGRADE=&quot;No&quot; AND (Not Installed)" Sequence="1399"/>
+    <ROW Action="AI_ResolveKnownFolders" Sequence="52"/>
+    <ROW Action="AI_EnableDebugLog" Sequence="51"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiInstallUISequenceComponent">
+    <ROW Action="AI_PRESERVE_INSTALL_TYPE" Sequence="199"/>
+    <ROW Action="AI_RESTORE_LOCATION" Condition="APPDIR=&quot;&quot;" Sequence="749"/>
+    <ROW Action="AI_ResolveKnownFolders" Sequence="53"/>
+    <ROW Action="AI_DpiContentScale" Sequence="52"/>
+    <ROW Action="AI_EnableDebugLog" Sequence="51"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiRegsComponent">
+    <ROW Registry="Manufacturer" Root="-1" Key="Software\[Manufacturer]" Name="\"/>
+    <ROW Registry="Path" Root="-1" Key="Software\[Manufacturer]\[ProductName]" Name="Path" Value="[APPDIR]" Component_="ProductInformation"/>
+    <ROW Registry="ProductName" Root="-1" Key="Software\[Manufacturer]\[ProductName]" Name="\"/>
+    <ROW Registry="Software" Root="-1" Key="Software" Name="\"/>
+    <ROW Registry="Version" Root="-1" Key="Software\[Manufacturer]\[ProductName]" Name="Version" Value="[ProductVersion]" Component_="ProductInformation"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiThemeComponent">
+    <ATTRIBUTE name="UsedTheme" value="classic"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiUpgradeComponent">
+    <ROW UpgradeCode="[|UpgradeCode]" VersionMin="0.0.1" VersionMax="[|ProductVersion]" Attributes="257" ActionProperty="OLDPRODUCTS"/>
+    <ROW UpgradeCode="[|UpgradeCode]" VersionMin="[|ProductVersion]" Attributes="2" ActionProperty="AI_NEWERPRODUCTFOUND"/>
+  </COMPONENT>
+</DOCUMENT>
