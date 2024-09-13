@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<DOCUMENT Type="Advanced Installer" CreateVersion="21.5" version="21.6" Modules="architect" RootPath="." Language="en" Id="{42A4A35A-DF45-439B-B73C-13598854D2EA}">
+<DOCUMENT Type="Advanced Installer" CreateVersion="21.5" version="21.6" Modules="architect" RootPath="." Language="en" Id="{DCA27A7E-E5FE-4821-9830-41C89BDE3B00}">
   <COMPONENT cid="caphyon.advinst.msicomp.ProjectOptionsComponent">
     <ROW Name="Application_AssetGenDestFolderPath" Value="Generated Assets" ValueType="1"/>
     <ROW Name="Application_WorkingDir" Value="APPDIR"/>
@@ -15,12 +15,12 @@
     <ROW Property="AiLicenseAgreementLink" Value="https://imagemagick.org/script/license.php" Type="4"/>
     <ROW Property="IAgree" Value="No" Type="4"/>
     <ROW Property="Manufacturer" Value="ImageMagick"/>
-    <ROW Property="ProductCode" Value="1033:{6C9AA94F-E455-4107-A5C3-9FAF7623343F} " Type="16"/>
+    <ROW Property="ProductCode" Value="1033:{F66B634B-8B6C-4626-B6D3-DE9AE7812175} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="ImageMagick.Q16"/>
     <ROW Property="ProductVersion" Value="1.0.0" Options="32"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
-    <ROW Property="UpgradeCode" Value="{7C17F9CE-6862-45E0-B488-70D227399D70}"/>
+    <ROW Property="UpgradeCode" Value="{F5DCA1B3-DF3D-48C1-BC06-01BCF3629F43}"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiDirsComponent">
     <ROW Directory="APPDIR" Directory_Parent="TARGETDIR" DefaultDir="APPDIR:." IsPseudoRoot="1"/>
