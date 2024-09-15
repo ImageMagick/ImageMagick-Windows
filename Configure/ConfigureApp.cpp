@@ -70,21 +70,29 @@ BOOL ConfigureApp::Init()
 BOOL ConfigureApp::InitInstance()
 {
   if (AttachConsole(ATTACH_PARENT_PROCESS))
+  {
+    try
     {
-      try
-      {
-        return Init();
-      }
-      catch (exception ex)
-      {
-        FILE
-          *fpstderr=stderr;
-
-        freopen_s(&fpstderr, "CONOUT$", "w", stderr);
-        cerr << ex.what() << endl;
-        return(FALSE);
-      }
+      cout << "Console attached successfully." << endl;
+      return Init();
     }
+    catch (exception ex)
+    {
+      FILE *fpstderr = stderr;
+      if (freopen_s(&fpstderr, "CONOUT$", "w", stderr) == 0)
+      {
+        cerr << "Exception caught: " << ex.what() << endl;
+      }
+      else
+      {
+        cout << "Failed to redirect stderr." << endl;
+      }
+      return(FALSE);
+    }
+  }
   else
+  {
+    cout << "Failed to attach console." << endl;
     return Init();
+  }
 }
