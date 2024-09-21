@@ -38,6 +38,8 @@ public:
 
 private:
 
+  void addConfigFolder(wofstream &file) const;
+
   void addNestedProjects(wofstream &file,const wstring &name,const wstring &prefix) const;
 
   void addProjects(wofstream &file,const wstring &prefix) const;

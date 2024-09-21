@@ -74,7 +74,19 @@ void Solution::write(WaitDialog &waitDialog) const
     file;
 
   steps=loadProjectFiles();
-  waitDialog.setSteps(steps+4);
+  waitDialog.setSteps(steps+7);
+
+  waitDialog.nextStep(L"Writing configuration");
+  writeMagickBaseConfig();
+
+  waitDialog.nextStep(L"Writing Makefile.PL");
+  writeMakeFile();
+
+  waitDialog.nextStep(L"Writing config config");
+  createConfigFiles();
+
+  waitDialog.nextStep(L"Writing threshold-map.h");
+  writeThresholdMap();
 
   file.open(getFileName());
   if (!file)
@@ -94,18 +106,6 @@ void Solution::write(WaitDialog &waitDialog) const
       projectFile->write(_projects);
     }
   }
-
-  waitDialog.nextStep(L"Writing configuration");
-  writeMagickBaseConfig();
-
-  waitDialog.nextStep(L"Writing Makefile.PL");
-  writeMakeFile();
-
-  waitDialog.nextStep(L"Writing config config");
-  createConfigFiles();
-
-  waitDialog.nextStep(L"Writing threshold-map.h");
-  writeThresholdMap();
 
   if (!versionInfo.load())
     return;
@@ -533,6 +533,29 @@ void Solution::writeVersion(const VersionInfo &versionInfo,const wstring &input,
   outputStream.close();
 }
 
+void Solution::addConfigFolder(wofstream &file) const
+{
+  file << "Project(\"{2150E333-8FDC-42A3-9474-1A3956D46DE8}\") = \"Config\", \"Config\", \"{" << createGuid(L"Config") << "}\"" << endl;
+  file << "\tProjectSection(SolutionItems) = preProject" << endl;
+  for (const auto& entry : filesystem::directory_iterator(pathFromRoot(L"Artifacts\\bin")))
+  {
+    wstring
+      fileName;
+
+    if (!entry.is_regular_file())
+      continue;
+
+    fileName = entry.path().filename();
+    if (!endsWith(fileName, L".xml"))
+      continue;
+
+    file << "\t\tArtifacts\\bin\\" << fileName << " = Artifacts\\bin\\" << fileName << endl;
+  }
+  file << "\tEndProjectSection" << endl;
+  file << "EndProject" << endl;
+  return;
+}
+
 void Solution::addNestedProjects(wofstream &file,const wstring &name,const wstring &prefix) const
 {
   wstring
@@ -649,6 +672,7 @@ void Solution::write(wofstream &file) const
   addProjects(file,L"IM_MOD");
 
   addSolutionFolder(file,L"Applications",L"UTIL");
+  addConfigFolder(file);
   addSolutionFolder(file,L"Core",L"CORE");
   addSolutionFolder(file,L"Demo",L"DEMO");
   addSolutionFolder(file,L"Filter",L"FILTER");
