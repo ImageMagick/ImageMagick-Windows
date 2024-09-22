@@ -82,7 +82,7 @@ void Solution::write(WaitDialog &waitDialog) const
   waitDialog.nextStep(L"Writing Makefile.PL");
   writeMakeFile();
 
-  waitDialog.nextStep(L"Writing config config");
+  waitDialog.nextStep(L"Writing config files");
   createConfigFiles();
 
   waitDialog.nextStep(L"Writing threshold-map.h");
