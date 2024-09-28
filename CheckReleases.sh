@@ -15,7 +15,7 @@ check_release()
   fi
 
   regex=$(tail -n 1 $1)
-  latest=$(echo "$data" | grep -E "$regex" | grep -o -E "[0-9]+\.[0-9]+(\.[0-9]+)?" | sort -V | tail -n 1)
+  latest=$(echo "$data" | grep -Po "$regex" | sort -V | tail -n 1)
   if [ -n "$latest" ]; then
     dot_count=$(echo $latest | grep -o "\." | wc -l)
     if [ "$dot_count" = "1" ]; then
