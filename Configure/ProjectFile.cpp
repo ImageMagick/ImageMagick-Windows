@@ -97,6 +97,11 @@ void ProjectFile::initialize(Project* project)
     _includes.push_back(inc);
   }
 
+  for (auto& inc : project->definesDll())
+  {
+    _definesDll.push_back(inc);
+  }
+
   for (auto& inc : project->definesLib())
   {
     _definesLib.push_back(inc);
@@ -187,6 +192,8 @@ void ProjectFile::loadConfig()
       addLines(config,_cppFiles);
     else if (line == L"[VISUAL_STUDIO]")
       _minimumVisualStudioVersion=parseVisualStudioVersion(readLine(config));
+    else if (line == L"[DEFINES_DLL]")
+      addLines(config,_definesDll);
     else if (line == L"[DEFINES_LIB]")
       addLines(config,_definesLib);
   }
@@ -199,6 +206,7 @@ void ProjectFile::merge(ProjectFile *projectFile)
   merge(projectFile->_dependencies,_dependencies);
   merge(projectFile->_includes,_includes);
   merge(projectFile->_cppFiles,_cppFiles);
+  merge(projectFile->_definesDll,_definesDll);
   merge(projectFile->_definesLib,_definesLib);
 }
 
@@ -804,7 +812,7 @@ void ProjectFile::writePreprocessorDefinitions(wofstream &file,const bool debug)
   }
   else if (_project->isDll())
   {
-    for (auto& def : _project->definesDll())
+    for (auto& def : _definesDll)
     {
       file << ";" << def;
     }

@@ -116,6 +116,7 @@ private:
   wstring                _guid;
   vector<wstring>        _includeFiles;
   vector<wstring>        _includes;
+  vector<wstring>        _definesDll;
   vector<wstring>        _definesLib;
   VisualStudioVersion    _minimumVisualStudioVersion;
   wstring                _name;
