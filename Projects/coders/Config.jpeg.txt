@@ -1,5 +1,5 @@
 [INCLUDES]
-jpeg-turbo->.
+jpeg-turbo->src
 
 [DEFINES_DLL]
 MAGICKCORE_HAVE_JPEG_ENABLE_LOSSLESS
