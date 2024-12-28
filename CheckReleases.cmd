@@ -26,4 +26,5 @@ echo %BASH%
 exit /b 1
 
 :EXECUTE
+set LC_ALL=en_US.utf8
 %BASH% --login -c "./CheckReleases.sh %REPOS% %TYPE%"
