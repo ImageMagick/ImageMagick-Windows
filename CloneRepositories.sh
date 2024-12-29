@@ -71,10 +71,15 @@ else
 fi
 
 if [ "$sha" = "latest" ]; then
-    declare -r commitDate=`date "+%Y-%m-%d %H:%M:%S %z"`
+    commitDate=`date "+%Y-%m-%d %H:%M:%S %z"`
 else
     # get a commit date from the current ImageMagick checkout
-    declare -r commitDate=`git -C ImageMagick log -1 --format=%ci`
+    commitDate=`git -C ImageMagick log -1 --format=%ci`
+
+    repoCommitDate=`git log -1 --format=%ci`
+    if [[ "$commitDate" < "$repoCommitDate" ]]; then
+        commitDate=$repoCommitDate
+    fi
 fi
 echo "Set latest commit date as $commitDate"
 
