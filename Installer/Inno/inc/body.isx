@@ -35,7 +35,6 @@
 
 ; Optional Tasks
 [Tasks]
-#include "tasks-desktopicon.isx"
 #include "tasks-update-path.isx"
 #ifdef MagickDynamicPackage
   #ifdef MagickVersion7
