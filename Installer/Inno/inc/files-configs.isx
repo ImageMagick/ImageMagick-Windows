@@ -23,6 +23,7 @@ Source: "..\..\Artifacts\bin\english.xml"; DestDir: {#MagickConfigDirectory}; Fl
 Source: "..\..\Artifacts\bin\delegates.xml"; DestDir: {#MagickConfigDirectory}; Flags: confirmoverwrite
 Source: "..\..\Artifacts\bin\locale.xml"; DestDir: {#MagickConfigDirectory}; Flags: confirmoverwrite
 Source: "..\..\Artifacts\bin\log.xml"; DestDir: {#MagickConfigDirectory}; Flags: confirmoverwrite
+Source: "..\..\Artifacts\bin\mime.xml"; DestDir: {#MagickConfigDirectory}; Flags: confirmoverwrite
 Source: "..\..\Artifacts\bin\policy.xml"; DestDir: {#MagickConfigDirectory}; Flags: confirmoverwrite
 Source: "..\..\Artifacts\bin\sRGB.icc"; DestDir: {#MagickConfigDirectory}; Flags: confirmoverwrite
 Source: "..\..\Artifacts\bin\thresholds.xml"; DestDir: {#MagickConfigDirectory}; Flags: confirmoverwrite

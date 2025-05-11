@@ -54,6 +54,7 @@
     <ROW File="english.xml" Component_="colors.xml" FileName="english.xml" Attributes="0" SourcePath="x64\english.xml" SelfReg="false"/>
     <ROW File="locale.xml" Component_="colors.xml" FileName="locale.xml" Attributes="0" SourcePath="x64\locale.xml" SelfReg="false"/>
     <ROW File="log.xml" Component_="colors.xml" FileName="log.xml" Attributes="0" SourcePath="x64\log.xml" SelfReg="false"/>
+    <ROW File="mime.xml" Component_="colors.xml" FileName="mime.xml" Attributes="0" SourcePath="x64\mime.xml" SelfReg="false"/>
     <ROW File="policy.xml" Component_="colors.xml" FileName="policy.xml" Attributes="0" SourcePath="x64\policy.xml" SelfReg="false"/>
     <ROW File="thresholds.xml" Component_="colors.xml" FileName="THRESH~1.XML|thresholds.xml" Attributes="0" SourcePath="x64\thresholds.xml" SelfReg="false"/>
     <ROW File="type.xml" Component_="colors.xml" FileName="type.xml" Attributes="0" SourcePath="x64\type.xml" SelfReg="false"/>
