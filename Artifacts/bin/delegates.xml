@@ -59,7 +59,7 @@
   will it read any output image.
 -->
 <delegatemap>
-  <delegate decode="bpg" command="cmd.exe /c (&quot;bpgdec&quot; -b 16 -o &quot;%o.png&quot; &quot;%i&quot;) &amp; (move &quot;%o.png&quot; &quot;%o&quot; >nul)"/>
+  <delegate decode="bpg" command="&quot;bpgdec&quot; -b 16 -o &quot;%o&quot; &quot;%i&quot;"/>
   <delegate decode="png" encode="bpg" command="&quot;bpgenc&quot; -b 12 -q &quot;%~&quot; -o &quot;%o&quot; &quot;%i&quot;"/>
   <delegate decode="dng:decode" stealth="True" command="dcraw.exe -6 -W -O &quot;%u.ppm&quot; &quot;%i&quot;"/>
   <delegate decode="dot" command="&quot;dot&quot; -Tsvg &quot;%i&quot; -o &quot;%o&quot;" />
