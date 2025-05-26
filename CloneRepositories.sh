@@ -48,6 +48,17 @@ clone_date()
     cd ..
 }
 
+download_release()
+{
+    local project=$1
+    local release=$2
+    local file=$3
+
+    echo "Downloading $file from $release of $project"
+
+    curl -L "https://github.com/ImageMagick/$project/releases/download/$release/$file" -o "$file"
+}
+
 imagemagick=$1
 sha=$2
 
@@ -82,6 +93,22 @@ else
     fi
 fi
 echo "Set latest commit date as $commitDate"
+
+if [ ! -d "Configure" ]; then
+    mkdir -p "Configure"
+fi
+
+cd "Configure"
+
+configure_release="2025.05.25.1917"
+download_release "Configure" "$configure_release" "Configure.Debug.x64.exe"
+download_release "Configure" "$configure_release" "Configure.Debug.arm64.exe"
+download_release "Configure" "$configure_release" "Configure.Debug.x86.exe"
+download_release "Configure" "$configure_release" "Configure.Release.x64.exe"
+download_release "Configure" "$configure_release" "Configure.Release.arm64.exe"
+download_release "Configure" "$configure_release" "Configure.Release.x86.exe"
+
+cd ..
 
 if [ ! -d "Dependencies" ]; then
     mkdir -p "Dependencies"

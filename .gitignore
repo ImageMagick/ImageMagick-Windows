@@ -3,12 +3,7 @@
 /Build/package.version.h
 /Build/version.h
 
-/Configure/Configure
-/Configure/Configure.2017
-/Configure/Debug
-/Configure/Release
-/Configure/*.user
-/Configure/*.exe
+/Configure
 
 /Dependencies/*
 
