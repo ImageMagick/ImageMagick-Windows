@@ -88,7 +88,9 @@ else
     commitDate=`git -C ImageMagick log -1 --format=%ci`
 
     repoCommitDate=`git log -1 --format=%ci`
+
     if [[ "$commitDate" < "$repoCommitDate" ]]; then
+        echo "Commit date $commitDate is older than the latest commit date of this repository $repoCommitDate"
         commitDate=$repoCommitDate
     fi
 fi
