@@ -105,9 +105,6 @@ if [[ "$OSTYPE" == "msys"* ]]; then
     cd "Configure"
 
     configure_release="2025.05.25.1917"
-    download_release "Configure" "$configure_release" "Configure.Debug.x64.exe"
-    download_release "Configure" "$configure_release" "Configure.Debug.arm64.exe"
-    download_release "Configure" "$configure_release" "Configure.Debug.x86.exe"
     download_release "Configure" "$configure_release" "Configure.Release.x64.exe"
     download_release "Configure" "$configure_release" "Configure.Release.arm64.exe"
     download_release "Configure" "$configure_release" "Configure.Release.x86.exe"
