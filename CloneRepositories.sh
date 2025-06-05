@@ -56,7 +56,7 @@ download_release()
 
     echo "Downloading $file from $release of $project"
 
-    curl -L "https://github.com/ImageMagick/$project/releases/download/$release/$file" -o "$file"
+    curl -sS -L "https://github.com/ImageMagick/$project/releases/download/$release/$file" -o "$file"
 }
 
 imagemagick=$1
