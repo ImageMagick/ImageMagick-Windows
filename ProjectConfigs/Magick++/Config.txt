@@ -1,14 +1,17 @@
-[DLL]
-
-[DIRECTORIES]
-lib
-lib\Magick++
+[DYNAMIC_LIBRARY]
 
 [INCLUDES]
-..
+\ImageMagick
 lib
 
-[DEPENDENCIES]
+[DEFINES]
+_VISUALC_
+
+[EXCLUDES]
+demo\
+tests\
+
+[REFERENCES]
 MagickCore
 MagickWand
 

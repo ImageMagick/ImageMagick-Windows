@@ -1,22 +1,9 @@
-[EXEMODULE]
-
-[DIRECTORIES]
-.
+[APPLICATION]
 
 [INCLUDES]
 ..
 
-[MODULE_PREFIX]
-UTIL
-
-[EXCLUDES]
-animate.c
-display.c
-import.c
-
-[DEPENDENCIES]
-coders
-filters
+[REFERENCES]
 MagickCore
 MagickWand
 

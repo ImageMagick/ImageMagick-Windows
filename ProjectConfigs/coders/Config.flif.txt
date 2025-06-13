@@ -1,5 +1,4 @@
-[INCLUDES]
-flif->src\library
+[CODER]
 
-[DEPENDENCIES]
+[REFERENCES]
 flif

@@ -1,22 +1,11 @@
-[EXEMODULE]
+[DEMO]
 
 [OPTIONAL]
 
-[PATH]
-Magick++\demo
-
-[DIRECTORIES]
-.
-
 [INCLUDES]
-..
-Magick++->lib
+\ImageMagick\
+\ImageMagick\Magick++\lib
 
-[MODULE_PREFIX]
-DEMO
-
-[DEPENDENCIES]
-coders
-filters
+[REFERENCES]
 Magick++
 MagickCore

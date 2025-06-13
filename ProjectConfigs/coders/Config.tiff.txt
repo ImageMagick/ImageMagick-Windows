@@ -1,6 +1,7 @@
-[INCLUDES]
-tiff->libtiff
+[CODER]
 
-[DEPENDENCIES]
+[CODER_REFERENCES]
+psd
+
+[REFERENCES]
 tiff
-coders>psd

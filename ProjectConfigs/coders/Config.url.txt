@@ -1,5 +1,4 @@
-[INCLUDES]
-xml->include
+[CODER]
 
-[DEPENDENCIES]
+[REFERENCES]
 xml

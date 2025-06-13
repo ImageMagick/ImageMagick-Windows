@@ -1,5 +1,4 @@
-[INCLUDES]
-zip->lib
+[CODER]
 
-[DEPENDENCIES]
+[REFERENCES]
 zip
