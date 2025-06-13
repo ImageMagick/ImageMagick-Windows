@@ -14,7 +14,7 @@
 
 /OptionalDependencies/*
 
-/Projects/utilities/ImageMagick.version.h
+/ProjectConfigs/utilities/ImageMagick.version.h
 
 /*.Projects/*
 
