@@ -1,8 +1,7 @@
-[INCLUDES]
-openjpeg->src\lib\openjp2
+[CODER]
 
-[DEFINES_LIB]
+[STATIC_DEFINES]
 OPJ_STATIC
 
-[DEPENDENCIES]
+[REFERENCES]
 openjpeg

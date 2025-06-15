@@ -1,10 +1,12 @@
-[APPLICATION]
+[DYNAMIC_LIBRARY]
+
+[DEFINES]
+_MAGICKLIB_
 
 [INCLUDES]
-..
+\ImageMagick
 
 [REFERENCES]
 MagickCore
-MagickWand
 
 [MAGICK_PROJECT]

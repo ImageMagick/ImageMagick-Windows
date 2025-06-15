@@ -1,12 +1,7 @@
-[INCLUDES]
-exr->imath
-exr->imath\src\Imath
-exr->openexr
-exr->openexr\src\lib\OpenEXR
-exr->openexr\src\lib\OpenEXRCore
+[CODER]
 
-[DEFINES_DLL]
+[DYNAMIC_DEFINES]
 OPENEXR_DLL
 
-[DEPENDENCIES]
+[REFERENCES]
 exr

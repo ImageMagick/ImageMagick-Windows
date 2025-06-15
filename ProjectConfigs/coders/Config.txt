@@ -1,7 +1,4 @@
-[DLLMODULE]
-
-[DIRECTORIES]
-.
+[CODER]
 
 [INCLUDES]
 ..
@@ -11,10 +8,7 @@ wmf.c
 x.c
 xwd.c
 
-[MODULE_PREFIX]
-IM_MOD
-
-[DEPENDENCIES]
+[REFERENCES]
 MagickCore
 
 [MAGICK_PROJECT]

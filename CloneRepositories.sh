@@ -9,42 +9,105 @@ clone()
     echo ''
     echo "Cloning $repo"
 
-    if [ ! -d "$folder" ]; then
-        git clone https://github.com/ImageMagick/$repo.git $folder
-        if [ $? != 0 ]; then echo "Error during checkout"; exit; fi
+    if [ -z "$folder" ]; then
+        folder=$repo
     fi
 
-    cd $folder
+    if [ -d "$folder" ]; then
+        cd $folder
+    else
+        git clone https://github.com/ImageMagick/$repo.git $folder
+        if [ $? != 0 ]; then echo "Error during checkout"; exit; fi
+
+        cd $folder
+        git remote add sshpush git@github.com:ImageMagick/$repo.git
+        git config remote.pushDefault sshpush
+    fi
+
+    git checkout new-config 2>/dev/null || git checkout -b new-config
     git reset --hard
-    git pull origin main
+    git pull origin new-config
     cd ..
 }
 
-clone_commit()
+clone_configure()
 {
-    local repo=$1
-    local commit=$2
-    local folder=$3
+    clone 'Configure'
+}
 
-    clone $repo $folder
+clone_dependencies()
+{
+    if [ ! -d "Dependencies" ]; then
+        mkdir -p "Dependencies"
+    fi
 
-    cd $folder
-    git checkout $commit >/dev/null
-    git show --oneline -s
+    cd "Dependencies"
+
+    clone 'aom'
+    clone 'brotli'
+    clone 'bzlib'
+    clone 'cairo'
+    clone 'croco'
+    clone 'de265'
+    clone 'deflate'
+    clone 'exr'
+    clone 'ffi'
+    clone 'freetype'
+    clone 'fribidi'
+    clone 'glib'
+    clone 'harfbuzz'
+    clone 'heif'
+    clone 'highway'
+    clone 'jpeg-turbo'
+    clone 'jpeg-turbo-12'
+    clone 'jpeg-turbo-16'
+    clone 'jpeg-xl'
+    clone 'lcms'
+    clone 'lqr'
+    clone 'lzma'
+    clone 'openh264'
+    clone 'openjpeg'
+    clone 'pango'
+    clone 'pixman'
+    clone 'png'
+    clone 'raqm'
+    clone 'raw'
+    clone 'rsvg'
+    clone 'tiff'
+    clone 'webp'
+    clone 'xml'
+    clone 'zip'
+    clone 'zlib'
+
     cd ..
 }
 
-clone_date()
+clone_optional_applications()
 {
-    local repo=$1
-    local date=$2
+    if [ ! -d "OptionalApplications" ]; then
+        mkdir -p "OptionalApplications"
+    fi
 
-    clone $repo $repo
+    cd "OptionalApplications"
+    
+    clone 'dcraw'
+    clone 'IMDisplay'
 
-    cd $repo
-    local commit=$(git rev-list -n 1 --before="$date" origin/main)
-    git checkout $commit >/dev/null
-    git show --oneline -s
+    cd ..
+}
+
+clone_optional_dependencies()
+{
+    if [ ! -d "OptionalDependencies" ]; then
+        mkdir -p "OptionalDependencies"
+    fi
+
+    cd "OptionalDependencies"
+
+    clone 'fftw'
+    clone 'flif'
+    clone 'jbig'
+
     cd ..
 }
 
@@ -59,111 +122,59 @@ download_release()
     curl -sS -L "https://github.com/ImageMagick/$project/releases/download/$release/$file" -o "$file"
 }
 
-imagemagick=$1
-sha=$2
+download_configure()
+{
+    if [[ "$OSTYPE" == "msys"* ]]; then
+        cd "Configure"
 
-if [ -z "$imagemagick" ]; then
-    echo "Usage: $0 ImageMagick/ImageMagick6 [<commit>|latest]"
-    exit 1
-fi
+        configure_release="2025.05.25.1917"
+        download_release "Configure" "$configure_release" "Configure.Release.x64.exe"
+        download_release "Configure" "$configure_release" "Configure.Release.arm64.exe"
+        download_release "Configure" "$configure_release" "Configure.Release.x86.exe"
 
-if [ -d "../$imagemagick" ]; then
-    echo "Copying repository from ../$imagemagick"
-    cp -R ../$imagemagick "ImageMagick"
-    git -C "ImageMagick" show --oneline -s
-else
-    if [ -z "$sha" ] || [ "$sha" = "latest" ]; then
-        commit=$(git ls-remote "https://github.com/ImageMagick/$imagemagick" "main" | cut -f 1)
-    else
-        commit=$sha
+        cd ..
     fi
+}
 
-    clone_commit "$imagemagick" "$commit" "ImageMagick"
-fi
+development=true
+imagemagick=0
 
-if [ "$sha" = "latest" ]; then
-    commitDate=`date "+%Y-%m-%d %H:%M:%S %z"`
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    --development)
+      development=true
+      shift
+      ;;
+    --imagemagick6)
+      imagemagick=6
+      shift
+      ;;
+    --imagemagick7)
+      imagemagick=7
+      shift
+      ;;
+    *)
+      echo "Unknown option: $1"
+      exit 1
+      ;;
+  esac
+done
+
+if [[ "$development" == true ]]; then
+    echo "Cloning dependencies for development"
+    clone_configure
+    clone_dependencies
+    clone_optional_dependencies
+    clone_optional_applications
 else
-    # get a commit date from the current ImageMagick checkout
-    commitDate=`git -C ImageMagick log -1 --format=%ci`
-
-    repoCommitDate=`git log -1 --format=%ci`
-
-    if [[ "$commitDate" < "$repoCommitDate" ]]; then
-        echo "Commit date $commitDate is older than the latest commit date of this repository $repoCommitDate"
-        commitDate=$repoCommitDate
-    fi
-fi
-echo "Set latest commit date as $commitDate"
-
-if [ ! -d "Configure" ]; then
-    mkdir -p "Configure"
+    echo "Cloning dependencies for release"
+    download_configure
 fi
 
-# only download configure on windows
-if [[ "$OSTYPE" == "msys"* ]]; then
-    cd "Configure"
-
-    configure_release="2025.06.14.1339"
-    download_release "Configure" "$configure_release" "Configure.Release.x64.exe"
-    download_release "Configure" "$configure_release" "Configure.Release.arm64.exe"
-    download_release "Configure" "$configure_release" "Configure.Release.x86.exe"
-
-    cd ..
+if [[ "$imagemagick" == 6 ]]; then
+    echo "Cloning ImageMagick 6"
+    clone 'ImageMagick6' 'ImageMagick'
+elif [[ "$imagemagick" == 7 ]]; then
+    echo "Cloning ImageMagick 7"
+    clone 'ImageMagick'
 fi
-
-if [ ! -d "Dependencies" ]; then
-    mkdir -p "Dependencies"
-fi
-
-cd "Dependencies"
-
-clone_date 'aom' "$commitDate"
-clone_date 'brotli' "$commitDate"
-clone_date 'bzlib' "$commitDate"
-clone_date 'cairo' "$commitDate"
-clone_date 'croco' "$commitDate"
-clone_date 'de265' "$commitDate"
-clone_date 'deflate' "$commitDate"
-clone_date 'exr' "$commitDate"
-clone_date 'ffi' "$commitDate"
-clone_date 'freetype' "$commitDate"
-clone_date 'fribidi' "$commitDate"
-clone_date 'glib' "$commitDate"
-clone_date 'harfbuzz' "$commitDate"
-clone_date 'heif' "$commitDate"
-clone_date 'highway' "$commitDate"
-clone_date 'jpeg-turbo' "$commitDate"
-clone_date 'jpeg-turbo-12' "$commitDate"
-clone_date 'jpeg-turbo-16' "$commitDate"
-clone_date 'jpeg-xl' "$commitDate"
-clone_date 'lcms' "$commitDate"
-clone_date 'lqr' "$commitDate"
-clone_date 'lzma' "$commitDate"
-clone_date 'openh264' "$commitDate"
-clone_date 'openjpeg' "$commitDate"
-clone_date 'pango' "$commitDate"
-clone_date 'pixman' "$commitDate"
-clone_date 'png' "$commitDate"
-clone_date 'raqm' "$commitDate"
-clone_date 'raw' "$commitDate"
-clone_date 'rsvg' "$commitDate"
-clone_date 'tiff' "$commitDate"
-clone_date 'webp' "$commitDate"
-clone_date 'xml' "$commitDate"
-clone_date 'zip' "$commitDate"
-clone_date 'zlib' "$commitDate"
-
-cd ..
-
-if [ ! -d "OptionalDependencies" ]; then
-    mkdir -p "OptionalDependencies"
-fi
-
-cd "OptionalDependencies"
-
-clone_date 'dcraw' "$commitDate"
-clone_date 'fftw' "$commitDate"
-clone_date 'flif' "$commitDate"
-clone_date 'IMDisplay' "$commitDate"
-clone_date 'jbig' "$commitDate"
