@@ -1,34 +1,19 @@
-[DLL]
+[DYNAMIC_LIBRARY]
 
 [DEFINES]
 _MAGICKLIB_
 
-[DIRECTORIES]
-.
+[DYNAMIC_DEFINES]
+_MAGICKMOD_
 
 [INCLUDES]
-..
-bzlib->.
-fftw->api
-freetype->include
-glib->.
-glib->glib
-lcms->include
-lqr->.
-lqr->lqr
-raqm->src
-xml->include
-zlib->.
+\ImageMagick
 
-[EXCLUDES]
-mac.c
-vms.c
-widget.c
-
-[DEPENDENCIES]
+[REFERENCES]
 bzlib
 freetype
 fftw
+glib
 lcms
 lqr
 raqm

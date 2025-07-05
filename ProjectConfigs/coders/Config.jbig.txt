@@ -1,5 +1,4 @@
-[INCLUDES]
-jbig->libjbig
+[CODER]
 
-[DEPENDENCIES]
+[REFERENCES]
 jbig

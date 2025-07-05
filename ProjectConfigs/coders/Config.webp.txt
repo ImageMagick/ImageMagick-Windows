@@ -1,5 +1,4 @@
-[INCLUDES]
-webp->src
+[CODER]
 
-[DEPENDENCIES]
+[REFERENCES]
 webp

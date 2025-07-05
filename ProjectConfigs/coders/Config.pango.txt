@@ -1,11 +1,7 @@
-[INCLUDES]
-cairo->src
-glib->.
-glib->glib
-harfbuzz->src
-pango->.
+[CODER]
 
-[DEPENDENCIES]
+[REFERENCES]
 cairo
 glib
+harfbuzz
 pango

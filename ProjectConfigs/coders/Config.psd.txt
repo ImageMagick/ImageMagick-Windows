@@ -1,5 +1,4 @@
-[INCLUDES]
-zlib->.
+[CODER]
 
-[DEPENDENCIES]
+[REFERENCES]
 zlib

@@ -1,5 +1,4 @@
-[INCLUDES]
-freetype->include
+[CODER]
 
-[DEPENDENCIES]
+[REFERENCES]
 freetype

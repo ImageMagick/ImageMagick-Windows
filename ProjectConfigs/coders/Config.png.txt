@@ -1,7 +1,5 @@
-[INCLUDES]
-png->.
-zlib->.
+[CODER]
 
-[DEPENDENCIES]
+[REFERENCES]
 png
 zlib

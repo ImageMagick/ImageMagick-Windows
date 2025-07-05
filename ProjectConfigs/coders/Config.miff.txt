@@ -1,12 +1,9 @@
-[INCLUDES]
-bzlib->.
-lzma->src\liblzma\api
-zlib->.
+[CODER]
 
-[DEFINES_LIB]
+[STATIC_DEFINES]
 LZMA_API_STATIC
 
-[DEPENDENCIES]
+[REFERENCES]
 bzlib
 lzma
 zlib

@@ -1,21 +1,15 @@
-[DLL]
+[DYNAMIC_LIBRARY]
 
 [DEFINES]
 _MAGICKLIB_
 
-[DIRECTORIES]
-.
-
 [INCLUDES]
-..
+\ImageMagick
 
 [EXCLUDES]
-drawtest.c
-wandtest.c
+tests\
 
-[DEPENDENCIES]
+[REFERENCES]
 MagickCore
-
-[OPENCL]
 
 [MAGICK_PROJECT]
