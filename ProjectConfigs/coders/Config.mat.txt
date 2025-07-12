@@ -1,5 +1,0 @@
-[INCLUDES]
-zlib->.
-
-[DEPENDENCIES]
-zlib

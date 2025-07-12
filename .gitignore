@@ -12,11 +12,10 @@
 /Installer/Inno/config.isx
 /Installer/Inno/Artifacts/*
 
+/OptionalApplications/*
 /OptionalDependencies/*
 
-/ProjectConfigs/utilities/ImageMagick.version.h
-
-/*.Projects/*
+/ProjectFiles/*
 
 /*.sln
 

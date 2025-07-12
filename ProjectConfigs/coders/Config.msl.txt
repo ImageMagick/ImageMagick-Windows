@@ -1,5 +1,0 @@
-[INCLUDES]
-xml->include
-
-[DEPENDENCIES]
-xml

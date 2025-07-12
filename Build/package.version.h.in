@@ -1,3 +1,0 @@
-#include "version.h"
-#define MagickPackageVersionNumber @PACKAGE_LIB_VERSION_NUMBER@
-#define MagickPackageVersionText   "@MAGICK_LIB_VERSION_TEXT@@PACKAGE_VERSION_ADDENDUM@"

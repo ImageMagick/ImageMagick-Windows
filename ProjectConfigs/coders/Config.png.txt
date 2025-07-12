@@ -1,7 +1,0 @@
-[INCLUDES]
-png->.
-zlib->.
-
-[DEPENDENCIES]
-png
-zlib

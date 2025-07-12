@@ -1,5 +1,0 @@
-[INCLUDES]
-zip->lib
-
-[DEPENDENCIES]
-zip

@@ -1,7 +1,0 @@
-compare
-composite
-conjure
-identify
-mogrify
-montage
-stream

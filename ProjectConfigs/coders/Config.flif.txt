@@ -1,5 +1,0 @@
-[INCLUDES]
-flif->src\library
-
-[DEPENDENCIES]
-flif
